@@ -1,0 +1,164 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {}
+		},
+		{
+			"path": "pages/basics/home/home",
+			"style": {
+				"component": true
+			}
+		},
+		{
+			"path": "pages/basics/word/word",
+			"style": {}
+		},
+		{
+			"path": "pages/basics/search/search",
+			"style": {}
+		},
+		{
+			"path": "pages/basics/characters/characters",
+			"style": {}
+		},
+		{
+			"path": "pages/basics/words/words",
+			"style": {}
+		},
+		{
+			"path": "pages/basics/pronunciation/pronunciation",
+			"style": {}
+		},
+		{
+			"path": "pages/component/home/home",
+			"style": {
+				"component": true
+			}
+		},
+		{
+			"path": "pages/component/music/music",
+			"style": {}
+		},
+		{
+			"path": "pages/component/playmusic/playmusic",
+			"style": {}
+		},
+		{
+			"path": "pages/component/uploadmusic/uploadmusic",
+			"style": {}
+		},
+		{
+			"path": "pages/component/condition/condition",
+			"style": {}
+		},
+		{
+			"path": "pages/component/voice/voice",
+			"style": {}
+		},
+		{
+			"path": "pages/component/pinyin/pinyin",
+			"style": {}
+		},
+		{
+			"path": "pages/component/daily/daily",
+			"style": {}
+		},
+		{
+			"path": "pages/component/uploadpronunciation/uploadpronunciation",
+			"style": {}
+		},
+		{
+			"path": "pages/plugin/home/home",
+			"style": {
+				"component": true
+			}
+		},
+		{
+			"path": "pages/plugin/article/article",
+			"style": {}
+		},
+		{
+			"path": "pages/plugin/comment/comment",
+			"style": {}
+		},
+		{
+			"path": "pages/plugin/write/write",
+			"style": {}
+		},
+		{
+			"path": "pages/about/home/home",
+			"style": {
+				"component": true
+			}
+		},
+		{
+			"path": "pages/about/userinfo/userinfo",
+			"style": {}
+		},
+		{
+			"path": "pages/about/visitor/visitor",
+			"style": {}
+		},
+		{
+			"path": "pages/about/nickname/nickname",
+			"style": {}
+		},
+		{
+			"path": "pages/about/email/email",
+			"style": {}
+		},
+		{
+			"path": "pages/about/password/password",
+			"style": {}
+		},
+		{
+			"path": "pages/about/articlesliked/articlesliked",
+			"style": {}
+		},
+		{
+			"path": "pages/about/myarticles/myarticles",
+			"style": {}
+		},
+		{
+			"path": "pages/about/mycomments/mycomments",
+			"style": {}
+		},
+		{
+			"path": "pages/about/phone/phone",
+			"style": {}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {}
+		},
+		{
+			"path": "pages/forget/forget",
+			"style": {}
+		}
+	],
+	"sitemapLocation": "sitemap.json",
+	"style": "v2",
+	"requiredBackgroundModes": [
+		"audio",
+		"location"
+	],
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"cu-custom": "@/colorui/components/cu-custom"
+		}
+	},
+	"globalStyle": {
+		"backgroundColor": "#F6F6F6",
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#F6F6F6",
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "custom"
+	},
+	"subPackages": []
+}
