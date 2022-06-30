@@ -12,7 +12,7 @@
 <body>
 ```
 
->  如果你使用 `IntelliJ IDEA`，可以使用插件 `Git Commit Template` 来辅助书写 commit message 
+>  如果你使用 `WebStorm`，可以使用插件 `Git Commit Template` 来辅助书写 commit message 
 
 #### **header**
 
