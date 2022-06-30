@@ -1,10 +1,12 @@
 <template>
   <view>
-    <template v-for="item in tabBar">
-      <components :is="item.name" v-if="currentPage === item.name">{{ item.name }}</components>
-    </template>
+    <basics v-if="currentPage==='basics'"/>
+    <component v-if="currentPage==='component'"/>
+    <plugin v-if="currentPage==='plugin'"/>
+    <about v-if="currentPage==='about'"/>
+
     <view class="cu-bar tabbar bg-white shadow foot" style="border-radius: 50rem">
-      <view v-for="item in tabBar" class="action" data-cur="basics" @tap="changePage(item.name)">
+      <view v-for="item in tabBar" class="action" data-cur="basics" @tap="changePage(item.name)" :key="item.name">
         <view class="cuIcon-cu-image">
           <image
               :src="`${cosUrl}${item.image}${currentPage===item.name?'-selected':''}.png`"
