@@ -4,7 +4,7 @@
 
 兴化语记是 [E方言](https://edialect.top) 中`莆仙方言公共服务包` 的别称，主要服务对象包括福建省莆田市及其周边地区的莆仙方言使用者。
 
-兴化语记目前包括网页端（https://pxm.edialect.top, https://hinghwa.cn），微信小程序端（兴化语记），计划在本项目中通过 `uni-app` 增加移动端（https://m.pxm.edialect.top），QQ小程序端等。
+兴化语记目前包括网页端 ( https://pxm.edialect.top, https://hinghwa.cn )，微信小程序端（兴化语记），计划在本项目中通过 `uni-app` 增加移动端（https://m.pxm.edialect.top），QQ小程序端等。
 
 ![uni-app版界面首页](images/image-20220701012922288.png)
 
