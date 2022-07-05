@@ -16,10 +16,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-          cache: "npm"
+          cache: "yarn"
       - name: Install Dependencies
         run: |
-          npm install
+          yarn install --frozen-lockfile --production=false
+      - name: Lint
+        run: |
+          yarn run lint
       - name: Build H5
         run: |
-          npm run build:h5
+          yarn run build:h5
