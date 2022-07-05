@@ -1,6 +1,13 @@
-import request from "./request";
+import request from "../utils/request";
 
 export function login() {
+//#ifdef H5
+  uni.navigateTo({
+    url: "/pages/login/login",
+  });
+//#endif
+
+//#ifndef H5
   uni.login({
       // 尝试调用登录接口成功
       success: (res) => {
@@ -25,10 +32,10 @@ export function login() {
             uni.setStorageSync("token", res2.token);
             uni.setStorageSync("id", res2.id);
             setTimeout(() => {
-              uni.reLaunch({
+              uni.redirectTo({
                 url: "/pages/index/index",
               });
-            }, 500);
+            }, 0);
           })
           .catch((err) => {
             switch (err.statusCode) {
@@ -57,5 +64,6 @@ export function login() {
       },
     }
   )
+//#endif
 }
 

@@ -6,7 +6,7 @@
     <about v-if="currentPage==='about'"/>
 
     <view class="cu-bar tabbar bg-white shadow foot" style="border-radius: 50rem">
-      <view v-for="item in tabBar" class="action" data-cur="basics" @tap="changePage(item.name)" :key="item.name">
+      <view v-for="item in tabBar" :key="item.name" class="action" data-cur="basics" @tap="changePage(item.name)">
         <view class="cuIcon-cu-image">
           <image
               :src="`${cosUrl}${item.image}${currentPage===item.name?'-selected':''}.png`"
@@ -23,7 +23,7 @@ import basics    from "../basics/home/home";
 import component from "../component/home/home";
 import plugin    from "../plugin/home/home";
 import about     from "../about/home/home";
-import {login}   from "../../utils/login";
+import {login}   from "../../services/login";
 
 const app = getApp();
 export default {
