@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import {COS_URL} from "../const/urls";
-import basics    from "./basics/home/home";
-import component from "./component/home/home";
-import plugin    from "./plugin/home/home";
-import about     from "./about/home/home";
-import {login}   from "../utils/login";
+import {COS_URL} from "../../const/urls";
+import basics    from "../basics/home/home";
+import component from "../component/home/home";
+import plugin    from "../plugin/home/home";
+import about     from "../about/home/home";
+import {login}   from "../../utils/login";
 
 const app = getApp();
 export default {

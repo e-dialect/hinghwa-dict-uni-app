@@ -1,7 +1,7 @@
 {
   "pages": [
     {
-      "path": "pages/index",
+      "path": "pages/index/index",
       "style": {}
     },
     {
