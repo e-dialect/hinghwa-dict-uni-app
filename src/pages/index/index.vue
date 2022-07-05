@@ -23,7 +23,7 @@ import basics    from "../basics/home/home";
 import component from "../component/home/home";
 import plugin    from "../plugin/home/home";
 import about     from "../about/home/home";
-import {login}   from "../../services/login";
+import {mpLogin} from "../../services/login";
 
 const app = getApp();
 export default {
@@ -86,7 +86,7 @@ export default {
           content: "请先登录",
           showCancel: false,
           success: () => {
-            login();
+            mpLogin();
           },
         });
         return;

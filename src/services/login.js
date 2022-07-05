@@ -1,9 +1,9 @@
 import request from "../utils/request";
 
 /**
- * 一键登录
+ * 小程序一键登录
  */
-export function login() {
+export function mpLogin() {
 //#ifdef H5
   uni.navigateTo({
     url: "/pages/login/login",
