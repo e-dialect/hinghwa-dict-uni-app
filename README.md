@@ -15,3 +15,5 @@
 `uni-app` 是一个使用 [Vue.js](https://vuejs.org/) 开发所有前端应用的框架，开发者编写一套代码，可发布到iOS、Android、Web（响应式）、以及各种小程序（微信/支付宝/百度/头条/飞书/QQ/快手/钉钉/淘宝）、快应用等多个平台。
 
 项目主体采用 `Vue2` + `webpack`，之所以不采用 `Vue3` + `Vite` 的原因在于，这个仓库源自于[原先的微信小程序代码](https://github.com/e-dialect/hinghwa-dict-mp-weixin)，通过 `uni-app` 提供的插件一键转化为 `uni-app` 应用。（因此代码前期会充满着 `refactor` 和 `fix`，彻底完成转化之后才适时添加新功能）
+
+UI 组件使用  [`ColorUI`](https://github.com/weilanwl/ColorUI/) ，这是一款适应于H5、微信小程序、安卓、iOS、支付宝的高颜值，高度自定义的 CSS 组件库。
