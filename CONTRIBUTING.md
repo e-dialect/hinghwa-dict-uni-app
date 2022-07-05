@@ -1,5 +1,33 @@
 # 代码贡献说明
 
+## 贡献流程
+
+### 认领 issue
+
+你可以在 [Issues](https://github.com/e-dialect/hinghwa-dict-uni-app/issues) 找到需要解决的问题，留意有 `good first issue` 或 `help wanted` label 的 issue，他们通常较好上手，并且有相应指南。
+
+找到你想解决的 issue ，看到右侧的 Assignees ，点击 assign yourself ，即可把这个 issue 分配给自己。这就向他人表示你已经在尝试解决这个 issue 了。
+
+### 开始编码
+
+在点击仓库右上角的 Fork 按钮将在你的账号中创建该仓库的副本。前往你的 GitHub 中的相同仓库，地址通常为 https://github.com/你的用户名/hinghwa-dict-uni-app 接下来将在你自己账号的仓库中操作。
+
+> 如果你不知道以下说的是什么东西，你可能需要尝试 [GitHub Desktop](https://desktop.github.com/) ，这能帮助你少敲一堆命令，减轻学习 Git 的负担。（不过这不代表不用学习 Git）如果你遇到了困难，请向 mentor 求助。
+
+将仓库 clone 到本地，这样本地才有代码，才能对其修改。操作步骤参考 [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+现在对你刚刚 clone 的代码进行修改，修改完成后，将代码 push 到你自己的仓库。
+
+### 创建 Pull Request
+
+参考 [Creating a pull request from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
+
+> 同样，如果你遇到了困难，请向 mentor 求助。
+
+### 等待 Code Review
+
+你提交的 Pull Request 将在 review 后合并入仓库。如果有需要改进的地方，你的 reviewer 会在 Pull Request 下留言，所以请留意你的 reviewer 给你的消息（不过也不用担心，你会收到邮件提醒）。
+
 ## Git 使用规范
 
 ### Commit 规范
