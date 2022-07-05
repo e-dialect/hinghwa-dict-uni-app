@@ -24,6 +24,8 @@
 
 > 同样，如果你遇到了困难，请向 mentor 求助。
 
+在你创建 Pull Request 后，你会看到 checks running ，请留意失败的 checks ，这通常意味着你提交的代码可能存在问题。
+
 ### 等待 Code Review
 
 你提交的 Pull Request 将在 review 后合并入仓库。如果有需要改进的地方，你的 reviewer 会在 Pull Request 下留言，所以请留意你的 reviewer 给你的消息（不过也不用担心，你会收到邮件提醒）。
