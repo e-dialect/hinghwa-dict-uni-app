@@ -1,9 +1,9 @@
 <template>
   <view>
     <basics v-if="currentPage==='basics'"/>
-    <component v-if="currentPage==='component'"/>
-    <plugin v-if="currentPage==='plugin'"/>
-    <about v-if="currentPage==='about'"/>
+    <tools v-if="currentPage==='tools'"/>
+    <InteractionPage v-if="currentPage==='InteractionPage'"/>
+    <me v-if="currentPage==='me'"/>
 
     <view class="cu-bar tabbar bg-white shadow foot" style="border-radius: 50rem">
       <view v-for="item in tabBar" :key="item.name" class="action" data-cur="basics" @tap="changePage(item.name)">
@@ -18,20 +18,20 @@
 </template>
 
 <script>
-import {COS_URL} from "../../const/urls";
-import basics    from "../basics/home/home";
-import component from "../component/home/home";
-import plugin    from "../plugin/home/home";
-import about     from "../about/home/home";
-import {mpLogin} from "../../services/login";
+import {COS_URL}       from "../../const/urls";
+import basics          from "../basics/home/home";
+import tools           from "../component/home/home";
+import InteractionPage from "../plugin/home/home";
+import me              from "../about/home/home";
+import {mpLogin}       from "../../services/login";
 
 const app = getApp();
 export default {
   components: {
     basics,
-    component,
-    plugin,
-    about,
+    tools,
+    InteractionPage,
+    me,
   },
   data() {
     return {
@@ -43,15 +43,15 @@ export default {
           image: 'index'
         },
         {
-          name: 'component',
+          name: 'tools',
           image: 'tool'
         },
         {
-          name: 'plugin',
+          name: 'InteractionPage',
           image: 'hd'
         },
         {
-          name: 'about',
+          name: 'me',
           image: 'my'
         }
       ]
@@ -81,7 +81,7 @@ export default {
      * @param page 新页面
      */
     changePage(page) {
-      if (app.globalData.status === 0 && page === "about") {
+      if (app.globalData.status === 0 && page === "me") {
         uni.showModal({
           content: "请先登录",
           showCancel: false,
