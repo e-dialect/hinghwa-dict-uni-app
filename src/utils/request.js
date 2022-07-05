@@ -16,6 +16,7 @@ const request = (method = 'GET', url = '', data = {}) => {
       },
       dataType: 'json',
     }).then((response) => {
+      uni.hideLoading();
       let [error, res] = response;
       if (error) {
         uni.showToast({
@@ -25,18 +26,32 @@ const request = (method = 'GET', url = '', data = {}) => {
         reject(error)
       }
       if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
-      else reject(res)
+      else {
+        switch (res.statusCode) {
+          case 500:
+            uni.showToast({
+              title: "服务器内部错误",
+              icon: "error",
+            });
+            break;
+          case 404:
+            uni.showToast({
+              title: "请求资源不存在",
+              icon: "error",
+            });
+            break;
+        }
+        reject(res)
+      }
     }).catch(error => {
+      uni.hideLoading();
       uni.showToast({
         title: "网络错误",
         icon: "error",
       });
       reject(error)
-    }).finally(() => {
-      uni.hideLoading();
     })
   })
-
 }
 
 
