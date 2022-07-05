@@ -1,5 +1,8 @@
 import request from "../utils/request";
 
+/**
+ * 一键登录
+ */
 export function login() {
 //#ifdef H5
   uni.navigateTo({
@@ -67,3 +70,47 @@ export function login() {
 //#endif
 }
 
+/**
+ * 账号密码登录
+ * @param username 用户名
+ * @param password 密码
+ */
+export function normalLogin(username,password) {
+  if (!username) {
+    uni.showToast({
+      title: '请输入用户名',
+      icon: 'error'
+    });
+    return;
+  }
+  if (!password) {
+    uni.showToast({
+      title: '请输入密码',
+      icon: 'error'
+    });
+    return;
+  }
+  request.post("/login", {
+    username: username,
+    password: password
+  }).then(res => {
+    uni.showToast({
+      title: '登录成功',
+      icon: 'success'
+    });
+    uni.setStorageSync('token', res.token);
+    uni.setStorageSync('id', res.id);
+    uni.reLaunch({
+      url: '/pages/index/index'
+    });
+  }).catch(err => {
+    switch (err.statusCode) {
+      case 401:
+        uni.showToast({
+          title: '用户名或密码错误',
+          icon: 'error'
+        });
+        break;
+    }
+  })
+}
