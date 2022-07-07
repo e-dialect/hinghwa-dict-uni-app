@@ -82,7 +82,7 @@ export default {
 
         uploadPronunciation() {
             // wx.navigateTo({
-            //   url: '/pages/component/uploadpronunciation/uploadpronunciation'
+            //   url: '/pages/Words/PronunciationUpload/PronunciationUpload'
             // })
         },
 

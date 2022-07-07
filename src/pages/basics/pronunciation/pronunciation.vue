@@ -92,7 +92,7 @@ export default {
             let id = this.id;
             let word = this.word;
             uni.navigateTo({
-                url: '/pages/component/uploadpronunciation/uploadpronunciation?id=' + id + '&word=' + word
+                url: '/pages/Words/PronunciationUpload/PronunciationUpload?id=' + id + '&word=' + word
             });
         },
 

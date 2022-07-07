@@ -1,20 +1,23 @@
 import {BASE_URL} from "@/const/urls";
 
-const request = (method = 'GET', url = '', data = {}) => {
-  uni.showLoading({
-    title: '加载中',
-    mask: true
-  });
+/**
+ * 上传文件
+ * @param file 文件对象（路径）
+ * @returns {Promise<unknown>}
+ */
+export function uploadFile(file) {
   return new Promise(function (resolve, reject) {
-    uni.request({
-      method: method,
-      url: BASE_URL + url,
-      data: data,
+    uni.showLoading({
+      title: '上传中……',
+      mask: true
+    });
+    uni.uploadFile({
+      url: BASE_URL + '/website/files',
+      filePath: file,
+      name: 'file',
       header: {
-        'content-type': 'application/json',
         token: uni.getStorageSync("token")
       },
-      dataType: 'json',
     }).then((response) => {
       uni.hideLoading();
       let [error, res] = response;
@@ -36,12 +39,17 @@ const request = (method = 'GET', url = '', data = {}) => {
               icon: "error",
             });
             break;
-          case 404:
+          case 401:
             uni.showToast({
-              title: "请求资源不存在",
+              title: "请先登录",
               icon: "error",
             });
             break;
+          default:
+            uni.showToast({
+              title: "上传失败！",
+              icon: "error",
+            })
         }
         reject(res)
       }
@@ -55,25 +63,3 @@ const request = (method = 'GET', url = '', data = {}) => {
     })
   })
 }
-
-
-export function get(url, data) {
-  return request('get', url, data)
-}
-
-export function post(url, data) {
-  return request('post', url, data)
-}
-
-export function put(url, data) {
-  return request('put', url, data)
-}
-
-export function del(url, data) {
-  return request('delete', url, data)
-}
-
-export default {
-  get, post, put, del,
-};
-
