@@ -442,7 +442,7 @@ export default {
             let ipa = this.word.standard_ipa;
             let pinyin = this.word.standard_pinyin;
             uni.navigateTo({
-                url: '/pages/component/uploadpronunciation/uploadpronunciation?id=' + id + '&word=' + word + '&ipa=' + ipa + '&pinyin=' + pinyin
+                url: '/pages/Words/PronunciationUpload/PronunciationUpload?id=' + id + '&word=' + word + '&ipa=' + ipa + '&pinyin=' + pinyin
             });
         }
     }
