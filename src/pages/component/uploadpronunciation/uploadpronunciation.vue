@@ -4,7 +4,7 @@
       <view slot="content" class="text-black">发布</view>
     </cu-custom>
     <view style="height: 100%; position: absolute; width: 100%">
-      <form @submit="release">
+      <form @submit="submitRecord">
         <block>
           <input class="extend text-bold" disabled value="词语"/>
           <input :value="word" class="fileName" disabled/>
@@ -63,6 +63,9 @@
 </template>
 
 <script>
+import {uploadFile} from "@/services/file";
+import request      from "@/utils/request";
+
 const app      = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];
 const towns    = [
@@ -216,11 +219,12 @@ export default {
       this.multiIndex.splice(e.detail.column, 1, e.detail.value);
     },
 
-
-    release(e) {
-      uni.showLoading({
-        title: '正在提交...'
-      });
+    /**
+     * 提交录音
+     * @param e
+     */
+    submitRecord(e) {
+      // 整理要提交的数据
       let pronunciation = {
         word: this.id,
         source: this.source,
@@ -229,53 +233,26 @@ export default {
         county: counties[this.multiIndex[0]],
         town: towns[this.multiIndex[0]][this.multiIndex[1]]
       };
-      this.uploadMp3(pronunciation);
-    },
-
-    // 上传.mp3文件
-    uploadMp3(pronunciation) {
-      let that = this;
-      uni.uploadFile({
-        url: app.globalData.server + 'website/files',
-        filePath: pronunciation.source,
-        name: 'file',
-        header: {
-          token: app.globalData.token
-        },
-
-        success(res) {
-          if (res.statusCode == 200) {
-            let url              = JSON.parse(res.data).url;
-            pronunciation.source = url;
-            uni.request({
-              url: app.globalData.server + 'pronunciation',
-              method: 'POST',
-              data: {
-                pronunciation: pronunciation
-              },
-              header: {
-                'content-type': 'application/json',
-                token: app.globalData.token
-              },
-
-              success(res) {
-                if (res.statusCode == 200) {
-                  uni.hideLoading();
-                  uni.showToast({
-                    title: '发布成功'
-                  });
-                  setTimeout(function () {
-                    uni.navigateBack({
-                      delta: 1
-                    });
-                  }, 500);
-                }
-              }
+      // 上传录音文件
+      uploadFile(pronunciation.source).then(res => {
+        pronunciation.source = res.url;
+        request.post('/pronunciation', pronunciation).then(() => {
+          uni.showToast({
+            title: '语音贡献成功'
+          });
+          setTimeout(function () {
+            uni.navigateBack({
+              delta: 1
             });
-          }
-        }
-      });
+          }, 500);
+        }).catch(() => {
+          uni.showToast({
+            title: '语音贡献失败'
+          });
+        })
+      })
     },
+
 
     /**
      * 重新录制
