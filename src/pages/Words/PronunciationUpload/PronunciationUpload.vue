@@ -127,7 +127,8 @@ export default {
       });
     }
 
-//ifdef H5
+    const that= this;
+//#ifdef H5
     // 查看是否支持本浏览器
     if (navigator.mediaDevices.getUserMedia) {
       // 尝试获取麦克风权限
@@ -149,7 +150,7 @@ export default {
             // 录音停止
             this.recorderManager.onstop = () => {
               const blob = new Blob(chunks, { type: this.recorderManager.mimeType })
-              this.setSource(window.URL.createObjectURL(blob))
+              that.setSource(window.URL.createObjectURL(blob))
             }
 
             this.status=0
@@ -168,9 +169,9 @@ export default {
         icon: 'error'
       });
     }
-//endif
+//#endif
 
-//ifndef H5
+//#ifndef H5
     this.recorderManager = uni.getRecorderManager();
     this.recorderManager.onError(function () {
       uni.showToast({
@@ -179,10 +180,10 @@ export default {
       });
     });
     this.recorderManager.onStop(function (res) {
-      this.setSource(res.tempFilePath);
+      that.setSource(res.tempFilePath);
     });
     this.status=0
-//endif
+//#endif
   },
 
   methods: {
