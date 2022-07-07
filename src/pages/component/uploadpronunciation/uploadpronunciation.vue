@@ -93,7 +93,7 @@ export default {
       word: '',
       ipa: '',
       pinyin: '',
-      status: 0,
+      status: -1,
       source: '',
       multiIndex: [0, 0],
     };
@@ -127,8 +127,59 @@ export default {
       });
     }
 
-    const that = this; // 创建录音管理器
+    // 播放录音文件用
+    this.innerAudioContext = uni.createInnerAudioContext();
+    this.innerAudioContext.onError((res) => {
+      uni.showToast({
+        title: '播放失败',
+        icon: 'none'
+      });
+    });
 
+//ifdef H5
+    // 查看是否支持本浏览器
+    if (navigator.mediaDevices.getUserMedia) {
+      // 尝试获取麦克风权限
+      const constraints = { audio: true }
+      navigator.mediaDevices.getUserMedia(constraints).then(
+          // 成功回调
+          stream => {
+            this.recorderManager = new MediaRecorder(stream)
+            let chunks = []
+
+            // 录音开始
+            this.recorderManager.onstart         = () => {
+              chunks = []
+            }
+            // 录音过程中
+            this.recorderManager.ondataavailable = function (e) {
+              chunks.push(e.data)
+            }
+            // 录音停止
+            this.recorderManager.onstop = () => {
+              const blob = new Blob(chunks, { type: this.recorderManager.mimeType })
+              this.setSource(window.URL.createObjectURL(blob))
+            }
+
+            this.status=0
+          },
+          // 失败回调
+          () => {
+            uni.showToast({
+              title: '授权录音失败',
+              icon: 'error'
+            });
+          }
+      )
+    } else {
+      uni.showToast({
+        title: '不支持本浏览器',
+        icon: 'error'
+      });
+    }
+//endif
+
+//ifndef H5
     this.recorderManager = uni.getRecorderManager();
     this.recorderManager.onError(function () {
       uni.showToast({
@@ -137,31 +188,30 @@ export default {
       });
     });
     this.recorderManager.onStop(function (res) {
-      that.setSource(res.tempFilePath); // that.uploadMp3(res.tempFilePath)
-    }); // 创建播放器
-
-    this.innerAudioContext = uni.createInnerAudioContext();
-    this.innerAudioContext.onError((res) => {
-      uni.showToast({
-        title: '播放失败',
-        icon: 'none'
-      });
+      this.setSource(res.tempFilePath);
     });
+    this.status=0
+//endif
   },
+  
   methods: {
     /**
      * 开始录音
      */
     startRecord() {
+      if(this.status===-1){
+        uni.showToast({
+          title: '请先授权录音',
+          icon: 'warning'
+        });
+        return;
+      }
       this.status = 1
       uni.showToast({
         title: '正在录音...',
         icon: 'none'
       }); // 开始录音
-
-      this.recorderManager.start({
-        format: 'mp3'
-      });
+      this.recorderManager.start();
     },
 
     /**
@@ -172,7 +222,10 @@ export default {
       this.recorderManager.stop();
     },
 
-
+    /**
+     * 设置录音文件
+     * @param source {string} 录音文件路径
+     */
     setSource(source) {
       this.source = source
       uni.showToast({
