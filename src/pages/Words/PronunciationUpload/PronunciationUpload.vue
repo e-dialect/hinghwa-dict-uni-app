@@ -2,7 +2,7 @@
   <view>
     <!--标题-->
     <cu-custom :isBack="true" bgColor="bg-white">
-      <view slot="content" class="text-black">发布</view>
+      <view slot="content" class="text-black">贡献语音</view>
     </cu-custom>
 
     <view style="height: 100%; position: absolute; width: 100%">
@@ -81,9 +81,9 @@
 </template>
 
 <script>
-import {uploadFile}      from "@/services/file";
-import request           from "@/utils/request";
-import {counties, towns} from "@/const/location";
+import {uploadFile}          from "@/services/file";
+import {counties, towns}     from "@/const/location";
+import {createPronunciation} from "@/services/pronunciation";
 
 const app = getApp();
 export default {
@@ -109,6 +109,8 @@ export default {
    * @param options {id,word,ipa,pinyin}
    */
   onLoad(options) {
+
+
     // 读取页面参数
     for (let i in options) {
       this[i] = options[i];
@@ -289,21 +291,19 @@ export default {
 
       // 上传录音文件
       uploadFile(pronunciation.source).then(res => {
-        pronunciation.source = res.url;
-        request.post('/pronunciation', pronunciation).then(() => {
+        pronunciation.source = JSON.parse(res).url;
+        createPronunciation(pronunciation).then(res => {
           uni.showToast({
-            title: '语音贡献成功'
+            title: '语音贡献成功',
+            icon: 'success'
           });
-          setTimeout(function () {
-            uni.navigateBack({
-              delta: 1
-            });
-          }, 500);
+          uni.navigateBack();
         }).catch(() => {
           uni.showToast({
-            title: '语音贡献失败'
+            title: '语音贡献失败',
+            icon: 'error'
           });
-        })
+        });
       })
     },
 
