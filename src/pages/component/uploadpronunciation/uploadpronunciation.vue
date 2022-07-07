@@ -23,14 +23,14 @@
         <view class="flex">
           <input class="extend text-bold" disabled value="地区"/>
           <picker
-              :range="multiArray"
-              :value="multiIndex"
+              :range="pickerRange"
+              :value="pickerIndex"
               class="fileName"
               mode="multiSelector"
               style="margin-right: 20rpx"
               @columnchange="columnChange"
           >
-            {{ multiArray[0][multiIndex[0]] }} {{ multiArray[1][multiIndex[1]] }}
+            {{ pickerRange[0][pickerIndex[0]] }} {{ pickerRange[1][pickerIndex[1]] }}
           </picker>
         </view>
 
@@ -54,7 +54,7 @@
           <view v-else>
             <button
                 class="cu-btn icon llg bg-blue shadow margin-bottom-sm"
-                @tap="playMp3"
+                @tap="playAudio"
             >
               <text class="cuIcon-notificationfill"></text>
             </button>
@@ -95,12 +95,12 @@ export default {
       pinyin: '',
       status: -1,
       source: '',
-      multiIndex: [0, 0],
+      pickerIndex: [0, 0],
     };
   },
   computed: {
-    multiArray() {
-      return [counties, towns[this.multiIndex[0]]];
+    pickerRange() {
+      return [counties, towns[this.pickerIndex[0]]];
     }
   },
 
@@ -118,7 +118,7 @@ export default {
     if (app.globalData.userInfo.county) {
       const index0fCounty = counties.indexOf(app.globalData.userInfo.county);
       const indexOfTown   = towns[index0fCounty].indexOf(app.globalData.userInfo.town);
-      this.multiIndex     = [index0fCounty, indexOfTown]
+      this.pickerIndex = [index0fCounty, indexOfTown]
     } else {
       uni.showModal({
         title: '地区tip',
@@ -126,15 +126,6 @@ export default {
         showCancel: false
       });
     }
-
-    // 播放录音文件用
-    this.innerAudioContext = uni.createInnerAudioContext();
-    this.innerAudioContext.onError((res) => {
-      uni.showToast({
-        title: '播放失败',
-        icon: 'none'
-      });
-    });
 
 //ifdef H5
     // 查看是否支持本浏览器
@@ -193,7 +184,7 @@ export default {
     this.status=0
 //endif
   },
-  
+
   methods: {
     /**
      * 开始录音
@@ -210,7 +201,7 @@ export default {
       uni.showToast({
         title: '正在录音...',
         icon: 'none'
-      }); // 开始录音
+      });
       this.recorderManager.start();
     },
 
@@ -236,32 +227,39 @@ export default {
     /**
      * 播放录音
      */
-    playMp3() {
-      const src = this.source;
-
+    playAudio(src) {
       if (!src) {
         uni.showToast({
-          title: '请先录音',
+          title: '不是一个可用文件',
           icon: 'error'
         });
         return;
       }
 
+      // 播放录音文件用
+      const innerAudioContext = uni.createInnerAudioContext();
+      innerAudioContext.onError(() => {
+        uni.showToast({
+          title: '播放失败',
+          icon: 'none'
+        });
+      });
+
       uni.showToast({
-        title: '正在播放录音...',
+        title: '正在播放...',
         icon: 'none'
       });
 
-      this.innerAudioContext.src = src;
-      this.innerAudioContext.play();
+      innerAudioContext.src = src;
+      innerAudioContext.play();
     },
 
     /**
-     * 滑动列标签
+     * 滑动列标签的回调事件
      * @param e
      */
     columnChange(e) {
-      this.multiIndex.splice(e.detail.column, 1, e.detail.value);
+      this.pickerIndex.splice(e.detail.column, 1, e.detail.value);
     },
 
     /**
@@ -275,9 +273,19 @@ export default {
         source: this.source,
         ipa: e.detail.value.ipa,
         pinyin: e.detail.value.pinyin,
-        county: counties[this.multiIndex[0]],
-        town: towns[this.multiIndex[0]][this.multiIndex[1]]
+        county: counties[this.pickerIndex[0]],
+        town: towns[this.pickerIndex[0]][this.pickerIndex[1]]
       };
+      for(let i in pronunciation){
+        if(!pronunciation[i]){
+          uni.showToast({
+            title: '请填写完整信息',
+            icon: 'none'
+          });
+          return;
+        }
+      }
+
       // 上传录音文件
       uploadFile(pronunciation.source).then(res => {
         pronunciation.source = res.url;
@@ -298,9 +306,8 @@ export default {
       })
     },
 
-
     /**
-     * 重新录制
+     * 重新录音
      */
     reRecord() {
       this.source = ''
