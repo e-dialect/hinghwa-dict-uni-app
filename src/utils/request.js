@@ -1,4 +1,4 @@
-const baseUrl = 'https://api.pxm.edialect.top'
+import {BASE_URL} from "@/const/urls";
 
 const request = (method = 'GET', url = '', data = {}) => {
   uni.showLoading({
@@ -8,7 +8,7 @@ const request = (method = 'GET', url = '', data = {}) => {
   return new Promise(function (resolve, reject) {
     uni.request({
       method: method,
-      url: baseUrl + url,
+      url: BASE_URL + url,
       data: data,
       header: {
         'content-type': 'application/json',
@@ -18,6 +18,7 @@ const request = (method = 'GET', url = '', data = {}) => {
     }).then((response) => {
       uni.hideLoading();
       let [error, res] = response;
+      // 如果有错误，则抛出错误
       if (error) {
         uni.showToast({
           title: "网络错误",
@@ -25,6 +26,7 @@ const request = (method = 'GET', url = '', data = {}) => {
         });
         reject(error)
       }
+      // 如果正常返回，则根据状态码进行处理
       if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
       else {
         switch (res.statusCode) {
