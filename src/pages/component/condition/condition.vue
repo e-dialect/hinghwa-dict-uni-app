@@ -28,11 +28,11 @@
                 </view>
             </picker>
         </view>
-
+<view class="flex justify-center">
         <button class="cu-btn round bg-gradual-blue shadow text-df margin-top margin-bottom" style="display: flex; justify-content: center; width: 65vw" @tap="searchByConditions">
             条件检索
         </button>
-
+</view>
         <view class="padding bg-white solid-bottom" v-for="(item, index) in result" :key="index">
             <view class="text-bold text-xxl text-black">{{ item.pinyin }}</view>
 
