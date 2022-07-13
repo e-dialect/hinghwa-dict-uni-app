@@ -1,5 +1,5 @@
 ---
-name: 功能建议
+name: 功能建议（feature request）
 about: 为项目献言纳策
 title: 建议：
 labels: enhancement
