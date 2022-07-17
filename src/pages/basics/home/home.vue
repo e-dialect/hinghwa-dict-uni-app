@@ -134,6 +134,8 @@
 </template>
 
 <script>
+import {mpLogin} from "../../../services/login.js";
+const app = getApp();
 const app = getApp();
 export default {
     data() {
@@ -301,76 +303,9 @@ export default {
             });
         },
 
-        login(e) {
-            uni.getUserProfile({
-                desc: '展示用户信息',
-                success: (res) => {
-                    uni.login({
-                        success(res1) {
-                            if (res1.code) {
-                                //发起网络请求
-                                uni.request({
-                                    url: app.globalData.server + 'login/wechat',
-                                    method: 'POST',
-                                    data: {
-                                        jscode: res1.code
-                                    },
-                                    header: {
-                                        'content-type': 'application/json'
-                                    },
-
-                                    success(res2) {
-                                        console.log(res2);
-
-                                        if (res2.statusCode == 200) {
-                                            uni.showToast({
-                                                title: '登录成功',
-                                                duration: 2000
-                                            });
-                                            uni.setStorageSync('token', res2.data.token);
-                                            uni.setStorageSync('id', res2.data.id);
-                                            setTimeout(function () {
-                                                uni.reLaunch({
-                                                    url: '/pages/index/index'
-                                                });
-                                            }, 500);
-                                        } else if (res2.statusCode == 404) {
-                                            uni.showModal({
-                                                content: '当前用户未注册或未绑定微信',
-                                                showCancel: false,
-
-                                                success(res3) {
-                                                    if (res3.confirm) {
-                                                        //跳转到登录页面
-                                                        uni.navigateTo({
-                                                            url: '/pages/login/login'
-                                                        });
-                                                    }
-                                                }
-                                            });
-                                        } else if (res2.statusCode == 500) {
-                                            uni.showToast({
-                                                title: '服务器错误',
-                                                icon: 'error'
-                                            });
-                                        }
-                                    }
-                                });
-                            } else {
-                                console.log('登录失败！' + res.errMsg);
-                            }
-                        }
-                    });
-                },
-
-                fail(err) {
-                    //跳转到登录页面
-                    uni.navigateTo({
-                        url: '/pages/login/login'
-                    });
-                }
-            });
-        },
+        login() {
+			mpLogin()
+		},
 
         // jump to a word randomly
         randomWord() {
