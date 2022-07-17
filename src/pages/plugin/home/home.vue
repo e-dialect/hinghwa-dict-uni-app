@@ -21,7 +21,7 @@
             @scrolltolower="loadMoreArticles"
         >
             <view class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in status == 0 ? hot_articles : display_all_articles" :key="index">
-                <view class="cu-item shadow" style="margin-bottom: 20rpx">
+                <view class="cu-item shadow margin-bottom-sm">
                     <view class="flex justify-between">
                         <view class="title flex align-center">
                             <view class="text-cut">{{ item.article.title }}</view>
@@ -32,10 +32,10 @@
                         <text class="cuIcon-attention text-grey margin-top-sm margin-right">{{ item.article.views }}</text>
                     </view>
                     <view class="content">
-                        <view class="desc">
-                            <view class="text-df">
+                        <view class="desc margin-xs">
+                            <view class="text-df margin-bottom-xs">
                                 <image class="cu-avatar round ssm" :src="item.author.avatar" mode="aspectFill"></image>
-                                <text :decode="true">&nbsp;{{ item.author.nickname }}&nbsp;&nbsp;</text>
+                                <text :decode="true" class="margin-xs">{{ item.author.nickname }}</text>
                             </view>
                             <view class="text-content">{{ item.article.description }}</view>
                         </view>
