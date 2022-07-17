@@ -36,11 +36,13 @@
                             <view class="text-df">
                                 <image class="cu-avatar round ssm" :src="item.author.avatar" mode="aspectFill"></image>
                                 <text :decode="true">&nbsp;{{ item.author.nickname }}&nbsp;&nbsp;</text>
-                                <text class="text-grey">{{ item.article.publish_time }}</text>
                             </view>
                             <view class="text-content">{{ item.article.description }}</view>
                         </view>
                         <image :src="item.article.cover" mode="aspectFill"></image>
+                    </view>
+                    <view class="time">
+                        <text class="text-grey fr margin-right-xl margin-top-xs">{{ item.article.publish_time }}</text>
                     </view>
                 </view>
             </view>
