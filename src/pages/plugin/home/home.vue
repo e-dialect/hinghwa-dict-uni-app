@@ -23,9 +23,9 @@
             <view class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in status == 0 ? hot_articles : display_all_articles" :key="index">
                 <view class="cu-item shadow" style="margin-bottom: 20rpx">
                     <view class="flex justify-between">
-                        <view class="title flex">
+                        <view class="title flex align-center">
                             <view class="text-cut">{{ item.article.title }}</view>
-                            <view class="cu-tag bg-blue light sm round margin-top-smp margin-left-xs">
+                            <view class="cu-tag bg-blue light sm round margin-left">
                                 <text class="cuIcon-appreciate">{{ item.article.likes }}</text>
                             </view>
                         </view>
