@@ -1,3 +1,7 @@
+/**
+ * 声母及其例字
+ * @type {{all: string, b: string, c: string, d: string, g: string, h: string, k: string, l: string, m: string, n: string, p: string, s: string, t: string, ng: string, z: string, Ǿ: string}}
+ */
 const shengmu = {
     all: 'all：全部声母',
     b: 'b：（买放笔）',
@@ -16,6 +20,11 @@ const shengmu = {
     h: 'h：（好远发）',
     Ǿ: 'Ǿ：（乌云压）'
 };
+
+/**
+ * 声母及其例字
+ * @type {[{children: [{label: string, value: string}], label: string, value: string},{children: [{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},null,null,null,null,null,null,null,null,null,null,null,null,null,null], label: string, value: string},{children: [{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},null,null,null,null,null,null,null], label: string, value: string},{children: [{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},null,null,null,null,null,null,null,null], label: string, value: string}]}
+ */
 const yunmu = [
     {
         value: 'all',
@@ -222,6 +231,11 @@ const yunmu = [
         ]
     }
 ];
+
+/**
+ * 声调及其例字
+ * @type {{all: string, "1": string, "2": string, "3": string, "4": string, "5": string, "6": string, "7": string}}
+ */
 const shengdiao = {
     all: 'all：全部声调',
     1: '1：阴平533（机诗）',
@@ -232,6 +246,7 @@ const shengdiao = {
     6: '6：阴入2（急息）',
     7: '7：阳入4（及实）'
 };
+
 module.exports = {
     shengmu: shengmu,
     yunmu: yunmu,

@@ -56,7 +56,7 @@
 <script>
 	const app = getApp();
 
-	const utils = require('../../../resourse/syd.js');
+	const utils = require('../../../const/sheng-yun-diao.js');
 
 	export default {
 		data() {
