@@ -21,7 +21,7 @@
             @scrolltolower="loadMoreArticles"
         >
             <view class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in status == 0 ? hot_articles : display_all_articles" :key="index">
-                <view class="cu-item shadow margin-bottom-sm">
+                <view class="cu-item shadow margin-bottom-sm" style="border-bottom: solid 20upx gainsboro;">
                     <view class="flex justify-between">
                         <view class="title flex align-center">
                             <view class="text-cut">{{ item.article.title }}</view>
