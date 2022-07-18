@@ -1,6 +1,7 @@
-// 声母 开尾韵 鼻尾韵 塞尾韵  声调
-// B站视频 BV1RJ411q7yW
-// 声音地址 https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/xxx.mp3   xxx=b p m 或者 a ang ah 或者 阳入
+/**
+ * 声母列表
+ * @type {[{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},null,null,null,null,null,null,null,null,null,null]}
+ */
 const shengmu = [
     {
         key: 0,
@@ -93,6 +94,11 @@ const shengmu = [
         example: '乌 ou1 云 ong2'
     }
 ];
+
+/**
+ * 开尾韵列表
+ * @type {[{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},null,null,null,null,null,null,null,null,null,null,null,null,null,null]}
+ */
 const kai = [
     {
         key: 0,
@@ -209,6 +215,11 @@ const kai = [
         example: '蛇 syo2 鹅 gyo2'
     }
 ];
+
+/**
+ * 鼻尾韵列表
+ * @type {[{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},null,null,null,null,null,null,null]}
+ */
 const bi = [
     {
         key: 0,
@@ -283,6 +294,11 @@ const bi = [
         example: '黄 ng2 方 hng1'
     }
 ];
+
+/**
+ * 塞尾韵列表
+ * @type {[{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},null,null,null,null,null,null,null,null]}
+ */
 const se = [
     {
         key: 0,
@@ -363,34 +379,11 @@ const se = [
         example: '约 yoh6 雀 cyoh6'
     }
 ];
-const columns2 = [
-    {
-        title: '调类',
-        dataIndex: 'type',
-        key: 'type',
-        align: 'center'
-    },
-    {
-        title: '调值/调符',
-        dataIndex: 'tone',
-        key: 'tone',
-        align: 'center'
-    },
-    {
-        title: '例字/调号',
-        dataIndex: 'example',
-        key: 'example',
-        align: 'center'
-    },
-    {
-        title: '音频',
-        key: 'action',
-        scopedSlots: {
-            customRender: 'action'
-        },
-        align: 'center'
-    }
-];
+
+/**
+ * 声调列表
+ * @type {[{tone: string, type: string, key: number, example: string},{tone: string, type: string, key: number, example: string},{tone: string, type: string, key: number, example: string},{tone: string, type: string, key: number, example: string},{tone: string, type: string, key: number, example: string},null,null]}
+ */
 const tone = [
     {
         key: 0,
@@ -435,6 +428,7 @@ const tone = [
         example: '及 gih7'
     }
 ];
+
 module.exports = {
     shengmu: shengmu,
     kai: kai,

@@ -144,7 +144,7 @@
 <script>
 const app = getApp();
 
-const utils = require("../../../resourse/pinyin.js");
+const utils = require("../../../const/pinyin.js");
 
 export default {
   data() {
