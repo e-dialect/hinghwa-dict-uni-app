@@ -32,8 +32,8 @@
                         <text class="cuIcon-attention text-grey margin-top-sm margin-right">{{ item.article.views }}</text>
                     </view>
                     <view class="content">
-                        <view class="desc margin-xs">
-                            <view class="text-df margin-bottom-xs">
+                        <view class="desc">
+                            <view class="text-df" style="margin-bottom: 17upx;">
                                 <image class="cu-avatar round ssm" :src="item.author.avatar" mode="aspectFill"></image>
                                 <text :decode="true" class="margin-xs">{{ item.author.nickname }}</text>
                             </view>
