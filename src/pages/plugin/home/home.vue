@@ -21,11 +21,11 @@
             @scrolltolower="loadMoreArticles"
         >
             <view class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in status == 0 ? hot_articles : display_all_articles" :key="index">
-                <view class="cu-item shadow" style="margin-bottom: 20rpx">
+                <view class="cu-item shadow margin-bottom-sm" style="border-bottom: solid 20upx gainsboro;">
                     <view class="flex justify-between">
-                        <view class="title flex">
+                        <view class="title flex align-center">
                             <view class="text-cut">{{ item.article.title }}</view>
-                            <view class="cu-tag bg-blue light sm round margin-top-smp margin-left-xs">
+                            <view class="cu-tag bg-blue light sm round margin-left">
                                 <text class="cuIcon-appreciate">{{ item.article.likes }}</text>
                             </view>
                         </view>
@@ -33,14 +33,16 @@
                     </view>
                     <view class="content">
                         <view class="desc">
-                            <view class="text-df">
+                            <view class="text-df" style="margin-bottom: 17upx;">
                                 <image class="cu-avatar round ssm" :src="item.author.avatar" mode="aspectFill"></image>
-                                <text :decode="true">&nbsp;{{ item.author.nickname }}&nbsp;&nbsp;</text>
-                                <text class="text-grey">{{ item.article.publish_time }}</text>
+                                <text :decode="true" class="margin-xs">{{ item.author.nickname }}</text>
                             </view>
                             <view class="text-content">{{ item.article.description }}</view>
                         </view>
                         <image :src="item.article.cover" mode="aspectFill"></image>
+                    </view>
+                    <view class="time">
+                        <text class="text-grey fr margin-right-xl margin-top-xs">{{ item.article.publish_time }}</text>
                     </view>
                 </view>
             </view>

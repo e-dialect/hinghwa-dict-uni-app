@@ -1,6 +1,6 @@
 ---
 name: 功能建议（feature request）
-about: 为项目献言纳策
+about: 为项目积极提供建议
 title: 建议：
 labels: enhancement
 assignees: ''
