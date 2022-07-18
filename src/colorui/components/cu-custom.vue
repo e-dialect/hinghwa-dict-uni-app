@@ -1,5 +1,5 @@
 <template>
-  <view :style="`height: ${CustomBar}px`" class="cu-custom">
+  <view :style="`height: ${CustomBar}px`+''" class="cu-custom">
     <view
         :class="'cu-bar fixed ' + (bgImage ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
         :style="`height: ${CustomBar}px;padding-top: ${StatusBar}px;` + (bgImage ? `background-image: url(${bgImage})` : '')"
@@ -8,7 +8,7 @@
         <text class="cuIcon-back" @tap="BackPage"></text>
         <slot name="backText"></slot>
       </view>
-      <view :style="`top: ${StatusBar} px`" class="content">
+      <view :style="`top: ${StatusBar} px`+''" class="content">
         <slot name="content"></slot>
         <text v-if="title" class="text-black">{{ title }}</text>
       </view>
