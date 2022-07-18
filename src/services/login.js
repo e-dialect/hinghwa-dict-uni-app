@@ -3,7 +3,7 @@ import request from "../utils/request";
 /**
  * 小程序一键登录
  */
-export function mpLogin() {
+export async function mpLogin() {
 //#ifdef H5
   uni.navigateTo({
     url: "/pages/login/login",
@@ -75,7 +75,7 @@ export function mpLogin() {
  * @param username 用户名
  * @param password 密码
  */
-export function normalLogin(username,password) {
+export async function normalLogin(username, password) {
   if (!username) {
     uni.showToast({
       title: '请输入用户名',
