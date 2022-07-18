@@ -1,10 +1,7 @@
 <template>
   <view>
     <!--导航栏-->
-    <cu-custom v-if="isShare === true" :isBack="true" bgColor="bg-white"></cu-custom>
-    <view v-else class="back text-xl" @tap="navigateToIndex">
-      <text class="cuIcon-back"></text>
-    </view>
+    <cu-custom></cu-custom>
 
     <!--贡献语音的按钮-->
     <button
@@ -235,11 +232,6 @@ export default {
 <style>
 page {
   background-color: #ffffff;
-}
-
-.back {
-  margin-top: 8vh;
-  margin-left: 4vw;
 }
 
 .contributing-button {

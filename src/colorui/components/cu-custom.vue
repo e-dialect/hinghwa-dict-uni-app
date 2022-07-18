@@ -1,85 +1,80 @@
 <template>
-    <view class="cu-custom" :style="'height:' + CustomBar + 'px'">
-        <view
-            :class="'cu-bar fixed ' + (bgImage != '' ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
-            :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;' + (bgImage ? 'background-image:url( + bgImage+)' : '')"
-        >
-            <view class="action" @tap="BackPage" v-if="isBack">
-                <text class="cuIcon-back"></text>
-                <slot name="backText"></slot>
-            </view>
-            <view
-                class="action border-custom"
-                v-if="isCustom"
-                :style="'width:' + Custom.width + 'px;height:' + Custom.height + 'px;margin-left:calc(750rpx - ' + Custom.right + 'px)'"
-            >
-                <text class="cuIcon-back" @tap="BackPage"></text>
-                <text class="cuIcon-homefill" @tap="toHome"></text>
-            </view>
-            <view class="content" :style="'top:' + StatusBar + 'px'">
-                <slot name="content"></slot>
-            </view>
-            <slot name="right"></slot>
-        </view>
+  <view :style="`height: ${CustomBar}px`" class="cu-custom">
+    <view
+        :class="'cu-bar fixed ' + (bgImage ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
+        :style="`height: ${CustomBar}px;padding-top: ${StatusBar}px;` + (bgImage ? `background-image: url(${bgImage})` : '')"
+    >
+      <view v-if="isBack" class="action">
+        <text class="cuIcon-back" @tap="BackPage"></text>
+        <slot name="backText"></slot>
+      </view>
+      <view :style="`top: ${StatusBar} px`" class="content">
+        <slot name="content"></slot>
+        <text v-if="title" class="text-black">{{ title }}</text>
+      </view>
+      <slot name="right"></slot>
     </view>
+  </view>
 </template>
 
 <script>
+import {toIndexPage} from "@/routers";
+
 const app = getApp();
 export default {
-    data() {
-        return {
-            StatusBar: app.globalData.StatusBar,
-            CustomBar: app.globalData.CustomBar,
-            Custom: app.globalData.Custom
-        };
+  data() {
+    return {
+      StatusBar: app.globalData.StatusBar,
+      CustomBar: app.globalData.CustomBar,
+      Custom: app.globalData.Custom
+    };
+  },
+  /**
+   * 组件的一些选项
+   */
+  options: {
+    addGlobalClass: true,
+    multipleSlots: true
+  },
+  /**
+   * 组件的对外属性
+   */
+  props: {
+    bgColor: {
+      type: String,
+      default: 'bg-white'
     },
-    /**
-     * 组件的一些选项
-     */
-    options: {
-        addGlobalClass: true,
-        multipleSlots: true
+    isCustom: {
+      type: [Boolean, String],
+      default: false
     },
-    /**
-     * 组件的对外属性
-     */
-    props: {
-        bgColor: {
-            type: String,
-            default: ''
-        },
-        isCustom: {
-            type: [Boolean, String],
-            default: false
-        },
-        isBack: {
-            type: [Boolean, String],
-            default: false
-        },
-        bgImage: {
-            type: String,
-            default: ''
-        }
+    isBack: {
+      type: [Boolean, String],
+      default: true
     },
-    /**
-     * 组件的方法列表
-     */
-    methods: {
-        BackPage() {
-            uni.navigateBack({
-                delta: 1
-            });
-        },
-
-        toHome() {
-            uni.reLaunch({
-                url: '/pages/index/index'
-            });
-        }
+    bgImage: {
+      type: String,
+      default: ''
+    },
+    title: {
+      type: String,
+      default: ''
     }
+  },
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    BackPage() {
+      const pages = getCurrentPages();
+      if (pages.length > 1) {
+        uni.navigateBack({
+          delta: 1,
+        });
+      } else {
+        toIndexPage();
+      }
+    },
+  }
 };
 </script>
-<style>
-/* colorui/components/cu-custom.wxss */
-</style>
