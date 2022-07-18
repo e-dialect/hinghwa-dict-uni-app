@@ -36,7 +36,7 @@ export default {
     },
     noData: {
       type: String,
-      default: '<div style="color: red;">数据不能为空</div>',
+      default: '<div>这里暂时空空如也~</div>',
     },
     startHandler: {
       type: Function,
@@ -70,13 +70,8 @@ export default {
   components: {
     wxParseTemplate,
   },
-  data() {
-    return {
-      imageUrls: [],
-    };
-  },
   computed: {
-    nodes() {
+    results() {
       const {
               content,
               noData,
@@ -91,11 +86,15 @@ export default {
         end: endHandler,
         chars: charsHandler,
       };
-      const results       = HtmlToJson(parseData, customHandler, imageProp, this);
-      this.imageUrls      = results.imageUrls;
-      console.log("results", results)
-      return results.nodes;
+      return HtmlToJson(parseData, customHandler, imageProp, this);
     },
+    nodes() {
+      return this.results.nodes;
+    },
+    imageUrls() {
+      return this.results.imageUrls;
+    },
+
   },
   methods: {
     navigate(href, $event) {
@@ -109,10 +108,10 @@ export default {
       });
       this.$emit('preview', src, $event);
     },
-    removeImageUrl(src) {
-      const {imageUrls} = this;
-      imageUrls.splice(imageUrls.indexOf(src), 1);
-    },
+    // removeImageUrl(src) {
+    //   const {imageUrls} = this;
+    //   imageUrls.splice(imageUrls.indexOf(src), 1);
+    // },
   },
 };
 </script>
