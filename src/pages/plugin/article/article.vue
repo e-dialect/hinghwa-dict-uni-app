@@ -17,7 +17,7 @@
           <text class="text-xl text-grey line">{{ article.description }}</text>
         </view>
         <view :data-text="article.content" class="margin-top-xl">
-          <wemark :md="article.content" disabled highlight link type="wemark"></wemark>
+          <MarkdownViewer :markdown="article.content"></MarkdownViewer>
         </view>
         <view class="margin-top-xl padding-top-sm solid-top">
           <view class="text-df text-bold">评论（{{ comments.length }}条）</view>
@@ -56,12 +56,13 @@
         </view>
       </view>
     </scroll-view>
-    <view class="cu-bar foot input padding-bottom" style="min-height: 120rpx">
+    <view class="cu-bar foot input padding-bottom" style="min-height: 120rpx; z-index: 200">
       <view v-if="is_reply == false" :class="'like ' + (is_like == 0 ? '' : 'text-blue border')" @tap="like">
         <text class="cuIcon-appreciate">{{ likes }}</text>
       </view>
       <view class="input-box">
-        <input :adjust-position="true" :focus="is_reply" :placeholder="ph_text" :value="comment" style="margin-left: 30rpx"
+        <input :adjust-position="true" :focus="is_reply" :placeholder="ph_text" :value="comment"
+               style="margin-left: 30rpx"
                @blur="blur" @focus="focus" @input="getText"/>
       </view>
       <button v-if="is_reply == true" class="cu-btn bg-blue shadow" style="width: 16vw" @tap="commentFun">发送</button>
@@ -70,12 +71,14 @@
 </template>
 
 <script>
-import wemark from '@/wemark/wemark';
+import uParse         from '@/utils/u-parese/u-parse'
+import MarkdownViewer from "@/components/MarkdownViewer";
 
 const app = getApp();
 export default {
   components: {
-    wemark
+    MarkdownViewer,
+    uParse
   },
   data() {
     return {
