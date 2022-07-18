@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import uParse         from '@/utils/u-parese/u-parse'
+import uParse         from '@/utils/u-parse/u-parse'
 import MarkdownViewer from "@/components/MarkdownViewer";
 
 const app = getApp();

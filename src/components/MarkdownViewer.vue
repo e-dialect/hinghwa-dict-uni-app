@@ -6,7 +6,7 @@
 
 <script>
 import {marked} from 'marked';
-import uParse   from '../utils/u-parese/u-parse';
+import uParse   from '../utils/u-parse/u-parse';
 
 export default {
   name: "MarkdownViewer",
