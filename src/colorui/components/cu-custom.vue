@@ -10,6 +10,7 @@
       </view>
       <view :style="`top: ${StatusBar} px`" class="content">
         <slot name="content"></slot>
+        <text v-if="title" class="text-black">{{ title }}</text>
       </view>
       <slot name="right"></slot>
     </view>
@@ -52,6 +53,10 @@ export default {
       default: true
     },
     bgImage: {
+      type: String,
+      default: ''
+    },
+    title: {
       type: String,
       default: ''
     }
