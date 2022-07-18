@@ -37,7 +37,7 @@
 
       <!--a类型-->
       <block v-else-if="node.tag == 'a'">
-        <view :class="node.classStr" :data-href="node.attr.href" :style="node.styleStr" @click="wxParseATap">
+        <view :class="node.classStr" :data-href="node.attr.href" :style="node.styleStr" @tap="openURL(node.attr.href)">
           <block v-for="(node, index) of node.nodes" :key="index">
             <wx-parse-template :node="node"/>
           </block>
@@ -83,16 +83,27 @@ export default {
     wxParseAudio,
   },
   methods: {
-    wxParseATap(e) {
-      const {
-              href
-            } = e.currentTarget.dataset;
-      if (!href) return;
-      let parent = this.$parent;
-      while (!parent.preview || typeof parent.preview !== 'function') {
-        parent = parent.$parent;
-      }
-      parent.navigate(href, e);
+    /**
+     * 打开URL
+     * @param href {String} 要打开的URL
+     */
+    openURL(href) {
+      //#ifdef H5
+      window.open(href);
+      //#endif
+
+      //#ifndef H5
+      uni.setClipboardData({
+        data: href,
+        success: function () {
+          uni.showToast({
+            title: '链接已复制！请在浏览器中打开',
+            icon: 'success',
+            duration: 2000
+          });
+        }
+      });
+      //#endif
     },
   },
 };
