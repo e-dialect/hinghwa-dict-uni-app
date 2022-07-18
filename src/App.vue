@@ -60,7 +60,7 @@ export default {
 <style>
 @import 'colorui/main.css';
 @import 'colorui/icon.css';
-
+@import '@/utils/u-parse/u-parse.css';
 page {
     background-color: #f7f7f7;
 }
