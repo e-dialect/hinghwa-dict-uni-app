@@ -1,8 +1,8 @@
 <template>
-  <view :class="(node.tag == 'li' ? node.classStr : (node.node==='text'?'text':''))">
+  <view :class="(node.tag === 'li' ? node.classStr : (node.node==='text'?'text':''))">
     <!--判断是否是标签节点-->
-    <block v-if="node.node == 'element'">
-      <block v-if="node.tag == 'button'">
+    <block v-if="node.node === 'element'">
+      <block v-if="node.tag === 'button'">
         <button size="mini" type="default">
           <block v-for="(node, index) of node.nodes" :key="index">
             <wx-parse-template :node="node"/>
@@ -11,7 +11,7 @@
       </block>
 
       <!--li类型-->
-      <block v-else-if="node.tag == 'li'">
+      <block v-else-if="node.tag === 'li'">
         <!-- <view :class="node.classStr" :style="node.styleStr"> -->
         <view :style="node.styleStr">
           <block v-for="(node, index) of node.nodes" :key="index">
@@ -21,22 +21,22 @@
       </block>
 
       <!--video类型-->
-      <block v-else-if="node.tag == 'video'">
+      <block v-else-if="node.tag === 'video'">
         <wx-parse-video :node="node"/>
       </block>
 
       <!--audio类型-->
-      <block v-else-if="node.tag == 'audio'">
+      <block v-else-if="node.tag === 'audio'">
         <wx-parse-audio :node="node"/>
       </block>
 
       <!--img类型-->
-      <block v-else-if="node.tag == 'img'">
+      <block v-else-if="node.tag === 'img'">
         <wx-parse-img :node="node"/>
       </block>
 
       <!--a类型-->
-      <block v-else-if="node.tag == 'a'">
+      <block v-else-if="node.tag === 'a'">
         <view :class="node.classStr" :data-href="node.attr.href" :style="node.styleStr" @tap="openURL(node.attr.href)">
           <block v-for="(node, index) of node.nodes" :key="index">
             <wx-parse-template :node="node"/>
@@ -45,7 +45,7 @@
       </block>
 
       <!--br类型-->
-      <block v-else-if="node.tag == 'br'">
+      <block v-else-if="node.tag === 'br'">
         <text>\n</text>
       </block>
 
@@ -61,7 +61,7 @@
     </block>
 
     <!--判断是否是文本节点-->
-    <block v-else-if="node.node == 'text'">{{ node.text }}</block>
+    <block v-else-if="node.node === 'text'">{{ node.text }}</block>
   </view>
 </template>
 
