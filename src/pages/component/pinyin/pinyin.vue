@@ -262,7 +262,7 @@ export default {
 };
 </script>
 <style>
-@import "../../../utils/color-ui/animation.css";
+@import "../../../colorui/animation.css";
 
 page {
   background-color: white;
