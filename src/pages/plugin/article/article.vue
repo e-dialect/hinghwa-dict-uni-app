@@ -1,28 +1,38 @@
 <template>
   <view>
-    <cu-custom :isBack="true" bgColor="bg-white">
-      <view slot="content" class="text-black">兴化语记</view>
-    </cu-custom>
+    <cu-custom title="语记·文章"></cu-custom>
+
     <scroll-view scroll-y style="height: 82vh">
       <view class="padding-sm">
+        <!--文章标题-->
         <view class="text-bold text-xxl line">{{ article.title }}</view>
-        <view class="flex text-df margin-top" @tap="toVisitor">
-          <image :src="article.author.avatar" class="cu-avatar round ssm" mode="aspectFill"></image>
-          <text :decode="true">
-            &nbsp;{{ article.author.nickname }}&nbsp;&nbsp;
-            <text class="text-grey">{{ article.publish_time }}</text>
-          </text>
+
+        <!--文章信息-->
+        <view>
+          <view class="flex text-df margin-top align-center" @tap="toUserPage(article.author.id)">
+            <text class="text-grey">文章作者：</text>
+            <image :src="article.author.avatar" class="cu-avatar round ssm" mode="aspectFill"></image>
+            <text class="text-grey"> {{ article.author.nickname }}</text>
+          </view>
+          <text class="text-grey">发布时间：{{ article.publish_time + "\n" }}</text>
+          <text class="text-grey">更新时间：{{ article.update_time }}</text>
         </view>
+
+        <!--文章简介-->
         <view class="solid-top solid-bottom margin-top-xl padding-top-sm padding-bottom-sm">
           <text class="text-xl text-grey line">{{ article.description }}</text>
         </view>
+
+        <!--文章内容-->
         <view :data-text="article.content" class="margin-top-xl">
           <MarkdownViewer :markdown="article.content"></MarkdownViewer>
         </view>
+
+        <!--文章评论区-->
         <view class="margin-top-xl padding-top-sm solid-top">
           <view class="text-df text-bold">评论（{{ comments.length }}条）</view>
           <view v-for="(item, index) in comments" :key="index" class="solid-bottom padding-top-sm padding-bottom-sm">
-            <view v-if="item.parent == 0">
+            <view v-if="item.parent === 0">
               <view class="flex">
                 <image :data-index="index" :src="item.user.avatar" class="cu-avatar round margin-right-sm"
                        mode="aspectFill" @tap="toVisitorByComment"></image>
@@ -43,9 +53,9 @@
             <view v-for="(kid, index1) in item.kids" :key="index1" class="text-reply">
               <text :data-id="kid.user.id" class="text-blue" @tap="toVisitorByReply">{{ kid.user.nickname }}</text>
 
-              <text v-if="kid.parent != item.id">@</text>
+              <text v-if="kid.parent !== item.id">@</text>
 
-              <text v-if="kid.parent != item.id" :data-id="comments[map[kid.parent]].user.id" class="text-blue"
+              <text v-if="kid.parent !== item.id" :data-id="comments[map[kid.parent]].user.id" class="text-blue"
                     @tap="toVisitorByReply">
                 {{ comments[map[kid.parent]].user.nickname }}
               </text>
@@ -54,42 +64,45 @@
             </view>
           </view>
         </view>
+
       </view>
     </scroll-view>
-    <view class="cu-bar foot input padding-bottom" style="min-height: 120rpx; z-index: 200">
-      <view v-if="is_reply == false" :class="'like ' + (is_like == 0 ? '' : 'text-blue border')" @tap="like">
-        <text class="cuIcon-appreciate">{{ likes }}</text>
+
+    <!--最新评论-->
+    <view class="cu-bar foot input padding bg-white" style="min-height: 120rpx; z-index: 200">
+      <!--点赞按钮-->
+      <view v-if="is_reply === false" :class="'like ' + (is_like === 0 ? '' : 'text-blue')" @tap="like">
+        <text class="cuIcon-appreciate bg-white">{{ likes }}</text>
       </view>
       <view class="input-box">
         <input :adjust-position="true" :focus="is_reply" :placeholder="ph_text" :value="comment"
                style="margin-left: 30rpx"
                @blur="blur" @focus="focus" @input="getText"/>
       </view>
-      <button v-if="is_reply == true" class="cu-btn bg-blue shadow" style="width: 16vw" @tap="commentFun">发送</button>
+      <button v-if="is_reply === true" class="cu-btn bg-blue shadow" style="width: 16vw" @tap="commentFun">发送</button>
     </view>
   </view>
 </template>
 
 <script>
-import uParse         from '@/utils/u-parse/u-parse'
 import MarkdownViewer from "@/components/MarkdownViewer";
+import {toUserPage}   from "@/routers";
 
 const app = getApp();
 export default {
   components: {
-    MarkdownViewer,
-    uParse
+    MarkdownViewer
   },
   data() {
     return {
+      toUserPage: toUserPage,
       article: {
         title: '',
-
         author: {
           avatar: ''
         },
-
         publish_time: '',
+        update_time: '',
         description: '',
         content: ''
       },
@@ -121,10 +134,8 @@ export default {
     };
   },
   onLoad(options) {
-    let id = options.id;
-    this.setData({
-      id: id
-    });
+    let id  = options.id;
+    this.id = id
     this.getArticle(id);
   },
   onShow() {
@@ -132,17 +143,12 @@ export default {
     // this.getComments()
   },
   methods: {
-    // 获取游客信息
-    toVisitor() {
-      let id = this.article.author.id;
-      uni.navigateTo({
-        url: '/pages/about/visitor/visitor?id=' + id
-      });
-    },
 
     // 根据id获取文章细节
     getArticle(id) {
-      uni.showLoading();
+      uni.showLoading({
+        title: '加载中...'
+      });
       let that = this;
       uni.request({
         url: app.globalData.server + 'articles/' + id,
@@ -154,7 +160,8 @@ export default {
         },
 
         success(res) {
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
+
             that.setData({
               article: res.data.article,
               likes: res.data.article.likes,
@@ -183,7 +190,7 @@ export default {
         success(res) {
           console.log(res.data);
 
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
             let comments = res.data.comments;
             let map      = []; // 获取根评论
 
@@ -193,7 +200,7 @@ export default {
             } // 获取子孙评论
 
             for (let i = 0; i < comments.length; i++) {
-              if (comments[i].parent != 0) {
+              if (comments[i].parent !== 0) {
                 let p = comments[i].parent;
 
                 while (comments[map[p]].parent) {
@@ -225,18 +232,14 @@ export default {
     reply(e) {
       let id         = e.currentTarget.dataset.id;
       let reply_user = this.comments[this.map[id]].user.nickname;
-      this.setData({
-        parent: id,
-        is_reply: true,
-        ph_text: '@ ' + reply_user
-      });
+      this.parent    = id
+      this.is_reply  = true
+      this.ph_text   = '@ ' + reply_user
       console.log(this.parent);
     },
 
     getText(e) {
-      this.setData({
-        comment: e.detail.value
-      });
+      this.comment = e.detail.value
     },
 
     commentFun() {
@@ -247,7 +250,6 @@ export default {
       let that = this;
       uni.request({
         url: app.globalData.server + 'articles/' + id + '/comments',
-        // url: 'http://127.0.0.1:4523/mock/404238/articles/1/comments',
         method: 'POST',
         data: {
           content: comment,
@@ -261,7 +263,7 @@ export default {
         success(res) {
           console.log(res);
 
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
             // 清空输入框
             that.setData({
               comment: '',
@@ -271,17 +273,17 @@ export default {
               title: '发表成功'
             });
             that.getComments();
-          } else if (res.statusCode == 400) {
+          } else if (res.statusCode === 400) {
             uni.showToast({
               title: '格式错误',
               icon: 'error'
             });
-          } else if (res.statusCode == 401) {
+          } else if (res.statusCode === 401) {
             uni.showToast({
               title: '没有权限',
               icon: 'error'
             });
-          } else if (res.statusCode == 500) {
+          } else if (res.statusCode === 500) {
             uni.showToast({
               title: '服务器错误',
               icon: 'error'
@@ -292,18 +294,14 @@ export default {
     },
 
     focus() {
-      this.setData({
-        is_reply: true
-      });
+      this.is_reply = true
     },
 
     blur() {
-      if (this.comment == '') {
-        this.setData({
-          parent: 0,
-          is_reply: false,
-          ph_text: '评论...'
-        });
+      if (this.comment === '') {
+        this.parent   = 0
+        this.is_reply = false
+        this.ph_text  = '评论...'
       }
     },
 
@@ -311,7 +309,7 @@ export default {
       let is_like = this.is_like;
       let that    = this;
 
-      if (is_like == false) {
+      if (!is_like) {
         // 给文章点赞
         uni.request({
           url: app.globalData.server + 'articles/' + that.article.id + '/like',
@@ -326,7 +324,7 @@ export default {
           success(res) {
             console.log(res);
 
-            if (res.statusCode == 200) {
+            if (res.statusCode === 200) {
               that.setData({
                 likes: that.likes + 1,
                 is_like: 1
@@ -338,7 +336,6 @@ export default {
         // 取消点赞
         uni.request({
           url: app.globalData.server + 'articles/' + that.article.id + '/like',
-          // url: 'http://127.0.0.1:4523/mock/404238/articles/1/like',
           method: 'DELETE',
           data: {},
           header: {
@@ -347,7 +344,7 @@ export default {
           },
 
           success(res) {
-            if (res.statusCode == 200) {
+            if (res.statusCode === 200) {
               that.setData({
                 likes: that.likes - 1,
                 is_like: 0
