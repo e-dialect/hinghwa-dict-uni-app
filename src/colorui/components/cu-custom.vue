@@ -1,19 +1,19 @@
 <template>
-    <view class="cu-custom" :style="'height:' + CustomBar + 'px'">
-        <view
-            :class="'cu-bar fixed ' + (bgImage ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
-            :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;' + (bgImage ? 'background-image:url( + bgImage+)' : '')"
-        >
-          <view v-if="isBack" class="action">
-            <text class="cuIcon-back" @tap="BackPage"></text>
-            <slot name="backText"></slot>
-          </view>
-          <view :style="'top:' + StatusBar + 'px'" class="content">
-            <slot name="content"></slot>
-          </view>
-          <slot name="right"></slot>
-        </view>
+  <view :style="`height: ${CustomBar}px`" class="cu-custom">
+    <view
+        :class="'cu-bar fixed ' + (bgImage ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
+        :style="`height: ${CustomBar}px;padding-top: ${StatusBar}px;` + (bgImage ? `background-image: url(${bgImage})` : '')"
+    >
+      <view v-if="isBack" class="action">
+        <text class="cuIcon-back" @tap="BackPage"></text>
+        <slot name="backText"></slot>
+      </view>
+      <view :style="`top: ${StatusBar} px`" class="content">
+        <slot name="content"></slot>
+      </view>
+      <slot name="right"></slot>
     </view>
+  </view>
 </template>
 
 <script>
@@ -38,40 +38,38 @@ export default {
   /**
    * 组件的对外属性
    */
-    props: {
-        bgColor: {
-            type: String,
-            default: ''
-        },
-        isCustom: {
-            type: [Boolean, String],
-            default: false
-        },
-        isBack: {
-            type: [Boolean, String],
-          default: true
-        },
-        bgImage: {
-            type: String,
-            default: ''
-        }
+  props: {
+    bgColor: {
+      type: String,
+      default: ''
     },
-    /**
-     * 组件的方法列表
-     */
-    methods: {
-        BackPage() {
-          const pages = getCurrentPages();
-          if (pages.length > 1) {
-            uni.navigateBack({
-              delta: 1,
-            });
-          } else {
-            toIndexPage();
-          }
-        },
+    isCustom: {
+      type: [Boolean, String],
+      default: false
+    },
+    isBack: {
+      type: [Boolean, String],
+      default: true
+    },
+    bgImage: {
+      type: String,
+      default: ''
     }
+  },
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    BackPage() {
+      const pages = getCurrentPages();
+      if (pages.length > 1) {
+        uni.navigateBack({
+          delta: 1,
+        });
+      } else {
+        toIndexPage();
+      }
+    },
+  }
 };
 </script>
-<style>
-</style>
