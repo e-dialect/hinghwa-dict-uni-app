@@ -41,7 +41,7 @@ export default {
   props: {
     bgColor: {
       type: String,
-      default: ''
+      default: 'bg-white'
     },
     isCustom: {
       type: [Boolean, String],

@@ -1,7 +1,7 @@
 <template>
   <view>
     <!--导航栏-->
-    <cu-custom bgColor="bg-white"></cu-custom>
+    <cu-custom></cu-custom>
 
     <!--贡献语音的按钮-->
     <button
