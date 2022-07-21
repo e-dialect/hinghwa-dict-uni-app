@@ -83,11 +83,9 @@
 
                         <view class="text-lg margin-top-xs">
                             <text :data-id="k.word" @tap="getWord" v-for="(k, index2) in j.characters" :key="index2">
-                                <text v-if="k.word" class="text-blue">{{ k.pinyin }}</text>
-
-                                <text v-else>{{ k.pinyin }}</text>
-
-                                <text class="text-grey" space="emsp">/{{ k.ipa }}/</text>
+                                <text v-if="k.word" class="text-blue" space="emsp">{{ k.pinyin }}{{' '}}{{' '}}</text>
+                                <text v-else space="emsp">{{ k.pinyin }}{{' '}}{{' '}}</text>
+                                <text class="text-grey" space="emsp">/{{ k.ipa }}/{{' '}}{{' '}}</text>
                             </text>
                         </view>
                     </view>
