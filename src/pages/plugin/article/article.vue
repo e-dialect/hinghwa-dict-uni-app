@@ -138,10 +138,7 @@ export default {
     this.id = id
     this.getArticle(id);
   },
-  onShow() {
-    // 获取评论
-    // this.getComments()
-  },
+
   methods: {
 
     // 根据id获取文章细节
@@ -188,8 +185,6 @@ export default {
         },
 
         success(res) {
-          console.log(res.data);
-
           if (res.statusCode === 200) {
             let comments = res.data.comments;
             let map      = []; // 获取根评论
@@ -235,7 +230,6 @@ export default {
       this.parent    = id
       this.is_reply  = true
       this.ph_text   = '@ ' + reply_user
-      console.log(this.parent);
     },
 
     getText(e) {
@@ -245,7 +239,6 @@ export default {
     commentFun() {
       let comment = this.comment;
       let parent  = this.parent;
-      console.log(this.parent);
       let id   = this.article.id.toString();
       let that = this;
       uni.request({
@@ -261,8 +254,6 @@ export default {
         },
 
         success(res) {
-          console.log(res);
-
           if (res.statusCode === 200) {
             // 清空输入框
             that.setData({
@@ -322,8 +313,6 @@ export default {
           },
 
           success(res) {
-            console.log(res);
-
             if (res.statusCode === 200) {
               that.setData({
                 likes: that.likes + 1,
