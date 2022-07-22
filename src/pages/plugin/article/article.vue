@@ -2,7 +2,7 @@
   <view>
     <cu-custom title="语记·文章"></cu-custom>
 
-    <scroll-view scroll-y style="height: 82vh">
+    <scroll-view scroll-y style="height: 87vh">
       <view class="padding-sm">
         <!--文章标题-->
         <view class="text-bold text-xxl line">{{ article.title }}</view>
@@ -33,39 +33,26 @@
           <view class="text-df text-bold">评论（{{ comments.length }}条）</view>
           <view v-for="(item, index) in comments" :key="index" class="solid-bottom padding-top-sm padding-bottom-sm">
             <view v-if="item.parent === 0">
-              <view class="flex">
-                <image :data-index="index" :src="item.user.avatar" class="cu-avatar round margin-right-sm"
-                       mode="aspectFill" @tap="toVisitorByComment"></image>
-                <view class="flex flex-sub justify-between">
-                  <view class="flex flex-direction">
-                    <view class="text-name">{{ item.user.nickname }}</view>
-                    <view class="text-date">{{ item.time }}</view>
-                  </view>
-                  <view class="text-dz">
-                    <text class="cuIcon-appreciate"></text>
-                  </view>
-                </view>
+              <!--该评论-->
+              <ArticleComment :comment="item" @tap="reply(item.id)"></ArticleComment>
+              <!--简要展开子评论-->
+              <view v-for="(kid, index1) in item.kids" :key="index1" class="text-reply">
+                <text class="text-blue" @tap="toUserPage(kid.user.id)">{{ kid.user.nickname }}</text>
+                <text
+                    v-if="kid.parent !== item.id"
+                    class="text-blue"
+                    @tap="toUserPage(comments[map[kid.parent]].user.id)"
+                >
+                  @ {{ comments[map[kid.parent]].user.nickname }}
+                </text>
+                <text @tap="toCommentDetailsPage(item.id)">：{{ kid.content }}</text>
               </view>
-            </view>
-
-            <view :data-id="item.id" class="text-content" @tap="reply">{{ item.content }}</view>
-
-            <view v-for="(kid, index1) in item.kids" :key="index1" class="text-reply">
-              <text :data-id="kid.user.id" class="text-blue" @tap="toVisitorByReply">{{ kid.user.nickname }}</text>
-
-              <text v-if="kid.parent !== item.id">@</text>
-
-              <text v-if="kid.parent !== item.id" :data-id="comments[map[kid.parent]].user.id" class="text-blue"
-                    @tap="toVisitorByReply">
-                {{ comments[map[kid.parent]].user.nickname }}
-              </text>
-
-              <text :data-id="item.id" @tap="getAllReplys">：{{ kid.content }}</text>
             </view>
           </view>
         </view>
-
       </view>
+
+
     </scroll-view>
 
     <!--最新评论-->
@@ -75,9 +62,16 @@
         <text class="cuIcon-appreciate bg-white">{{ likes }}</text>
       </view>
       <view class="input-box">
-        <input :adjust-position="true" :focus="is_reply" :placeholder="ph_text" :value="comment"
-               style="margin-left: 30rpx"
-               @blur="blur" @focus="focus" @input="getText"/>
+        <input
+            :adjust-position="true"
+            :focus="is_reply"
+            :placeholder="ph_text"
+            :value="comment"
+            style="margin-left: 30rpx"
+            @blur="blur"
+            @focus="focus"
+            @input="getText"
+        />
       </view>
       <button v-if="is_reply === true" class="cu-btn bg-blue shadow" style="width: 16vw" @tap="commentFun">发送</button>
     </view>
@@ -85,12 +79,15 @@
 </template>
 
 <script>
-import MarkdownViewer from "@/components/MarkdownViewer";
-import {toUserPage}   from "@/routers";
+import MarkdownViewer            from "@/components/MarkdownViewer";
+import {toUserPage}              from "@/routers";
+import {getArticle, getComments} from "@/services/article";
+import ArticleComment            from "@/components/ArticleComment";
 
 const app = getApp();
 export default {
   components: {
+    ArticleComment,
     MarkdownViewer
   },
   data() {
@@ -142,81 +139,22 @@ export default {
   methods: {
 
     // 根据id获取文章细节
-    getArticle(id) {
-      uni.showLoading({
-        title: '加载中...'
-      });
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'articles/' + id,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json',
-          token: app.globalData.token
-        },
+    async getArticle(id) {
+      const res    = await getArticle(id)
+      this.article = res.article
+      this.likes   = res.article.likes
+      this.is_like = res.me.liked
+      this.getComments(id)
+    },
 
-        success(res) {
-          if (res.statusCode === 200) {
-
-            that.setData({
-              article: res.data.article,
-              likes: res.data.article.likes,
-              is_like: res.data.me.liked
-            });
-            setTimeout(function () {
-              uni.hideLoading();
-            }, 500);
-          }
-        }
+    getComments(id) {
+      getComments(id).then(res => {
+        this.comments = res.comments;
+        this.map      = res.map;
       });
     },
 
-    getComments() {
-      let id   = this.id.toString();
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'articles/' + id + '/comments',
-        // url: 'http://127.0.0.1:4523/mock/404238/articles/1/comments',
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            let comments = res.data.comments;
-            let map      = []; // 获取根评论
-
-            for (let i = 0; i < comments.length; i++) {
-              comments[i].kids    = [];
-              map[comments[i].id] = i;
-            } // 获取子孙评论
-
-            for (let i = 0; i < comments.length; i++) {
-              if (comments[i].parent !== 0) {
-                let p = comments[i].parent;
-
-                while (comments[map[p]].parent) {
-                  p = comments[map[p]].parent;
-                }
-
-                comments[map[p]].kids.push(comments[i]);
-              }
-            }
-
-            that.setData({
-              comments: comments,
-              map: map
-            });
-          }
-        }
-      });
-    },
-
-    getAllReplys(e) {
-      let id         = e.currentTarget.dataset.id;
+    toCommentDetailsPage(id) {
       let comment    = JSON.stringify(this.comments[this.map[id]]);
       let article_id = this.article.id;
       uni.navigateTo({
@@ -224,8 +162,7 @@ export default {
       });
     },
 
-    reply(e) {
-      let id         = e.currentTarget.dataset.id;
+    reply(id) {
       let reply_user = this.comments[this.map[id]].user.nickname;
       this.parent    = id
       this.is_reply  = true
@@ -239,8 +176,8 @@ export default {
     commentFun() {
       let comment = this.comment;
       let parent  = this.parent;
-      let id   = this.article.id.toString();
-      let that = this;
+      let id      = this.article.id.toString();
+      let that    = this;
       uni.request({
         url: app.globalData.server + 'articles/' + id + '/comments',
         method: 'POST',
@@ -263,7 +200,7 @@ export default {
             uni.showToast({
               title: '发表成功'
             });
-            that.getComments();
+            that.getComments(that.id);
           } else if (res.statusCode === 400) {
             uni.showToast({
               title: '格式错误',
@@ -343,21 +280,6 @@ export default {
         });
       }
     },
-
-    toVisitorByComment(e) {
-      let index = e.currentTarget.dataset.index;
-      let id    = this.comments[index].user.id;
-      uni.navigateTo({
-        url: '/pages/about/visitor/visitor?id=' + id
-      });
-    },
-
-    toVisitorByReply(e) {
-      let id = e.currentTarget.dataset.id;
-      uni.navigateTo({
-        url: '/pages/about/visitor/visitor?id=' + id
-      });
-    }
   }
 };
 </script>
