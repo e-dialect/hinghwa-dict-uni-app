@@ -179,9 +179,9 @@ export default {
                 return;
             }
 
-            if (password.length < 8 || password.length > 32) {
+            if (password.length < 6 || password.length > 32) {
                 uni.showToast({
-                    title: '密码长度8~32位',
+                    title: '密码长度 6 - 32 位',
                     icon: 'error'
                 });
                 return;
