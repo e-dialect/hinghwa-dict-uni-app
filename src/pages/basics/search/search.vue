@@ -81,14 +81,12 @@
                             <text class="text-grey">{{ j.county }} / {{ j.town }}</text>
                         </view>
 
-                        <view class="text-lg margin-top-xs">
-                            <text :data-id="k.word" @tap="getWord" v-for="(k, index2) in j.characters" :key="index2">
-                                <text v-if="k.word" class="text-blue">{{ k.pinyin }}</text>
-
-                                <text v-else>{{ k.pinyin }}</text>
-
-                                <text class="text-grey" space="emsp">/{{ k.ipa }}/</text>
-                            </text>
+                        <view class="text-lg margin-top-xs" style="display: flex;flex-wrap: wrap;">
+                            <view :data-id="k.word" @tap="getWord" v-for="(k, index2) in j.characters" :key="index2" style="display: flex;width: 33%;"> 
+                                <view v-if="k.word" class="text-blue" space="emsp" style="width: 40%;">{{ k.pinyin }}</view>
+                                <view v-else space="emsp" style="width: 40%;">{{ k.pinyin }}</view>
+                                <view class="text-grey" space="emsp" style="width: 60%;">/{{ k.ipa }}/</view>
+                            </view> 
                         </view>
                     </view>
                 </view>
