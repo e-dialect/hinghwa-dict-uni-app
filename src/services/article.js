@@ -10,6 +10,35 @@ export async function getArticle(id) {
 }
 
 /**
+ * AT0201 点赞文章
+ * @param id 文章id
+ * @returns {Promise<unknown>}
+ */
+export async function likeArticle(id) {
+  return request.post(`/articles/${id}/like`)
+}
+
+/**
+ * AT0202 取消点赞文章
+ * @param id 文章id
+ * @returns {Promise<*>}
+ */
+export async function unlikeArticle(id) {
+  return request.del(`/articles/${id}/like`)
+}
+
+/**
+ * AT0401 发表文章评论
+ * @param id 文章id
+ * @param comment 评论内容
+ * @param replyId 回复评论id
+ * @returns {Promise<unknown>}
+ */
+export async function createComment(id, comment, replyId) {
+  return request.post(`/articles/${id}/comments`, {content: comment, parent: replyId})
+}
+
+/**
  * AT0404 获取文章评论
  * @param id 文章id
  * @returns {Promise<{comments: *, map: *[]}>}
