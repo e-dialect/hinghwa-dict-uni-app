@@ -61,8 +61,8 @@
     <!--最新评论-->
     <view class="cu-bar foot input padding bg-white" style="min-height: 120rpx; z-index: 200">
       <!--点赞按钮-->
-      <view v-if="inEditing === false" :class="'like ' + (!me.liked ? '' : 'text-blue')" @tap="btnLike">
-        <text class="cuIcon-appreciate bg-white">{{ article.likes }}</text>
+      <view v-if="inEditing === false" class="like bg-white" @tap="btnLike">
+        <text :class="'cuIcon-appreciate bg-white '+(!me.liked ? '' : 'text-blue')">{{ article.likes }}</text>
       </view>
       <!--评论框-->
       <view class="input-box">
