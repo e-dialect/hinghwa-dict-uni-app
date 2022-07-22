@@ -21,13 +21,13 @@
           <input :value="pinyin" class="fileName" name="pinyin" placeholder="请输入该词语的拼音"/>
         </block>
         <view class="flex">
-          <input class="extend text-bold" disabled value="地区"/>
+          <input class="extend text-bold" style="padding: 14rpx 25rpx" disabled value="地区"/>
           <picker
               :range="pickerRange"
               :value="pickerIndex"
-              class="fileName"
+              class="fileName text-lg"
+			        style="width: 74%;"
               mode="multiSelector"
-              style="margin-right: 20rpx"
               @columnchange="columnChange"
           >
             {{ pickerRange[0][pickerIndex[0]] }} {{ pickerRange[1][pickerIndex[1]] }}
@@ -39,29 +39,31 @@
           <!-- 没有有效的录音文件-->
           <view v-if="!source">
             <button
-                class="cu-btn icon llg bg-blue shadow margin-bottom-sm"
+                class="cu-btn icons bg-blue shadow"
+				        style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
                 @longpress="startRecord"
                 @touchend="stopRecord"
             >
-              <text class="cuIcon-voice"></text>
+              <text class="cuIcon-voice" style="font-size: 50upx;"></text>
             </button>
-            <view class="text-xlp">
+            <view class="text-bold">
               <text v-if="status === 0">长按开始录音</text>
               <text v-else>松开结束录音</text>
             </view>
-          </view>
+		  </view>
           <!-- 有有效的录音文件-->
           <view v-else>
             <button
-                class="cu-btn icon llg bg-blue shadow margin-bottom-sm"
+                class="cu-btn icon llg bg-blue shadow"
+				        style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
                 @tap="playAudio(source)"
             >
-              <text class="cuIcon-notificationfill"></text>
+              <text class="cuIcon-notificationfill" style="font-size: 50upx;"></text>
             </button>
-            <view class="text-xlp">
+            <view class="text-bold">
               <text>点击播放录音</text>
             </view>
-          </view>
+		  </view>
         </view>
 
         <!--有录音文件之后的提交按钮-->
@@ -289,31 +291,34 @@ export default {
 };
 </script>
 <style>
+page {
+  font-size: 32rpx;
+}
 
 .fileName {
-  height: 10vw;
+  height: 5%;
   background-color: white;
   padding: 1.8%;
   width: 77.5%;
   margin-left: 2.5%;
   margin-top: 2.5%;
-  border-radius: 2vw;
+  border-radius: 10rpx;
   display: inline-block;
 }
 
 .extend {
-  height: 10vw;
+  height: 5%;
   background-color: #dbdee2;
   width: 15%;
   margin-left: 2.5%;
   margin-top: 2.5%;
-  border-radius: 2vw;
+  border-radius: 10rpx;
   display: inline-block;
   text-align: center;
 }
 
 .record-btn {
-  margin-top: 12vw;
+  margin-top: 65rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
