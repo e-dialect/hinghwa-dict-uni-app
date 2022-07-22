@@ -108,10 +108,10 @@ export default {
       });
       this.$emit('preview', src, $event);
     },
-    // removeImageUrl(src) {
-    //   const {imageUrls} = this;
-    //   imageUrls.splice(imageUrls.indexOf(src), 1);
-    // },
+    removeImageUrl(src) {
+      const {imageUrls} = this;
+      imageUrls.splice(imageUrls.indexOf(src), 1);
+    },
   },
 };
 </script>
