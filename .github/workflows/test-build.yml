@@ -26,3 +26,6 @@ jobs:
       - name: Build H5
         run: |
           yarn run build:h5
+      - name: Build Weixin Miniprogram
+        run: |
+          yarn run build:mp-weixin
