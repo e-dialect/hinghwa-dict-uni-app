@@ -21,7 +21,6 @@ export default {
   },
   computed: {
     text() {
-      console.log(marked(this.markdown))
       return marked(this.markdown);
     }
   },
