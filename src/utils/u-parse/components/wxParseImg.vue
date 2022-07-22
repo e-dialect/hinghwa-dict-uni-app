@@ -1,12 +1,18 @@
 <template>
-  <image
-      :lazy-load="node.attr.lazyLoad"
-      :mode="node.attr.mode"
-      :src="node.attr.src"
-      :style="newStyleStr || node.styleStr"
-      @load="wxParseImgLoad"
-      @tap="wxParseImgTap(node.attr.src)"
-  />
+  <view>
+    <text v-if="errMsg">图片加载错误：{{ errMsg }}</text>
+    <image
+        v-else
+        :lazy-load="node.attr.lazyLoad"
+        :mode="node.attr.mode"
+        :src="node.attr.src"
+        :alt="node.attr.src"
+        :style="newStyleStr || node.styleStr"
+        @load="wxParseImgLoad"
+        @tap="wxParseImgTap(node.attr.src)"
+        @error="error"
+    />
+  </view>
 </template>
 
 <script>
@@ -16,6 +22,7 @@ export default {
     return {
       newStyleStr: '',
       preview: true,
+      errMsg: '',
     };
   },
   props: {
@@ -27,6 +34,9 @@ export default {
     },
   },
   methods: {
+    error(e) {
+      this.errMsg = e.detail.errMsg
+    },
     wxParseImgTap(src) {
       if (!this.preview) return;
       if (!src) return;
