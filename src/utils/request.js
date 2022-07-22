@@ -1,4 +1,5 @@
 import {BASE_URL} from "@/const/urls";
+import {mpLogin}  from "@/services/login";
 
 const request = (method = 'GET', url = '', data = {}) => {
   uni.showLoading({
@@ -30,11 +31,26 @@ const request = (method = 'GET', url = '', data = {}) => {
       if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
       else {
         switch (res.statusCode) {
-          case 500:
+          case 401:
             uni.showToast({
-              title: "服务器内部错误",
+              title: "请先登录！",
               icon: "error",
-            });
+            })
+            uni.showModal({
+              title: "立即登录？",
+              content: "立刻一键登录或跳转到登录页面",
+              success: async function (res) {
+                if (res.confirm) {
+                  await mpLogin()
+                }
+              }
+            })
+            break;
+          case 403:
+            uni.showToast({
+              title: "没有权限！",
+              icon: "error",
+            })
             break;
           case 404:
             uni.showToast({
@@ -42,6 +58,18 @@ const request = (method = 'GET', url = '', data = {}) => {
               icon: "error",
             });
             break;
+          case 500:
+            uni.showToast({
+              title: "服务器内部错误",
+              icon: "error",
+            });
+            break;
+          default:
+            uni.showToast({
+              title: "错误代码" + res.statusCode,
+              icon: "error",
+            });
+            break
         }
         reject(res)
       }
@@ -53,7 +81,8 @@ const request = (method = 'GET', url = '', data = {}) => {
       });
       reject(error)
     })
-  })
+    }
+  )
 }
 
 
