@@ -20,12 +20,12 @@
             @refresherrefresh="onRefresh"
             @scrolltolower="loadMoreArticles"
         >
-            <view class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in status == 0 ? hot_articles : display_all_articles" :key="index">
-                <view class="cu-item shadow margin-bottom-sm" style="border-bottom: solid 20upx gainsboro;">
+            <view class="word-card padding-xs shadow -gray cu-card article no-card" style="margin: 3vw" @tap="article" :data-index="index" v-for="(item, index) in status == 0 ? hot_articles : display_all_articles" :key="index">
+                <view class="cu-item shadow margin-bottom-sm">
                     <view class="flex justify-between">
-                        <view class="title flex align-center">
+                        <view class="title flex align-center" style="width: 80%;">
                             <view class="text-cut">{{ item.article.title }}</view>
-                            <view class="cu-tag bg-blue light sm round margin-left">
+                            <view class="cu-tag bg-blue light sm round margin">
                                 <text class="cuIcon-appreciate">{{ item.article.likes }}</text>
                             </view>
                         </view>
@@ -39,7 +39,7 @@
                             </view>
                             <view class="text-content">{{ item.article.description }}</view>
                         </view>
-                        <image :src="item.article.cover" mode="aspectFill"></image>
+                        <image :src="item.article.cover" mode="aspectFill" class="margin-top"></image>
                     </view>
                     <view class="time">
                         <text class="text-grey fr margin-right-xl margin-top-xs">{{ item.article.publish_time }}</text>
