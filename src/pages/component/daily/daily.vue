@@ -1,13 +1,9 @@
 <template>
     <view>
-        <view class="title" :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px'">
-            <view class="cu-bar bg-white">
-                <view class="action border-title">
-                    <text class="text-xl text-bold text-blue">日常用语</text>
-                    <text class="bg-gradual-blue" style="width: 3rem"></text>
-                </view>
-            </view>
-        </view>
+        <!--导航栏-->
+		<cu-custom>
+			<view slot="content">日常用语</view>
+		</cu-custom>
 
         <view class="cu-bar search bg-white">
             <view class="search-form round">
