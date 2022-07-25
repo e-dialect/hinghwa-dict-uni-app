@@ -295,6 +295,7 @@
 
 			getWord(e) {
 				let id = e.currentTarget.dataset.id;
+        if (!id) return
 				uni.navigateTo({
 					url: '/pages/basics/words/words?id=' + id
 				});
