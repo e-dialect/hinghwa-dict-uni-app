@@ -324,7 +324,7 @@ export default {
 </script>
 <style>
 .bg-image {
-    z-index: -1;
+    z-index: 0;
     position: absolute;
     width: 100vw;
     height: 28vh;
