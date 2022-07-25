@@ -30,13 +30,12 @@
     <!--标题栏：发音-->
     <view class="padding solid-bottom">
       <view>
-        <text class="text-bold text-xl">{{ word.standard_pinyin + "\n" }}</text>
+        <text class="text-bold text-xl" space="ensp">{{ word.standard_pinyin }}</text>
+        <WordPronunciationButton v-if="!word.source" :pinyin="word.standard_pinyin"/>
       </view>
       <view>
-        <text class="text-grey text-xl">/{{ word.standard_ipa }}/</text>
-        <text v-if="word.source " class="cuIcon-notificationfill text-xl text-blue margin-sm"
-              @tap="playAudio(word.source)"></text>
-        <text v-else class="cuIcon-notificationfill text-xl text-grey margin-sm"></text>
+        <text class="text-grey text-xl" space="ensp">/{{ word.standard_ipa }}/</text>
+        <WordPronunciationButton :ipa="word.standard_ipa" :source="word.source"/>
       </view>
     </view>
 
@@ -61,6 +60,21 @@
             <button class="cu-btn bg-red" style="width: 8vw">{{ item.type }}</button>
             <text>{{ item.content }}</text>
             <text class="text-grey">{{ item.explain }}</text>
+          </view>
+        </view>
+
+        <!--相关词汇-->
+        <view v-if="word.related_words.length !== 0" class="margin-top-xl">
+          <view class="text-bold text-xl">相关词汇</view>
+          <view class="margin-top-sm">
+            <text
+                v-for="(item, index) in word.related_words"
+                :key="index"
+                class="text-blue"
+                @tap="toWordPage(item.id)"
+            >
+              {{ item.word + " " }}
+            </text>
           </view>
         </view>
       </swiper-item>
@@ -97,6 +111,9 @@
 
       <!--其他-->
       <swiper-item class="margin">
+        <!--空白占位-->
+        <text class="text-gray text-sm">内容有误？想要更新？请反馈给管理员或在网页端发起修改~</text>
+
         <!--附注-->
         <view v-if="word.annotation.length !== 0" class="margin-right">
           <view class="text-bold text-xl">附注</view>
@@ -105,30 +122,14 @@
           </text>
         </view>
 
-        <!--相关词汇-->
-        <view v-if="word.related_words.length !== 0" class="margin-top">
-          <view class="text-bold text-xl">相关词汇</view>
-          <view class="margin-top-sm">
-            <text
-                v-for="(item, index) in word.related_words"
-                :key="index"
-                class="text-blue"
-                @tap="toWordPage(item.id)"
-            >
-              {{ item.word }}
-            </text>
-          </view>
-        </view>
-
         <!--普通话词汇-->
         <view v-if="word.mandarin.length !== 0" class="margin-top">
           <view class="text-bold text-xl">普通话词汇</view>
           <view class="margin-top-sm">
-            <text v-for="(item, index) in word.mandarin" :key="index">{{ item }}</text>
+            <text v-for="(item, index) in word.mandarin" :key="index">{{ item + " " }}</text>
           </view>
         </view>
         <!--TODO: 相关文章-->
-        <!--TODO: 空白占位-->
       </swiper-item>
     </swiper>
 
@@ -140,9 +141,11 @@ import {getWordDetails}                                                 from "@/
 import {toIndexPage, toUploadPronunciationPage, toUserPage, toWordPage} from "@/routers";
 import {playAudio}                                                      from "@/utils/audio";
 import {getPronunciations}                                              from "@/services/pronunciation";
+import WordPronunciationButton                                          from "@/components/WordPronunciationButton";
 
 const app = getApp();
 export default {
+  components: {WordPronunciationButton},
   data() {
     return {
       ///////////////////////////////

@@ -20,3 +20,48 @@ export async function getPronunciations(filter) {
   const res = await request.get(`/pronunciation`, filter)
   return res.pronunciation
 }
+
+/**
+ * PN0203 获取指定的语音发音
+ * @param body {{pinyins?:string,ipas?:string,words?:string}}
+ * @returns {Promise<unknown>}
+ */
+export async function combinePronunciation(body) {
+  return new Promise((resolve, reject) => {
+    request.get("/pronunciation/combine", body).then(res => {
+      resolve(res.url)
+    }).catch(() => {
+      uni.hideToast();
+      resolve("")
+    })
+  })
+}
+
+/**
+ * PN0203 通过汉字获取指定的语音发音
+ * @param chinese 汉字
+ * @returns {Promise<*>}
+ */
+export async function combinePronunciationByChinese(chinese) {
+  const res = await combinePronunciation({words: chinese})
+  return res.url
+}
+
+/**
+ * PN0203 通过拼音获取指定的语音发音
+ * @param pinyins 拼音
+ * @returns {Promise<*>}
+ */
+export async function combinePronunciationByPinyin(pinyin) {
+  return await combinePronunciation({pinyins: pinyin})
+}
+
+/**
+ * PN0203 通过IPA获取指定的语音发音
+ * @param ipa 国际音标
+ * @returns {Promise<*>}
+ */
+export async function combinePronunciationByIpa(ipa) {
+  return await combinePronunciation({ipas: ipa})
+}
+
