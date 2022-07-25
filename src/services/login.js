@@ -1,5 +1,5 @@
-import request                    from "../utils/request";
-import {toIndexPage, toLoginPage} from "@/routers";
+import request                              from "../utils/request";
+import {toIndexPage, toLoginPage, toMePage} from "@/routers";
 
 /**
  * 小程序一键登录
@@ -25,13 +25,7 @@ export async function mpLogin() {
             jscode: res.code,
           }, true)
           .then(res2 => {
-            uni.showToast({
-              title: "登录成功",
-              duration: 2000,
-            });
-            uni.setStorageSync("token", res2.token);
-            uni.setStorageSync("id", res2.id);
-            setTimeout(toIndexPage, 0);
+            afterLogin(res2)
           })
           .catch((err) => {
             switch (err.statusCode) {
@@ -83,13 +77,7 @@ export async function normalLogin(username, password) {
     username: username,
     password: password
   }, true).then(res => {
-    uni.showToast({
-      title: '登录成功',
-      icon: 'success'
-    });
-    uni.setStorageSync('token', res.token);
-    uni.setStorageSync('id', res.id);
-    toIndexPage(true);
+    afterLogin(res)
   }).catch(err => {
     switch (err.statusCode) {
       case 401:
@@ -100,4 +88,19 @@ export async function normalLogin(username, password) {
         break;
     }
   })
+}
+
+function afterLogin(res) {
+  uni.showToast({
+    title: '登录成功',
+    icon: 'success'
+  });
+  uni.setStorageSync('token', res.token);
+  uni.setStorageSync('id', res.id);
+//#ifdef H5
+  toIndexPage();
+//#endif
+//#ifndef H5
+  toMePage();
+//#endif
 }

@@ -60,3 +60,15 @@ export function toLoginPage() {
     url: "/pages/login/login",
   });
 }
+
+export function toMePage(closeAll = false) {
+  if (closeAll) {
+    uni.reLaunch({
+      url: "/pages/index/index?status=me"
+    })
+  } else {
+    uni.navigateTo({
+      url: "/pages/index/index?status=me",
+    });
+  }
+}
