@@ -124,7 +124,7 @@
         <view v-if="word.mandarin.length !== 0" class="margin-top">
           <view class="text-bold text-xl">普通话词汇</view>
           <view class="margin-top-sm">
-            <text v-for="(item, index) in word.mandarin" :key="index">{{ item }}</text>
+            <text v-for="(item, index) in word.mandarin" :key="index">{{ item + " " }}</text>
           </view>
         </view>
         <!--TODO: 相关文章-->
