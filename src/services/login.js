@@ -98,7 +98,7 @@ function afterLogin(res) {
   uni.setStorageSync('token', res.token);
   uni.setStorageSync('id', res.id);
 //#ifdef H5
-  toIndexPage();
+  toIndexPage(true);
 //#endif
 //#ifndef H5
   toMePage();
