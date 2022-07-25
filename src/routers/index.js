@@ -17,11 +17,11 @@ export function toUserPage(id) {
 export function toIndexPage(closeAll = false) {
   if (closeAll) {
     uni.reLaunch({
-      url: '/'
+      url: '/pages/index/index'
     })
   } else {
     uni.navigateTo({
-      url: '/'
+      url: '/pages/index/index'
     });
   }
 }
