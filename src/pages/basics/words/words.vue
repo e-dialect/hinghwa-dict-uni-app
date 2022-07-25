@@ -63,6 +63,21 @@
             <text class="text-grey">{{ item.explain }}</text>
           </view>
         </view>
+
+        <!--相关词汇-->
+        <view v-if="word.related_words.length !== 0" class="margin-top-xl">
+          <view class="text-bold text-xl">相关词汇</view>
+          <view class="margin-top-sm">
+            <text
+                v-for="(item, index) in word.related_words"
+                :key="index"
+                class="text-blue"
+                @tap="toWordPage(item.id)"
+            >
+              {{ item.word + " " }}
+            </text>
+          </view>
+        </view>
       </swiper-item>
 
       <!--发音-->
@@ -103,21 +118,6 @@
           <text class="margin-top-sm text-grey">
             {{ word.annotation }}
           </text>
-        </view>
-
-        <!--相关词汇-->
-        <view v-if="word.related_words.length !== 0" class="margin-top">
-          <view class="text-bold text-xl">相关词汇</view>
-          <view class="margin-top-sm">
-            <text
-                v-for="(item, index) in word.related_words"
-                :key="index"
-                class="text-blue"
-                @tap="toWordPage(item.id)"
-            >
-              {{ item.word }}
-            </text>
-          </view>
         </view>
 
         <!--普通话词汇-->
