@@ -14,10 +14,16 @@ export function toUserPage(id) {
 /**
  * 跳转至首页
  */
-export function toIndexPage() {
-  uni.navigateTo({
-    url: '/'
-  });
+export function toIndexPage(closeAll = false) {
+  if (closeAll) {
+    uni.reLaunch({
+      url: '/'
+    })
+  } else {
+    uni.navigateTo({
+      url: '/'
+    });
+  }
 }
 
 /**
@@ -46,5 +52,11 @@ export async function toUploadPronunciationPage(id) {
   const word = await getWordDetails(id)
   uni.navigateTo({
     url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`
+  });
+}
+
+export function toLoginPage() {
+  uni.navigateTo({
+    url: "/pages/login/login",
   });
 }

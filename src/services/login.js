@@ -1,13 +1,12 @@
-import request from "../utils/request";
+import request                    from "../utils/request";
+import {toIndexPage, toLoginPage} from "@/routers";
 
 /**
  * 小程序一键登录
  */
 export async function mpLogin() {
 //#ifdef H5
-  uni.navigateTo({
-    url: "/pages/login/login",
-  });
+  toLoginPage();
 //#endif
 
 //#ifndef H5
@@ -16,9 +15,7 @@ export async function mpLogin() {
       success: (res) => {
         // 如果没有获取到微信的 code 直接使用普通登录
         if (!res.code) {
-          uni.navigateTo({
-            url: "/pages/login/login",
-          });
+          toLoginPage();
           return
         }
         // 尝试进行微信登录
@@ -26,7 +23,7 @@ export async function mpLogin() {
           "/login/wechat",
           {
             jscode: res.code,
-          })
+          }, true)
           .then(res2 => {
             uni.showToast({
               title: "登录成功",
@@ -34,23 +31,17 @@ export async function mpLogin() {
             });
             uni.setStorageSync("token", res2.token);
             uni.setStorageSync("id", res2.id);
-            setTimeout(() => {
-              uni.redirectTo({
-                url: "/pages/index/index",
-              });
-            }, 0);
+            setTimeout(toIndexPage, 0);
           })
           .catch((err) => {
             switch (err.statusCode) {
               case 404: {
                 uni.showModal({
-                  content: "当前用户未注册或未绑定微信",
+                  content: err.data.msg || "当前用户未注册或未绑定微信",
                   showCancel: false,
                   success() {
                     //跳转到普通登录页面
-                    uni.navigateTo({
-                      url: "/pages/login/login",
-                    });
+                    toLoginPage()
                   },
                 })
                 break
@@ -61,9 +52,7 @@ export async function mpLogin() {
       // 尝试调用登录接口失败
       fail() {
         // 跳转到账号密码登录页面
-        uni.navigateTo({
-          url: "/pages/login/login",
-        })
+        toLoginPage()
       },
     }
   )
@@ -93,21 +82,19 @@ export async function normalLogin(username, password) {
   request.post("/login", {
     username: username,
     password: password
-  }).then(res => {
+  }, true).then(res => {
     uni.showToast({
       title: '登录成功',
       icon: 'success'
     });
     uni.setStorageSync('token', res.token);
     uni.setStorageSync('id', res.id);
-    uni.reLaunch({
-      url: '/pages/index/index'
-    });
+    toIndexPage(true);
   }).catch(err => {
     switch (err.statusCode) {
       case 401:
         uni.showToast({
-          title: '用户名或密码错误',
+          title: err.data.msg || '用户名或密码错误',
           icon: 'error'
         });
         break;
