@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import {toIndexPage} from "@/routers";
+
 const app = getApp();
 export default {
     data() {
@@ -207,18 +209,13 @@ export default {
             uni.showModal({
                 content: '是否退出当前登录？',
 
-                success(res) {
+                success:async(res)=> {
                     if (res.confirm) {
                         uni.clearStorageSync();
                         app.globalData.status = 0;
-                        uni.navigateTo({
-                            url: '/pages/index/index?status=basics',
-
-                            success(res) {
-                                uni.showToast({
-                                    title: '登出成功！'
-                                });
-                            }
+                        await toIndexPage(uni.getSystemInfoSync().uniPlatform==='web');
+                        uni.showToast({
+                            title: '登出成功！'
                         });
                     }
                 }
@@ -324,7 +321,7 @@ export default {
 </script>
 <style>
 .bg-image {
-    z-index: -1;
+    z-index: 0;
     position: absolute;
     width: 100vw;
     height: 28vh;
