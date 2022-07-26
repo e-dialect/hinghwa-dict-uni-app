@@ -8,7 +8,7 @@
         <text class="cuIcon-back" @tap="BackPage"></text>
         <slot name="backText"></slot>
       </view>
-      <view :style="`top: ${StatusBar} px;height: ${CustomBar - StatusBar}px;line-height: ${CustomBar - StatusBar}px;`+''" class="content">
+      <view :style="`top: ${StatusBar} px; height: ${CustomBar - StatusBar}px; line-height: ${CustomBar - StatusBar}px;`+''" class="content">
         <slot name="content"></slot>
         <text v-if="title" class="text-black">{{ title }}</text>
       </view>
