@@ -6,7 +6,10 @@
         <!-- <button class="cu-btn icon lg bg-blue shadow write" bindtap="uploadPronunciation">
   <text class="cuIcon-voice"></text>
 </button> -->
-        <view class="padding-sm" v-for="(item, index) in pronunciation" :key="index">
+        <view v-if="pronunciation.length === 0" class="text-lg margin">
+			<text>这里暂时空空如也~</text>
+		</view>
+        <view v-else class="padding-sm" v-for="(item, index) in pronunciation" :key="index">
             <view class="voice" :data-index="index" @tap="play">
                 <view class="word solid-right">{{ item.pronunciation.word_word }}</view>
                 <view class="info">
