@@ -32,8 +32,11 @@
   </view>
 </scroll-view> -->
 
+        <cu-custom bgColor="bg-white" :isBack="true">
+			<view slot="content" class="text-black">语记·用户</view>
+		</cu-custom>
         <scroll-view scroll-y class="scrollPage">
-            <image class="bg-image" src="/static/images/bg2.jpg" mode="aspectFill"></image>
+            <image class="bg-image" src="https://cos.edialect.top/miniprogram/user.png" mode="aspectFill"></image>
             <view class="bg-info">
                 <view class="avatar">
                     <image class="cu-avatar round" :src="avatar" mode="aspectFill"></image>
