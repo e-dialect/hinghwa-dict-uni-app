@@ -2,8 +2,8 @@
   <view>
     <cu-custom title="语记·文章"></cu-custom>
 
-    <scroll-view scroll-y style="height: 87vh">
-      <view class="padding-sm">
+    <scroll-view scroll-y style="height: 100%">
+      <view class="padding-sm" style="margin-bottom: 120upx;">
         <!--文章标题-->
         <view class="text-bold text-xxl line">{{ article.title }}</view>
 
@@ -51,6 +51,11 @@
                 <text @tap="toCommentDetailsPage(item.id)">：{{ kid.content }}</text>
               </view>
             </view>
+          </view>
+	  
+          <!--文章评论区底部-->
+          <view class="margin-top-sm text-center">
+            <text class="text-grey text-sm">期待你的评论哦~</text>
           </view>
         </view>
       </view>
