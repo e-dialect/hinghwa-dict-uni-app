@@ -66,8 +66,8 @@
       </button>
     </view>
     <view
-      v-for="(item, index) in result"
-      :key="index"
+      v-for="(item, index2) in result"
+      :key="index2"
       class="padding bg-white solid-bottom"
     >
       <view class="text-bold text-xxl text-black">
@@ -76,24 +76,24 @@
 
       <view>
         <text
-          v-for="(item, index1) in item.characters"
-          :key="index1"
-          :data-id="item.word"
+          v-for="(jtem, index12) in item.characters"
+          :key="index12"
+          :data-id="jtem.word"
           @tap="getWord"
         >
           <text
-            :class="'text-xxl ' + (item.word ? 'text-blue' : 'text-black')"
+            :class="'text-xxl ' + (jtem.word ? 'text-blue' : 'text-black')"
             space="emsp"
           >
-            {{ item.character }}
+            {{ jtem.character }}
           </text>
 
           <text
-            v-if="item.traditional !== item.character"
+            v-if="jtem.traditional !== jtem.character"
             class="text-xl"
             space="emsp"
           >
-            {{ item.traditional }}
+            {{ jtem.traditional }}
           </text>
 
           <text
