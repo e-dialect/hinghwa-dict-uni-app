@@ -55,7 +55,7 @@
 	  
           <!--文章评论区底部-->
           <view class="margin-top-sm text-center">
-            <text class="text-grey text-sm">期待你的评论哦~</text>
+            <text class="text-grey text-sm">这里暂时空空如也~</text>
           </view>
         </view>
       </view>
