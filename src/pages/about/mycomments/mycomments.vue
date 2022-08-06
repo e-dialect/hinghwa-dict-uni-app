@@ -3,24 +3,25 @@
         <cu-custom bgColor="bg-white" :isBack="true">
             <view class="text-black" slot="content">我的评论</view>
         </cu-custom>
-        <view class="padding-sm bg-white">
-            <view class="solid-bottom padding-top-sm padding-bottom-sm" v-for="(item, index) in publish_comments" :key="index">
-                <view :data-index="index" @tap="toArticle">
-                    <view class="flex">
-                        <image class="cu-avatar round margin-right-sm" :src="avatar" mode="aspectFill"></image>
-                        <view class="flex flex-sub justify-between">
-                            <view class="flex flex-direction">
-                                <view class="text-name">{{ nickname }}</view>
-                                <view class="text-date">{{ item.time }}</view>
-                            </view>
-                            <view class="text-dz">
-                                <text class="cuIcon-appreciate"></text>
-                            </view>
+        <view v-if="publish_comments.length === 0" class="text-lg margin">
+        	<text>这里暂时空空如也~</text>
+        </view>
+        <view v-else class="solid-bottom padding-top-sm padding-bottom-sm" v-for="(item, index) in publish_comments" :key="index">
+            <view :data-index="index" @tap="toArticle">
+                <view class="flex">
+                    <image class="cu-avatar round margin-right-sm" :src="avatar" mode="aspectFill"></image>
+                    <view class="flex flex-sub justify-between">
+                        <view class="flex flex-direction">
+                            <view class="text-name">{{ nickname }}</view>
+                            <view class="text-date">{{ item.time }}</view>
+                        </view>
+                        <view class="text-dz">
+                            <text class="cuIcon-appreciate"></text>
                         </view>
                     </view>
-                    <view class="text-content">{{ item.content }}</view>
-                </view>
-            </view>
+                </view>    
+                <view class="text-content">{{ item.content }}</view>
+            </view>    
         </view>
     </view>
 </template>
