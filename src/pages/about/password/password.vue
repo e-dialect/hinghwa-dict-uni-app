@@ -1,17 +1,40 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true"></cu-custom>
-        <form @submit="changePassword">
-            <view class="cu-form-group" v-for="(item, index) in pwd" :key="index">
-                <view class="text-df text-bold-less margin-right-sm">{{ item.str }}</view>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    />
+    <form @submit="changePassword">
+      <view
+        v-for="(item, index) in pwd"
+        :key="index"
+        class="cu-form-group"
+      >
+        <view class="text-df text-bold-less margin-right-sm">
+          {{ item.str }}
+        </view>
 
-                <input :name="item.name" :password="item.is_pwd" :placeholder="item.ph" />
+        <input
+          :name="item.name"
+          :password="item.is_pwd"
+          :placeholder="item.ph"
+        >
 
-                <text :class="item.icon" @tap="changeStatus" :data-index="index"></text>
-            </view>
-            <button class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm" style="display: flex; justify-content: center" form-type="submit">保存</button>
-        </form>
-    </view>
+        <text
+          :class="item.icon"
+          :data-index="index"
+          @tap="changeStatus"
+        />
+      </view>
+      <button
+        class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm"
+        style="display: flex; justify-content: center"
+        form-type="submit"
+      >
+        保存
+      </button>
+    </form>
+  </view>
 </template>
 
 <script>

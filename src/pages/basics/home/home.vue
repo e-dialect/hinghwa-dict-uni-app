@@ -1,41 +1,69 @@
 <template>
-    <view>
-        <scroll-view
-            scroll-y
-            class="scrollPage"
-            :refresher-enabled="true"
-            refresher-default-style="none"
-            refresher-background="white"
-            :refresher-triggered="triggered"
-            @refresherrefresh="onRefresh"
-        >
-            <image src="https://cos.edialect.top/miniprogram/fm.gif" mode="widthFix" style="width: 100%"></image>
-            <!-- <view class="layout-index-login" style="z-index:100;">
+  <view>
+    <scroll-view
+      scroll-y
+      class="scrollPage"
+      :refresher-enabled="true"
+      refresher-default-style="none"
+      refresher-background="white"
+      :refresher-triggered="triggered"
+      @refresherrefresh="onRefresh"
+    >
+      <image
+        src="https://cos.edialect.top/miniprogram/fm.gif"
+        mode="widthFix"
+        style="width: 100%"
+      />
+      <!-- <view class="layout-index-login" style="z-index:100;">
     <view wx:if="{{status==0}}" class="index-card bg-img" style="background-image:url(https://wx3.sinaimg.cn/mw690/0084vph8ly1gsxy5mqf1oj36y01jkqd9.jpg)">
       <view class="card-name">兴化语记</view>
       <view class="card-slogan">记住乡愁 留下乡音</view>
       <button class="card-btn cu-btn round bg-black shadow" bindtap="login" style="width:22vw">一键登录</button>
     </view>
   </view> -->
-            <!-- <view style="box-shadow:0 -10px 40px 45px #f7f7f7;position:relative;z-index:100;"></view> -->
-            <view class="layout-index" style="z-index: 100">
-                <view class="welcome-card shadow -gray">
-                    <view v-if="status == 0" class="padding solid-bottom flex justify-between align-center">
-                        <view>
-                            <view class="text-bold text-xl">欢迎来到兴化语记</view>
-                            <view class="text-gray margin-top-sm">记住乡愁 留下乡音</view>
-                        </view>
-                        <view>
-                            <button class="cu-btn bg-black shadow" style="width: fit-content" @tap="login">一键登录</button>
-                        </view>
-                    </view>
-                    <view class="cu-bar search" @tap="search">
-                        <view class="search-form round">
-                            <text class="cuIcon-search"></text>
-                            <input type="text" placeholder="搜索词语、单字、拼音和文章" confirm-type="search" :disabled="true" />
-                        </view>
-                    </view>
-                    <!-- <view class="flex padding align-center text-center">
+      <!-- <view style="box-shadow:0 -10px 40px 45px #f7f7f7;position:relative;z-index:100;"></view> -->
+      <view
+        class="layout-index"
+        style="z-index: 100"
+      >
+        <view class="welcome-card shadow -gray">
+          <view
+            v-if="status == 0"
+            class="padding solid-bottom flex justify-between align-center"
+          >
+            <view>
+              <view class="text-bold text-xl">
+                欢迎来到兴化语记
+              </view>
+              <view class="text-gray margin-top-sm">
+                记住乡愁 留下乡音
+              </view>
+            </view>
+            <view>
+              <button
+                class="cu-btn bg-black shadow"
+                style="width: fit-content"
+                @tap="login"
+              >
+                一键登录
+              </button>
+            </view>
+          </view>
+          <view
+            class="cu-bar search"
+            @tap="search"
+          >
+            <view class="search-form round">
+              <text class="cuIcon-search" />
+              <input
+                type="text"
+                placeholder="搜索词语、单字、拼音和文章"
+                confirm-type="search"
+                :disabled="true"
+              >
+            </view>
+          </view>
+          <!-- <view class="flex padding align-center text-center">
         <view class="flex-sub" data-id="1" bindtap="getTools">
           <view>
             <image src="https://cos.edialect.top/miniprogram/1.png" mode="widthFix" style="width:100%"></image>
@@ -61,14 +89,33 @@
           <view class="text-bold">日常用语</view>
         </view>
       </view> -->
-                </view>
-                <!-- <view class="flex" style="margin:5vw"> -->
-                <view class="word-card padding shadow -gray" style="margin: 5vw">
-                    <view class="text-gray" style="direction: rtl" @tap="randomWord">随机跳词</view>
-                    <view class="text-bold text-center padding text-xxlp solid-bottom" @tap="getMore">{{ word.word }}</view>
-                    <view class="text-gray padding-top" @tap="getMore">{{ word.definition }}</view>
-                </view>
-                <!-- <view class="flex-sub">
+        </view>
+        <!-- <view class="flex" style="margin:5vw"> -->
+        <view
+          class="word-card padding shadow -gray"
+          style="margin: 5vw"
+        >
+          <view
+            class="text-gray"
+            style="direction: rtl"
+            @tap="randomWord"
+          >
+            随机跳词
+          </view>
+          <view
+            class="text-bold text-center padding text-xxlp solid-bottom"
+            @tap="getMore"
+          >
+            {{ word.word }}
+          </view>
+          <view
+            class="text-gray padding-top"
+            @tap="getMore"
+          >
+            {{ word.definition }}
+          </view>
+        </view>
+        <!-- <view class="flex-sub">
         <view class="search-card padding shadow -gray" bindtap="search">
           <view class="text-bold text-center padding text-xl">搜索</view>
           <view class="cu-bar search">
@@ -83,8 +130,8 @@
           <view class="text-gray text-center">点击进入>></view>
         </view>
       </view> -->
-                <!-- </view> -->
-                <!-- <view class="index-search" style="border-radius:5000rpx;" bindtap="search">
+        <!-- </view> -->
+        <!-- <view class="index-search" style="border-radius:5000rpx;" bindtap="search">
       <view class="cu-bar search">
         <view class="search-form round">
           <text class="cuIcon-search"></text>
@@ -92,7 +139,7 @@
         </view>
       </view>
     </view> -->
-                <!-- <view class="index-word shadow -gray">
+        <!-- <view class="index-word shadow -gray">
       <view class="flex solid-bottom justify-between">
         <view class="padding-sm margin-xs">
           <text class="text-bold">每日一词</text>
@@ -108,12 +155,12 @@
         </view>
       </view>
     </view> -->
-                <!-- <swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+        <!-- <swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
       <swiper-item data-index="{{index}}" bindtap="toArticle" wx:for="{{carousels}}" wx:key>
         <image src="{{item.url}}" mode="aspectFill"></image>
       </swiper-item>
     </swiper> -->
-                <!-- <view class="index-search" bindtap="search">
+        <!-- <view class="index-search" bindtap="search">
       <view class="flex">
         <view class="flex-treble padding-sm margin-xs radius">
           <view class="text-xl text-bold">语记·搜索</view>
@@ -124,13 +171,24 @@
         </view>
       </view>
     </view> -->
-                <view class="word-card padding shadow -gray" style="margin: 5vw" :data-index="index" @tap="toArticle" v-for="(item, index) in announcements" :key="index">
-                    <image :src="item.article.cover" mode="widthFix" style="width: 100%"></image>
-                </view>
-                <view class="stand-view"></view>
-            </view>
-        </scroll-view>
-    </view>
+        <view
+          v-for="(item, index) in announcements"
+          :key="index"
+          class="word-card padding shadow -gray"
+          style="margin: 5vw"
+          :data-index="index"
+          @tap="toArticle"
+        >
+          <image
+            :src="item.article.cover"
+            mode="widthFix"
+            style="width: 100%"
+          />
+        </view>
+        <view class="stand-view" />
+      </view>
+    </scroll-view>
+  </view>
 </template>
 
 <script>

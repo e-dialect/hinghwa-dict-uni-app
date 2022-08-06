@@ -1,6 +1,6 @@
 <template>
-    <view>
-        <!-- <scroll-view scroll-y class="scrollPage">
+  <view>
+    <!-- <scroll-view scroll-y class="scrollPage">
   <view class="user-bg img-edge-cover">
     <view class="text-xl text-white back" bindtap="back">
       <text class="cuIcon-back"></text>
@@ -32,42 +32,72 @@
   </view>
 </scroll-view> -->
 
-        <cu-custom bgColor="bg-white" :isBack="true">
-			<view slot="content" class="text-black">语记·用户</view>
-		</cu-custom>
-        <scroll-view scroll-y class="scrollPage">
-            <image class="bg-image" src="https://cos.edialect.top/miniprogram/user.png" mode="aspectFill"></image>
-            <view class="bg-info">
-                <view class="avatar">
-                    <image class="cu-avatar round" :src="avatar" mode="aspectFill"></image>
-                </view>
-                <view class="text">{{ nickname }}</view>
-            </view>
-            <view class="padding flex text-center text-grey bg-white shadow-warp">
-                <view class="flex flex-sub flex-direction solid-right" @tap="getMyRecords">
-                    <view class="text-xlp text-orange">{{ recordsCount }}</view>
-                    <view class="margin-top-sm">
-                        <text class="cuIcon-voice"></text>
-                        语音量
-                    </view>
-                </view>
-                <view class="flex flex-sub flex-direction solid-right">
-                    <view class="text-xlp text-blue">{{ wordsCount }}</view>
-                    <view class="margin-top-sm">
-                        <text class="cuIcon-font"></text>
-                        词语量
-                    </view>
-                </view>
-                <view class="flex flex-sub flex-direction">
-                    <view class="text-xlp text-green">{{ visitTotal }}</view>
-                    <view class="margin-top-sm">
-                        <text class="cuIcon-attention"></text>
-                        播放量
-                    </view>
-                </view>
-            </view>
-        </scroll-view>
-    </view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        语记·用户
+      </view>
+    </cu-custom>
+    <scroll-view
+      scroll-y
+      class="scrollPage"
+    >
+      <image
+        class="bg-image"
+        src="https://cos.edialect.top/miniprogram/user.png"
+        mode="aspectFill"
+      />
+      <view class="bg-info">
+        <view class="avatar">
+          <image
+            class="cu-avatar round"
+            :src="avatar"
+            mode="aspectFill"
+          />
+        </view>
+        <view class="text">
+          {{ nickname }}
+        </view>
+      </view>
+      <view class="padding flex text-center text-grey bg-white shadow-warp">
+        <view
+          class="flex flex-sub flex-direction solid-right"
+          @tap="getMyRecords"
+        >
+          <view class="text-xlp text-orange">
+            {{ recordsCount }}
+          </view>
+          <view class="margin-top-sm">
+            <text class="cuIcon-voice" />
+            语音量
+          </view>
+        </view>
+        <view class="flex flex-sub flex-direction solid-right">
+          <view class="text-xlp text-blue">
+            {{ wordsCount }}
+          </view>
+          <view class="margin-top-sm">
+            <text class="cuIcon-font" />
+            词语量
+          </view>
+        </view>
+        <view class="flex flex-sub flex-direction">
+          <view class="text-xlp text-green">
+            {{ visitTotal }}
+          </view>
+          <view class="margin-top-sm">
+            <text class="cuIcon-attention" />
+            播放量
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
 </template>
 
 <script>

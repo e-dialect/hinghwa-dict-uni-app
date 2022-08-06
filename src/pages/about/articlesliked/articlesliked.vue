@@ -1,36 +1,76 @@
 <template>
   <view>
-    <cu-custom bgColor="bg-white" :isBack="true">
-      <view class="text-black" slot="content">点赞文章</view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        点赞文章
+      </view>
     </cu-custom>
-    <view v-if="like_articles.length === 0" class="text-lg margin">
+    <view
+      v-if="like_articles.length === 0"
+      class="text-lg margin"
+    >
       <text>这里暂时空空如也~</text>
     </view>
-    <view v-else class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in like_articles" :key="index">
-      <view class="cu-item shadow" style="margin-bottom: 20rpx">
+    <view
+      v-for="(item, index) in like_articles"
+      v-else
+      :key="index"
+      class="cu-card article no-card"
+      :data-index="index"
+      @tap="article"
+    >
+      <view
+        class="cu-item shadow"
+        style="margin-bottom: 20rpx"
+      >
         <view class="flex justify-between">
           <view class="title flex">
-            <view class="text-cut">{{ item.article.title }}</view>
+            <view class="text-cut">
+              {{ item.article.title }}
+            </view>
             <view class="cu-tag bg-blue light sm round margin-top-smp margin-left-xs">
-              <text class="cuIcon-appreciate">{{ item.article.likes }}</text>
+              <text class="cuIcon-appreciate">
+                {{ item.article.likes }}
+              </text>
             </view>
           </view>
-          <text class="cuIcon-attention text-grey margin-top-sm margin-right">{{ item.article.views }}</text>
+          <text class="cuIcon-attention text-grey margin-top-sm margin-right">
+            {{ item.article.views }}
+          </text>
         </view>
         <view class="content">
           <view class="desc">
             <view class="text-df">
-              <image class="cu-avatar round ssm" :src="item.author.avatar" mode="aspectFill"></image>
-              <text :decode="true">&nbsp;{{ item.author.nickname }}&nbsp;&nbsp;</text>
-              <text class="text-grey">{{ item.article.publish_time }}</text>
+              <image
+                class="cu-avatar round ssm"
+                :src="item.author.avatar"
+                mode="aspectFill"
+              />
+              <text :decode="true">
+                &nbsp;{{ item.author.nickname }}&nbsp;&nbsp;
+              </text>
+              <text class="text-grey">
+                {{ item.article.publish_time }}
+              </text>
             </view>
-            <view class="text-content">{{ item.article.description }}</view>
+            <view class="text-content">
+              {{ item.article.description }}
+            </view>
           </view>
-          <image :src="item.article.cover" mode="aspectFill"></image>
+          <image
+            :src="item.article.cover"
+            mode="aspectFill"
+          />
         </view>
       </view>
     </view>
-    <view class="stand-view"></view>
+    <view class="stand-view" />
   </view>
 </template>
 

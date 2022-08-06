@@ -1,47 +1,87 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true"></cu-custom>
-        <view class="cu-form-group padding" @tap="chooseAvatar">
-            <view class="title">头像</view>
-            <view>
-                <image :src="avatar" class="margin-right-xs cu-avatar xl round" mode="aspectFill"></image>
-                <text class="cuIcon-right text-gray"></text>
-            </view>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    />
+    <view
+      class="cu-form-group padding"
+      @tap="chooseAvatar"
+    >
+      <view class="title">
+        头像
+      </view>
+      <view>
+        <image
+          :src="avatar"
+          class="margin-right-xs cu-avatar xl round"
+          mode="aspectFill"
+        />
+        <text class="cuIcon-right text-gray" />
+      </view>
+    </view>
+    <view
+      class="cu-form-group"
+      @tap="changeNickname"
+    >
+      <view class="title">
+        昵称
+      </view>
+      <view class="text-grey">
+        {{ nickname }}
+        <text class="cuIcon-right" />
+      </view>
+    </view>
+    <view
+      class="cu-form-group"
+      @tap="changeEmail"
+    >
+      <view class="title">
+        邮箱
+      </view>
+      <view class="text-grey">
+        {{ email }}
+        <text class="cuIcon-right text-gray" />
+      </view>
+    </view>
+    <view
+      class="cu-form-group"
+      @tap="changePhone"
+    >
+      <view class="title">
+        手机
+      </view>
+      <view class="text-grey">
+        {{ phone }}
+        <text class="cuIcon-right text-gray" />
+      </view>
+    </view>
+    <view
+      class="cu-form-group padding-top-xl"
+      style="background-color: #f7f7f7"
+    >
+      <view class="text-df text-gray">
+        个人信息
+      </view>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">
+        生日
+      </view>
+      <picker
+        mode="date"
+        :value="date"
+        start="1990-09-01"
+        end="2020-09-01"
+        @change="DateChange"
+      >
+        <view class="picker text-grey">
+          {{ date }}
         </view>
-        <view class="cu-form-group" @tap="changeNickname">
-            <view class="title">昵称</view>
-            <view class="text-grey">
-                {{ nickname }}
-                <text class="cuIcon-right"></text>
-            </view>
-        </view>
-        <view class="cu-form-group" @tap="changeEmail">
-            <view class="title">邮箱</view>
-            <view class="text-grey">
-                {{ email }}
-                <text class="cuIcon-right text-gray"></text>
-            </view>
-        </view>
-        <view class="cu-form-group" @tap="changePhone">
-            <view class="title">手机</view>
-            <view class="text-grey">
-                {{ phone }}
-                <text class="cuIcon-right text-gray"></text>
-            </view>
-        </view>
-        <view class="cu-form-group padding-top-xl" style="background-color: #f7f7f7">
-            <view class="text-df text-gray">个人信息</view>
-        </view>
-        <view class="cu-form-group">
-            <view class="title">生日</view>
-            <picker mode="date" :value="date" start="1990-09-01" end="2020-09-01" @change="DateChange">
-                <view class="picker text-grey">
-                    {{ date }}
-                </view>
-            </picker>
-        </view>
+      </picker>
+    </view>
 
-        <!-- <view class="cu-form-group">
+    <!-- <view class="cu-form-group">
   <view class="title">现居地</view>
   <picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
     <view class="picker text-grey">
@@ -50,15 +90,23 @@
   </picker>
 </view> -->
 
-        <view class="cu-form-group">
-            <view class="title">居住地</view>
-            <picker mode="multiSelector" @change="multiChange" @columnchange="columnChange" :value="multiIndex" :range="multiArray">
-                <view class="picker text-grey">
-                    <text>{{ multiArray[0][multiIndex[0]] }} {{ multiArray[1][multiIndex[1]] }}</text>
-                </view>
-            </picker>
+    <view class="cu-form-group">
+      <view class="title">
+        居住地
+      </view>
+      <picker
+        mode="multiSelector"
+        :value="multiIndex"
+        :range="multiArray"
+        @change="multiChange"
+        @columnchange="columnChange"
+      >
+        <view class="picker text-grey">
+          <text>{{ multiArray[0][multiIndex[0]] }} {{ multiArray[1][multiIndex[1]] }}</text>
         </view>
+      </picker>
     </view>
+  </view>
 </template>
 
 <script>

@@ -1,21 +1,51 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true"></cu-custom>
-        <view class="cu-form-group">
-            <view class="text-df text-bold-less margin-right-sm">原邮箱</view>
-            <input :value="old_email" :disabled="true" />
-        </view>
-        <view class="cu-form-group">
-            <view class="text-df text-bold-less margin-right-sm">新邮箱</view>
-            <input placeholder="请输入新邮箱" @input="getNewEmail" />
-        </view>
-        <view class="cu-form-group">
-            <view class="text-df text-bold-less margin-right-sm">验证码</view>
-            <input placeholder="请输入验证码" @input="getCode" />
-            <button @tap="sendCode" class="cu-btn bg-gradual-blue shadow" style="width: 32vw; border-radius: 5000rpx">获取验证码</button>
-        </view>
-        <button class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm" style="display: flex; justify-content: center" @tap="setNewEmail">保存</button>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    />
+    <view class="cu-form-group">
+      <view class="text-df text-bold-less margin-right-sm">
+        原邮箱
+      </view>
+      <input
+        :value="old_email"
+        :disabled="true"
+      >
     </view>
+    <view class="cu-form-group">
+      <view class="text-df text-bold-less margin-right-sm">
+        新邮箱
+      </view>
+      <input
+        placeholder="请输入新邮箱"
+        @input="getNewEmail"
+      >
+    </view>
+    <view class="cu-form-group">
+      <view class="text-df text-bold-less margin-right-sm">
+        验证码
+      </view>
+      <input
+        placeholder="请输入验证码"
+        @input="getCode"
+      >
+      <button
+        class="cu-btn bg-gradual-blue shadow"
+        style="width: 32vw; border-radius: 5000rpx"
+        @tap="sendCode"
+      >
+        获取验证码
+      </button>
+    </view>
+    <button
+      class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm"
+      style="display: flex; justify-content: center"
+      @tap="setNewEmail"
+    >
+      保存
+    </button>
+  </view>
 </template>
 
 <script>

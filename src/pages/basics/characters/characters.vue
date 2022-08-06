@@ -1,44 +1,77 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true"></cu-custom>
-        <!-- <view class="logo">
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    />
+    <!-- <view class="logo">
   <image src="/images/logo.png" mode="aspectFill"></image>
 </view> -->
-        <view class="flex padding solid-bottom">
-            <view class="text-bold text-xxlp">{{ character.character }}</view>
-            <!-- <view class="text-lg text-blue margin-left margin-top">
+    <view class="flex padding solid-bottom">
+      <view class="text-bold text-xxlp">
+        {{ character.character }}
+      </view>
+      <!-- <view class="text-lg text-blue margin-left margin-top">
     <text class="cuIcon-notificationfill"></text>
   </view> -->
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">拼音</view>
-            <view class="text-grey">{{ character.pinyin }}</view>
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">国际音标</view>
-            <view class="text-grey">{{ character.ipa }}</view>
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">声母</view>
-            <view class="text-grey">{{ character.shengmu }}</view>
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">韵母</view>
-            <view class="text-grey">{{ character.yunmu }}</view>
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">声调</view>
-            <view class="text-grey">{{ character.shengdiao }}</view>
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">县区</view>
-            <view class="text-grey">{{ character.county }}</view>
-        </view>
-        <view class="cu-form-group padding padding-right-xl">
-            <view class="title">乡镇</view>
-            <view class="text-grey">{{ character.town }}</view>
-        </view>
     </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        拼音
+      </view>
+      <view class="text-grey">
+        {{ character.pinyin }}
+      </view>
+    </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        国际音标
+      </view>
+      <view class="text-grey">
+        {{ character.ipa }}
+      </view>
+    </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        声母
+      </view>
+      <view class="text-grey">
+        {{ character.shengmu }}
+      </view>
+    </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        韵母
+      </view>
+      <view class="text-grey">
+        {{ character.yunmu }}
+      </view>
+    </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        声调
+      </view>
+      <view class="text-grey">
+        {{ character.shengdiao }}
+      </view>
+    </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        县区
+      </view>
+      <view class="text-grey">
+        {{ character.county }}
+      </view>
+    </view>
+    <view class="cu-form-group padding padding-right-xl">
+      <view class="title">
+        乡镇
+      </view>
+      <view class="text-grey">
+        {{ character.town }}
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>

@@ -1,33 +1,67 @@
 <template>
   <view>
-    <cu-custom bgColor="bg-white" :isBack="true">
-      <view slot="content" class="text-black">语记·语音</view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        语记·语音
+      </view>
     </cu-custom>
     <!-- <button class="cu-btn icon lg bg-blue shadow write" bindtap="uploadPronunciation">
 <text class="cuIcon-voice"></text>
 </button> -->
-    <view v-if="pronunciation.length === 0" class="text-lg margin">
+    <view
+      v-if="pronunciation.length === 0"
+      class="text-lg margin"
+    >
       <text>这里暂时空空如也~</text>
     </view>
-    <view v-else class="padding-sm" v-for="(item, index) in pronunciation" :key="index">
-      <view class="voice" :data-index="index" @tap="play">
-        <view class="word solid-right">{{ item.pronunciation.word_word }}</view>
+    <view
+      v-for="(item, index) in pronunciation"
+      v-else
+      :key="index"
+      class="padding-sm"
+    >
+      <view
+        class="voice"
+        :data-index="index"
+        @tap="play"
+      >
+        <view class="word solid-right">
+          {{ item.pronunciation.word_word }}
+        </view>
         <view class="info">
           <view>
             <view class="text-df margin-bottom-sm">
-              <text decode>{{ item.pronunciation.pinyin }}&nbsp;&nbsp;</text>
-              <text class="text-blue cuIcon-notificationfill"></text>
+              <text decode>
+                {{ item.pronunciation.pinyin }}&nbsp;&nbsp;
+              </text>
+              <text class="text-blue cuIcon-notificationfill" />
             </view>
             <view class="text-df margin-bottom-sm">
-              <text class="text-grey">/{{ item.pronunciation.ipa }}/</text>
+              <text class="text-grey">
+                /{{ item.pronunciation.ipa }}/
+              </text>
             </view>
             <view class="text-df margin-bottom-sm">
               <text>地区：</text>
-              <text decode>{{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}</text>
+              <text decode>
+                {{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}
+              </text>
             </view>
             <view class="text-df">
               <text>来源：</text>
-              <text class="text-blue" :data-id="item.contributor.id" @tap="toVisitor">{{ item.contributor.nickname }}</text>
+              <text
+                class="text-blue"
+                :data-id="item.contributor.id"
+                @tap="toVisitor"
+              >
+                {{ item.contributor.nickname }}
+              </text>
             </view>
           </view>
         </view>

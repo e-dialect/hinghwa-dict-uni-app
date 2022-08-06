@@ -1,21 +1,26 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white">
-            <view class="text-black" slot="content">语记·工具</view>
-        </cu-custom>
-        <view class="cu-card">
-            <view
-                class="cu-item bg-img shadow-blur"
-                :style="'background-image:url(' + item.img + ');height:15vh;'"
-                @tap="getTools"
-                :data-url="item.url"
-                v-for="(item, index) in list"
-                :key="index"
-            >
-                <view class="cardTitle"></view>
-            </view>
-        </view>
+  <view>
+    <cu-custom bg-color="bg-white">
+      <view
+        slot="content"
+        class="text-black"
+      >
+        语记·工具
+      </view>
+    </cu-custom>
+    <view class="cu-card">
+      <view
+        v-for="(item, index) in list"
+        :key="index"
+        class="cu-item bg-img shadow-blur"
+        :style="'background-image:url(' + item.img + ');height:15vh;'"
+        :data-url="item.url"
+        @tap="getTools"
+      >
+        <view class="cardTitle" />
+      </view>
     </view>
+  </view>
 </template>
 
 <script>

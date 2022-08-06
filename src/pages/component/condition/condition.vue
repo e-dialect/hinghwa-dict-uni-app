@@ -1,54 +1,108 @@
 <template>
   <view>
-    <cu-custom :isBack="true" bgColor="bg-white">
-      <view slot="content" class="text-black">条件查字</view>
+    <cu-custom
+      :is-back="true"
+      bg-color="bg-white"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        条件查字
+      </view>
     </cu-custom>
 
     <view class="cu-form-group">
-      <view class="title">声母</view>
-      <picker :range="shengmu" :value="index" @change="PickerChange">
+      <view class="title">
+        声母
+      </view>
+      <picker
+        :range="shengmu"
+        :value="index"
+        @change="PickerChange"
+      >
         <view class="picker">
           {{ shengmu[index] }}
         </view>
       </picker>
     </view>
     <view class="cu-form-group">
-      <view class="title">韵母</view>
-      <picker :range="yunmu" :value="multiIndex" mode="multiSelector" @change="MultiChange"
-              @columnchange="MultiColumnChange">
+      <view class="title">
+        韵母
+      </view>
+      <picker
+        :range="yunmu"
+        :value="multiIndex"
+        mode="multiSelector"
+        @change="MultiChange"
+        @columnchange="MultiColumnChange"
+      >
         <view class="picker">
           {{ yunmu[1][multiIndex[1]] }}
         </view>
       </picker>
     </view>
     <view class="cu-form-group">
-      <view class="title">声调</view>
-      <picker :range="shengdiao" :value="index1" @change="PickerChange1">
+      <view class="title">
+        声调
+      </view>
+      <picker
+        :range="shengdiao"
+        :value="index1"
+        @change="PickerChange1"
+      >
         <view class="picker">
           {{ shengdiao[index1] }}
         </view>
       </picker>
     </view>
     <view class="flex justify-center">
-      <button class="cu-btn round bg-gradual-blue shadow text-df margin-top margin-bottom"
-              style="display: flex; justify-content: center; width: 65vw" @tap="searchByConditions">
+      <button
+        class="cu-btn round bg-gradual-blue shadow text-df margin-top margin-bottom"
+        style="display: flex; justify-content: center; width: 65vw"
+        @tap="searchByConditions"
+      >
         条件检索
       </button>
     </view>
-    <view v-for="(item, index) in result" :key="index" class="padding bg-white solid-bottom">
-      <view class="text-bold text-xxl text-black">{{ item.pinyin }}</view>
+    <view
+      v-for="(item, index2) in result"
+      :key="index2"
+      class="padding bg-white solid-bottom"
+    >
+      <view class="text-bold text-xxl text-black">
+        {{ item.pinyin }}
+      </view>
 
       <view>
-        <text v-for="(item, index1) in item.characters" :key="index1" :data-id="item.word" @tap="getWord">
-          <text :class="'text-xxl ' + (item.word ? 'text-blue' : 'text-black')"
-                space="emsp">{{ item.character }}
+        <text
+          v-for="(jtem, index12) in item.characters"
+          :key="index12"
+          :data-id="jtem.word"
+          @tap="getWord"
+        >
+          <text
+            :class="'text-xxl ' + (jtem.word ? 'text-blue' : 'text-black')"
+            space="emsp"
+          >
+            {{ jtem.character }}
           </text>
 
-          <text v-if="item.traditional !== item.character" class="text-xl"
-                space="emsp">{{ item.traditional }}
+          <text
+            v-if="jtem.traditional !== jtem.character"
+            class="text-xl"
+            space="emsp"
+          >
+            {{ jtem.traditional }}
           </text>
 
-          <text v-else class="text-xl" space="emsp">{{ space }}</text>
+          <text
+            v-else
+            class="text-xl"
+            space="emsp"
+          >
+            {{ space }}
+          </text>
         </text>
       </view>
     </view>

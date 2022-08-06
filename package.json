@@ -46,7 +46,7 @@
     "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
     "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
     "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src --max-warnings 0"
   },
   "dependencies": {
     "@dcloudio/uni-app-plus": "^2.0.1-34920220609002",

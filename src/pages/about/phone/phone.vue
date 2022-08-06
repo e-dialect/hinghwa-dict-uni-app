@@ -1,12 +1,27 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true"></cu-custom>
-        <view class="cu-form-group">
-            <view class="text-df text-bold-less margin-right-sm">手机</view>
-            <input placeholder="请输入11位手机号嗷~" maxlength="11" @input="setPhone" />
-        </view>
-        <button class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm" style="width: 16vw; margin-left: 80vw" @tap="savePhone">保存</button>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    />
+    <view class="cu-form-group">
+      <view class="text-df text-bold-less margin-right-sm">
+        手机
+      </view>
+      <input
+        placeholder="请输入11位手机号嗷~"
+        maxlength="11"
+        @input="setPhone"
+      >
     </view>
+    <button
+      class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm"
+      style="width: 16vw; margin-left: 80vw"
+      @tap="savePhone"
+    >
+      保存
+    </button>
+  </view>
 </template>
 
 <script>

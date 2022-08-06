@@ -1,34 +1,73 @@
 <template>
   <view>
     <!--标题-->
-    <cu-custom :isBack="true" bgColor="bg-white">
-      <view slot="content" class="text-black">贡献语音</view>
+    <cu-custom
+      :is-back="true"
+      bg-color="bg-white"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        贡献语音
+      </view>
     </cu-custom>
 
     <view style="height: 100%; position: absolute; width: 100%">
       <form @submit="submitRecord">
         <!--表单列表-->
         <block>
-          <input class="extend text-bold" disabled value="词语"/>
-          <input :value="word" class="fileName" disabled/>
+          <input
+            class="extend text-bold"
+            disabled
+            value="词语"
+          >
+          <input
+            :value="word"
+            class="fileName"
+            disabled
+          >
         </block>
         <block>
-          <input class="extend text-bold" disabled value="IPA"/>
-          <input :value="ipa" class="fileName" name="ipa" placeholder="请输入该词语的国际音标"/>
+          <input
+            class="extend text-bold"
+            disabled
+            value="IPA"
+          >
+          <input
+            :value="ipa"
+            class="fileName"
+            name="ipa"
+            placeholder="请输入该词语的国际音标"
+          >
         </block>
         <block>
-          <input class="extend text-bold" disabled value="拼音"/>
-          <input :value="pinyin" class="fileName" name="pinyin" placeholder="请输入该词语的拼音"/>
+          <input
+            class="extend text-bold"
+            disabled
+            value="拼音"
+          >
+          <input
+            :value="pinyin"
+            class="fileName"
+            name="pinyin"
+            placeholder="请输入该词语的拼音"
+          >
         </block>
         <view class="flex">
-          <input class="extend text-bold" style="padding: 14rpx 25rpx" disabled value="地区"/>
+          <input
+            class="extend text-bold"
+            style="padding: 14rpx 25rpx"
+            disabled
+            value="地区"
+          >
           <picker
-              :range="pickerRange"
-              :value="pickerIndex"
-              class="fileName text-lg"
-			        style="width: 74%;"
-              mode="multiSelector"
-              @columnchange="columnChange"
+            :range="pickerRange"
+            :value="pickerIndex"
+            class="fileName text-lg"
+            style="width: 74%;"
+            mode="multiSelector"
+            @columnchange="columnChange"
           >
             {{ pickerRange[0][pickerIndex[0]] }} {{ pickerRange[1][pickerIndex[1]] }}
           </picker>
@@ -39,46 +78,62 @@
           <!-- 没有有效的录音文件-->
           <view v-if="!source">
             <button
-                class="cu-btn icons bg-blue shadow"
-				        style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
-                @longpress="startRecord"
-                @touchend="stopRecord"
+              class="cu-btn icons bg-blue shadow"
+              style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
+              @longpress="startRecord"
+              @touchend="stopRecord"
             >
-              <text class="cuIcon-voice" style="font-size: 50upx;"></text>
+              <text
+                class="cuIcon-voice"
+                style="font-size: 50upx;"
+              />
             </button>
             <view class="text-bold">
-              <text v-if="status === 0">长按开始录音</text>
-              <text v-else>松开结束录音</text>
+              <text v-if="status === 0">
+                长按开始录音
+              </text>
+              <text v-else>
+                松开结束录音
+              </text>
             </view>
-		  </view>
+          </view>
           <!-- 有有效的录音文件-->
           <view v-else>
             <button
-                class="cu-btn icon llg bg-blue shadow"
-				        style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
-                @tap="playAudio(source)"
+              class="cu-btn icon llg bg-blue shadow"
+              style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
+              @tap="playAudio(source)"
             >
-              <text class="cuIcon-notificationfill" style="font-size: 50upx;"></text>
+              <text
+                class="cuIcon-notificationfill"
+                style="font-size: 50upx;"
+              />
             </button>
             <view class="text-bold">
               <text>点击播放录音</text>
             </view>
-		  </view>
+          </view>
         </view>
 
         <!--有录音文件之后的提交按钮-->
         <view v-if="source">
-          <button class="cu-btn block bg-red shadow margin" style="width: 90vw;" @tap="reRecord">
+          <button
+            class="cu-btn block bg-red shadow margin"
+            style="width: 90vw;"
+            @tap="reRecord"
+          >
             重新录制
           </button>
-          <button class="cu-btn block bg-blue shadow margin" form-type="submit" style="width: 90vw;">
+          <button
+            class="cu-btn block bg-blue shadow margin"
+            form-type="submit"
+            style="width: 90vw;"
+          >
             确认提交
           </button>
         </view>
-
       </form>
     </view>
-
   </view>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
-    <view>
-        <!-- pages/component/playmusic/playmusic.wxml -->
-        <text>pages/component/playmusic/playmusic.wxml</text>
-    </view>
+  <view>
+    <!-- pages/component/playmusic/playmusic.wxml -->
+    <text>pages/component/playmusic/playmusic.wxml</text>
+  </view>
 </template>
 
 <script>

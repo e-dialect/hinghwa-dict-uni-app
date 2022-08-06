@@ -1,114 +1,241 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true">
-            <view slot="content" class="text-black">语记·搜索</view>
-        </cu-custom>
-        <scroll-view scroll-y class="scrollPage">
-            <view v-if="index == 2" class="bg-white padding-sm padding-left">
-                <view class="text-black text-bold text-xl">输入汉字查拼音</view>
-                <view>忽略所有非汉字字符，暂不支持搜索繁体字</view>
-            </view>
-            <view class="cu-bar search bg-white">
-                <view class="action">
-                    <picker @change="sortFun" :value="index" :range="sort">
-                        <text>{{ sort[index] }}</text>
-                        <text class="cuIcon-triangledownfill"></text>
-                    </picker>
-                </view>
-                <view class="search-form round">
-                    <text class="cuIcon-search"></text>
-                    <input type="text" placeholder="兴化语记" :focus="true" :value="key" confirm-type="search" @input="keyFun" @confirm="search" />
-                </view>
-                <view class="action" @tap="search">
-                    <text class="text-blue">搜索</text>
-                </view>
-            </view>
-            <!-- <view class="cu-bar bg-white text-grey" wx:if="{{status==0}}">
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        语记·搜索
+      </view>
+    </cu-custom>
+    <scroll-view
+      scroll-y
+      class="scrollPage"
+    >
+      <view
+        v-if="index == 2"
+        class="bg-white padding-sm padding-left"
+      >
+        <view class="text-black text-bold text-xl">
+          输入汉字查拼音
+        </view>
+        <view>忽略所有非汉字字符，暂不支持搜索繁体字</view>
+      </view>
+      <view class="cu-bar search bg-white">
+        <view class="action">
+          <picker
+            :value="index"
+            :range="sort"
+            @change="sortFun"
+          >
+            <text>{{ sort[index] }}</text>
+            <text class="cuIcon-triangledownfill" />
+          </picker>
+        </view>
+        <view class="search-form round">
+          <text class="cuIcon-search" />
+          <input
+            type="text"
+            placeholder="兴化语记"
+            :focus="true"
+            :value="key"
+            confirm-type="search"
+            @input="keyFun"
+            @confirm="search"
+          >
+        </view>
+        <view
+          class="action"
+          @tap="search"
+        >
+          <text class="text-blue">
+            搜索
+          </text>
+        </view>
+      </view>
+      <!-- <view class="cu-bar bg-white text-grey" wx:if="{{status==0}}">
     <view class="action">历史搜索</view>
     <image src="/images/home/delete.png" mode="widthFix" bindtap="deleteHistory"
       style="width:5vw;height:auto;margin-right:30rpx;">
     </image>
   </view> -->
-            <!-- <view class="history" wx:if="{{status==0}}">
+      <!-- <view class="history" wx:if="{{status==0}}">
     <view class="padding-xs" wx:for="{{history}}">
       <view class="cu-tag round">{{item}}</view>
     </view>
   </view> -->
-            <!-- <view class="bg-white flex text-df text-black" wx:if="{{status!=0}}">
+      <!-- <view class="bg-white flex text-df text-black" wx:if="{{status!=0}}">
     <view class="flex-sub padding {{status==1?'text-bold':''}}" bindtap="sort" data-index="1">单字</view>
     <view class="flex-sub padding {{status==2?'text-bold':''}}" bindtap="sort" data-index="2">词语</view>
     <view class="flex-sub padding line {{status==3?'text-bold':''}}" bindtap="sort" data-index="3">文章</view>
     <view class="flex-sub padding text-center" bindtap="sort" data-index="3">更多</view>
   </view> -->
-            <view class="cu-list menu" v-if="index == 0 && status == 1">
-                <view class="cu-item arrow" style="min-height: 240rpx" @tap="word" :data-index="index" v-for="(item, index) in words" :key="index">
-                    <view class="flex flex-direction justify-between">
-                        <view class="margin-bottom-xs">
-                            <text class="text-xxl text-bold">{{ item.word.word }}</text>
-                        </view>
-                        <view class="margin-bottom-xs">
-                            <text>{{ item.word.standard_pinyin }}</text>
-                            <text class="text-grey" decode>&nbsp;&nbsp;/{{ item.word.standard_ipa }}/</text>
-                            <text v-if="item.pronunciation.url.length > 4" class="cuIcon-notificationfill text-blue margin-left"></text>
-                        </view>
-                        <view class="text-grey definition">{{ item.word.definition }}</view>
-                    </view>
-                </view>
+      <view
+        v-if="index == 0 && status == 1"
+        class="cu-list menu"
+      >
+        <view
+          v-for="(item, index1) in words"
+          :key="index1"
+          class="cu-item arrow"
+          style="min-height: 240rpx"
+          :data-index="index1"
+          @tap="word"
+        >
+          <view class="flex flex-direction justify-between">
+            <view class="margin-bottom-xs">
+              <text class="text-xxl text-bold">
+                {{ item.word.word }}
+              </text>
             </view>
-            <view v-if="index == 1 && status == 1">
-                <view class="cu-list menu" v-for="(item, index) in pronunciation" :key="index">
-                    <view class="cu-item arrow" style="min-height: 150rpx" :data-id="kid.id" @tap="character" v-for="(kid, index1) in item.characters" :key="index1">
-                        <view class="flex flex-direction justify-between">
-                            <view class="margin-bottom-sm">
-                                <text class="text-xxl text-bold">{{ item.label }}</text>
-                                <!-- <text class="cuIcon-notificationfill text-blue margin-left"></text> -->
-                            </view>
-                            <view>
-                                <text>{{ kid.pinyin }}</text>
-                                <text class="text-grey margin-left">/{{ kid.ipa }}/</text>
-                            </view>
-                        </view>
-                    </view>
-                </view>
+            <view class="margin-bottom-xs">
+              <text>{{ item.word.standard_pinyin }}</text>
+              <text
+                class="text-grey"
+                decode
+              >
+                &nbsp;&nbsp;/{{ item.word.standard_ipa }}/
+              </text>
+              <text
+                v-if="item.pronunciation.url.length > 4"
+                class="cuIcon-notificationfill text-blue margin-left"
+              />
             </view>
-            <view class="bg-white" v-if="index == 2 && status == 1">
-                <view v-for="(i, index) in characters" :key="index">
-                    <view class="padding solid-bottom" v-for="(j, index1) in i.characters" :key="index1">
-                        <view>
-                            <text class="text-xxl text-black text-bold">{{ i.label }}</text>
-                            <text v-if="i.lable !== i.traditional"></text>
-                            <text class="text-xl">{{ i.label === i.traditional ? ' ' : i.traditional }}</text>
-                            <text class="text-grey">{{ j.county }} / {{ j.town }}</text>
-                        </view>
+            <view class="text-grey definition">
+              {{ item.word.definition }}
+            </view>
+          </view>
+        </view>
+      </view>
+      <view v-if="index == 1 && status == 1">
+        <view
+          v-for="(item, index11) in pronunciation"
+          :key="index11"
+          class="cu-list menu"
+        >
+          <view
+            v-for="(kid, index1) in item.characters"
+            :key="index1"
+            class="cu-item arrow"
+            style="min-height: 150rpx"
+            :data-id="kid.id"
+            @tap="character"
+          >
+            <view class="flex flex-direction justify-between">
+              <view class="margin-bottom-sm">
+                <text class="text-xxl text-bold">
+                  {{ item.label }}
+                </text>
+                <!-- <text class="cuIcon-notificationfill text-blue margin-left"></text> -->
+              </view>
+              <view>
+                <text>{{ kid.pinyin }}</text>
+                <text class="text-grey margin-left">
+                  /{{ kid.ipa }}/
+                </text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view
+        v-if="index == 2 && status == 1"
+        class="bg-white"
+      >
+        <view
+          v-for="(i, index11) in characters"
+          :key="index11"
+        >
+          <view
+            v-for="(j, index1) in i.characters"
+            :key="index1"
+            class="padding solid-bottom"
+          >
+            <view>
+              <text class="text-xxl text-black text-bold">
+                {{ i.label }}
+              </text>
+              <text v-if="i.lable !== i.traditional" />
+              <text class="text-xl">
+                {{ i.label === i.traditional ? ' ' : i.traditional }}
+              </text>
+              <text class="text-grey">
+                {{ j.county }} / {{ j.town }}
+              </text>
+            </view>
 
-                        <view class="text-lg margin-top-xs" style="display: flex;flex-wrap: wrap;">
-                            <view :data-id="k.word" @tap="getWord" v-for="(k, index2) in j.characters" :key="index2" style="display: flex;width: 33%;"> 
-                                <view v-if="k.word" class="text-blue" space="emsp" style="width: 40%;">{{ k.pinyin }}</view>
-                                <view v-else space="emsp" style="width: 40%;">{{ k.pinyin }}</view>
-                                <view class="text-grey" space="emsp" style="width: 60%;">/{{ k.ipa }}/</view>
-                            </view> 
-                        </view>
-                    </view>
+            <view
+              class="text-lg margin-top-xs"
+              style="display: flex;flex-wrap: wrap;"
+            >
+              <view
+                v-for="(k, index2) in j.characters"
+                :key="index2"
+                :data-id="k.word"
+                style="display: flex;width: 33%;"
+                @tap="getWord"
+              >
+                <view
+                  v-if="k.word"
+                  class="text-blue"
+                  space="emsp"
+                  style="width: 40%;"
+                >
+                  {{ k.pinyin }}
                 </view>
+                <view
+                  v-else
+                  space="emsp"
+                  style="width: 40%;"
+                >
+                  {{ k.pinyin }}
+                </view>
+                <view
+                  class="text-grey"
+                  space="emsp"
+                  style="width: 60%;"
+                >
+                  /{{ k.ipa }}/
+                </view>
+              </view>
             </view>
-            <view v-if="index == 3 && status == 1">
-                <view class="flex article solid-bottom" :data-id="item.article.id" @tap="toArticle" v-for="(item, index) in articles" :key="index">
-                    <image :src="item.article.cover" mode="aspectFill"></image>
+          </view>
+        </view>
+      </view>
+      <view v-if="index == 3 && status == 1">
+        <view
+          v-for="(item, index1) in articles"
+          :key="index1"
+          class="flex article solid-bottom"
+          :data-id="item.article.id"
+          @tap="toArticle"
+        >
+          <image
+            :src="item.article.cover"
+            mode="aspectFill"
+          />
 
-                    <view style="flex: 1">
-                        <view class="flex justify-between">
-                            <view class="text-bold-less text-lg">{{ item.article.title }}</view>
-                            <view class="text-grey margin-top-mini">
-                                <text class="cuIcon-attention"></text>
-                                {{ item.article.views }}
-                            </view>
-                        </view>
-                        <view class="content">{{ item.article.description }}</view>
-                    </view>
-                </view>
+          <view style="flex: 1">
+            <view class="flex justify-between">
+              <view class="text-bold-less text-lg">
+                {{ item.article.title }}
+              </view>
+              <view class="text-grey margin-top-mini">
+                <text class="cuIcon-attention" />
+                {{ item.article.views }}
+              </view>
             </view>
-        </scroll-view>
-    </view>
+            <view class="content">
+              {{ item.article.description }}
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
 </template>
 
 <script>
@@ -125,31 +252,31 @@ export default {
             pronunciation: [],
             words: [],
             articles: [],
-
-            kid: {
-                id: '',
-                pinyin: '',
-                ipa: ''
-            },
-
-            i: {
-                characters: [],
-                label: '',
-                lable: '',
-                traditional: ''
-            },
-
-            j: {
-                county: '',
-                town: '',
-                characters: []
-            },
-
-            k: {
-                word: '',
-                pinyin: '',
-                ipa: ''
-            }
+            //
+            // kid: {
+            //     id: '',
+            //     pinyin: '',
+            //     ipa: ''
+            // },
+            //
+            // i: {
+            //     characters: [],
+            //     label: '',
+            //     lable: '',
+            //     traditional: ''
+            // },
+            //
+            // j: {
+            //     county: '',
+            //     town: '',
+            //     characters: []
+            // },
+            //
+            // k: {
+            //     word: '',
+            //     pinyin: '',
+            //     ipa: ''
+            // }
         };
     },
     onLoad(option) {
