@@ -78,11 +78,11 @@
         class="cu-list menu"
       >
         <view
-          v-for="(item, index) in words"
-          :key="index"
+          v-for="(item, index1) in words"
+          :key="index1"
           class="cu-item arrow"
           style="min-height: 240rpx"
-          :data-index="index"
+          :data-index="index1"
           @tap="word"
         >
           <view class="flex flex-direction justify-between">
@@ -112,8 +112,8 @@
       </view>
       <view v-if="index == 1 && status == 1">
         <view
-          v-for="(item, index) in pronunciation"
-          :key="index"
+          v-for="(item, index11) in pronunciation"
+          :key="index11"
           class="cu-list menu"
         >
           <view
@@ -146,8 +146,8 @@
         class="bg-white"
       >
         <view
-          v-for="(i, index) in characters"
-          :key="index"
+          v-for="(i, index11) in characters"
+          :key="index11"
         >
           <view
             v-for="(j, index1) in i.characters"
@@ -177,7 +177,7 @@
                 :data-id="k.word"
                 style="display: flex;width: 33%;"
                 @tap="getWord"
-              > 
+              >
                 <view
                   v-if="k.word"
                   class="text-blue"
@@ -200,15 +200,15 @@
                 >
                   /{{ k.ipa }}/
                 </view>
-              </view> 
+              </view>
             </view>
           </view>
         </view>
       </view>
       <view v-if="index == 3 && status == 1">
         <view
-          v-for="(item, index) in articles"
-          :key="index"
+          v-for="(item, index1) in articles"
+          :key="index1"
           class="flex article solid-bottom"
           :data-id="item.article.id"
           @tap="toArticle"
@@ -252,31 +252,31 @@ export default {
             pronunciation: [],
             words: [],
             articles: [],
-
-            kid: {
-                id: '',
-                pinyin: '',
-                ipa: ''
-            },
-
-            i: {
-                characters: [],
-                label: '',
-                lable: '',
-                traditional: ''
-            },
-
-            j: {
-                county: '',
-                town: '',
-                characters: []
-            },
-
-            k: {
-                word: '',
-                pinyin: '',
-                ipa: ''
-            }
+            //
+            // kid: {
+            //     id: '',
+            //     pinyin: '',
+            //     ipa: ''
+            // },
+            //
+            // i: {
+            //     characters: [],
+            //     label: '',
+            //     lable: '',
+            //     traditional: ''
+            // },
+            //
+            // j: {
+            //     county: '',
+            //     town: '',
+            //     characters: []
+            // },
+            //
+            // k: {
+            //     word: '',
+            //     pinyin: '',
+            //     ipa: ''
+            // }
         };
     },
     onLoad(option) {
