@@ -1,35 +1,89 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true">
-            <view class="text-black" slot="content">用户注册</view>
-        </cu-custom>
-        <form @submit="register">
-            <view class="cu-form-group">
-                <view class="text-df text-bold-less margin-right-sm">用户名</view>
-                <input name="username" placeholder="请输入用户名" />
-            </view>
-            <view class="cu-form-group">
-                <view class="text-df text-bold-less margin-right-sm">密码</view>
-                <input name="password" :password="is_pwd1" placeholder="请输入6~11位密码" />
-                <text :class="is_pwd1 == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'" @tap="ear1"></text>
-            </view>
-            <view class="cu-form-group">
-                <view class="text-df text-bold-less margin-right-sm">确认密码</view>
-                <input name="password_confirmed" :password="is_pwd2" placeholder="请再次输入密码" />
-                <text :class="is_pwd2 == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'" @tap="ear2"></text>
-            </view>
-            <view class="cu-form-group">
-                <view class="text-df text-bold-less margin-right-sm">邮箱</view>
-                <input name="email" placeholder="请输入邮箱" @input="getEmail" />
-            </view>
-            <view class="cu-form-group">
-                <view class="text-df text-bold-less margin-right-sm">验证码</view>
-                <input name="code" placeholder="请输入验证码" />
-                <button @tap="getCode" class="cu-btn bg-gradual-blue shadow" style="width: 32vw; border-radius: 5000rpx">获取验证码</button>
-            </view>
-            <button class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm" style="display: flex; justify-content: center" form-type="submit">注册</button>
-        </form>
-    </view>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        用户注册
+      </view>
+    </cu-custom>
+    <form @submit="register">
+      <view class="cu-form-group">
+        <view class="text-df text-bold-less margin-right-sm">
+          用户名
+        </view>
+        <input
+          name="username"
+          placeholder="请输入用户名"
+        >
+      </view>
+      <view class="cu-form-group">
+        <view class="text-df text-bold-less margin-right-sm">
+          密码
+        </view>
+        <input
+          name="password"
+          :password="is_pwd1"
+          placeholder="请输入6~11位密码"
+        >
+        <text
+          :class="is_pwd1 == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
+          @tap="ear1"
+        />
+      </view>
+      <view class="cu-form-group">
+        <view class="text-df text-bold-less margin-right-sm">
+          确认密码
+        </view>
+        <input
+          name="password_confirmed"
+          :password="is_pwd2"
+          placeholder="请再次输入密码"
+        >
+        <text
+          :class="is_pwd2 == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
+          @tap="ear2"
+        />
+      </view>
+      <view class="cu-form-group">
+        <view class="text-df text-bold-less margin-right-sm">
+          邮箱
+        </view>
+        <input
+          name="email"
+          placeholder="请输入邮箱"
+          @input="getEmail"
+        >
+      </view>
+      <view class="cu-form-group">
+        <view class="text-df text-bold-less margin-right-sm">
+          验证码
+        </view>
+        <input
+          name="code"
+          placeholder="请输入验证码"
+        >
+        <button
+          class="cu-btn bg-gradual-blue shadow"
+          style="width: 32vw; border-radius: 5000rpx"
+          @tap="getCode"
+        >
+          获取验证码
+        </button>
+      </view>
+      <button
+        class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm"
+        style="display: flex; justify-content: center"
+        form-type="submit"
+      >
+        注册
+      </button>
+    </form>
+  </view>
 </template>
 
 <script>

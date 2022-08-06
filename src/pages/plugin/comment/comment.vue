@@ -1,52 +1,110 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true"></cu-custom>
-        <view class="padding-sm solid-bottom">
-            <view class="flex">
-                <image class="cu-avatar round margin-right-sm" :src="comment.user.avatar" mode="aspectFill"></image>
-                <view class="flex flex-sub justify-between">
-                    <view class="flex flex-direction">
-                        <view class="text-name">{{ comment.user.nickname }}</view>
-                        <view class="text-date">{{ comment.time }}</view>
-                    </view>
-                    <view class="text-dz">
-                        <text class="cuIcon-appreciate"></text>
-                    </view>
-                </view>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    />
+    <view class="padding-sm solid-bottom">
+      <view class="flex">
+        <image
+          class="cu-avatar round margin-right-sm"
+          :src="comment.user.avatar"
+          mode="aspectFill"
+        />
+        <view class="flex flex-sub justify-between">
+          <view class="flex flex-direction">
+            <view class="text-name">
+              {{ comment.user.nickname }}
             </view>
-            <view class="text-content">{{ comment.content }}</view>
-        </view>
-        <view class="padding-sm">
-            <view class="text-df text-bold padding-top-sm padding-bottom-sm">全部回复（{{ comment.kids.length }}条）</view>
-            <view class="padding-top-sm padding-bottom-sm solid-bottom" v-for="(item, index) in comment.kids" :key="index">
-                <view class="flex">
-                    <image class="cu-avatar round margin-right-sm" :src="item.user.avatar" mode="aspectFill"></image>
-                    <view class="flex flex-sub justify-between">
-                        <view class="flex flex-direction">
-                            <view class="text-name">{{ item.user.nickname }}</view>
-                            <view class="text-date">{{ item.time }}</view>
-                        </view>
-                        <view class="text-dz">
-                            <text class="cuIcon-appreciate"></text>
-                        </view>
-                    </view>
-                </view>
-
-                <view class="text-content">
-                    <text v-if="item.parent != comment.id">@</text>
-                    <text class="text-blue" v-if="item.parent != comment.id">{{ comment.kids[map[item.parent]].user.nickname }}</text>
-                    <text v-if="item.parent != comment.id">：</text>
-                    <text @tap="reply" :data-id="item.id">{{ item.content }}</text>
-                </view>
+            <view class="text-date">
+              {{ comment.time }}
             </view>
+          </view>
+          <view class="text-dz">
+            <text class="cuIcon-appreciate" />
+          </view>
         </view>
-        <view class="cu-bar foot input padding-bottom" style="min-height: 120rpx">
-            <view class="input-box">
-                <input style="margin-left: 30rpx" :placeholder="ph_text" :focus="is_reply" @input="getText" @focus="focus" @blur="blur" :adjust-position="true" />
-            </view>
-            <button class="cu-btn bg-blue shadow" style="width: 16vw" @tap="commentFun">发送</button>
-        </view>
+      </view>
+      <view class="text-content">
+        {{ comment.content }}
+      </view>
     </view>
+    <view class="padding-sm">
+      <view class="text-df text-bold padding-top-sm padding-bottom-sm">
+        全部回复（{{ comment.kids.length }}条）
+      </view>
+      <view
+        v-for="(item, index) in comment.kids"
+        :key="index"
+        class="padding-top-sm padding-bottom-sm solid-bottom"
+      >
+        <view class="flex">
+          <image
+            class="cu-avatar round margin-right-sm"
+            :src="item.user.avatar"
+            mode="aspectFill"
+          />
+          <view class="flex flex-sub justify-between">
+            <view class="flex flex-direction">
+              <view class="text-name">
+                {{ item.user.nickname }}
+              </view>
+              <view class="text-date">
+                {{ item.time }}
+              </view>
+            </view>
+            <view class="text-dz">
+              <text class="cuIcon-appreciate" />
+            </view>
+          </view>
+        </view>
+
+        <view class="text-content">
+          <text v-if="item.parent != comment.id">
+            @
+          </text>
+          <text
+            v-if="item.parent != comment.id"
+            class="text-blue"
+          >
+            {{ comment.kids[map[item.parent]].user.nickname }}
+          </text>
+          <text v-if="item.parent != comment.id">
+            ：
+          </text>
+          <text
+            :data-id="item.id"
+            @tap="reply"
+          >
+            {{ item.content }}
+          </text>
+        </view>
+      </view>
+    </view>
+    <view
+      class="cu-bar foot input padding-bottom"
+      style="min-height: 120rpx"
+    >
+      <view class="input-box">
+        <input
+          style="margin-left: 30rpx"
+          :placeholder="ph_text"
+          :focus="is_reply"
+          :adjust-position="true"
+          @input="getText"
+          @focus="focus"
+          @blur="blur"
+        >
+      </view>
+      <button
+        class="cu-btn bg-blue shadow"
+        style="width: 16vw"
+        @tap="commentFun"
+      >
+        发送
+      </button>
+    </view>
+  </view>
 </template>
 
 <script>

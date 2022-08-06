@@ -1,6 +1,6 @@
 <template>
   <view>
-    <u-parse :content="text"></u-parse>
+    <u-parse :content="text" />
   </view>
 </template>
 

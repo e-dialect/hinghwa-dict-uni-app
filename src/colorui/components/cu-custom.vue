@@ -1,18 +1,35 @@
 <template>
-  <view :style="`height: ${CustomBar}px`+''" class="cu-custom">
+  <view
+    :style="`height: ${CustomBar}px`+''"
+    class="cu-custom"
+  >
     <view
-        :class="'cu-bar fixed ' + (bgImage ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
-        :style="`height: ${CustomBar}px;padding-top: ${StatusBar}px;` + (bgImage ? `background-image: url(${bgImage})` : '')"
+      :class="'cu-bar fixed ' + (bgImage ? 'none-bg text-white bg-img' : '') + ' ' + bgColor"
+      :style="`height: ${CustomBar}px;padding-top: ${StatusBar}px;` + (bgImage ? `background-image: url(${bgImage})` : '')"
     >
-      <view v-if="isBack" class="action">
-        <text class="cuIcon-back" @tap="BackPage"></text>
-        <slot name="backText"></slot>
+      <view
+        v-if="isBack"
+        class="action"
+      >
+        <text
+          class="cuIcon-back"
+          @tap="BackPage"
+        />
+        <slot name="backText" />
       </view>
-      <view :style="`top: ${StatusBar}px; height: ${CustomBar - StatusBar}px; line-height: ${CustomBar - StatusBar}px;`+''" class="content">
-        <slot name="content"></slot>
-        <text v-if="title" class="text-black">{{ title }}</text>
+      <view
+        :style="`top: ${StatusBar}px; height: ${CustomBar - StatusBar}px; line-height: ${CustomBar - StatusBar}px;`+''"
+        class="content"
+      >
+        <slot name="content" />
+        <text
+          v-if="title"
+          class="text-black"
+        >
+          {{ title }}
+        </text>
       </view>
-      <slot name="right"></slot>
+      <slot name="right" />
     </view>
   </view>
 </template>
@@ -22,20 +39,6 @@ import {toIndexPage} from "@/routers";
 
 const app = getApp();
 export default {
-  data() {
-    return {
-      StatusBar: app.globalData.StatusBar,
-      CustomBar: app.globalData.CustomBar,
-      Custom: app.globalData.Custom
-    };
-  },
-  /**
-   * 组件的一些选项
-   */
-  options: {
-    addGlobalClass: true,
-    multipleSlots: true
-  },
   /**
    * 组件的对外属性
    */
@@ -60,6 +63,20 @@ export default {
       type: String,
       default: ''
     }
+  },
+  data() {
+    return {
+      StatusBar: app.globalData.StatusBar,
+      CustomBar: app.globalData.CustomBar,
+      Custom: app.globalData.Custom
+    };
+  },
+  /**
+   * 组件的一些选项
+   */
+  options: {
+    addGlobalClass: true,
+    multipleSlots: true
   },
   /**
    * 组件的方法列表

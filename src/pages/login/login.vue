@@ -1,30 +1,57 @@
 <template>
   <view>
     <view class="logo">
-      <image :src="logo" mode="widthFix"></image>
+      <image
+        :src="logo"
+        mode="widthFix"
+      />
     </view>
     <form @submit="login">
       <view class="info">
-        <view class="cuIcon-friend">&nbsp;</view>
-        <input name="username" placeholder="请输入用户名"/>
+        <view class="cuIcon-friend">
+&nbsp;
+        </view>
+        <input
+          name="username"
+          placeholder="请输入用户名"
+        >
       </view>
       <view class="info">
-        <view class="cuIcon-lock">&nbsp;</view>
-        <input name="password" password placeholder="请输入密码"/>
+        <view class="cuIcon-lock">
+&nbsp;
+        </view>
+        <input
+          name="password"
+          password
+          placeholder="请输入密码"
+        >
       </view>
       <view class="flex justify-center">
         <button
-            class="cu-btn round bg-gradual-blue shadow text-df margin-top"
-            form-type="submit"
-            style="width: 65vw"
+          class="cu-btn round bg-gradual-blue shadow text-df margin-top"
+          form-type="submit"
+          style="width: 65vw"
         >
           登录
         </button>
       </view>
     </form>
-    <view class="flex text-bold text-center" style="margin-top: 20vh">
-      <view class="flex-sub solid-right" @tap="forget">忘记密码</view>
-      <view class="flex-sub" @tap="register">用户注册</view>
+    <view
+      class="flex text-bold text-center"
+      style="margin-top: 20vh"
+    >
+      <view
+        class="flex-sub solid-right"
+        @tap="forget"
+      >
+        忘记密码
+      </view>
+      <view
+        class="flex-sub"
+        @tap="register"
+      >
+        用户注册
+      </view>
     </view>
   </view>
 </template>

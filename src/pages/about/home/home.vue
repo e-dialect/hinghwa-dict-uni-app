@@ -1,85 +1,158 @@
 <template>
-    <view>
-        <scroll-view scroll-y class="scrollPage">
-            <image class="bg-image" src="https://cos.edialect.top/miniprogram/user.png" mode="aspectFill"></image>
-            <view class="bg-info">
-                <view class="avatar" @tap="userInfo">
-                    <image class="cu-avatar round" :src="avatar" mode="aspectFill"></image>
-                </view>
-                <view class="text">{{ nickname }}</view>
-            </view>
-            <view class="padding flex text-center text-grey bg-white shadow-warp">
-                <view class="flex flex-sub flex-direction solid-right" @tap="getMyRecords">
-                    <view class="text-xlp text-orange">{{ recordsCount }}</view>
-                    <view class="margin-top-sm">
-                        <text class="cuIcon-voice"></text>
-                        语音量
-                    </view>
-                </view>
-                <view class="flex flex-sub flex-direction solid-right">
-                    <view class="text-xlp text-blue">{{ wordsCount }}</view>
-                    <view class="margin-top-sm">
-                        <text class="cuIcon-font"></text>
-                        词语量
-                    </view>
-                </view>
-                <view class="flex flex-sub flex-direction">
-                    <view class="text-xlp text-green">{{ visitTotal }}</view>
-                    <view class="margin-top-sm">
-                        <text class="cuIcon-attention"></text>
-                        播放量
-                    </view>
-                </view>
-            </view>
-            <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-                <view class="cu-item arrow">
-                    <navigator class="content" url="/pages/about/articlesliked/articlesliked" hover-class="none">
-                        <text class="cuIcon-appreciate text-grey"></text>
-                        <text class="text-grey">点赞文章</text>
-                    </navigator>
-                </view>
-                <view class="cu-item arrow">
-                    <navigator class="content" url="/pages/about/myarticles/myarticles" hover-class="none">
-                        <text class="cuIcon-edit text-grey"></text>
-                        <text class="text-grey">我的文章</text>
-                    </navigator>
-                </view>
-                <view class="cu-item arrow">
-                    <navigator class="content" url="/pages/about/mycomments/mycomments" hover-class="none">
-                        <text class="cuIcon-comment text-grey"></text>
-                        <text class="text-grey">我的评论</text>
-                    </navigator>
-                </view>
-                <view class="cu-item arrow">
-                    <navigator class="content" url="/pages/about/articles/articles" hover-class="none">
-                        <text class="cuIcon-musicfill text-grey"></text>
-                        <text class="text-grey">我的音乐</text>
-                    </navigator>
-                </view>
-            </view>
-            <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-                <view class="cu-item arrow">
-                    <navigator class="content" url="/pages/about/password/password" hover-class="none">
-                        <text class="cuIcon-write text-grey"></text>
-                        <text class="text-grey">修改密码</text>
-                    </navigator>
-                </view>
-                <view class="cu-item arrow" @tap="bindingWechat">
-                    <navigator class="content" url="/pages/about/articles/articles" hover-class="none">
-                        <text class="cuIcon-group text-grey"></text>
-                        <text class="text-grey">绑定微信</text>
-                    </navigator>
-                </view>
-                <view class="cu-item arrow" @tap="exit">
-                    <navigator class="content" url="/pages/about/articles/articles" hover-class="none">
-                        <text class="cuIcon-exit text-grey"></text>
-                        <text class="text-grey">退出登录</text>
-                    </navigator>
-                </view>
-            </view>
-            <view class="stand-view"></view>
-        </scroll-view>
-    </view>
+  <view>
+    <scroll-view
+      scroll-y
+      class="scrollPage"
+    >
+      <image
+        class="bg-image"
+        src="https://cos.edialect.top/miniprogram/user.png"
+        mode="aspectFill"
+      />
+      <view class="bg-info">
+        <view
+          class="avatar"
+          @tap="userInfo"
+        >
+          <image
+            class="cu-avatar round"
+            :src="avatar"
+            mode="aspectFill"
+          />
+        </view>
+        <view class="text">
+          {{ nickname }}
+        </view>
+      </view>
+      <view class="padding flex text-center text-grey bg-white shadow-warp">
+        <view
+          class="flex flex-sub flex-direction solid-right"
+          @tap="getMyRecords"
+        >
+          <view class="text-xlp text-orange">
+            {{ recordsCount }}
+          </view>
+          <view class="margin-top-sm">
+            <text class="cuIcon-voice" />
+            语音量
+          </view>
+        </view>
+        <view class="flex flex-sub flex-direction solid-right">
+          <view class="text-xlp text-blue">
+            {{ wordsCount }}
+          </view>
+          <view class="margin-top-sm">
+            <text class="cuIcon-font" />
+            词语量
+          </view>
+        </view>
+        <view class="flex flex-sub flex-direction">
+          <view class="text-xlp text-green">
+            {{ visitTotal }}
+          </view>
+          <view class="margin-top-sm">
+            <text class="cuIcon-attention" />
+            播放量
+          </view>
+        </view>
+      </view>
+      <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            url="/pages/about/articlesliked/articlesliked"
+            hover-class="none"
+          >
+            <text class="cuIcon-appreciate text-grey" />
+            <text class="text-grey">
+              点赞文章
+            </text>
+          </navigator>
+        </view>
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            url="/pages/about/myarticles/myarticles"
+            hover-class="none"
+          >
+            <text class="cuIcon-edit text-grey" />
+            <text class="text-grey">
+              我的文章
+            </text>
+          </navigator>
+        </view>
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            url="/pages/about/mycomments/mycomments"
+            hover-class="none"
+          >
+            <text class="cuIcon-comment text-grey" />
+            <text class="text-grey">
+              我的评论
+            </text>
+          </navigator>
+        </view>
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            url="/pages/about/articles/articles"
+            hover-class="none"
+          >
+            <text class="cuIcon-musicfill text-grey" />
+            <text class="text-grey">
+              我的音乐
+            </text>
+          </navigator>
+        </view>
+      </view>
+      <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            url="/pages/about/password/password"
+            hover-class="none"
+          >
+            <text class="cuIcon-write text-grey" />
+            <text class="text-grey">
+              修改密码
+            </text>
+          </navigator>
+        </view>
+        <view
+          class="cu-item arrow"
+          @tap="bindingWechat"
+        >
+          <navigator
+            class="content"
+            url="/pages/about/articles/articles"
+            hover-class="none"
+          >
+            <text class="cuIcon-group text-grey" />
+            <text class="text-grey">
+              绑定微信
+            </text>
+          </navigator>
+        </view>
+        <view
+          class="cu-item arrow"
+          @tap="exit"
+        >
+          <navigator
+            class="content"
+            url="/pages/about/articles/articles"
+            hover-class="none"
+          >
+            <text class="cuIcon-exit text-grey" />
+            <text class="text-grey">
+              退出登录
+            </text>
+          </navigator>
+        </view>
+      </view>
+      <view class="stand-view" />
+    </scroll-view>
+  </view>
 </template>
 
 <script>

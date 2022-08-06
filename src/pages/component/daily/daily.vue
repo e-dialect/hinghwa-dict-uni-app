@@ -1,47 +1,95 @@
 <template>
-    <view>
-        <!--导航栏-->
-		<cu-custom>
-			<view slot="content">日常用语</view>
-		</cu-custom>
+  <view>
+    <!--导航栏-->
+    <cu-custom>
+      <view slot="content">
+        日常用语
+      </view>
+    </cu-custom>
 
-        <view class="cu-bar search bg-white">
-            <view class="search-form round">
-                <text class="cuIcon-search"></text>
-                <input type="text" placeholder="欢迎光临" :value="keywordTmp" confirm-type="search" @input="getInput" @confirm="search" />
-            </view>
-            <view class="action" @tap="search">
-                <text class="text-blue">搜索</text>
-            </view>
-        </view>
-
-        <view class="padding bg-white text-smp">
-            <view class="flex margin-bottom-sm text-center solid-bottom solid-top text-bold">
-                <view class="flex-sub padding-sm margin-xs">普通话</view>
-                <view class="flex-sub padding-sm margin-xs">英语</view>
-                <view class="flex-sub padding-sm margin-xs">莆仙正字</view>
-                <view class="flex-twice padding-sm margin-xs">莆仙拼音</view>
-            </view>
-            <view class="flex margin-bottom-sm text-center solid-bottom" v-for="(item, index) in pageData" :key="index">
-                <view class="flex-sub padding-sm margin-xs">{{ item.mandarin }}</view>
-
-                <view class="flex-sub padding-sm margin-xs">{{ item.english }}</view>
-
-                <view class="flex-sub padding-sm margin-xs">{{ item.character }}</view>
-
-                <view class="flex-twice padding-sm margin-xs">{{ item.pinyin }}</view>
-            </view>
-        </view>
-
-        <view class="flex margin-bottom-sm text-center text-smp">
-            <view class="flex-sub padding-sm margin-xs"></view>
-            <button class="flex-twice padding-sm margin-xs cu-btn bg-blue shadow" @tap="previous">上一页</button>
-            <view class="flex-treble padding-sm margin-xs">{{ curPage }}/{{ pageNum }}</view>
-            <button class="flex-twice padding-sm margin-xs cu-btn bg-blue shadow" @tap="next">下一页</button>
-            <view class="flex-treble padding-sm margin-xs">共{{ itemNum }}条</view>
-        </view>
-        <view class="stand-view"></view>
+    <view class="cu-bar search bg-white">
+      <view class="search-form round">
+        <text class="cuIcon-search" />
+        <input
+          type="text"
+          placeholder="欢迎光临"
+          :value="keywordTmp"
+          confirm-type="search"
+          @input="getInput"
+          @confirm="search"
+        >
+      </view>
+      <view
+        class="action"
+        @tap="search"
+      >
+        <text class="text-blue">
+          搜索
+        </text>
+      </view>
     </view>
+
+    <view class="padding bg-white text-smp">
+      <view class="flex margin-bottom-sm text-center solid-bottom solid-top text-bold">
+        <view class="flex-sub padding-sm margin-xs">
+          普通话
+        </view>
+        <view class="flex-sub padding-sm margin-xs">
+          英语
+        </view>
+        <view class="flex-sub padding-sm margin-xs">
+          莆仙正字
+        </view>
+        <view class="flex-twice padding-sm margin-xs">
+          莆仙拼音
+        </view>
+      </view>
+      <view
+        v-for="(item, index) in pageData"
+        :key="index"
+        class="flex margin-bottom-sm text-center solid-bottom"
+      >
+        <view class="flex-sub padding-sm margin-xs">
+          {{ item.mandarin }}
+        </view>
+
+        <view class="flex-sub padding-sm margin-xs">
+          {{ item.english }}
+        </view>
+
+        <view class="flex-sub padding-sm margin-xs">
+          {{ item.character }}
+        </view>
+
+        <view class="flex-twice padding-sm margin-xs">
+          {{ item.pinyin }}
+        </view>
+      </view>
+    </view>
+
+    <view class="flex margin-bottom-sm text-center text-smp">
+      <view class="flex-sub padding-sm margin-xs" />
+      <button
+        class="flex-twice padding-sm margin-xs cu-btn bg-blue shadow"
+        @tap="previous"
+      >
+        上一页
+      </button>
+      <view class="flex-treble padding-sm margin-xs">
+        {{ curPage }}/{{ pageNum }}
+      </view>
+      <button
+        class="flex-twice padding-sm margin-xs cu-btn bg-blue shadow"
+        @tap="next"
+      >
+        下一页
+      </button>
+      <view class="flex-treble padding-sm margin-xs">
+        共{{ itemNum }}条
+      </view>
+    </view>
+    <view class="stand-view" />
+  </view>
 </template>
 
 <script>

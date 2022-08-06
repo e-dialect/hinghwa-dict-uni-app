@@ -1,87 +1,147 @@
 <template>
   <view>
-    <cu-custom title="语记·文章"></cu-custom>
+    <cu-custom title="语记·文章" />
 
-    <scroll-view scroll-y style="height: 100%">
-      <view class="padding-sm" style="margin-bottom: 120upx;">
+    <scroll-view
+      scroll-y
+      style="height: 100%"
+    >
+      <view
+        class="padding-sm"
+        style="margin-bottom: 120upx;"
+      >
         <!--文章标题-->
-        <view class="text-bold text-xxl line">{{ article.title }}</view>
+        <view class="text-bold text-xxl line">
+          {{ article.title }}
+        </view>
 
         <!--文章信息-->
         <view>
-          <view class="flex text-df margin-top align-center" @tap="toUserPage(article.author.id)">
-            <text class="text-grey">文章作者：</text>
-            <image :src="article.author.avatar" class="cu-avatar round ssm" mode="aspectFill"></image>
-            <text class="text-grey"> {{ article.author.nickname }}</text>
+          <view
+            class="flex text-df margin-top align-center"
+            @tap="toUserPage(article.author.id)"
+          >
+            <text class="text-grey">
+              文章作者：
+            </text>
+            <image
+              :src="article.author.avatar"
+              class="cu-avatar round ssm"
+              mode="aspectFill"
+            />
+            <text class="text-grey">
+              {{ article.author.nickname }}
+            </text>
           </view>
-          <text class="text-grey">发布时间：{{ article.publish_time + "\n" }}</text>
-          <text class="text-grey">更新时间：{{ article.update_time }}</text>
+          <text class="text-grey">
+            发布时间：{{ article.publish_time + "\n" }}
+          </text>
+          <text class="text-grey">
+            更新时间：{{ article.update_time }}
+          </text>
         </view>
 
         <!--文章简介-->
         <view class="solid-top solid-bottom margin-top-xl padding-top-sm padding-bottom-sm">
-          <text class="text-xl text-grey line">{{ article.description }}</text>
+          <text class="text-xl text-grey line">
+            {{ article.description }}
+          </text>
         </view>
 
         <!--文章内容-->
-        <view :data-text="article.content" class="margin-top-xl">
-          <MarkdownViewer :markdown="article.content"></MarkdownViewer>
+        <view
+          :data-text="article.content"
+          class="margin-top-xl"
+        >
+          <MarkdownViewer :markdown="article.content" />
         </view>
 
         <!--文章评论区-->
         <view class="margin-top-xl padding-top-sm solid-top">
-          <view class="text-df text-bold">评论（{{ comments.length }}条）</view>
-          <view v-for="(item, index) in comments" :key="index" class="solid-bottom padding-top-sm padding-bottom-sm">
+          <view class="text-df text-bold">
+            评论（{{ comments.length }}条）
+          </view>
+          <view
+            v-for="(item, index) in comments"
+            :key="index"
+            class="solid-bottom padding-top-sm padding-bottom-sm"
+          >
             <view v-if="item.parent === 0">
               <!--该评论-->
               <view @tap="reply(item.id)">
-                <ArticleComment :comment="item"/>
+                <ArticleComment :comment="item" />
               </view>
 
               <!--简要展开子评论-->
-              <view v-for="(kid, index1) in item.kids" :key="index1" class="text-reply">
-                <text class="text-blue" @tap="toUserPage(kid.user.id)">{{ kid.user.nickname }}</text>
+              <view
+                v-for="(kid, index1) in item.kids"
+                :key="index1"
+                class="text-reply"
+              >
                 <text
-                    v-if="kid.parent !== item.id"
-                    class="text-blue"
-                    @tap="toUserPage(comments[map[kid.parent]].user.id)"
+                  class="text-blue"
+                  @tap="toUserPage(kid.user.id)"
+                >
+                  {{ kid.user.nickname }}
+                </text>
+                <text
+                  v-if="kid.parent !== item.id"
+                  class="text-blue"
+                  @tap="toUserPage(comments[map[kid.parent]].user.id)"
                 >
                   @ {{ comments[map[kid.parent]].user.nickname }}
                 </text>
-                <text @tap="toCommentDetailsPage(item.id)">：{{ kid.content }}</text>
+                <text @tap="toCommentDetailsPage(item.id)">
+                  ：{{ kid.content }}
+                </text>
               </view>
             </view>
           </view>
 	  
           <!--文章评论区底部-->
           <view class="margin-top-sm text-center">
-            <text class="text-grey text-sm">这里暂时空空如也~</text>
+            <text class="text-grey text-sm">
+              这里暂时空空如也~
+            </text>
           </view>
         </view>
       </view>
-
-
     </scroll-view>
 
     <!--最新评论-->
-    <view class="cu-bar foot input padding bg-white" style="min-height: 120rpx; z-index: 200">
+    <view
+      class="cu-bar foot input padding bg-white"
+      style="min-height: 120rpx; z-index: 200"
+    >
       <!--点赞按钮-->
-      <view v-if="inEditing === false" class="like bg-white" @tap="btnLike">
-        <text :class="'cuIcon-appreciate bg-white '+(!me.liked ? '' : 'text-blue')">{{ article.likes }}</text>
+      <view
+        v-if="inEditing === false"
+        class="like bg-white"
+        @tap="btnLike"
+      >
+        <text :class="'cuIcon-appreciate bg-white '+(!me.liked ? '' : 'text-blue')">
+          {{ article.likes }}
+        </text>
       </view>
       <!--评论框-->
       <view class="input-box">
         <input
-            :adjust-position="true"
-            :placeholder="ph_text"
-            :value="comment"
-            style="margin-left: 30rpx"
-            @blur="blur"
-            @focus="focus"
-            @input="getText"
-        />
+          :adjust-position="true"
+          :placeholder="ph_text"
+          :value="comment"
+          style="margin-left: 30rpx"
+          @blur="blur"
+          @focus="focus"
+          @input="getText"
+        >
       </view>
-      <button class="cu-btn bg-blue shadow" style="width: 16vw" @tap="createComment">发送</button>
+      <button
+        class="cu-btn bg-blue shadow"
+        style="width: 16vw"
+        @tap="createComment"
+      >
+        发送
+      </button>
     </view>
   </view>
 </template>

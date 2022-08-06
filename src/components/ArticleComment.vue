@@ -1,18 +1,21 @@
 <template>
-
   <view class="padding-bottom-sm">
     <view class="flex">
       <image
-          :src="comment.user.avatar"
-          class="cu-avatar round margin-right-sm"
-          mode="aspectFill"
-          @tap="toUserPage(comment.user.id)"
+        :src="comment.user.avatar"
+        class="cu-avatar round margin-right-sm"
+        mode="aspectFill"
+        @tap="toUserPage(comment.user.id)"
       />
 
       <view class="flex flex-sub justify-between">
         <view class="flex flex-direction">
-          <view class="text-name">{{ comment.user.nickname }}</view>
-          <view class="text-date">{{ comment.time }}</view>
+          <view class="text-name">
+            {{ comment.user.nickname }}
+          </view>
+          <view class="text-date">
+            {{ comment.time }}
+          </view>
         </view>
         <!--        TODO 增加删除回复按钮-->
         <!--        <view v-if="this_is_my_comment" @tap="deleteComment">-->
@@ -25,9 +28,10 @@
       </view>
     </view>
 
-    <view class="text-content padding-left-xl">{{ comment.content }}</view>
+    <view class="text-content padding-left-xl">
+      {{ comment.content }}
+    </view>
   </view>
-
 </template>
 
 <script>

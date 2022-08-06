@@ -1,34 +1,68 @@
 <template>
-    <view>
-        <cu-custom bgColor="bg-white" :isBack="true">
-            <view slot="content" class="text-black">更多语音</view>
-        </cu-custom>
-        <button class="cu-btn icon lg bg-blue shadow write" @tap="uploadPronunciation">
-            <text class="cuIcon-voice"></text>
-        </button>
-        <view style="background-color: white">
-            <view class="solid-bottom padding text-bold text-sl">{{ word }}</view>
-            <view class="padding solid-bottom" v-for="(item, index) in pronunciation" :key="index">
-                <view class="flex justify-between align-center">
-                    <view>
-                        <view class="text-lg">
-                            <text>{{ item.pronunciation.pinyin }}</text>
-                            <text class="text-grey" decode>&nbsp;&nbsp;/{{ item.pronunciation.ipa }}/&nbsp;&nbsp;</text>
-                            <text class="cuIcon-notificationfill text-blue" :data-index="index" @tap="play"></text>
-                        </view>
-                        <view class="margin-top">
-                            <text>来源：</text>
-                            <text class="text-blue" :data-id="item.contributor.id" @tap="toVisitor">{{ item.contributor.nickname }}</text>
-                            <text decode>&nbsp;&nbsp;（{{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}）</text>
-                        </view>
-                    </view>
-                    <view class="text-xl">
-                        <text class="cuIcon-like"></text>
-                    </view>
-                </view>
+  <view>
+    <cu-custom
+      bg-color="bg-white"
+      :is-back="true"
+    >
+      <view
+        slot="content"
+        class="text-black"
+      >
+        更多语音
+      </view>
+    </cu-custom>
+    <button
+      class="cu-btn icon lg bg-blue shadow write"
+      @tap="uploadPronunciation"
+    >
+      <text class="cuIcon-voice" />
+    </button>
+    <view style="background-color: white">
+      <view class="solid-bottom padding text-bold text-sl">
+        {{ word }}
+      </view>
+      <view
+        v-for="(item, index) in pronunciation"
+        :key="index"
+        class="padding solid-bottom"
+      >
+        <view class="flex justify-between align-center">
+          <view>
+            <view class="text-lg">
+              <text>{{ item.pronunciation.pinyin }}</text>
+              <text
+                class="text-grey"
+                decode
+              >
+                &nbsp;&nbsp;/{{ item.pronunciation.ipa }}/&nbsp;&nbsp;
+              </text>
+              <text
+                class="cuIcon-notificationfill text-blue"
+                :data-index="index"
+                @tap="play"
+              />
             </view>
+            <view class="margin-top">
+              <text>来源：</text>
+              <text
+                class="text-blue"
+                :data-id="item.contributor.id"
+                @tap="toVisitor"
+              >
+                {{ item.contributor.nickname }}
+              </text>
+              <text decode>
+                &nbsp;&nbsp;（{{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}）
+              </text>
+            </view>
+          </view>
+          <view class="text-xl">
+            <text class="cuIcon-like" />
+          </view>
         </view>
+      </view>
     </view>
+  </view>
 </template>
 
 <script>

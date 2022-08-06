@@ -1,8 +1,8 @@
 <template>
-    <view>
-        <!-- pages/plugin/write/write.wxml -->
-        <text>pages/plugin/write/write.wxml</text>
-    </view>
+  <view>
+    <!-- pages/plugin/write/write.wxml -->
+    <text>pages/plugin/write/write.wxml</text>
+  </view>
 </template>
 
 <script>
