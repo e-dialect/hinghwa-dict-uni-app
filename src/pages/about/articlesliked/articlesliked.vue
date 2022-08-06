@@ -3,7 +3,10 @@
         <cu-custom bgColor="bg-white" :isBack="true">
             <view class="text-black" slot="content">点赞文章</view>
         </cu-custom>
-        <view class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in like_articles" :key="index">
+		<view v-if="like_articles.length === 0" class="text-lg margin">
+			<text>这里暂时空空如也~</text>
+		</view>
+        <view v-else class="cu-card article no-card" @tap="article" :data-index="index" v-for="(item, index) in like_articles" :key="index">
             <view class="cu-item shadow" style="margin-bottom: 20rpx">
                 <view class="flex justify-between">
                     <view class="title flex">
