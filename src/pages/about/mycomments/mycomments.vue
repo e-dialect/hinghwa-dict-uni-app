@@ -29,77 +29,77 @@
 <script>
 const app = getApp();
 export default {
-    data() {
-        return {
-            avatar: '',
-            nickname: '',
-            publish_comments: []
-        };
-    },
-    onLoad() {
-        this.setData({
-            avatar: app.globalData.userInfo.avatar,
-            nickname: app.globalData.userInfo.nickname
-        }); // 获取我的评论
+  data() {
+    return {
+      avatar: '',
+      nickname: '',
+      publish_comments: []
+    };
+  },
+  onLoad() {
+    this.setData({
+      avatar: app.globalData.userInfo.avatar,
+      nickname: app.globalData.userInfo.nickname
+    }); // 获取我的评论
 
-        this.getComments();
-    },
-    methods: {
-        getComments() {
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'articles/comments',
-                method: 'PUT',
-                data: {
-                    comments: app.globalData.publish_comments
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    console.log(res.data);
-
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            publish_comments: res.data.comments
-                        });
-                    }
-                }
-            });
+    this.getComments();
+  },
+  methods: {
+    getComments() {
+      let that = this;
+      uni.request({
+        url: app.globalData.server + 'articles/comments',
+        method: 'PUT',
+        data: {
+          comments: app.globalData.publish_comments
+        },
+        header: {
+          'content-type': 'application/json'
         },
 
-        toArticle(e) {
-            let index = e.currentTarget.dataset.index;
-            let id = this.publish_comments[index].article;
-            uni.navigateTo({
-                url: '/pages/plugin/article/article?id=' + id
+        success(res) {
+          console.log(res.data);
+
+          if (res.statusCode == 200) {
+            that.setData({
+              publish_comments: res.data.comments
             });
+          }
         }
+      });
+    },
+
+    toArticle(e) {
+      let index = e.currentTarget.dataset.index;
+      let id = this.publish_comments[index].article;
+      uni.navigateTo({
+        url: '/pages/plugin/article/article?id=' + id
+      });
     }
+  }
 };
 </script>
 <style>
 .text-name {
-    color: #666666;
-    font-size: 30rpx;
+  color: #666666;
+  font-size: 30rpx;
 }
 
 .text-date {
-    color: #9b9b9b;
-    font-size: 24rpx;
+  color: #9b9b9b;
+  font-size: 24rpx;
 }
 
 .text-dz {
-    color: #999999;
-    font-size: 36rpx;
-    align-self: center;
+  color: #999999;
+  font-size: 36rpx;
+  align-self: center;
 }
 
 .text-content {
-    position: relative;
-    width: 85vw;
-    left: 10vw;
-    margin-top: 15rpx;
+  position: relative;
+  width: 85vw;
+  left: 10vw;
+  margin-top: 15rpx;
 }
 </style>

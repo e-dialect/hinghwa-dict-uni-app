@@ -37,51 +37,51 @@
 <script>
 const app = getApp();
 export default {
-    data() {
-        return {
-            publish_articles: []
-        };
-    },
-    onLoad() {
-        this.getArticles();
-    },
-    methods: {
-        getArticles() {
-            uni.showLoading({
-                title: '加载中'
-            });
-            let that = this; // 获取点赞文章
+  data() {
+    return {
+      publish_articles: []
+    };
+  },
+  onLoad() {
+    this.getArticles();
+  },
+  methods: {
+    getArticles() {
+      uni.showLoading({
+        title: '加载中'
+      });
+      let that = this; // 获取点赞文章
 
-            uni.request({
-                url: app.globalData.server + 'articles',
-                method: 'PUT',
-                data: {
-                    articles: app.globalData.publish_articles
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            publish_articles: res.data.articles
-                        });
-                        uni.hideLoading();
-                    }
-                }
-            });
+      uni.request({
+        url: app.globalData.server + 'articles',
+        method: 'PUT',
+        data: {
+          articles: app.globalData.publish_articles
+        },
+        header: {
+          'content-type': 'application/json'
         },
 
-        // 进入文章
-        article(e) {
-            let index = e.currentTarget.dataset.index;
-            let id = this.publish_articles[index].article.id;
-            uni.navigateTo({
-                url: '/pages/plugin/article/article?id=' + id
+        success(res) {
+          if (res.statusCode == 200) {
+            that.setData({
+              publish_articles: res.data.articles
             });
+            uni.hideLoading();
+          }
         }
+      });
+    },
+
+    // 进入文章
+    article(e) {
+      let index = e.currentTarget.dataset.index;
+      let id = this.publish_articles[index].article.id;
+      uni.navigateTo({
+        url: '/pages/plugin/article/article?id=' + id
+      });
     }
+  }
 };
 </script>
 <style>
