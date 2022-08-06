@@ -97,7 +97,7 @@
             {{ item.content }}
           </view>
           <view
-            v-for="(item, index1) in item.example"
+            v-for="(jtem, index1) in item.example"
             :key="index1"
             class="padding-sm"
           >
@@ -105,11 +105,11 @@
               class="cu-btn bg-red"
               style="width: 8vw"
             >
-              {{ item.type }}
+              {{ jtem.type }}
             </button>
-            <text>{{ item.content }}</text>
+            <text>{{ jtem.content }}</text>
             <text class="text-grey">
-              {{ item.explain }}
+              {{ jtem.explain }}
             </text>
           </view>
         </view>
