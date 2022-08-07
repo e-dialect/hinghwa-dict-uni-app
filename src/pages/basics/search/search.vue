@@ -175,7 +175,7 @@
                 v-for="(k, index2) in j.characters"
                 :key="index2"
                 :data-id="k.word"
-                style="display: flex;width: 33%;"
+                style="display: flex;width: 50%;"
                 @tap="getWord"
               >
                 <view
