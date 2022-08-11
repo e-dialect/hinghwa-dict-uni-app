@@ -11,7 +11,8 @@
         <view class="flex flex-direction">
           <view
             class="text-name"
-            @tap="toUserPage(comment.user.id)">
+            @tap="toUserPage(comment.user.id)"
+          >
             {{ comment.user.nickname }}
           </view>
           <view class="text-date">
@@ -35,7 +36,6 @@
       {{ comment.content }}
     </view>
   </view>
-
 </template>
 
 <script>

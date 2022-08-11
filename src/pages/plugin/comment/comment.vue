@@ -7,7 +7,7 @@
 
     <!--当前评论-->
     <view>
-      <ArticleComment :comment="comment"/>
+      <ArticleComment :comment="comment" />
     </view>
 
     <view class="padding-sm">
@@ -30,7 +30,8 @@
             <view class="flex flex-direction">
               <view
                 class="text-name"
-                @tap="toUserPage(item.user.id)">
+                @tap="toUserPage(item.user.id)"
+              >
                 {{ item.user.nickname }}
               </view>
               <view class="text-date">
@@ -38,7 +39,7 @@
               </view>
             </view>
             <view class="text-dz">
-              <text class="cuIcon-appreciate"/>
+              <text class="cuIcon-appreciate" />
             </view>
           </view>
         </view>
@@ -89,7 +90,6 @@
         发送
       </button>
     </view>
-
   </view>
 </template>
 
