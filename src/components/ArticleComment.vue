@@ -27,9 +27,6 @@
         <!--        <view class="text-dz">-->
         <!--          <text class="cuIcon-appreciate"></text>-->
         <!--        </view>-->
-        <view class="text-dz">
-          <text class="cuIcon-appreciate" />
-        </view>
       </view>
     </view>
     <view class="text-content">
