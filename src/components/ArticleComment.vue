@@ -45,7 +45,8 @@ export default {
   name: "ArticleComment",
   props: {
     comment: {
-      type: Object
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
