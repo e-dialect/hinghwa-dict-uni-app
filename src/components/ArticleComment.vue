@@ -1,16 +1,17 @@
 <template>
-  <view class="padding-bottom-sm">
+  <view class="padding-sm solid-bottom">
     <view class="flex">
       <image
-        :src="comment.user.avatar"
-        class="cu-avatar round margin-right-sm"
-        mode="aspectFill"
-        @tap="toUserPage(comment.user.id)"
+          class="cu-avatar round margin-right-sm"
+          :src="comment.user.avatar"
+          mode="aspectFill"
+          @tap="toUserPage(comment.user.id)"
       />
-
       <view class="flex flex-sub justify-between">
         <view class="flex flex-direction">
-          <view class="text-name">
+          <view
+              class="text-name"
+              @tap="toUserPage(comment.user.id)">
             {{ comment.user.nickname }}
           </view>
           <view class="text-date">
@@ -25,13 +26,16 @@
         <!--        <view class="text-dz">-->
         <!--          <text class="cuIcon-appreciate"></text>-->
         <!--        </view>-->
+        <view class="text-dz">
+          <text class="cuIcon-appreciate" />
+        </view>
       </view>
     </view>
-
-    <view class="text-content padding-left-xl">
+    <view class="text-content">
       {{ comment.content }}
     </view>
   </view>
+
 </template>
 
 <script>
@@ -41,8 +45,7 @@ export default {
   name: "ArticleComment",
   props: {
     comment: {
-      type: Object,
-      default: () => ({})
+      type: Object
     }
   },
   data() {
