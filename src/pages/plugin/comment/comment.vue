@@ -9,63 +9,21 @@
     <view>
       <ArticleComment :comment="comment" />
     </view>
-
-    <view class="padding-sm">
-      <view class="text-df text-bold padding-top-sm padding-bottom-sm">
-        全部回复（{{ comment.kids.length }}条）
-      </view>
-      <view
-        v-for="(item, index) in comment.kids"
-        :key="index"
-        class="padding-top-sm padding-bottom-sm solid-bottom"
-      >
-        <view class="flex">
-          <image
-            class="cu-avatar round margin-right-sm"
-            :src="item.user.avatar"
-            mode="aspectFill"
-            @tap="toUserPage(item.user.id)"
-          />
-          <view class="flex flex-sub justify-between">
-            <view class="flex flex-direction">
-              <view
-                class="text-name"
-                @tap="toUserPage(item.user.id)"
-              >
-                {{ item.user.nickname }}
-              </view>
-              <view class="text-date">
-                {{ item.time }}
-              </view>
-            </view>
-            <view class="text-dz">
-              <text class="cuIcon-appreciate" />
-            </view>
-          </view>
-        </view>
-
-        <view class="text-content">
-          <text v-if="item.parent !== comment.id">
-            @
-          </text>
-          <text
-            v-if="item.parent !== comment.id"
-            class="text-blue"
-          >
-            {{ comment.kids[map[item.parent]].user.nickname }}
-          </text>
-          <text v-if="item.parent !== comment.id">
-            ：
-          </text>
-          <text
-            :data-id="item.id"
-            @tap="reply"
-          >
-            {{ item.content }}
-          </text>
-        </view>
+   
+    <!--子评论-->
+    <view class="text-df text-bold padding-top-lg padding-sm">
+      全部回复（{{ comment.kids.length }}条）
+    </view>
+    <view
+      v-for="(item, index) in comment.kids"
+      :key="index"
+      class="padding-top-xs"
+    >
+      <view>
+        <ArticleComment :comment="item" />
       </view>
     </view>
+	
     <!--评论框-->
     <view
       class="cu-bar foot input padding-bottom"
