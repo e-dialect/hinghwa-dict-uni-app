@@ -2,16 +2,16 @@
   <view class="padding-sm solid-bottom">
     <view class="flex">
       <image
-          class="cu-avatar round margin-right-sm"
-          :src="comment.user.avatar"
-          mode="aspectFill"
-          @tap="toUserPage(comment.user.id)"
+        class="cu-avatar round margin-right-sm"
+        :src="comment.user.avatar"
+        mode="aspectFill"
+        @tap="toUserPage(comment.user.id)"
       />
       <view class="flex flex-sub justify-between">
         <view class="flex flex-direction">
           <view
-              class="text-name"
-              @tap="toUserPage(comment.user.id)">
+            class="text-name"
+            @tap="toUserPage(comment.user.id)">
             {{ comment.user.nickname }}
           </view>
           <view class="text-date">

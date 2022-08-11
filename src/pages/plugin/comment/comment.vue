@@ -1,13 +1,13 @@
 <template>
   <view>
     <cu-custom
-        bg-color="bg-white"
-        :is-back="true"
+      bg-color="bg-white"
+      :is-back="true"
     />
 
     <!--当前评论-->
     <view>
-      <ArticleComment :comment="comment" />
+      <ArticleComment :comment="comment"/>
     </view>
 
     <view class="padding-sm">
@@ -15,22 +15,22 @@
         全部回复（{{ comment.kids.length }}条）
       </view>
       <view
-          v-for="(item, index) in comment.kids"
-          :key="index"
-          class="padding-top-sm padding-bottom-sm solid-bottom"
+        v-for="(item, index) in comment.kids"
+        :key="index"
+        class="padding-top-sm padding-bottom-sm solid-bottom"
       >
         <view class="flex">
           <image
-              class="cu-avatar round margin-right-sm"
-              :src="item.user.avatar"
-              mode="aspectFill"
-              @tap="toUserPage(item.user.id)"
+            class="cu-avatar round margin-right-sm"
+            :src="item.user.avatar"
+            mode="aspectFill"
+            @tap="toUserPage(item.user.id)"
           />
           <view class="flex flex-sub justify-between">
             <view class="flex flex-direction">
               <view
-                  class="text-name"
-                  @tap="toUserPage(item.user.id)">
+                class="text-name"
+                @tap="toUserPage(item.user.id)">
                 {{ item.user.nickname }}
               </view>
               <view class="text-date">
@@ -38,7 +38,7 @@
               </view>
             </view>
             <view class="text-dz">
-              <text class="cuIcon-appreciate" />
+              <text class="cuIcon-appreciate"/>
             </view>
           </view>
         </view>
@@ -48,8 +48,8 @@
             @
           </text>
           <text
-              v-if="item.parent !== comment.id"
-              class="text-blue"
+            v-if="item.parent !== comment.id"
+            class="text-blue"
           >
             {{ comment.kids[map[item.parent]].user.nickname }}
           </text>
@@ -57,8 +57,8 @@
             ：
           </text>
           <text
-              :data-id="item.id"
-              @tap="reply"
+            :data-id="item.id"
+            @tap="reply"
           >
             {{ item.content }}
           </text>
@@ -67,24 +67,24 @@
     </view>
     <!--评论框-->
     <view
-        class="cu-bar foot input padding-bottom"
-        style="min-height: 120rpx"
+      class="cu-bar foot input padding-bottom"
+      style="min-height: 120rpx"
     >
       <view class="input-box">
         <input
-            :adjust-position="true"
-            :placeholder="ph_text"
-            :value="text"
-            style="margin-left: 30rpx"
-            @blur="blur"
-            @focus="focus"
-            @input="getText"
+          :adjust-position="true"
+          :placeholder="ph_text"
+          :value="text"
+          style="margin-left: 30rpx"
+          @blur="blur"
+          @focus="focus"
+          @input="getText"
         >
       </view>
       <button
-          class="cu-btn bg-blue shadow"
-          style="width: 16vw"
-          @tap="createComment"
+        class="cu-btn bg-blue shadow"
+        style="width: 16vw"
+        @tap="createComment"
       >
         发送
       </button>
@@ -130,7 +130,7 @@ export default {
     let comment  = JSON.parse(options.comment);
     let id       = options.id;
     this.comment = comment
-    this.id = id
+    this.id      = id
 
     let map = [];
     for (let i = 0; i < this.comment.kids.length; i++) {
@@ -172,8 +172,8 @@ export default {
      * @param id 0 表示直接评论文章，其他表示回复某评论的子评论
      */
     reply(id) {
-      this.parent  = id
-      this.text    = ''
+      this.parent = id
+      this.text   = ''
     },
 
     /**
@@ -191,7 +191,7 @@ export default {
     getComments(id) {
       getComments(id).then(res => {
         this.comment = res.comment;
-        this.map      = res.map;
+        this.map     = res.map;
       });
     },
     /**
