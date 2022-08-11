@@ -80,6 +80,7 @@ export default {
       },
 
       map: [],
+      ph_text: '评论...',
       inEditing: false,
       text: '',
     };
@@ -95,17 +96,6 @@ export default {
       map[this.comment.kids[i].id] = i;
     }
     this.map = map
-  },
-
-  computed: {
-    ph_text() {
-      if (this.parent > 0) {
-        const reply_user = this.comment[this.map[this.parent]].user.nickname;
-        return '@ ' + reply_user
-      } else {
-        return '评论...'
-      }
-    }
   },
   methods: {
     /**
