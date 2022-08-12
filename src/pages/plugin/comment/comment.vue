@@ -27,7 +27,7 @@
           <view @tap="reply(item.id)">
             <ArticleComment
               :comment="item"
-              :parentId="comment.id - item.parent"
+              :parent-Id="comment.id - item.parent"
               :mention="comment.kids[map[item.parent]].user.nickname"
             />
           </view>
