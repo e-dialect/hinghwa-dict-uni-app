@@ -25,7 +25,10 @@
           class="padding-top-xs"
         >
           <view @tap="reply(item.id)">
-            <ArticleComment :comment="item" :parent_id="comment.id - item.parent" :mention="comment.kids[map[item.parent]].user.nickname" />
+            <ArticleComment :comment="item"
+                            :parentId="comment.id - item.parent"
+                            :mention="comment.kids[map[item.parent]].user.nickname"
+            />
           </view>
         </view>
 
