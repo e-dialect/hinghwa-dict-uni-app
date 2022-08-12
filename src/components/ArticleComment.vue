@@ -31,13 +31,13 @@
     </view>
     <view class="text-content">
       <text
-        v-if="parent-id != 0 && comment.parent !== 0"
+        v-if="parent-id != comment.parent && comment.parent !== 0"
         class="text-blue"
       >
         @{{ mention }}
       </text>
       <text
-        v-if="parent-id != 0 && comment.parent !== 0"
+        v-if="parent-id != comment.parent && comment.parent !== 0"
       >
         ：
       </text>
