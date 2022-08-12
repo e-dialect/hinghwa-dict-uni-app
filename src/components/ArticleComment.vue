@@ -30,7 +30,20 @@
       </view>
     </view>
     <view class="text-content">
-      {{ comment.content }}
+      <text
+        v-if="parent_id != 0 && comment.parent !== 0"
+        class="text-blue"
+      >
+        @{{ mention }}
+      </text>
+      <text
+        v-if="parent_id != 0  && comment.parent !== 0"
+      >
+        ：
+      </text>
+      <text>
+        {{ comment.content }}
+      </text>
     </view>
   </view>
 </template>
@@ -44,7 +57,16 @@ export default {
     comment: {
       type: Object,
       default: () => ({})
+    },
+    parent_id: {
+      type: String,
+      default: ''
+    },
+    mention: {
+      type: String,
+      default: ''
     }
+
   },
   data() {
     return {

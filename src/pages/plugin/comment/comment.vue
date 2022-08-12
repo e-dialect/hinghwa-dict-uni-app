@@ -5,25 +5,39 @@
       :is-back="true"
     />
 
-    <!--当前评论-->
-    <view>
-      <ArticleComment :comment="comment" />
-    </view>
-   
-    <!--子评论-->
-    <view class="text-df text-bold padding-top-lg padding-sm">
-      全部回复（{{ comment.kids.length }}条）
-    </view>
-    <view
-      v-for="(item, index) in comment.kids"
-      :key="index"
-      class="padding-top-xs"
+    <scroll-view
+      scroll-y
+      style="height: 100%"
     >
-      <view>
-        <ArticleComment :comment="item" />
+      <view style="margin-bottom: 130upx">
+        <!--当前评论-->
+        <view>
+          <ArticleComment :comment="comment" />
+        </view>
+
+        <!--子评论-->
+        <view class="text-df text-bold padding-top-lg padding-sm">
+          全部回复（{{ comment.kids.length }}条）
+        </view>
+        <view
+          v-for="(item, index) in comment.kids"
+          :key="index"
+          class="padding-top-xs"
+        >
+          <view @tap="reply(item.id)">
+            <ArticleComment :comment="item" :parent_id="comment.id - item.parent" :mention="comment.kids[map[item.parent]].user.nickname" />
+          </view>
+        </view>
+
+        <!--文章评论区底部-->
+        <view class="margin-top-sm text-center">
+          <text class="text-grey text-sm">
+            这里暂时空空如也~
+          </text>
+        </view>
       </view>
-    </view>
-	
+    </scroll-view>
+
     <!--评论框-->
     <view
       class="cu-bar foot input padding-bottom"
@@ -80,7 +94,6 @@ export default {
       },
 
       map: [],
-      ph_text: '评论...',
       inEditing: false,
       text: '',
     };
@@ -96,6 +109,16 @@ export default {
       map[this.comment.kids[i].id] = i;
     }
     this.map = map
+  },
+  computed: {
+    ph_text() {
+      if (this.parent > 0) {
+        const reply_user = this.comment.kids[this.map[this.parent]].user.nickname;
+        return '@ ' + reply_user
+      } else {
+        return '评论...'
+      }
+    }
   },
   methods: {
     /**
@@ -147,7 +170,7 @@ export default {
      */
     createComment() {
       const comment = this.text;
-      const parent  = this.comment.id;
+      const parent  = this.parent;
       const id      = this.id;
       if (comment.length === 0) {
         uni.showToast({
