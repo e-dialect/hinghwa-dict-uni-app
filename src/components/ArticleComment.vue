@@ -31,13 +31,13 @@
     </view>
     <view class="text-content">
       <text
-        v-if="parentId != comment.parent && comment.parent !== 0"
+        v-if="parentId !== comment.parent && comment.parent !== 0"
         class="text-blue"
       >
         @{{ mention }}
       </text>
       <text
-        v-if="parentId != comment.parent && comment.parent !== 0"
+        v-if="parentId !== comment.parent && comment.parent !== 0"
       >
         ：
       </text>
@@ -59,8 +59,8 @@ export default {
       default: () => ({})
     },
     parentId: {
-      type: String,
-      default: ''
+      type: Number,
+      default: 0
     },
     mention: {
       type: String,
