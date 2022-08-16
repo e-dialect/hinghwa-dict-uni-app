@@ -1,16 +1,18 @@
 <template>
-  <view class="padding-bottom-sm">
+  <view class="padding-sm solid-bottom">
     <view class="flex">
       <image
-        :src="comment.user.avatar"
         class="cu-avatar round margin-right-sm"
+        :src="comment.user.avatar"
         mode="aspectFill"
         @tap="toUserPage(comment.user.id)"
       />
-
       <view class="flex flex-sub justify-between">
         <view class="flex flex-direction">
-          <view class="text-name">
+          <view
+            class="text-name"
+            @tap="toUserPage(comment.user.id)"
+          >
             {{ comment.user.nickname }}
           </view>
           <view class="text-date">
@@ -27,9 +29,21 @@
         <!--        </view>-->
       </view>
     </view>
-
-    <view class="text-content padding-left-xl">
-      {{ comment.content }}
+    <view class="text-content">
+      <text
+        v-if="parentId !== comment.parent && comment.parent !== 0"
+        class="text-blue"
+      >
+        @{{ mention }}
+      </text>
+      <text
+        v-if="parentId !== comment.parent && comment.parent !== 0"
+      >
+        ：
+      </text>
+      <text>
+        {{ comment.content }}
+      </text>
     </view>
   </view>
 </template>
@@ -43,7 +57,16 @@ export default {
     comment: {
       type: Object,
       default: () => ({})
+    },
+    parentId: {
+      type: Number,
+      default: 0
+    },
+    mention: {
+      type: String,
+      default: ''
     }
+
   },
   data() {
     return {

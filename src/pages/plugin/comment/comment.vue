@@ -4,102 +4,64 @@
       bg-color="bg-white"
       :is-back="true"
     />
-    <view class="padding-sm solid-bottom">
-      <view class="flex">
-        <image
-          class="cu-avatar round margin-right-sm"
-          :src="comment.user.avatar"
-          mode="aspectFill"
-        />
-        <view class="flex flex-sub justify-between">
-          <view class="flex flex-direction">
-            <view class="text-name">
-              {{ comment.user.nickname }}
-            </view>
-            <view class="text-date">
-              {{ comment.time }}
-            </view>
-          </view>
-          <view class="text-dz">
-            <text class="cuIcon-appreciate" />
-          </view>
+
+    <scroll-view
+      scroll-y
+      style="height: 100%"
+    >
+      <view style="margin-bottom: 130upx">
+        <!--当前评论-->
+        <view>
+          <ArticleComment :comment="comment" />
         </view>
-      </view>
-      <view class="text-content">
-        {{ comment.content }}
-      </view>
-    </view>
-    <view class="padding-sm">
-      <view class="text-df text-bold padding-top-sm padding-bottom-sm">
-        全部回复（{{ comment.kids.length }}条）
-      </view>
-      <view
-        v-for="(item, index) in comment.kids"
-        :key="index"
-        class="padding-top-sm padding-bottom-sm solid-bottom"
-      >
-        <view class="flex">
-          <image
-            class="cu-avatar round margin-right-sm"
-            :src="item.user.avatar"
-            mode="aspectFill"
-          />
-          <view class="flex flex-sub justify-between">
-            <view class="flex flex-direction">
-              <view class="text-name">
-                {{ item.user.nickname }}
-              </view>
-              <view class="text-date">
-                {{ item.time }}
-              </view>
-            </view>
-            <view class="text-dz">
-              <text class="cuIcon-appreciate" />
-            </view>
+
+        <!--子评论-->
+        <view class="text-df text-bold padding-top-lg padding-sm">
+          全部回复（{{ comment.kids.length }}条）
+        </view>
+        <view
+          v-for="(item, index) in comment.kids"
+          :key="index"
+          class="padding-top-xs"
+        >
+          <view @tap="reply(item.id)">
+            <ArticleComment
+              :comment="item"
+              :parent-id="comment.id"
+              :mention="comment.kids[map[item.parent]].user.nickname"
+            />
           </view>
         </view>
 
-        <view class="text-content">
-          <text v-if="item.parent != comment.id">
-            @
-          </text>
-          <text
-            v-if="item.parent != comment.id"
-            class="text-blue"
-          >
-            {{ comment.kids[map[item.parent]].user.nickname }}
-          </text>
-          <text v-if="item.parent != comment.id">
-            ：
-          </text>
-          <text
-            :data-id="item.id"
-            @tap="reply"
-          >
-            {{ item.content }}
+        <!--文章评论区底部-->
+        <view class="margin-top-sm text-center">
+          <text class="text-grey text-sm">
+            这里暂时空空如也~
           </text>
         </view>
       </view>
-    </view>
+    </scroll-view>
+
+    <!--评论框-->
     <view
       class="cu-bar foot input padding-bottom"
       style="min-height: 120rpx"
     >
       <view class="input-box">
         <input
-          style="margin-left: 30rpx"
-          :placeholder="ph_text"
-          :focus="is_reply"
           :adjust-position="true"
-          @input="getText"
-          @focus="focus"
+          :placeholder="ph_text"
+          :value="text"
+          style="margin-left: 30rpx"
           @blur="blur"
+          @focus="focus"
+          @input="getText"
         >
       </view>
       <button
         class="cu-btn bg-blue shadow"
         style="width: 16vw"
-        @tap="commentFun"
+        @tap="createComment"
       >
         发送
       </button>
@@ -108,172 +70,167 @@
 </template>
 
 <script>
+import {toUserPage}                 from "@/routers";
+import {createComment, getComments} from "@/services/article";
+import ArticleComment               from "@/components/ArticleComment";
+
 const app = getApp();
 export default {
-    data() {
-        return {
-            article_id: 0,
-            parent: 0,
+  components: {
+    ArticleComment
+  },
+  data() {
+    return {
+      toUserPage: toUserPage,
+      id: 0,
+      parent: 0,
 
-            comment: {
-                user: {
-                    avatar: '',
-                    nickname: ''
-                },
-
-                time: '',
-                content: '',
-                kids: [],
-                id: ''
-            },
-
-            map: [],
-            ph_text: '评论...',
-            is_reply: false,
-            text: '',
-
-            user: {
-                nickname: ''
-            }
-        };
-    },
-    onLoad(options) {
-        let data = JSON.parse(options.comment);
-        this.setData({
-            article_id: options.id,
-            parent: data.id,
-            comment: data
-        });
-        let map = [];
-
-        for (let i = 0; i < this.comment.kids.length; i++) {
-            map[this.comment.kids[i].id] = i;
-        }
-
-        this.setData({
-            map: map
-        });
-    },
-    methods: {
-        focus() {
-            this.setData({
-                is_reply: true
-            });
+      comment: {
+        user: {
+          avatar: '',
+          nickname: ''
         },
 
-        blur() {
-            let id = this.comment.id;
+        time: '',
+        content: '',
+        kids: [],
+        id: ''
+      },
 
-            if (this.text == '') {
-                this.setData({
-                    parent: id,
-                    is_reply: false,
-                    ph_text: '评论...'
-                });
-            }
-        },
+      map: [],
+      inEditing: false,
+      text: '',
+    };
+  },
+  onLoad(options) {
+    let comment  = JSON.parse(options.comment);
+    let id       = options.id;
+    this.comment = comment
+    this.id      = id
 
-        reply(e) {
-            let id = e.currentTarget.dataset.id;
-            let reply_user = this.comment.kids[this.map[id]].user.nickname;
-            this.setData({
-                parent: id,
-                is_reply: true,
-                ph_text: '@ ' + reply_user
-            });
-        },
-
-        getText(e) {
-            this.setData({
-                text: e.detail.value
-            });
-        },
-
-        commentFun() {
-            let comment = this.text;
-            let parent = this.parent;
-            let id = this.article_id;
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'articles/' + id + '/comments',
-                // url: 'http://127.0.0.1:4523/mock/404238/articles/1/comments',
-                method: 'POST',
-                data: {
-                    content: comment,
-                    parent: parent
-                },
-                header: {
-                    'content-type': 'application/json',
-                    token: app.globalData.token
-                },
-
-                success(res) {
-                    console.log(res);
-
-                    if (res.statusCode == 200) {
-                        uni.showToast({
-                            title: '发表成功'
-                        });
-                        setTimeout(function () {
-                            uni.navigateBack({
-                                delta: 1
-                            });
-                        }, 500);
-                    } else if (res.statusCode == 400) {
-                        uni.showToast({
-                            title: '格式错误',
-                            icon: 'error'
-                        });
-                    } else if (res.statusCode == 401) {
-                        uni.showToast({
-                            title: '没有权限',
-                            icon: 'error'
-                        });
-                    } else if (res.statusCode == 500) {
-                        uni.showToast({
-                            title: '服务器错误',
-                            icon: 'error'
-                        });
-                    }
-                }
-            });
-        }
+    let map = [];
+    for (let i = 0; i < this.comment.kids.length; i++) {
+      map[this.comment.kids[i].id] = i;
     }
+    this.map = map
+  },
+  computed: {
+    ph_text() {
+      if (this.parent > 0) {
+        const reply_user = this.comment.kids[this.map[this.parent]].user.nickname;
+        return '@ ' + reply_user
+      } else {
+        return '评论...'
+      }
+    }
+  },
+  methods: {
+    /**
+     * 选中评论框，进入编辑状态
+     */
+    focus() {
+      this.inEditing = true
+    },
+
+    /**
+     * 离开评论框，退出编辑状态
+     */
+    blur() {
+      if (this.text === '') {
+        this.reply(0)
+      }
+      this.inEditing = false
+    },
+
+    /**
+     * 回复某评论
+     * @param id 0 表示直接评论文章，其他表示回复某评论的子评论
+     */
+    reply(id) {
+      this.parent = id
+      this.text   = ''
+    },
+
+    /**
+     * 同步评论内容
+     * @param e
+     */
+    getText(e) {
+      this.text = e.detail.value
+    },
+
+    /**
+     * 获取文章评论
+     * @param id 文章id
+     */
+    getComments(id) {
+      getComments(id).then(res => {
+        this.comment = res.comment;
+        this.map     = res.map;
+      });
+    },
+    /**
+     * 发送评论
+     */
+    createComment() {
+      const comment = this.text;
+      const parent  = this.parent;
+      const id      = this.id;
+      if (comment.length === 0) {
+        uni.showToast({
+          title: '不能发送空评论',
+          icon: 'none'
+        });
+        return;
+      }
+      createComment(id, comment, parent).then(async () => {
+        await this.getComments(id);
+        this.reply(0)
+        this.inEditing = false
+        setTimeout(() => {
+          uni.showToast({
+            title: '发表成功'
+          });
+        }, 100)
+      });
+    },
+
+  }
 };
 </script>
 <style>
 page {
-    background-color: white;
+  background-color: white;
 }
 
 .text-name {
-    color: #666666;
-    font-size: 30rpx;
+  color: #666666;
+  font-size: 30rpx;
 }
 
 .text-date {
-    color: #9b9b9b;
-    font-size: 24rpx;
+  color: #9b9b9b;
+  font-size: 24rpx;
 }
 
 .text-dz {
-    color: #999999;
-    font-size: 36rpx;
-    align-self: center;
+  color: #999999;
+  font-size: 36rpx;
+  align-self: center;
 }
 
 .text-content {
-    position: relative;
-    width: 85vw;
-    left: 10vw;
-    margin-top: 15rpx;
+  position: relative;
+  width: 85vw;
+  left: 10vw;
+  margin-top: 15rpx;
 }
 
 .input-box {
-    flex: 1;
-    margin-left: 20rpx;
-    margin-right: 20rpx;
-    border-radius: 5000rpx;
-    background-color: #f5f5f5;
+  flex: 1;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  border-radius: 5000rpx;
+  background-color: #f5f5f5;
 }
 </style>
