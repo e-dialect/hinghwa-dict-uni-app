@@ -382,7 +382,7 @@ page {
   background-color: #f7f7f7;
   position: relative;
   width: 85vw;
-  left: 10vw;
+  left: 12vw;
   margin-top: 10 rpx;
   padding: 20 rpx;
   border-radius: 10 rpx;
