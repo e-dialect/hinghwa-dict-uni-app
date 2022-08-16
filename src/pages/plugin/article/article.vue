@@ -64,9 +64,11 @@
           <view
             v-for="(item, index) in comments"
             :key="index"
-            class="solid-bottom padding-top-sm padding-bottom-sm"
           >
-            <view v-if="item.parent === 0">
+            <view
+              v-if="item.parent === 0"
+              class="solid-bottom padding-top-sm padding-bottom-sm"
+            >
               <!--该评论-->
               <view @tap="reply(item.id)">
                 <ArticleComment :comment="item" />
