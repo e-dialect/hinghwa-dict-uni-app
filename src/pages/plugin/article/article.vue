@@ -64,9 +64,11 @@
           <view
             v-for="(item, index) in comments"
             :key="index"
-            class="solid-bottom padding-top-sm padding-bottom-sm"
           >
-            <view v-if="item.parent === 0">
+            <view
+              v-if="item.parent === 0"
+              class="solid-bottom padding-top-sm padding-bottom-sm"
+            >
               <!--该评论-->
               <view @tap="reply(item.id)">
                 <ArticleComment :comment="item" />
@@ -380,7 +382,7 @@ page {
   background-color: #f7f7f7;
   position: relative;
   width: 85vw;
-  left: 10vw;
+  left: 12vw;
   margin-top: 10 rpx;
   padding: 20 rpx;
   border-radius: 10 rpx;

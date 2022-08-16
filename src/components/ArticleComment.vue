@@ -1,5 +1,5 @@
 <template>
-  <view class="padding-sm solid-bottom">
+  <view class="padding-sm">
     <view class="flex">
       <image
         class="cu-avatar round margin-right-sm"

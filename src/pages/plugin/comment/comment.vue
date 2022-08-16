@@ -11,7 +11,7 @@
     >
       <view style="margin-bottom: 130upx">
         <!--当前评论-->
-        <view>
+        <view class="solid-bottom">
           <ArticleComment :comment="comment" />
         </view>
 
@@ -22,7 +22,7 @@
         <view
           v-for="(item, index) in comment.kids"
           :key="index"
-          class="padding-top-xs"
+          class="padding-top-xs solid-bottom"
         >
           <view @tap="reply(item.id)">
             <ArticleComment
