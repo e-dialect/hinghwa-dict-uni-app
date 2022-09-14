@@ -8,16 +8,14 @@
     </view>
     <form @submit="login">
       <view class="info">
-        <view class="cuIcon-friend">
-        </view>
+        <view class="cuIcon-friend" />
         <input
           name="username"
           placeholder="请输入用户名"
         >
       </view>
       <view class="info">
-        <view class="cuIcon-lock">
-        </view>
+        <view class="cuIcon-lock" />
         <input
           name="password"
           password
