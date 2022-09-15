@@ -61,6 +61,33 @@ export function toLoginPage() {
   });
 }
 
+/**
+ * 前往测试页面
+ */
+export function toRandomQuizPage() {
+  uni.navigateTo({
+    url: "/pages/component/RandomQuiz/RandomQuiz",
+  });
+}
+
+/**
+ * 前往单个测试页面
+ */
+export function toOneQuizPage(id) {
+  uni.navigateTo({
+    url: "/pages/component/quiz/quiz?id=" + id
+  });
+}
+
+/**
+ * 前往搜索测试页面
+ */
+export function toSearchQuizPage() {
+  uni.navigateTo({
+    url: "/pages/component/SearchQuiz/SearchQuiz",
+  });
+}
+
 export function toMePage(closeAll = false) {
   if (closeAll) {
     uni.reLaunch({
