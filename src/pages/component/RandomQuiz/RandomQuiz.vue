@@ -39,8 +39,8 @@
         <!--提交-->
         <view class="padding submit-btn">
           <button
-            @click="submitResult"
             class="cu-btn bg-gradual-blue"
+            @click="submitResult"
           >
             提 交
           </button>

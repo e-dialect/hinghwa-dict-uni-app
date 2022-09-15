@@ -14,8 +14,8 @@
         >
       </view>
       <view
-        @tap="searchQuizzes"
         class="action"
+        @tap="searchQuizzes"
       >
         <text class="text-blue">
           搜索
@@ -30,8 +30,8 @@
     >
       <view class="flex flex-direction justify-between">
         <view
-          @tap="toOneQuizPage(item.id)"
           class="margin-bottom-sm"
+          @tap="toOneQuizPage(item.id)"
         >
           <text class="text-xl text-bold text-blue ">
             {{ item.question }}
@@ -39,7 +39,6 @@
         </view>
       </view>
     </view>
-
   </view>
 </template>
 
