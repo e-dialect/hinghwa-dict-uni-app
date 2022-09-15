@@ -18,8 +18,8 @@
         <!--选项-->
         <view>
           <radio-group
-            @change="radioChange"
             class="block"
+            @change="radioChange"
           >
             <view
               v-for="(item, index) in quiz.options"
@@ -28,7 +28,7 @@
             >
               <radio
                 :value="index"
-                :checked="index === this.current"
+                :checked="index === current"
               />
               <view class="title text-black">
                 {{ index + 1 }}.{{ item }}
@@ -39,8 +39,8 @@
         <!--提交-->
         <view class="padding submit-btn">
           <button
-            @click="submitResult"
             class="cu-btn bg-gradual-blue"
+            @click="submitResult"
           >
             提 交
           </button>
@@ -70,7 +70,8 @@
           </view>
           <view
             v-show="isShow2"
-            class="text-content padding text-grey">
+            class="text-content padding text-grey"
+          >
             {{ quiz.explanation }}
           </view>
         </view>
@@ -79,8 +80,8 @@
     <view class="cu-bar tabbar bg-white shadow foot">
       <!--查看答案和解析-->
       <view
-        @tap="showAnswer"
         class="action"
+        @tap="showAnswer"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-question" />
@@ -90,9 +91,9 @@
         </view>
       </view>
       <view
-        @tap="showExplian"
         data-target="modalError"
         class="action"
+        @tap="showExplian"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-creative" />
@@ -102,9 +103,9 @@
         </view>
       </view>
       <view
-        @tap="showExplian"
         data-target="modalError"
         class="action"
+        @tap="showExplian"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-post" />

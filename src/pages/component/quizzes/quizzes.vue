@@ -44,8 +44,8 @@
         <view class="quiz-btn">
           <button
             style="height: 100upx;width: 200upx"
-            @tap="toRandomQuizPage()"
             class="cu-btn bg-blue shadow"
+            @tap="toRandomQuizPage()"
           >
             <text class="text-lg">
               开始答题
@@ -73,6 +73,7 @@
         </view>
       </view>
     </view>
+  </view>
 </template>
 
 <script>

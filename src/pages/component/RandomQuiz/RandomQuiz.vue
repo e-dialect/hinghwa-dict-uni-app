@@ -18,8 +18,8 @@
         <!--选项-->
         <view>
           <radio-group
-            @change="radioChange"
             class="block"
+            @change="radioChange"
           >
             <view
               v-for="(item, index) in quiz.options"
@@ -28,7 +28,7 @@
             >
               <radio
                 :value="index"
-                :checked="index === this.current"
+                :checked="index === current"
               />
               <view class="title text-black">
                 {{ index + 1 }}.{{ item }}
@@ -38,7 +38,7 @@
         </view>
         <!--提交-->
         <view class="padding submit-btn">
-          <button>
+          <button
             @click="submitResult"
             class="cu-btn bg-gradual-blue"
           >
@@ -78,8 +78,8 @@
     <!--切换题目-->
     <view class="cu-bar tabbar bg-white shadow foot">
       <view
-        @tap="changeQuiz"
         class="action"
+        @tap="changeQuiz"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-right" />
@@ -91,8 +91,8 @@
 
       <!--查看答案和解析-->
       <view
-        @tap="showAnswer"
         class="action"
+        @tap="showAnswer"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-question" />
@@ -102,9 +102,9 @@
         </view>
       </view>
       <view
-        @tap="showExplian"
         data-target="modalError"
         class="action"
+        @tap="showExplian"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-creative" />
@@ -114,9 +114,9 @@
         </view>
       </view>
       <view
-        @tap="showExplian"
         data-target="modalError"
         class="action"
+        @tap="showExplian"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-post" />
@@ -126,7 +126,6 @@
         </view>
       </view>
     </view>
-
   </view>
 </template>
 
