@@ -8,18 +8,14 @@
     </view>
     <form @submit="login">
       <view class="info">
-        <view class="cuIcon-friend">
-&nbsp;
-        </view>
+        <view class="cuIcon-friend" />
         <input
           name="username"
           placeholder="请输入用户名"
         >
       </view>
       <view class="info">
-        <view class="cuIcon-lock">
-&nbsp;
-        </view>
+        <view class="cuIcon-lock" />
         <input
           name="password"
           password
@@ -122,11 +118,8 @@ page {
   background-color: #f5f5f5;
   height: 80rpx;
   width: 60vw;
-  padding: 20rpx;
+  padding-left: 20rpx;
   border-radius: 10rpx;
-}
-
-.info input {
   font-size: 32rpx;
   margin-left:16px;
 }
