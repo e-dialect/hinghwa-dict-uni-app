@@ -43,9 +43,9 @@
         <!--开始答题按钮-->
         <view class="quiz-btn">
           <button
-            class="cu-btn bg-blue shadow"
             style="height: 100upx;width: 200upx"
             @tap="toRandomQuizPage()"
+            class="cu-btn bg-blue shadow"
           >
             <text class="text-lg">
               开始答题

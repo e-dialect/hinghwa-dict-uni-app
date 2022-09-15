@@ -19,10 +19,10 @@
         <view
           v-for="(item, index) in list"
           :key="index"
-          class="cu-item bg-img shadow-blur"
-          :style="'background-image:url(' + item.img + ');height:15vh;'"
           :data-url="item.url"
           @tap="getTools"
+          class="cu-item bg-img shadow-blur"
+          :style="'background-image:url(' + item.img + ');height:15vh;'"
         >
           <view class="cardTitle" />
         </view>

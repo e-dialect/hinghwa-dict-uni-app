@@ -11,36 +11,36 @@
         <view class="cu-bar bg-white solid-bottom">
           <view class="action text-black">
             <text class="cuIcon-title text-blue text-bold">
-              {{quiz.question}}
+              {{ quiz.question }}
             </text>
           </view>
         </view>
         <!--选项-->
         <view>
           <radio-group
-            class="block"
             @change="radioChange"
+            class="block"
           >
             <view
-              class="cu-form-group"
               v-for="(item, index) in quiz.options"
               :key="index"
+              class="cu-form-group"
             >
               <radio
                 :value="index"
                 :checked="index === this.current"
               />
               <view class="title text-black">
-                {{index + 1}}.{{item}}
+                {{ index + 1 }}.{{ item }}
               </view>
             </view>
           </radio-group>
         </view>
         <!--提交-->
         <view class="padding submit-btn">
-          <button
-            class="cu-btn bg-gradual-blue"
+          <button>
             @click="submitResult"
+            class="cu-btn bg-gradual-blue"
           >
             提 交
           </button>
@@ -54,7 +54,7 @@
             <view class="action text-grey">
               <text>正确答案：</text>
               <text class="solid-bottom padding-left text-blue">
-                {{quiz.answer + 1}}
+                {{ quiz.answer + 1 }}
               </text>
             </view>
           </view>
@@ -70,7 +70,7 @@
             v-show="isShow2"
             class="text-content padding text-grey"
           >
-            {{quiz.explanation}}
+            {{ quiz.explanation }}
           </view>
         </view>
       </form>
@@ -78,8 +78,8 @@
     <!--切换题目-->
     <view class="cu-bar tabbar bg-white shadow foot">
       <view
-        class="action"
         @tap="changeQuiz"
+        class="action"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-right" />
@@ -91,8 +91,8 @@
 
       <!--查看答案和解析-->
       <view
-        class="action"
         @tap="showAnswer"
+        class="action"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-question" />
@@ -102,9 +102,9 @@
         </view>
       </view>
       <view
-        class="action"
         @tap="showExplian"
         data-target="modalError"
+        class="action"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-creative" />
@@ -114,9 +114,9 @@
         </view>
       </view>
       <view
-        class="action"
         @tap="showExplian"
         data-target="modalError"
+        class="action"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-post" />
