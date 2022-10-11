@@ -10,7 +10,24 @@ export async function getArticle(id) {
 }
 
 /**
- * AT0201 点赞文章
+ * AT0201 获取全部文章的id数组
+ * @returns {Promise<unknown>}
+ */
+export async function getArticles() {
+  return request.get(`/articles`)
+}
+
+/**
+ * AT0202 获取全部文章信息
+ * @param id 文章id数组
+ * @returns {Promise<unknown>}
+ */
+export async function getAllArticles(id) {
+  return request.put(`/articles`, {articles: id})
+}
+
+/**
+ * AT0301 点赞文章
  * @param id 文章id
  * @returns {Promise<unknown>}
  */
@@ -19,7 +36,7 @@ export async function likeArticle(id) {
 }
 
 /**
- * AT0202 取消点赞文章
+ * AT0302 取消点赞文章
  * @param id 文章id
  * @returns {Promise<*>}
  */

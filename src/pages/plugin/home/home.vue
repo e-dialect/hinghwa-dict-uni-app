@@ -41,7 +41,7 @@
       @scrolltolower="loadMoreArticles"
     >
       <view
-        v-for="(item, index) in status == 0 ? hot_articles : display_all_articles"
+        v-for="(item, index) in status == 0 ? hot_articles : displayArticles"
         :key="index"
         class="word-card padding-xs shadow -gray cu-card article no-card"
         style="margin: 3vw"
@@ -108,158 +108,119 @@
 </template>
 
 <script>
+import {getHotArticles} from "@/services/website";
+import {getArticles, getAllArticles} from "@/services/article";
+
 const app = getApp();
 export default {
-    data() {
-        return {
-            hot_articles: [],
-            all_articles: [],
-            display_all_articles: [],
-            page: 1,
-            status: 0,
-            triggered: false
-        };
+  data() {
+    return {
+      hot_articles: [],
+      allArticles: [],
+      displayArticles: [],
+      page: 1,
+      status: 0,
+      triggered: false
+    };
+  },
+  options: {
+    addGlobalClass: true
+  },
+  beforeMount() {
+    let that = this;
+    this.getHotArticlesList();
+  },
+  methods: {
+    /**
+     * 获取热门文章列表
+     * @returns {Promise<void>}
+     */
+    async getHotArticlesList() {
+      uni.showLoading();
+      const res         = await getHotArticles()
+      this.hot_articles = res.hot_articles
+      await this.getArticlesList()
     },
-    options: {
-        addGlobalClass: true
+
+    /**
+     * 获取全部文章列表
+     * @returns {Promise<void>}
+     */
+    async getArticlesList() {
+      const res            = await getArticles()
+      const articlesId     = res.articles
+      const res1 = await getAllArticles(articlesId)
+      this.allArticles = res1.articles
+      this.displayArticles = res1.articles.slice(0, 4)
+      uni.hideLoading();
     },
-    beforeMount() {
-        let that = this;
-        this.getHotArticles();
+
+    // 下拉刷新
+    onRefresh() {
+      if (this._freshing) {
+        return;
+      }
+      this._freshing = true;
+      this.getHotArticlesList();
+      setTimeout(() => {
+        this.setData({
+          triggered: false
+        });
+        this._freshing = false;
+      }, 500);
     },
-    methods: {
-        // 获取热门文章
-        getHotArticles() {
-            uni.showLoading();
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'website/hot_articles',
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
 
-                success(res) {
-                    console.log(res);
+    // 加载更多文章
+    loadMoreArticles() {
+      uni.showLoading();
+      let page = this.page;
+      let origin_articles = this.displayArticles;
+      let concat_articles = this.allArticles.slice(page * 4, page * 4 + 4);
+      this.setData({
+        page: page + 1,
+        displayArticles: origin_articles.concat(concat_articles)
+      });
+      setTimeout(function () {
+        uni.hideLoading();
+      }, 500);
+    },
 
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            hot_articles: res.data.hot_articles
-                        });
-                        that.getAllArticles();
-                    }
-                }
-            });
-        },
+    changeStatus(e) {
+      let index = e.currentTarget.dataset.index;
+      this.setData({
+        status: index
+      });
+    },
 
-        // 获取全部文章
-        getAllArticles() {
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'articles',
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
+    article(e) {
+      let index = e.currentTarget.dataset.index;
+      let id = 0;
 
-                success(res) {
-                    if (res.statusCode == 200) {
-                        // 获取文章id数组
-                        let arr = res.data.articles; // 获取文章数组
+      if (this.status == 0) {
+        id = this.hot_articles[index].article.id;
+      } else {
+        id = this.allArticles[index].article.id;
+      }
 
-                        uni.request({
-                            url: app.globalData.server + 'articles',
-                            method: 'PUT',
-                            data: {
-                                articles: arr
-                            },
-                            header: {
-                                'content-type': 'application/json'
-                            },
+      uni.navigateTo({
+        url: '/pages/plugin/article/article?id=' + id
+      });
+    },
 
-                            success(res) {
-                                if (res.statusCode == 200) {
-                                    that.setData({
-                                        all_articles: res.data.articles,
-                                        display_all_articles: res.data.articles.slice(0, 4)
-                                    });
-                                    uni.hideLoading();
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-        },
-
-        // 下拉刷新
-        onRefresh() {
-            if (this._freshing) {
-                return;
-            }
-
-            this._freshing = true;
-            this.getHotArticles();
-            setTimeout(() => {
-                this.setData({
-                    triggered: false
-                });
-                this._freshing = false;
-            }, 500);
-        },
-
-        // 加载更多文章
-        loadMoreArticles() {
-            uni.showLoading();
-            let page = this.page;
-            let origin_articles = this.display_all_articles;
-            let concat_articles = this.all_articles.slice(page * 4, page * 4 + 4);
-            this.setData({
-                page: page + 1,
-                display_all_articles: origin_articles.concat(concat_articles)
-            });
-            setTimeout(function () {
-                uni.hideLoading();
-            }, 500);
-        },
-
-        changeStatus(e) {
-            let index = e.currentTarget.dataset.index;
-            this.setData({
-                status: index
-            });
-        },
-
-        article(e) {
-            let index = e.currentTarget.dataset.index;
-            let id = 0;
-
-            if (this.status == 0) {
-                id = this.hot_articles[index].article.id;
-            } else {
-                id = this.all_articles[index].article.id;
-            }
-
-            uni.navigateTo({
-                url: '/pages/plugin/article/article?id=' + id
-            });
-        },
-
-        writeArticle() {
-            uni.navigateTo({
-                url: '/pages/plugin/write/write'
-            });
-        }
+    writeArticle() {
+      uni.navigateTo({
+        url: '/pages/plugin/write/write'
+      });
     }
+  }
 };
 </script>
 <style>
 .write {
-    position: fixed;
-    bottom: 10vh;
-    right: 6vw;
-    z-index: 1024;
+  position: fixed;
+  bottom: 10vh;
+  right: 6vw;
+  z-index: 1024;
 }
 </style>
+
