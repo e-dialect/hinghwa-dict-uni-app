@@ -129,7 +129,32 @@ export default {
                     }
                 }
             });
-        }
+        },
+
+      /**
+       * 右上角分享事件
+       */
+      onShareAppMessage() {
+        let title = this.character.character + "：" + this.character.pinyin;
+        return {
+          title: title,
+          path: `/pages/basics/characters/characters?id=${this.id}&share=1`,
+          success: function () {
+            uni.showToast({
+              title: '分享成功',
+              icon: 'success',
+              duration: 2000
+            });
+          },
+          fail: function () {
+            uni.showToast({
+              title: '分享失败',
+              icon: 'none',
+              duration: 2000
+            });
+          }
+        };
+      }
     }
 };
 </script>
