@@ -241,370 +241,393 @@
 <script>
 const app = getApp();
 export default {
-    data() {
-        return {
-            status: 0,
-            index: 0,
-            sort: ['词语', '单字', '拼音', '文章'],
-            history: [],
-            key: '',
-            characters: [],
-            pronunciation: [],
-            words: [],
-            articles: [],
-            //
-            // kid: {
-            //     id: '',
-            //     pinyin: '',
-            //     ipa: ''
-            // },
-            //
-            // i: {
-            //     characters: [],
-            //     label: '',
-            //     lable: '',
-            //     traditional: ''
-            // },
-            //
-            // j: {
-            //     county: '',
-            //     town: '',
-            //     characters: []
-            // },
-            //
-            // k: {
-            //     word: '',
-            //     pinyin: '',
-            //     ipa: ''
-            // }
-        };
-    },
-    onLoad(option) {
-        if (option.index) {
-            this.setData({
-                index: option.index
-            });
-        }
-
-        var history = uni.getStorageSync('history');
-
-        if (history) {
-            this.setData({
-                history: history
-            });
-        }
-    },
-    methods: {
-        sortFun(e) {
-            this.setData({
-                index: e.detail.value
-            });
-        },
-
-        keyFun(e) {
-            this.setData({
-                key: e.detail.value
-            });
-        },
-
-        search() {
-            if (this.key == '') {
-                uni.showModal({
-                    content: '搜索内容为空！',
-                    showCancel: false,
-
-                    success(res) {
-                        console.log(res.confirm);
-                    }
-                });
-                return;
-            }
-
-            this.setData({
-                status: 1
-            });
-            this.history.push(this.key);
-            uni.setStorageSync('history', this.history);
-            uni.showLoading();
-            var key = this.key;
-            var index = this.index;
-
-            if (index == 0) {
-                // 词语
-                this.searchWord(key);
-            } else if (index == 1) {
-                // 单字 多字
-                this.searchCharacter(key);
-            } else if (index == 2) {
-                // 拼音
-                this.searchPinyin(key);
-            } else if (index == 3) {
-                // 文章
-                this.searchArticle(key);
-            }
-        },
-
-        searchPinyin(key) {
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'characters/words/v2?search=' + key,
-                method: 'GET',
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode === 200) {
-                        uni.hideLoading();
-                        console.log(res.data.characters);
-                        that.setData({
-                            characters: res.data.characters
-                        });
-                    }
-                }
-            });
-        },
-
-        searchCharacter(key) {
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'characters/words?search=' + key,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        uni.hideLoading();
-                        console.log(res.data.characters);
-
-                        if (res.data.characters[0].characters.length === 0) {
-                            uni.showToast({
-                                title: '搜索结果为空',
-                                icon: 'none'
-                            });
-                        } else {
-                            that.setData({
-                                pronunciation: res.data.characters
-                            });
-                        }
-                    }
-                }
-            });
-        },
-
-        searchWord(key) {
-            var that = this;
-            uni.request({
-                url: app.globalData.server + 'words?search=' + key,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        var arr = res.data.words;
-                        uni.request({
-                            url: app.globalData.server + 'words',
-                            method: 'PUT',
-                            data: {
-                                words: arr
-                            },
-                            header: {
-                                'content-type': 'application/json'
-                            },
-
-                            success(res) {
-                                if (res.statusCode == 200) {
-                                    uni.hideLoading();
-
-                                    if (res.data.words.length === 0) {
-                                        uni.showToast({
-                                            title: '搜索结果为空',
-                                            icon: 'none'
-                                        });
-                                    } else {
-                                        that.setData({
-                                            words: res.data.words
-                                        });
-                                    }
-                                }
-                            }
-                        });
-                    } else {
-                        uni.showToast({
-                            title: '服务器错误'
-                        });
-                    }
-                },
-
-                fail(err) {
-                    uni.showToast({
-                        title: '网络异常'
-                    });
-                }
-            });
-        },
-
-        searchArticle(key) {
-            var that = this;
-            uni.request({
-                url: app.globalData.server + 'articles?search=' + key,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        var arr = res.data.articles;
-                        uni.request({
-                            url: app.globalData.server + 'articles',
-                            method: 'PUT',
-                            data: {
-                                articles: arr
-                            },
-                            header: {
-                                'content-type': 'application/json'
-                            },
-
-                            success(res) {
-                                if (res.statusCode == 200) {
-                                    uni.hideLoading();
-                                    that.setData({
-                                        articles: res.data.articles
-                                    });
-                                }
-                            }
-                        });
-                    } else {
-                        uni.showToast({
-                            title: '服务器错误'
-                        });
-                    }
-                },
-
-                fail(err) {
-                    uni.showToast({
-                        title: '网络异常'
-                    });
-                }
-            });
-        },
-
-        deleteHistory() {
-            let that = this;
-            uni.showModal({
-                title: '提示',
-                content: '是否清空历史记录？',
-
-                success(res) {
-                    uni.setStorageSync('history', null);
-                    that.setData({
-                        history: []
-                    });
-                }
-            });
-        },
-
-        character(e) {
-            let id = e.currentTarget.dataset.id;
-            uni.navigateTo({
-                url: '/pages/basics/characters/characters?id=' + id
-            });
-        },
-
-        word(e) {
-            let index = e.currentTarget.dataset.index;
-            let id = this.words[index].word.id;
-            uni.navigateTo({
-                url: '/pages/basics/words/words?id=' + id
-            });
-        },
-
-        toArticle(e) {
-            let id = e.currentTarget.dataset.id;
-            uni.navigateTo({
-                url: '/pages/plugin/article/article?id=' + id
-            });
-        },
-
-        getWord(e) {
-            let id = e.currentTarget.dataset.id;
-
-            if (!id) {
-                return;
-            }
-
-            uni.navigateTo({
-                url: '/pages/basics/words/words?id=' + id
-            });
-        }
+  data() {
+    return {
+      status: 0,
+      index: 0,
+      sort: ['词语', '单字', '拼音', '文章'],
+      history: [],
+      key: '',
+      characters: [],
+      pronunciation: [],
+      words: [],
+      articles: [],
+      //
+      // kid: {
+      //     id: '',
+      //     pinyin: '',
+      //     ipa: ''
+      // },
+      //
+      // i: {
+      //     characters: [],
+      //     label: '',
+      //     lable: '',
+      //     traditional: ''
+      // },
+      //
+      // j: {
+      //     county: '',
+      //     town: '',
+      //     characters: []
+      // },
+      //
+      // k: {
+      //     word: '',
+      //     pinyin: '',
+      //     ipa: ''
+      // }
+    };
+  },
+  onLoad(option) {
+    if (option.index) {
+      this.setData({
+        index: option.index
+      });
     }
+
+    var history = uni.getStorageSync('history');
+
+    if (history) {
+      this.setData({
+        history: history
+      });
+    }
+  },
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: '语记·搜索',
+      path: `/pages/component/search/search`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
+  methods: {
+    sortFun(e) {
+      this.setData({
+        index: e.detail.value
+      });
+    },
+
+    keyFun(e) {
+      this.setData({
+        key: e.detail.value
+      });
+    },
+
+    search() {
+      if (this.key == '') {
+        uni.showModal({
+          content: '搜索内容为空！',
+          showCancel: false,
+
+          success(res) {
+            console.log(res.confirm);
+          }
+        });
+        return;
+      }
+
+      this.setData({
+        status: 1
+      });
+      this.history.push(this.key);
+      uni.setStorageSync('history', this.history);
+      uni.showLoading();
+      var key = this.key;
+      var index = this.index;
+
+      if (index == 0) {
+        // 词语
+        this.searchWord(key);
+      } else if (index == 1) {
+        // 单字 多字
+        this.searchCharacter(key);
+      } else if (index == 2) {
+        // 拼音
+        this.searchPinyin(key);
+      } else if (index == 3) {
+        // 文章
+        this.searchArticle(key);
+      }
+    },
+
+    searchPinyin(key) {
+      let that = this;
+      uni.request({
+        url: app.globalData.server + 'characters/words/v2?search=' + key,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json'
+        },
+
+        success(res) {
+          if (res.statusCode === 200) {
+            uni.hideLoading();
+            console.log(res.data.characters);
+            that.setData({
+              characters: res.data.characters
+            });
+          }
+        }
+      });
+    },
+
+    searchCharacter(key) {
+      let that = this;
+      uni.request({
+        url: app.globalData.server + 'characters/words?search=' + key,
+        method: 'GET',
+        data: {},
+        header: {
+          'content-type': 'application/json'
+        },
+
+        success(res) {
+          if (res.statusCode == 200) {
+            uni.hideLoading();
+            console.log(res.data.characters);
+
+            if (res.data.characters[0].characters.length === 0) {
+              uni.showToast({
+                title: '搜索结果为空',
+                icon: 'none'
+              });
+            } else {
+              that.setData({
+                pronunciation: res.data.characters
+              });
+            }
+          }
+        }
+      });
+    },
+
+    searchWord(key) {
+      var that = this;
+      uni.request({
+        url: app.globalData.server + 'words?search=' + key,
+        method: 'GET',
+        data: {},
+        header: {
+          'content-type': 'application/json'
+        },
+
+        success(res) {
+          if (res.statusCode == 200) {
+            var arr = res.data.words;
+            uni.request({
+              url: app.globalData.server + 'words',
+              method: 'PUT',
+              data: {
+                words: arr
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+
+              success(res) {
+                if (res.statusCode == 200) {
+                  uni.hideLoading();
+
+                  if (res.data.words.length === 0) {
+                    uni.showToast({
+                      title: '搜索结果为空',
+                      icon: 'none'
+                    });
+                  } else {
+                    that.setData({
+                      words: res.data.words
+                    });
+                  }
+                }
+              }
+            });
+          } else {
+            uni.showToast({
+              title: '服务器错误'
+            });
+          }
+        },
+
+        fail(err) {
+          uni.showToast({
+            title: '网络异常'
+          });
+        }
+      });
+    },
+
+    searchArticle(key) {
+      var that = this;
+      uni.request({
+        url: app.globalData.server + 'articles?search=' + key,
+        method: 'GET',
+        data: {},
+        header: {
+          'content-type': 'application/json'
+        },
+
+        success(res) {
+          if (res.statusCode == 200) {
+            var arr = res.data.articles;
+            uni.request({
+              url: app.globalData.server + 'articles',
+              method: 'PUT',
+              data: {
+                articles: arr
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+
+              success(res) {
+                if (res.statusCode == 200) {
+                  uni.hideLoading();
+                  that.setData({
+                    articles: res.data.articles
+                  });
+                }
+              }
+            });
+          } else {
+            uni.showToast({
+              title: '服务器错误'
+            });
+          }
+        },
+
+        fail(err) {
+          uni.showToast({
+            title: '网络异常'
+          });
+        }
+      });
+    },
+
+    deleteHistory() {
+      let that = this;
+      uni.showModal({
+        title: '提示',
+        content: '是否清空历史记录？',
+
+        success(res) {
+          uni.setStorageSync('history', null);
+          that.setData({
+            history: []
+          });
+        }
+      });
+    },
+
+    character(e) {
+      let id = e.currentTarget.dataset.id;
+      uni.navigateTo({
+        url: '/pages/basics/characters/characters?id=' + id
+      });
+    },
+
+    word(e) {
+      let index = e.currentTarget.dataset.index;
+      let id = this.words[index].word.id;
+      uni.navigateTo({
+        url: '/pages/basics/words/words?id=' + id
+      });
+    },
+
+    toArticle(e) {
+      let id = e.currentTarget.dataset.id;
+      uni.navigateTo({
+        url: '/pages/plugin/article/article?id=' + id
+      });
+    },
+
+    getWord(e) {
+      let id = e.currentTarget.dataset.id;
+
+      if (!id) {
+        return;
+      }
+
+      uni.navigateTo({
+        url: '/pages/basics/words/words?id=' + id
+      });
+    }
+  }
 };
 </script>
 <style>
 .history {
-    padding: 0 20rpx 20rpx 20rpx;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: white;
+  padding: 0 20rpx 20rpx 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
 }
 
 .line {
-    position: relative;
+  position: relative;
 }
 
 .line::after {
-    content: ' ';
-    width: 200%;
-    height: 90%;
-    position: absolute;
-    top: 30%;
-    left: 0;
-    border-radius: inherit;
-    transform: scale(0.5);
-    transform-origin: 0 0;
-    pointer-events: none;
-    box-sizing: border-box;
-    border-right: 1rpx solid rgba(0, 0, 0, 0.5);
+  content: ' ';
+  width: 200%;
+  height: 90%;
+  position: absolute;
+  top: 30%;
+  left: 0;
+  border-radius: inherit;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  pointer-events: none;
+  box-sizing: border-box;
+  border-right: 1rpx solid rgba(0, 0, 0, 0.5);
 }
 
 .definition {
-    display: -webkit-box;
-    word-break: break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .article {
-    padding: 20rpx;
-    background-color: white;
+  padding: 20rpx;
+  background-color: white;
 }
 
 .article image {
-    width: 240rpx;
-    height: 6.4em;
-    margin-right: 10rpx;
+  width: 240rpx;
+  height: 6.4em;
+  margin-right: 10rpx;
 }
 
 .content {
-    margin-top: 15rpx;
-    font-size: 26rpx;
-    color: #888;
-    height: 4.2em;
-    display: -webkit-box;
-    word-break: break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  margin-top: 15rpx;
+  font-size: 26rpx;
+  color: #888;
+  height: 4.2em;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

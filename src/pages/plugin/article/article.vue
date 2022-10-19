@@ -190,6 +190,29 @@ export default {
     this.id = id
     this.getArticle(id);
   },
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: this.article.title,
+      path: `/pages/plugin/article/article?id=${this.id}`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
   computed: {
     ph_text() {
       if (this.parent > 0) {
