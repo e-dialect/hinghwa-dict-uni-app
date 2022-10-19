@@ -77,75 +77,99 @@
 <script>
 const app = getApp();
 export default {
-    data() {
-        return {
-            character: {
-                character: '',
-                pinyin: '',
-                ipa: '',
-                shengmu: '',
-                yunmu: '',
-                shengdiao: '',
-                county: '',
-                town: ''
-            }
-        };
-    },
-    onLoad(options) {
-        this.getCharacter(options.id);
-    },
-    methods: {
-        // 获取单字信息
-        // 获取ipa发音
-        // getIpaPronunciation() {
-        //   let that = this
-        //   wx.request({
-        //     url: app.globalData.server + 'pronunciation/' + that.data.character.ipa,
-        //     method: 'GET',
-        //     data: {},
-        //     header: {
-        //       'content-type': 'application/json'
-        //     },
-        //     success(res) {
-        //       console.log(res)
-        //     }
-        //   })
-        // }
-        getCharacter(id) {
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'characters/' + id,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
+  data() {
+    return {
+      character: {
+        character: '',
+        pinyin: '',
+        ipa: '',
+        shengmu: '',
+        yunmu: '',
+        shengdiao: '',
+        county: '',
+        town: ''
+      }
+    };
+  },
+  onLoad(options) {
+    this.getCharacter(options.id);
+  },
 
-                success(res) {
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            character: res.data.character
-                        }); // that.getIpaPronunciation()
-                    }
-                }
-            });
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: this.character.character + "：" + this.character.pinyin,
+      path: `/pages/basics/characters/characters?id=${this.id}`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
+  methods: {
+    // 获取单字信息
+    // 获取ipa发音
+    // getIpaPronunciation() {
+    //   let that = this
+    //   wx.request({
+    //     url: app.globalData.server + 'pronunciation/' + that.data.character.ipa,
+    //     method: 'GET',
+    //     data: {},
+    //     header: {
+    //       'content-type': 'application/json'
+    //     },
+    //     success(res) {
+    //       console.log(res)
+    //     }
+    //   })
+    // }
+    getCharacter(id) {
+      let that = this;
+      uni.request({
+        url: app.globalData.server + 'characters/' + id,
+        method: 'GET',
+        data: {},
+        header: {
+          'content-type': 'application/json'
+        },
+
+        success(res) {
+          if (res.statusCode == 200) {
+            that.setData({
+              character: res.data.character
+            }); // that.getIpaPronunciation()
+          }
         }
-    }
+      });
+    },
+  }
 };
 </script>
 <style>
 page {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo image {
-    width: 22vh;
-    height: 16vh;
+  width: 22vh;
+  height: 16vh;
 }
 </style>

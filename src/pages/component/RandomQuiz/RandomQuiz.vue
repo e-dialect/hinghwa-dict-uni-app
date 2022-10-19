@@ -113,10 +113,10 @@
           查看解析
         </view>
       </view>
+      <!--
       <view
         data-target="modalError"
         class="action"
-        @tap="showExplian"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-post" />
@@ -124,7 +124,7 @@
         <view class="text-gray">
           修改测试
         </view>
-      </view>
+      </view>-->
     </view>
   </view>
 </template>

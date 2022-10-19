@@ -54,25 +54,25 @@
         </view>
       </view>
     </view>
-    <!--添题和纠错-->
+    <!--添题和纠错
     <view class="cu-bar tabbar bg-white shadow foot">
       <view class="action">
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-add" />
-          <view class="text-gray">
-            添加题目
-          </view>
         </view>
-        <view class="action">
-          <view class="cuIcon-cu-image">
-            <text class="lg text-gray cuIcon-write" />
-          </view>
-          <view class="text-gray">
-            提供建议
-          </view>
+        <view class="text-gray">
+          添加题目
         </view>
       </view>
-    </view>
+      <view class="action">
+        <view class="cuIcon-cu-image">
+          <text class="lg text-gray cuIcon-write" />
+        </view>
+        <view class="text-gray">
+          提供建议
+        </view>
+      </view>
+    </view>-->
   </view>
 </template>
 
@@ -86,7 +86,31 @@ export default {
       toRandomQuizPage: toRandomQuizPage,
       toSearchQuizPage: toSearchQuizPage,
     }
-  }
+  },
+
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: '语记·测试',
+      path: `/pages/component/quizzes/quizzes`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
 }
 </script>
 

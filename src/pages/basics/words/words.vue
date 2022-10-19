@@ -285,14 +285,14 @@ export default {
     return {
       title: title,
       path: `/pages/basics/words/words?id=${this.id}&share=1`,
-      success: function () {
+      success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
           duration: 2000
         });
       },
-      fail: function () {
+      fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',

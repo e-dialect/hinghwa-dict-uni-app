@@ -95,120 +95,143 @@
 <script>
 const app = getApp();
 export default {
-    data() {
-        return {
-            StatusBar: app.globalData.StatusBar,
-            CustomBar: app.globalData.CustomBar,
-            pageData: [],
-            pageNum: 0,
-            itemNum: 0,
-            curPage: 1,
-            keyword: '',
-            keywordTmp: ''
-        };
-    },
-    onLoad() {
-        let keyword = '';
-        let page = 1;
-        this.getPageData(keyword, page);
-    },
-    methods: {
-        getPageData(keyword, page) {
-            uni.showLoading();
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'website/daily-expression?keyword=' + keyword + '&pageSize=10&page=' + page,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
+  data() {
+    return {
+      StatusBar: app.globalData.StatusBar,
+      CustomBar: app.globalData.CustomBar,
+      pageData: [],
+      pageNum: 0,
+      itemNum: 0,
+      curPage: 1,
+      keyword: '',
+      keywordTmp: ''
+    };
+  },
+  onLoad() {
+    let keyword = '';
+    let page = 1;
+    this.getPageData(keyword, page);
+  },
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: '日常用语',
+      path: `/pages/component/daily/daily`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
+  methods: {
+    getPageData(keyword, page) {
+      uni.showLoading();
+      let that = this;
+      uni.request({
+        url: app.globalData.server + 'website/daily-expression?keyword=' + keyword + '&pageSize=10&page=' + page,
+        method: 'GET',
+        data: {},
+        header: {
+          'content-type': 'application/json'
+        },
 
-                success(res) {
-                    uni.hideLoading();
+        success(res) {
+          uni.hideLoading();
 
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            pageData: res.data.results,
-                            pageNum: res.data.total.page,
-                            itemNum: res.data.total.item
-                        });
-                    } else {
-                        uni.showToast({
-                            title: '服务器错误'
-                        });
-                    }
-                }
+          if (res.statusCode == 200) {
+            that.setData({
+              pageData: res.data.results,
+              pageNum: res.data.total.page,
+              itemNum: res.data.total.item
             });
-        },
-
-        getInput(e) {
-            this.setData({
-                keywordTmp: e.detail.value
+          } else {
+            uni.showToast({
+              title: '服务器错误'
             });
-        },
-
-        search() {
-            let keywordTmp = this.keywordTmp;
-
-            if (keywordTmp == '') {
-                uni.showToast({
-                    title: '搜索内容为空！',
-                    icon: 'none'
-                });
-            } else {
-                this.setData({
-                    keyword: keywordTmp,
-                    curPage: 1
-                });
-                this.getPageData(this.keyword, 1);
-            }
-        },
-
-        previous() {
-            let curPage = this.curPage;
-
-            if (curPage == 1) {
-                uni.showToast({
-                    title: '当前页为第一页！',
-                    icon: 'none'
-                });
-            } else {
-                this.setData({
-                    curPage: curPage - 1
-                });
-                this.getPageData(this.keyword, curPage - 1);
-            }
-        },
-
-        next() {
-            let curPage = this.curPage;
-
-            if (curPage >= this.pageNum) {
-                uni.showToast({
-                    title: '当前页为末尾页！',
-                    icon: 'none'
-                });
-            } else {
-                this.setData({
-                    curPage: curPage + 1
-                });
-                this.getPageData(this.keyword, curPage + 1);
-            }
+          }
         }
+      });
+    },
+
+    getInput(e) {
+      this.setData({
+        keywordTmp: e.detail.value
+      });
+    },
+
+    search() {
+      let keywordTmp = this.keywordTmp;
+
+      if (keywordTmp == '') {
+        uni.showToast({
+          title: '搜索内容为空！',
+          icon: 'none'
+        });
+      } else {
+        this.setData({
+          keyword: keywordTmp,
+          curPage: 1
+        });
+        this.getPageData(this.keyword, 1);
+      }
+    },
+
+    previous() {
+      let curPage = this.curPage;
+
+      if (curPage == 1) {
+        uni.showToast({
+          title: '当前页为第一页！',
+          icon: 'none'
+        });
+      } else {
+        this.setData({
+          curPage: curPage - 1
+        });
+        this.getPageData(this.keyword, curPage - 1);
+      }
+    },
+
+    next() {
+      let curPage = this.curPage;
+
+      if (curPage >= this.pageNum) {
+        uni.showToast({
+          title: '当前页为末尾页！',
+          icon: 'none'
+        });
+      } else {
+        this.setData({
+          curPage: curPage + 1
+        });
+        this.getPageData(this.keyword, curPage + 1);
+      }
     }
+  }
 };
 </script>
 <style>
 page {
-    background-color: white;
+  background-color: white;
 }
 
 .box {
-    margin: 20rpx 0;
+  margin: 20rpx 0;
 }
 
 .box view.cu-bar {
-    margin-top: 20rpx;
+  margin-top: 20rpx;
 }
 </style>

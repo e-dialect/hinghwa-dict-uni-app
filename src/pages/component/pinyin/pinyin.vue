@@ -263,6 +263,30 @@ export default {
 
     this.innerAudioContext = uni.createInnerAudioContext();
   },
+
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: '拼音方案',
+      path: `/pages/component/pinyin/pinyin`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
   methods: {
     selectModel(e) {
       let index = e.currentTarget.dataset.id;

@@ -173,6 +173,29 @@ export default {
       shengdiao: shengdiao
     });
   },
+  /**
+   * 右上角分享事件
+   */
+  onShareAppMessage() {
+    return {
+      title: '条件查字',
+      path: `/pages/component/condition/condition`,
+      success: () => {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: () => {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    };
+  },
   methods: {
     PickerChange(e) {
       this.setData({
