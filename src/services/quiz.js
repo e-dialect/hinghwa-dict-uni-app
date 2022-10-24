@@ -5,8 +5,8 @@ import request from "@/utils/request";
  * @param id 测试id
  * @returns {Promise<unknown>}
  */
-export async function getQuiz() {
-  return request.get(`/quizzes/1`)
+export async function getQuiz(id) {
+  return request.get(`/quizzes/${id}`)
 }
 
 /**

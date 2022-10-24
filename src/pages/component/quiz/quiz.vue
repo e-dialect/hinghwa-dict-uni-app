@@ -126,6 +126,7 @@ const app = getApp();
 export default {
   data() {
     return {
+      id: 0,
       quiz: {
         question: '',
         options: [],
@@ -138,16 +139,16 @@ export default {
       current: 99
     }
   },
-  onLoad() {
-    this.getOneQuiz();
+  onLoad(options) {
+    let id = options.id
+    this.getOneQuiz(id);
   },
   methods: {
     /**
      * 获取单个测试
-     * @returns {Promise<void>}
      */
-    async getOneQuiz() {
-      const res = await getQuiz()
+    async getOneQuiz(id) {
+      const res = await getQuiz(id)
       this.quiz = res.quiz
     },
     /**
