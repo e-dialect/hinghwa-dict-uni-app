@@ -5,8 +5,8 @@ import request from "@/utils/request";
  * @param id 测试id
  * @returns {Promise<unknown>}
  */
-export async function getQuiz() {
-  return request.get(`http://127.0.0.1:4523/m1/404238-0-default/quizzes/1`)
+export async function getQuiz(id) {
+  return request.get(`/quizzes/${id}`)
 }
 
 /**
@@ -15,7 +15,7 @@ export async function getQuiz() {
  * @returns {Promise<unknown>}
  */
 export async function searchQuiz(key) {
-  return await request.get(`http://127.0.0.1:4523/m1/404238-0-default/quizzes`, {keywords: key})
+  return await request.get(`/quizzes`, {keywords: key})
 }
 
 /**
@@ -23,5 +23,5 @@ export async function searchQuiz(key) {
  * @returns {Promise<unknown>}
  */
 export async function getRandomQuiz() {
-  return request.get(`http://127.0.0.1:4523/m1/404238-0-default/quizzes/random`)
+  return request.get(`/quizzes/random`)
 }

@@ -62,6 +62,10 @@ export default {
     keyFun(e) {
       this.key = e.detail.value
     },
+
+    /**
+     * 获取搜索内容
+     */
     searchQuizzes(key) {
       if (this.key === '') {
         uni.showToast({
