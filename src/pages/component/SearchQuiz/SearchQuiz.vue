@@ -74,7 +74,7 @@ export default {
         });
       }
       else{
-        searchQuiz(key).then(res => {
+        searchQuiz(this.key).then(res => {
           this.result = res.result
         });
       }

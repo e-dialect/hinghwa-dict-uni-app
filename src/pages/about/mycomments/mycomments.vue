@@ -42,9 +42,9 @@
                 {{ item.time }}
               </view>
             </view>
-            <view class="text-dz">
+<!--            <view class="text-dz">
               <text class="cuIcon-appreciate" />
-            </view>
+            </view>-->
           </view>
         </view>
         <view class="text-content">
@@ -87,8 +87,6 @@ export default {
         },
 
         success(res) {
-          console.log(res.data);
-
           if (res.statusCode == 200) {
             that.setData({
               publish_comments: res.data.comments
