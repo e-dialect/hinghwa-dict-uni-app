@@ -42,8 +42,9 @@
                 {{ item.time }}
               </view>
             </view>
-<!--            <view class="text-dz">
-              <text class="cuIcon-appreciate" />
+            <!--
+            <view class="text-dz">
+            <text class="cuIcon-appreciate" />
             </view>-->
           </view>
         </view>

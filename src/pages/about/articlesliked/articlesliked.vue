@@ -80,7 +80,7 @@
         </view>
       </view>
     </view>
-    <view class="stand-view"/>
+    <view class="stand-view" />
   </view>
 </template>
 
