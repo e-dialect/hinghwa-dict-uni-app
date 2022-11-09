@@ -65,13 +65,9 @@
 import {getUserInfo} from "@/services/user";
 import {getComment} from "@/services/article";
 import {toArticlePage} from "@/routers";
-import ArticleComment  from "@/components/ArticleComment";
 
 const app = getApp();
 export default {
-  components: {
-    ArticleComment,
-  },
   data() {
     return {
       toArticlePage: toArticlePage,
