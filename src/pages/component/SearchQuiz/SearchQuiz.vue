@@ -15,7 +15,7 @@
       </view>
       <view
         class="action"
-        @tap="searchQuizzes"
+        @tap="searchQuizzes(key)"
       >
         <text class="text-blue">
           搜索
@@ -67,7 +67,7 @@ export default {
      * 获取搜索内容
      */
     searchQuizzes(key) {
-      if (this.key === '') {
+      if (key === '') {
         uni.showToast({
           icon: "error",
           title: '搜索内容为空'

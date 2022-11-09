@@ -178,7 +178,7 @@ export default {
         is_author: false,
       },
       id: 0,
-      comments: [],
+      comments: {},
       map: [],
       parent: 0,
       comment: '',

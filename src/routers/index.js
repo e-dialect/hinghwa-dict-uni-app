@@ -54,6 +54,15 @@ export async function toUploadPronunciationPage(id) {
     url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`
   });
 }
+/**
+ * 前往文章页面
+ * @param id 文章id
+ */
+export function toArticlePage(id) {
+  uni.navigateTo({
+    url: '/pages/plugin/article/article?id=' + id
+  })
+}
 
 export function toLoginPage() {
   uni.navigateTo({

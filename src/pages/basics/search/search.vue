@@ -484,7 +484,7 @@ export default {
         },
 
         success(res) {
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
             var arr = res.data.articles;
             uni.request({
               url: app.globalData.server + 'articles',
@@ -497,7 +497,7 @@ export default {
               },
 
               success(res) {
-                if (res.statusCode == 200) {
+                if (res.statusCode === 200) {
                   uni.hideLoading();
                   that.setData({
                     articles: res.data.articles
