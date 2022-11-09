@@ -1,31 +1,12 @@
 <template>
-  <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        点赞文章
-      </view>
-    </cu-custom>
+  <view class="padding-bottom-lg">
     <view
-      v-if="likeArticlesList.length === 0"
-      class="text-lg margin"
-    >
-      <text>这里暂时空空如也~</text>
-    </view>
-    <ArticleList :article-list="likeArticlesList" />
-      <!--    <view
-      v-for="(item, index) in likeArticlesList"
-      v-else
+      v-for="(item, index) in articleList"
       :key="index"
       class="word-card padding-xs shadow -gray cu-card article no-card"
       style="margin: 3vw;"
       :data-index="index"
-      @tap="article"
+      @tap="toArticlePage(item.article.id)"
     >
       <view class="cu-item shadow margin-bottom-sm">
         <view class="flex justify-between">
@@ -80,46 +61,27 @@
           </text>
         </view>
       </view>
-    </view>-->
+    </view>
   </view>
 </template>
 
 <script>
-import {getUserInfo}  from "@/services/user";
-import {getArticles}  from "@/services/article";
-import ArticleList    from "@/components/ArticleList";
-
-const app = getApp();
+import {toArticlePage} from "@/routers";
 export default {
-  components: {
-    ArticleList
+  name: "ArticleList",
+  props: {
+    articleList: {
+      type: Object,
+      default: () => ({})
+    },
   },
   data() {
     return {
-      likeArticlesList: {}
-    };
-  },
-  onLoad() {
-    this.getLikeArticles();
-  },
-  methods: {
-    /**
-     * 获取用户点赞文章
-     * @returns {Promise<void>}
-     */
-    async getLikeArticles() {
-      const userInfo = await getUserInfo(app.globalData.id)
-      const articleInfo = await getArticles(userInfo.like_articles)
-      this.likeArticlesList = articleInfo.articles
-    },
+      toArticlePage: toArticlePage,
+    }
   }
-};
-</script>
-<style>
-/* pages/about/articlesliked/articlesliked.wxss */
-.word-card {
-  background-color: #ffffff;
-  border-radius: 20rpx;
-  margin-right: 1vw;
 }
+</script>
+
+<style scoped>
 </style>

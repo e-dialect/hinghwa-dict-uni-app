@@ -23,9 +23,13 @@
       :key="index"
       class="solid-bottom padding-top-sm padding-bottom-sm"
     >
+      <!--
+      <view @tap="toArticlePage(item.article)">
+        <ArticleComment :comment="item" />
+      </view>-->
       <view
         :data-index="index"
-        @tap="toArticle"
+        @tap="toArticlePage(item.article)"
       >
         <view class="flex">
           <image
@@ -43,9 +47,10 @@
               </view>
             </view>
             <!--
+            &lt;!&ndash;
             <view class="text-dz">
             <text class="cuIcon-appreciate" />
-            </view>-->
+            </view>&ndash;&gt;-->
           </view>
         </view>
         <view class="text-content">
@@ -57,53 +62,39 @@
 </template>
 
 <script>
+import {getUserInfo} from "@/services/user";
+import {getComment} from "@/services/article";
+import {toArticlePage} from "@/routers";
+import ArticleComment  from "@/components/ArticleComment";
+
 const app = getApp();
 export default {
+  components: {
+    ArticleComment,
+  },
   data() {
     return {
+      toArticlePage: toArticlePage,
       avatar: '',
       nickname: '',
       publish_comments: []
     };
   },
   onLoad() {
-    this.setData({
-      avatar: app.globalData.userInfo.avatar,
-      nickname: app.globalData.userInfo.nickname
-    }); // 获取我的评论
-
-    this.getComments();
+    this.getMyComments();
   },
   methods: {
-    getComments() {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'articles/comments',
-        method: 'PUT',
-        data: {
-          comments: app.globalData.publish_comments
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode == 200) {
-            that.setData({
-              publish_comments: res.data.comments
-            });
-          }
-        }
-      });
+    /**
+     * 获取用户评论
+     * @returns {Promise<void>}
+     */
+    async getMyComments() {
+      const userInfo = await getUserInfo(app.globalData.id)
+      this.avatar = userInfo.user.avatar
+      this.nickname =userInfo.user.nickname
+      const myComments = await getComment(userInfo.publish_comments)
+      this.publish_comments = myComments.comments
     },
-
-    toArticle(e) {
-      let index = e.currentTarget.dataset.index;
-      let id = this.publish_comments[index].article;
-      uni.navigateTo({
-        url: '/pages/plugin/article/article?id=' + id
-      });
-    }
   }
 };
 </script>

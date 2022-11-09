@@ -109,7 +109,7 @@
 
 <script>
 import {getHotArticles} from "@/services/website";
-import {getArticles, getAllArticles} from "@/services/article";
+import {searchArticles, getArticles} from "@/services/article";
 
 const app = getApp();
 export default {
@@ -147,9 +147,9 @@ export default {
      * @returns {Promise<void>}
      */
     async getArticlesList() {
-      const res            = await getArticles()
+      const res            = await searchArticles()
       const articlesId     = res.articles
-      const res1 = await getAllArticles(articlesId)
+      const res1 = await getArticles(articlesId)
       this.allArticles = res1.articles
       this.displayArticles = res1.articles.slice(0, 4)
       uni.hideLoading();

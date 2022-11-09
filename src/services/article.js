@@ -10,19 +10,19 @@ export async function getArticle(id) {
 }
 
 /**
- * AT0201 获取全部文章的id数组
+ * AT0201 搜索符合条件的文章
  * @returns {Promise<unknown>}
  */
-export async function getArticles() {
+export async function searchArticles() {
   return request.get(`/articles`)
 }
 
 /**
- * AT0202 获取全部文章信息
+ * AT0202 文章内容批量获取
  * @param id 文章id数组
  * @returns {Promise<unknown>}
  */
-export async function getAllArticles(id) {
+export async function getArticles(id) {
   return request.put(`/articles`, {articles: id})
 }
 
@@ -53,6 +53,15 @@ export async function unlikeArticle(id) {
  */
 export async function createComment(id, comment, replyId) {
   return request.post(`/articles/${id}/comments`, {content: comment, parent: replyId})
+}
+
+/**
+ * AT0403 评论内容批量获取
+ * @param commentId 评论id
+ * @returns {Promise<unknown>}
+ */
+export async function getComment(commentId) {
+  return request.put(`/articles/comments`, {comments: commentId})
 }
 
 /**
