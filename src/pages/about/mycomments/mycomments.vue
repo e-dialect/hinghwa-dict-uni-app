@@ -1,16 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        我的评论
-      </view>
-    </cu-custom>
+    <cu-custom title="我的评论" />
     <view
       v-if="publish_comments.length === 0"
       class="text-lg margin"

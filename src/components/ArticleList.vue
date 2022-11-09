@@ -1,7 +1,14 @@
 <template>
   <view class="padding-bottom-lg">
     <view
+      v-if="Object.keys(articleList).length === 0"
+      class="text-lg margin"
+    >
+      <text>这里暂时空空如也~</text>
+    </view>
+    <view
       v-for="(item, index) in articleList"
+      v-else
       :key="index"
       class="word-card padding-xs shadow -gray cu-card article no-card"
       style="margin: 3vw;"
