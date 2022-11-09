@@ -78,8 +78,8 @@ export default {
   name: "ArticleList",
   props: {
     articleList: {
-      type: Object,
-      default: () => ({})
+      type: Array,
+      default: () => []
     },
   },
   data() {
