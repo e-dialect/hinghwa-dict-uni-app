@@ -18,7 +18,7 @@
       <text>这里暂时空空如也~</text>
     </view>
     <ArticleList :article-list="likeArticlesList" />
-      <!--    <view
+    <!--    <view
       v-for="(item, index) in likeArticlesList"
       v-else
       :key="index"
