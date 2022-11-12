@@ -70,8 +70,8 @@
       </view>
     </view>
     <view
-        v-if="articleList.length"
-        class="text-gray margin-top-lg text-center"
+      v-if="articleList.length"
+      class="text-gray margin-top-lg text-center"
     >
       <text>—— 暂时没有更多内容了 ——</text>
     </view>
