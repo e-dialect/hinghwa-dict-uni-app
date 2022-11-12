@@ -255,7 +255,7 @@ export default {
       if (this.status === -1) {
         uni.showToast({
           title: '请先授权录音',
-          icon: 'warning'
+          icon: 'error'
         });
         return;
       }
