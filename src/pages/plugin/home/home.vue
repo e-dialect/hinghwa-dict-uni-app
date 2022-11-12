@@ -133,21 +133,6 @@ export default {
       this.status = Number(index)
     },
 
-    article(e) {
-      let index = e.currentTarget.dataset.index;
-      let id = 0;
-
-      if (this.status === 0) {
-        id = this.hot_articles[index].article.id;
-      } else {
-        id = this.allArticles[index].article.id;
-      }
-
-      uni.navigateTo({
-        url: '/pages/plugin/article/article?id=' + id
-      });
-    },
-
     writeArticle() {
       uni.navigateTo({
         url: '/pages/plugin/write/write'
