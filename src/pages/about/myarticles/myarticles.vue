@@ -1,126 +1,39 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        我的文章
-      </view>
-    </cu-custom>
-    <view
-      v-if="publish_articles.length === 0"
-      class="text-lg margin"
-    >
-      <text>这里暂时空空如也~</text>
-    </view>
-    <view
-      v-for="(item, index) in publish_articles"
-      v-else
-      :key="index"
-      class="cu-card article no-card"
-      :data-index="index"
-      @tap="article"
-    >
-      <view
-        class="cu-item shadow"
-        style="margin-bottom: 20rpx"
-      >
-        <view class="flex justify-between">
-          <view class="title flex">
-            <view class="text-cut">
-              {{ item.article.title }}
-            </view>
-            <view class="cu-tag bg-blue light sm round margin-top-smp margin-left-xs">
-              <text class="cuIcon-appreciate">
-                {{ item.article.likes }}
-              </text>
-            </view>
-          </view>
-          <text class="cuIcon-attention text-grey margin-top-sm margin-right">
-            {{ item.article.views }}
-          </text>
-        </view>
-        <view class="content">
-          <view class="desc">
-            <view class="text-df">
-              <image
-                class="cu-avatar round ssm"
-                :src="item.author.avatar"
-                mode="aspectFill"
-              />
-              <text :decode="true">
-                &nbsp;{{ item.author.nickname }}&nbsp;&nbsp;
-              </text>
-              <text class="text-grey">
-                {{ item.article.publish_time }}
-              </text>
-            </view>
-            <view class="text-content">
-              {{ item.article.description }}
-            </view>
-          </view>
-          <image
-            :src="item.article.cover"
-            mode="aspectFill"
-          />
-        </view>
-      </view>
-    </view>
-    <view class="stand-view" />
+    <cu-custom title="我的文章" />
+    <ArticleList :article-list="publish_articles" />
   </view>
 </template>
 
 <script>
+import {getUserInfo} from "@/services/user";
+import {getArticles} from "@/services/article";
+import ArticleList from "@/components/ArticleList";
+
+
 const app = getApp();
 export default {
+  components: {
+    ArticleList
+  },
   data() {
     return {
       publish_articles: []
     };
   },
   onLoad() {
-    this.getArticles();
+    this.getPublishArticles();
   },
   methods: {
-    getArticles() {
-      uni.showLoading({
-        title: '加载中'
-      });
-      let that = this; // 获取点赞文章
-
-      uni.request({
-        url: app.globalData.server + 'articles',
-        method: 'PUT',
-        data: {
-          articles: app.globalData.publish_articles
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode == 200) {
-            that.setData({
-              publish_articles: res.data.articles
-            });
-            uni.hideLoading();
-          }
-        }
-      });
+    /**
+     * 获取用户发表文章
+     * @returns {Promise<void>}
+     */
+    async getPublishArticles() {
+      const userInfo = await getUserInfo(app.globalData.id)
+      const articleInfo = await getArticles(userInfo.publish_articles)
+      this.publish_articles = articleInfo.articles
     },
-
-    // 进入文章
-    article(e) {
-      let index = e.currentTarget.dataset.index;
-      let id = this.publish_articles[index].article.id;
-      uni.navigateTo({
-        url: '/pages/plugin/article/article?id=' + id
-      });
-    }
   }
 };
 </script>

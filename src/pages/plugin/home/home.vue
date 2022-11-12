@@ -1,13 +1,6 @@
 <template>
   <view>
-    <cu-custom bg-color="bg-white">
-      <view
-        slot="content"
-        class="text-black"
-      >
-        语记·互动
-      </view>
-    </cu-custom>
+    <cu-custom title="语记·互动" />
     <!-- <button class="cu-btn icon lg bg-blue shadow write" bindtap="writeArticle">
   <text class="cuIcon-write"></text>
 </button> -->
@@ -16,14 +9,14 @@
       style="background-color: white"
     >
       <view
-        :class="'flex-sub ' + (status == 0 ? 'text-bold' : '')"
+        :class="'flex-sub ' + (status === 0 ? 'text-bold' : '')"
         data-index="0"
         @tap="changeStatus"
       >
         热门文章
       </view>
       <view
-        :class="'flex-sub ' + (status == 1 ? 'text-bold' : '')"
+        :class="'flex-sub ' + (status === 1 ? 'text-bold' : '')"
         data-index="1"
         @tap="changeStatus"
       >
@@ -37,71 +30,11 @@
       refresher-default-style="none"
       refresher-background="white"
       :refresher-triggered="triggered"
+      @refresherpulling="onPulling"
       @refresherrefresh="onRefresh"
       @scrolltolower="loadMoreArticles"
     >
-      <view
-        v-for="(item, index) in status == 0 ? hot_articles : displayArticles"
-        :key="index"
-        class="word-card padding-xs shadow -gray cu-card article no-card"
-        style="margin: 3vw"
-        :data-index="index"
-        @tap="article"
-      >
-        <view class="cu-item shadow margin-bottom-sm">
-          <view class="flex justify-between">
-            <view
-              class="title flex align-center"
-              style="width: 80%;"
-            >
-              <view class="text-cut">
-                {{ item.article.title }}
-              </view>
-              <view class="cu-tag bg-blue light sm round margin">
-                <text class="cuIcon-appreciate">
-                  {{ item.article.likes }}
-                </text>
-              </view>
-            </view>
-            <text class="cuIcon-attention text-grey margin-top-sm margin-right">
-              {{ item.article.views }}
-            </text>
-          </view>
-          <view class="content">
-            <view class="desc">
-              <view
-                class="text-df"
-                style="margin-bottom: 17upx;"
-              >
-                <image
-                  class="cu-avatar round ssm"
-                  :src="item.author.avatar"
-                  mode="aspectFill"
-                />
-                <text
-                  :decode="true"
-                  class="margin-xs"
-                >
-                  {{ item.author.nickname }}
-                </text>
-              </view>
-              <view class="text-content">
-                {{ item.article.description }}
-              </view>
-            </view>
-            <image
-              :src="item.article.cover"
-              mode="aspectFill"
-              class="margin-top"
-            />
-          </view>
-          <view class="time">
-            <text class="text-grey fr margin-right-xl margin-top-xs">
-              {{ item.article.publish_time }}
-            </text>
-          </view>
-        </view>
-      </view>
+      <ArticleList :article-list="status === 0 ? hot_articles : displayArticles" />
       <view class="stand-view" />
     </scroll-view>
   </view>
@@ -110,9 +43,13 @@
 <script>
 import {getHotArticles} from "@/services/website";
 import {searchArticles, getArticles} from "@/services/article";
+import ArticleList from "@/components/ArticleList";
 
 const app = getApp();
 export default {
+  components: {
+    ArticleList
+  },
   data() {
     return {
       hot_articles: [],
@@ -123,11 +60,13 @@ export default {
       triggered: false
     };
   },
+  onLoad() {
+    this._freshing = false;
+  },
   options: {
     addGlobalClass: true
   },
   beforeMount() {
-    let that = this;
     this.getHotArticlesList();
   },
   methods: {
@@ -153,6 +92,10 @@ export default {
       this.allArticles = res1.articles
       this.displayArticles = res1.articles.slice(0, 4)
       uni.hideLoading();
+    },
+    
+    onPulling() {
+      this.triggered = true;
     },
 
     // 下拉刷新
@@ -187,24 +130,7 @@ export default {
 
     changeStatus(e) {
       let index = e.currentTarget.dataset.index;
-      this.setData({
-        status: index
-      });
-    },
-
-    article(e) {
-      let index = e.currentTarget.dataset.index;
-      let id = 0;
-
-      if (this.status == 0) {
-        id = this.hot_articles[index].article.id;
-      } else {
-        id = this.allArticles[index].article.id;
-      }
-
-      uni.navigateTo({
-        url: '/pages/plugin/article/article?id=' + id
-      });
+      this.status = Number(index)
     },
 
     writeArticle() {
