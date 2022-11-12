@@ -1,13 +1,6 @@
 <template>
   <view>
-    <cu-custom bg-color="bg-white">
-      <view
-        slot="content"
-        class="text-black"
-      >
-        语记·工具
-      </view>
-    </cu-custom>
+    <cu-custom title="语记·工具" :isBack="false" />
     <scroll-view
       scroll-y
       style="height: 100%"

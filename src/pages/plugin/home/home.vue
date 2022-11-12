@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom title="语记·互动" />
+    <cu-custom title="语记·互动" :isBack="false" />
     <!-- <button class="cu-btn icon lg bg-blue shadow write" bindtap="writeArticle">
   <text class="cuIcon-write"></text>
 </button> -->
@@ -93,7 +93,7 @@ export default {
       this.displayArticles = res1.articles.slice(0, 4)
       uni.hideLoading();
     },
-    
+
     onPulling() {
       this.triggered = true;
     },
