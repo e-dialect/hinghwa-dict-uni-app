@@ -1,6 +1,9 @@
 <template>
   <view>
-    <cu-custom title="语记·工具" :isBack="false" />
+    <cu-custom
+      title="语记·工具"
+      :is-back="false"
+    />
     <scroll-view
       scroll-y
       style="height: 100%"

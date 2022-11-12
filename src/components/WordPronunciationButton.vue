@@ -1,8 +1,8 @@
 <template>
   <text
-      v-if="isValid"
-      class="cuIcon-notificationfill text-xl text-blue margin-sm"
-      @tap="play"
+    v-if="isValid"
+    class="cuIcon-notificationfill text-xl text-blue margin-sm"
+    @tap="play"
   />
 </template>
 
