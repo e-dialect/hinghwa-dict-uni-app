@@ -93,18 +93,18 @@
             </text>
           </navigator>
         </view>
-        <view class="cu-item arrow">
-          <navigator
-            class="content"
-            url="/pages/about/articles/articles"
-            hover-class="none"
-          >
-            <text class="cuIcon-musicfill text-grey" />
-            <text class="text-grey">
-              我的音乐
-            </text>
-          </navigator>
-        </view>
+        <!--        <view class="cu-item arrow">-->
+        <!--          <navigator-->
+        <!--            class="content"-->
+        <!--            url="/pages/about/articles/articles"-->
+        <!--            hover-class="none"-->
+        <!--          >-->
+        <!--            <text class="cuIcon-musicfill text-grey" />-->
+        <!--            <text class="text-grey">-->
+        <!--              我的音乐-->
+        <!--            </text>-->
+        <!--          </navigator>-->
+        <!--        </view>-->
       </view>
       <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
         <view class="cu-item arrow">
