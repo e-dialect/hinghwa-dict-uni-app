@@ -1,82 +1,107 @@
 <template>
   <view>
-    <cu-custom title="语记·随机测试" />
+    <cu-custom title="聪明花开" />
     <!--题目-->
-    <scroll-view
-      scroll-y
-      class="scrollPage"
+    <view
+      @touchstart="touchStart"
+      @touchend="touchEnd"
     >
-      <form>
-        <!--题干-->
-        <view class="cu-bar bg-white solid-bottom">
-          <view class="action text-black">
-            <text class="cuIcon-title text-blue text-bold">
-              {{ quiz.question }}
-            </text>
-          </view>
-        </view>
-        <!--选项-->
-        <view>
-          <radio-group
-            class="block"
-            @change="radioChange"
-          >
-            <view
-              v-for="(item, index) in quiz.options"
-              :key="index"
-              class="cu-form-group"
-            >
-              <radio
-                :value="index"
-                :checked="index === current"
-              />
-              <view class="title text-black">
-                {{ index + 1 }}.{{ item }}
-              </view>
-            </view>
-          </radio-group>
-        </view>
-        <!--提交-->
-        <view class="padding submit-btn">
-          <button
-            class="cu-btn bg-gradual-blue"
-            @click="submitResult"
-          >
-            提 交
-          </button>
-        </view>
-        <!--答案和解析-->
-        <view class="margin-top solid-top">
-          <view
-            v-show="isShow1"
-            class="cu-bar"
-          >
-            <view class="action text-grey">
-              <text>正确答案：</text>
-              <text class="solid-bottom padding-left text-blue">
-                {{ quiz.answer + 1 }}
+      <scroll-view
+        scroll-y
+        class="scrollPage"
+      >
+        <form
+          class="padding-bottom-lg"
+        >
+          <!--题干-->
+          <view class="cu-bar bg-white solid-bottom">
+            <view class="action text-black">
+              <text class="cuIcon-title text-blue text-bold padding">
+                {{ quiz.question }}
               </text>
             </view>
           </view>
-          <view
-            v-show="isShow2"
-            class="cu-bar bar-title"
-          >
-            <view class="action text-grey">
-              <text>解析：</text>
+          <!--选项-->
+          <view>
+            <radio-group
+              class="block padding"
+              @change="radioChange"
+            >
+              <label
+                v-for="(item, index) in quiz.options"
+                :key="index"
+                class="cu-form-group"
+              >
+                <radio
+                  :value="index"
+                  :checked="index === current"
+                />
+                <view class="title text-black">
+                  {{ index + 1 }}.{{ item }}
+                </view>
+              </label>
+            </radio-group>
+          </view>
+          <!--提交-->
+          <view class="padding submit-btn">
+            <button
+              class="cu-btn bg-gradual-blue"
+              @click="submitResult"
+            >
+              提 交
+            </button>
+          </view>
+          <!--答案和解析-->
+          <view class="margin-top solid-top">
+            <view
+              v-show="isShow1"
+              class="cu-bar"
+            >
+              <view class="action text-grey text-bold">
+                <text>正确答案：</text>
+                <text class="solid-bottom padding-left text-blue">
+                  {{ quiz.answer + 1 }}
+                </text>
+              </view>
+            </view>
+            <view
+              v-show="isShow2"
+              class="cu-bar bar-title"
+            >
+              <view class="action text-grey text-bold">
+                <text>解析：</text>
+              </view>
+            </view>
+            <view
+              v-show="isShow2"
+              class="text-content padding-left text-grey"
+            >
+              {{ quiz.explanation }}
             </view>
           </view>
-          <view
-            v-show="isShow2"
-            class="text-content padding text-grey"
-          >
-            {{ quiz.explanation }}
+        </form>
+      </scroll-view>
+    </view>
+    <!--    <view class="pullleft" :style="{top:top+'px',right:right+'px'}">
+          <view class="cuIcon-cu-image">
+            <text class="lg cuIcon-roundleftfill-copy" />
           </view>
-        </view>
-      </form>
-    </scroll-view>
-    <!--切换题目-->
+        </view>-->
+    <!--底部-->
     <view class="cu-bar tabbar bg-white shadow foot">
+      <!--重置题目-->
+      <view
+        class="action"
+        @tap="resetQuiz"
+      >
+        <view class="cuIcon-cu-image">
+          <text class="lg text-gray cuIcon-refresh" />
+        </view>
+        <view class="text-gray">
+          重置题目
+        </view>
+      </view>
+      <!--切换题目-->
       <view
         class="action"
         @tap="changeQuiz"
@@ -88,7 +113,6 @@
           下一题
         </view>
       </view>
-
       <!--查看答案和解析-->
       <view
         class="action"
@@ -104,7 +128,7 @@
       <view
         data-target="modalError"
         class="action"
-        @tap="showExplian"
+        @tap="showExplain"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-creative" />
@@ -146,7 +170,9 @@ export default {
       },
       isShow1: false,
       isShow2: false,
-      current: 99
+      current: 99, // 当前选中的选项
+      startX: 0, // 滑动开始x轴位置
+      startTime: 0  // 滑动开始时间
     }
   },
   onLoad() {
@@ -195,6 +221,8 @@ export default {
                   icon: 'none',
                 });
               }
+              this.isShow1 = true
+              this.isShow2 = true
             }
           }
         });
@@ -210,6 +238,32 @@ export default {
       this.isShow2 = false
     },
     /**
+     * 换题
+     */
+    resetQuiz() {
+      this.current = 99
+      this.isShow1 = false
+      this.isShow2 = false
+    },
+    /**
+     * 手指触碰时触发
+     */
+    touchStart(e) {
+      this.startTime = Date.now();
+      this.startX = e.changedTouches[0].clientX
+    },
+    /**
+     * 手指离开屏幕时触发
+     */
+    touchEnd(e) {
+      const endTime = Date.now();
+      const moveX = e.changedTouches[0].clientX - this.startX
+      if (endTime - this.startTime < 1500 && moveX < -60) {
+        this.changeQuiz()
+      }
+      console.log();
+    },
+    /**
      * 显示答案
      */
     showAnswer() {
@@ -218,7 +272,7 @@ export default {
     /**
      * 显示解析
      */
-    showExplian() {
+    showExplain() {
       this.isShow2 = true
     },
   }

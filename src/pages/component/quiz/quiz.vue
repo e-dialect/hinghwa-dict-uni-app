@@ -93,7 +93,7 @@
       <view
         data-target="modalError"
         class="action"
-        @tap="showExplian"
+        @tap="showExplain"
       >
         <view class="cuIcon-cu-image">
           <text class="lg text-gray cuIcon-creative" />
@@ -184,6 +184,8 @@ export default {
                   icon: 'none',
                 });
               }
+              this.isShow1 = true
+              this.isShow2 = true
             }
           }
         });
@@ -198,7 +200,7 @@ export default {
     /**
      * 显示解析
      */
-    showExplian() {
+    showExplain() {
       this.isShow2 = true
     },
   }
@@ -221,10 +223,6 @@ page {
 
 .cu-form-group+.cu-form-group {
   border-top: none;
-}
-
-.cu-bar-title {
-  min-height: 50upx;
 }
 
 .submit-btn {
