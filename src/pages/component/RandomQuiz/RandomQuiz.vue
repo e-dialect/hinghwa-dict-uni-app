@@ -10,7 +10,6 @@
         scroll-y
         class="scrollPage"
       >
-
         <form
           class="padding-bottom-lg"
         >
