@@ -16,7 +16,7 @@
         </view>
 
         <!--子评论-->
-        <view class="text-df text-bold padding-top-lg padding-sm">
+        <view class="text-df text-bold padding-top-lg padding-left-xs">
           全部回复（{{ comment.kids.length }}条）
         </view>
         <view

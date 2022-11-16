@@ -78,7 +78,7 @@
               <view
                 v-for="(kid, index1) in item.kids"
                 :key="index1"
-                class="text-reply"
+                class="text-reply margin-left-xs padding-left-xs"
               >
                 <text
                   class="text-blue"

@@ -41,7 +41,7 @@
       >
         ：
       </text>
-      <text>
+      <text class="padding-left-xs">
         {{ comment.content }}
       </text>
     </view>
