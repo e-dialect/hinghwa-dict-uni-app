@@ -151,10 +151,5 @@ export default {
   right: 6vw;
   z-index: 1024;
 }
-.word-card {
-  background-color: #ffffff;
-  border-radius: 20rpx;
-  margin-right: 1vw;
-}
 </style>
 

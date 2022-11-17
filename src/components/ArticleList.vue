@@ -97,4 +97,9 @@ export default {
 </script>
 
 <style scoped>
+.word-card {
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  margin-right: 1vw;
+}
 </style>
