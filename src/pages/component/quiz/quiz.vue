@@ -31,7 +31,7 @@
                 :checked="index === current"
               />
               <view class="title text-black">
-                {{ index + 1 }}.{{ item }}
+                {{ String.fromCharCode(index + 65) }}.{{ item }}
               </view>
             </view>
           </radio-group>
@@ -56,7 +56,7 @@
                 正确答案：
               </text>
               <text class="solid-bottom padding-left text-blue">
-                {{ quiz.answer + 1 }}
+                {{ String.fromCharCode(quiz.answer + 65) }}
               </text>
             </view>
           </view>
