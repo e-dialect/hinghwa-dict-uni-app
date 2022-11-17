@@ -37,10 +37,4 @@ export default {
 };
 </script>
 <style>
-/* pages/about/articlesliked/articlesliked.wxss */
-.word-card {
-  background-color: #ffffff;
-  border-radius: 20rpx;
-  margin-right: 1vw;
-}
 </style>
