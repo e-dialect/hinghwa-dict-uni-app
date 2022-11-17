@@ -13,7 +13,7 @@
       </button>
     </view>
     <view v-else>
-      <button type="link" @tap="visible=true">点击查看视频</button>
+      <button type="link" @tap="onTap">点击查看视频</button>
     </view>
   </view>
 </template>
@@ -30,6 +30,31 @@ export default {
   data() {
     return {
       visible: false
+    }
+  },
+  methods:{
+    onTap(){
+      // #ifdef MP-WEIXIN
+      uni.setClipboardData({
+        data: this.src,
+        success: function () {
+          uni.showToast({
+            title: '已复制视频链接',
+          })
+        },
+        fail: function () {
+          uni.showToast({
+            title: '无法复制链接至剪切板，请手动复制',
+            icon: 'fail'
+          })
+          this.visible=true
+        }
+      });
+      // #endif
+      // #ifndef MP-WEIXIN
+      this.visible = true;
+      // #endif
+
     }
   }
 }
