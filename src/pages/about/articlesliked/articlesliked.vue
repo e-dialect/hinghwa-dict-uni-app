@@ -37,5 +37,4 @@ export default {
 };
 </script>
 <style>
-/* pages/about/articlesliked/articlesliked.wxss */
 </style>
