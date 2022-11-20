@@ -26,7 +26,9 @@
     <view v-show="!isShow">
       <view class="padding">
         <view class="margin-bottom">
-            <text class="text-bold">搜索历史:</text>
+          <text class="text-bold">
+            搜索历史:
+          </text>
         </view>
         <view
           v-if="historyList.length === 0"
@@ -44,7 +46,9 @@
             class="cu-btn round bg-white margin-right-xs margin-bottom-sm"
             style="height: 55upx;line-height: 55upx"
           >
-            <text @tap="this.key = item;searchQuizzes(item)">{{ item }}</text>
+            <text @tap="key = item;searchQuizzes(item)">
+              {{ item }}
+            </text>
           </view>
         </view>
         <view class="margin-top-sm text-center">
