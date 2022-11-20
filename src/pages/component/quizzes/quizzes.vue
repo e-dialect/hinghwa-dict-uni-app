@@ -136,11 +136,9 @@
 
 <script>
 import {toRandomQuizPage, toSearchQuizPage}   from "@/routers";
-import MarkdownViewer from "@/components/MarkdownViewer";
 const app = getApp();
 
 export default {
-  components: {MarkdownViewer},
   data(){
     return{
       toRandomQuizPage: toRandomQuizPage,
