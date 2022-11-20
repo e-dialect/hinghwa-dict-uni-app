@@ -13,7 +13,7 @@
       </button>
     </view>
     <view v-else>
-      <button type="link" @tap="onTap">点击复制视频链接</button>
+      <button type="link" @tap="onTap">点击查看视频</button>
     </view>
   </view>
 </template>
