@@ -399,7 +399,7 @@ export default {
         },
 
         success(res) {
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
             uni.hideLoading();
             console.log(res.data.characters);
 

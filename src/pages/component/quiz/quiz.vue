@@ -6,11 +6,13 @@
       scroll-y
       class="scrollPage"
     >
-      <form>
+      <form
+        class="padding-top-xl padding-bottom-lg"
+      >
         <!--题干-->
         <view class="cu-bar bg-white solid-bottom">
           <view class="action text-black">
-            <text class="cuIcon-title text-blue text-bold">
+            <text class="cuIcon-title text-blue text-bold padding">
               {{ quiz.question }}
             </text>
           </view>
@@ -18,10 +20,10 @@
         <!--选项-->
         <view>
           <radio-group
-            class="block"
+            class="block padding"
             @change="radioChange"
           >
-            <view
+            <label
               v-for="(item, index) in quiz.options"
               :key="index"
               class="cu-form-group"
@@ -33,7 +35,7 @@
               <view class="title text-black">
                 {{ String.fromCharCode(index + 65) }}.{{ item }}
               </view>
-            </view>
+            </label>
           </radio-group>
         </view>
         <!--提交-->
@@ -51,11 +53,11 @@
             v-show="isShow1"
             class="cu-bar"
           >
-            <view class="action text-grey">
+            <view class="action text-grey text-bold">
               <text>
                 正确答案：
               </text>
-              <text class="solid-bottom padding-left text-blue">
+              <text class="padding-left text-blue">
                 {{ String.fromCharCode(quiz.answer + 65) }}
               </text>
             </view>
@@ -64,13 +66,13 @@
             v-show="isShow2"
             class="cu-bar bar-title"
           >
-            <view class="action text-grey">
+            <view class="action text-grey text-bold">
               <text>解析：</text>
             </view>
           </view>
           <view
             v-show="isShow2"
-            class="text-content padding text-grey"
+            class="text-content padding-left text-grey"
           >
             {{ quiz.explanation }}
           </view>
@@ -78,6 +80,18 @@
       </form>
     </scroll-view>
     <view class="cu-bar tabbar bg-white shadow foot">
+      <!--重置题目-->
+      <view
+        class="action"
+        @tap="resetQuiz"
+      >
+        <view class="cuIcon-cu-image">
+          <text class="lg text-gray cuIcon-refresh" />
+        </view>
+        <view class="text-gray">
+          重置题目
+        </view>
+      </view>
       <!--查看答案和解析-->
       <view
         class="action"
@@ -190,6 +204,14 @@ export default {
           }
         });
       }
+    },
+    /**
+     * 重置题目
+     */
+    resetQuiz() {
+      this.current = 99
+      this.isShow1 = false
+      this.isShow2 = false
     },
     /**
      * 显示答案

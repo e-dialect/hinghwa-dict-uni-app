@@ -11,7 +11,7 @@
         class="scrollPage"
       >
         <form
-          class="padding-bottom-lg"
+          class="padding-top-xl padding-bottom-lg"
         >
           <!--题干-->
           <view class="cu-bar bg-white solid-bottom">
@@ -59,7 +59,7 @@
             >
               <view class="action text-grey text-bold">
                 <text>正确答案：</text>
-                <text class="solid-bottom padding-left text-blue">
+                <text class="padding-left text-blue">
                   {{ String.fromCharCode(quiz.answer + 65) }}
                 </text>
               </view>
@@ -238,7 +238,7 @@ export default {
       this.isShow2 = false
     },
     /**
-     * 换题
+     * 重置题目
      */
     resetQuiz() {
       this.current = 99
@@ -258,7 +258,7 @@ export default {
     touchEnd(e) {
       const endTime = Date.now();
       const moveX = e.changedTouches[0].clientX - this.startX
-      if (endTime - this.startTime < 1500 && moveX < -60) {
+      if (endTime - this.startTime < 1500 && moveX < -70) {
         this.changeQuiz()
       }
       console.log();
