@@ -400,7 +400,7 @@ export default {
           'content-type': 'application/json'
         },
         success(res) {
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
             uni.hideLoading();
             if (res.data.characters[0].characters.length === 0) {
               uni.showToast({
@@ -428,7 +428,7 @@ export default {
         },
 
         success(res) {
-          if (res.statusCode == 200) {
+          if (res.statusCode === 200) {
             var arr = res.data.words;
             uni.request({
               url: app.globalData.server + 'words',
@@ -441,7 +441,7 @@ export default {
               },
 
               success(res) {
-                if (res.statusCode == 200) {
+                if (res.statusCode === 200) {
                   uni.hideLoading();
 
                   if (res.data.words.length === 0) {
