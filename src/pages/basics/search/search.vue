@@ -121,21 +121,27 @@
             :key="index1"
             class="cu-item arrow"
             style="min-height: 150rpx"
-            :data-id="kid.id"
+            :data-id="kid.characters[0].id"
             @tap="character"
           >
             <view class="flex flex-direction justify-between">
-              <view class="margin-bottom-sm">
+              <view class="margin-bottom-sm margin-top-sm">
                 <text class="text-xxl text-bold">
                   {{ item.label }}
                 </text>
                 <!-- <text class="cuIcon-notificationfill text-blue margin-left"></text> -->
               </view>
-              <view>
-                <text>{{ kid.pinyin }}</text>
-                <text class="text-grey margin-left">
-                  /{{ kid.ipa }}/
-                </text>
+              <view class="text-lg flex flex-wrap margin-bottom-sm">
+                <view
+                  v-for="(k, index2) in kid.characters"
+                  :key="index2"
+                  class="margin-right-xl"
+                >
+                  <text>{{ k.pinyin }}</text>
+                  <text class="text-grey margin-left">
+                    /{{ k.ipa }}/
+                  </text>
+                </view>
               </view>
             </view>
           </view>
@@ -166,11 +172,7 @@
                 {{ j.county }} / {{ j.town }}
               </text>
             </view>
-
-            <view
-              class="text-lg margin-top-xs"
-              style="display: flex;flex-wrap: wrap;"
-            >
+            <view class="text-lg margin-top-xs flex flex-wrap">
               <view
                 v-for="(k, index2) in j.characters"
                 :key="index2"
@@ -391,18 +393,15 @@ export default {
     searchCharacter(key) {
       let that = this;
       uni.request({
-        url: app.globalData.server + 'characters/words?search=' + key,
+        url: app.globalData.server + 'characters/words/v2?search=' + key,
         method: 'GET',
         data: {},
         header: {
           'content-type': 'application/json'
         },
-
         success(res) {
-          if (res.statusCode === 200) {
+          if (res.statusCode == 200) {
             uni.hideLoading();
-            console.log(res.data.characters);
-
             if (res.data.characters[0].characters.length === 0) {
               uni.showToast({
                 title: '搜索结果为空',
