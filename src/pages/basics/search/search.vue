@@ -241,6 +241,11 @@
 </template>
 
 <script>
+
+import {searchCharacters} from "@/services/character";
+import {getWords, searchWords} from "@/services/word";
+import {getArticles, searchArticles} from "@/services/article";
+
 const app = getApp();
 export default {
   data() {
@@ -369,154 +374,98 @@ export default {
       }
     },
 
-    searchPinyin(key) {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'characters/words/v2?search=' + key,
-        method: 'GET',
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            uni.hideLoading();
-            console.log(res.data.characters);
-            that.setData({
-              characters: res.data.characters
-            });
-          }
-        }
-      });
-    },
-
-    searchCharacter(key) {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'characters/words/v2?search=' + key,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-        success(res) {
-          if (res.statusCode === 200) {
-            uni.hideLoading();
-            if (res.data.characters[0].characters.length === 0) {
+    /**
+     * 搜索拼音
+     * @returns {Promise<void>}
+     */
+    async searchPinyin(key) {
+      await searchCharacters(key).then(async (res) => {
+        uni.hideLoading();
+        this.characters = res.characters
+      })
+        .catch((err) => {
+          switch (err.statusCode) {
+            case 500: {
               uni.showToast({
-                title: '搜索结果为空',
-                icon: 'none'
-              });
-            } else {
-              that.setData({
-                pronunciation: res.data.characters
-              });
+                title: '服务器错误'
+              })
+              break
             }
           }
+        });
+    },
+    /**
+     * 搜索单字
+     * @returns {Promise<void>}
+     */
+    async searchCharacter(key) {
+      await searchCharacters(key).then(async (res) => {
+        uni.hideLoading();
+        if (res.characters[0].characters.length === 0) {
+          uni.showToast({
+            title: '搜索结果为空',
+            icon: 'none'
+          });
+        } else {
+          this.pronunciation = res.characters
         }
-      });
+      })
+        .catch((err) => {
+          switch (err.statusCode) {
+            case 500: {
+              uni.showToast({
+                title: '服务器错误'
+              })
+              break
+            }
+          }
+        });
     },
 
-    searchWord(key) {
-      var that = this;
-      uni.request({
-        url: app.globalData.server + 'words?search=' + key,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            var arr = res.data.words;
-            uni.request({
-              url: app.globalData.server + 'words',
-              method: 'PUT',
-              data: {
-                words: arr
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-
-              success(res) {
-                if (res.statusCode === 200) {
-                  uni.hideLoading();
-
-                  if (res.data.words.length === 0) {
-                    uni.showToast({
-                      title: '搜索结果为空',
-                      icon: 'none'
-                    });
-                  } else {
-                    that.setData({
-                      words: res.data.words
-                    });
-                  }
-                }
-              }
-            });
-          } else {
-            uni.showToast({
-              title: '服务器错误'
-            });
+    /**
+     * 搜索词语
+     * @returns {Promise<void>}
+     */
+    async searchWord(key) {
+      const res      = await searchWords(key)
+      const wordsId  = res.words
+      await getWords(wordsId).then(async (res1) => {
+        uni.hideLoading();
+        this.words = res1.words;
+      })
+        .catch((err) => {
+          switch (err.statusCode) {
+            case 500: {
+              uni.showToast({
+                title: '服务器错误'
+              })
+              break
+            }
           }
-        },
-
-        fail(err) {
-          uni.showToast({
-            title: '网络异常'
-          });
-        }
-      });
+        });
     },
 
-    searchArticle(key) {
-      var that = this;
-      uni.request({
-        url: app.globalData.server + 'articles?search=' + key,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            var arr = res.data.articles;
-            uni.request({
-              url: app.globalData.server + 'articles',
-              method: 'PUT',
-              data: {
-                articles: arr
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-
-              success(res) {
-                if (res.statusCode === 200) {
-                  uni.hideLoading();
-                  that.setData({
-                    articles: res.data.articles
-                  });
-                }
-              }
-            });
-          } else {
-            uni.showToast({
-              title: '服务器错误'
-            });
+    /**
+     * 搜索文章
+     * @returns {Promise<void>}
+     */
+    async searchArticle(key) {
+      const res         = await searchArticles(key)
+      const articlesId  = res.articles
+      await getArticles(articlesId).then(async (res1) => {
+        uni.hideLoading();
+        this.articles = res1.articles;
+      })
+        .catch((err) => {
+          switch (err.statusCode) {
+            case 500: {
+              uni.showToast({
+                title: '服务器错误'
+              })
+              break
+            }
           }
-        },
-
-        fail(err) {
-          uni.showToast({
-            title: '网络异常'
-          });
-        }
-      });
+        });
     },
 
     deleteHistory() {

@@ -13,8 +13,8 @@ export async function getArticle(id) {
  * AT0201 搜索符合条件的文章
  * @returns {Promise<unknown>}
  */
-export async function searchArticles() {
-  return request.get(`/articles`)
+export async function searchArticles(key) {
+  return request.get(`/articles`, {search: key})
 }
 
 /**
