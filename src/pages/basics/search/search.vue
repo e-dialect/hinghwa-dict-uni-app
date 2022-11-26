@@ -80,8 +80,8 @@
         <view
           v-for="(item, index1) in words"
           :key="index1"
-          class="cu-item arrow"
-          style="min-height: 240rpx"
+          class="cu-item arrow "
+          style="min-height: 240rpx;border-bottom: 1upx solid rgba(0, 0, 0, 0.07);"
           :data-index="index1"
           @tap="word"
         >
@@ -93,11 +93,8 @@
             </view>
             <view class="margin-bottom-xs">
               <text>{{ item.word.standard_pinyin }}</text>
-              <text
-                class="text-grey"
-                decode
-              >
-                &nbsp;&nbsp;/{{ item.word.standard_ipa }}/
+              <text class="text-grey padding-left">
+                /{{ item.word.standard_ipa }}/
               </text>
               <text
                 v-if="item.pronunciation.url.length > 4"
@@ -208,46 +205,26 @@
         </view>
       </view>
       <view v-if="index == 3 && status == 1">
-        <view
-          v-for="(item, index1) in articles"
-          :key="index1"
-          class="flex article solid-bottom"
-          :data-id="item.article.id"
-          @tap="toArticle"
-        >
-          <image
-            :src="item.article.cover"
-            mode="aspectFill"
-          />
-
-          <view style="flex: 1">
-            <view class="flex justify-between">
-              <view class="text-bold-less text-lg">
-                {{ item.article.title }}
-              </view>
-              <view class="text-grey margin-top-mini">
-                <text class="cuIcon-attention" />
-                {{ item.article.views }}
-              </view>
-            </view>
-            <view class="content">
-              {{ item.article.description }}
-            </view>
-          </view>
-        </view>
+        <ArticleList
+          v-if="articles.length !== 0"
+          :article-list="articles"
+        />
       </view>
     </scroll-view>
   </view>
 </template>
 
 <script>
-
 import {searchCharacters} from "@/services/character";
 import {getWords, searchWords} from "@/services/word";
-import {getArticles, searchArticles} from "@/services/article";
+import {searchArticle} from "@/services/article";
+import ArticleList from "@/components/ArticleList";
 
 const app = getApp();
 export default {
+  components: {
+    ArticleList
+  },
   data() {
     return {
       status: 0,
@@ -288,17 +265,11 @@ export default {
   },
   onLoad(option) {
     if (option.index) {
-      this.setData({
-        index: option.index
-      });
+      this.index = option.index
     }
-
-    var history = uni.getStorageSync('history');
-
+    let history = uni.getStorageSync('history');
     if (history) {
-      this.setData({
-        history: history
-      });
+      this.history = history
     }
   },
   /**
@@ -326,39 +297,26 @@ export default {
   },
   methods: {
     sortFun(e) {
-      this.setData({
-        index: e.detail.value
-      });
+      this.index = e.detail.value
     },
 
     keyFun(e) {
-      this.setData({
-        key: e.detail.value
-      });
+      this.key = e.detail.value
     },
 
     search() {
       if (this.key == '') {
         uni.showModal({
           content: '搜索内容为空！',
-          showCancel: false,
-
-          success(res) {
-            console.log(res.confirm);
-          }
+          showCancel: false
         });
         return;
       }
-
-      this.setData({
-        status: 1
-      });
+      this.status = 1;
       this.history.push(this.key);
       uni.setStorageSync('history', this.history);
-      uni.showLoading();
-      var key = this.key;
-      var index = this.index;
-
+      let key = this.key;
+      let index = this.index;
       if (index == 0) {
         // 词语
         this.searchWord(key);
@@ -370,7 +328,7 @@ export default {
         this.searchPinyin(key);
       } else if (index == 3) {
         // 文章
-        this.searchArticle(key);
+        this.searchArticleList(key);
       }
     },
 
@@ -380,19 +338,15 @@ export default {
      */
     async searchPinyin(key) {
       await searchCharacters(key).then(async (res) => {
-        uni.hideLoading();
-        this.characters = res.characters
+        if (res.characters[0].characters.length === 0) {
+          uni.showToast({
+            title: '搜索结果为空',
+            icon: 'none'
+          });
+        } else {
+          this.characters = res.characters
+        }
       })
-        .catch((err) => {
-          switch (err.statusCode) {
-            case 500: {
-              uni.showToast({
-                title: '服务器错误'
-              })
-              break
-            }
-          }
-        });
     },
     /**
      * 搜索单字
@@ -400,7 +354,6 @@ export default {
      */
     async searchCharacter(key) {
       await searchCharacters(key).then(async (res) => {
-        uni.hideLoading();
         if (res.characters[0].characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
@@ -410,16 +363,6 @@ export default {
           this.pronunciation = res.characters
         }
       })
-        .catch((err) => {
-          switch (err.statusCode) {
-            case 500: {
-              uni.showToast({
-                title: '服务器错误'
-              })
-              break
-            }
-          }
-        });
     },
 
     /**
@@ -430,42 +373,32 @@ export default {
       const res      = await searchWords(key)
       const wordsId  = res.words
       await getWords(wordsId).then(async (res1) => {
-        uni.hideLoading();
-        this.words = res1.words;
+        if (res1.words.length === 0) {
+          uni.showToast({
+            title: '搜索结果为空',
+            icon: 'none'
+          });
+        } else {
+          this.words = res1.words;
+        }
       })
-        .catch((err) => {
-          switch (err.statusCode) {
-            case 500: {
-              uni.showToast({
-                title: '服务器错误'
-              })
-              break
-            }
-          }
-        });
     },
 
     /**
      * 搜索文章
      * @returns {Promise<void>}
      */
-    async searchArticle(key) {
-      const res         = await searchArticles(key)
-      const articlesId  = res.articles
-      await getArticles(articlesId).then(async (res1) => {
-        uni.hideLoading();
-        this.articles = res1.articles;
+    async searchArticleList(key) {
+      await searchArticle(key).then(async (res) => {
+        if (res.length === 0) {
+          uni.showToast({
+            title: '搜索结果为空',
+            icon: 'none'
+          });
+        } else {
+          this.articles = res;
+        }
       })
-        .catch((err) => {
-          switch (err.statusCode) {
-            case 500: {
-              uni.showToast({
-                title: '服务器错误'
-              })
-              break
-            }
-          }
-        });
     },
 
     deleteHistory() {
@@ -551,30 +484,6 @@ export default {
   word-break: break-all;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.article {
-  padding: 20rpx;
-  background-color: white;
-}
-
-.article image {
-  width: 240rpx;
-  height: 6.4em;
-  margin-right: 10rpx;
-}
-
-.content {
-  margin-top: 15rpx;
-  font-size: 26rpx;
-  color: #888;
-  height: 4.2em;
-  display: -webkit-box;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
 }

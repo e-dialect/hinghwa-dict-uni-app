@@ -45,7 +45,7 @@
 
 <script>
 import {getHotArticles} from "@/services/website";
-import {searchArticles, getArticles} from "@/services/article";
+import {searchArticle} from "@/services/article";
 import ArticleList from "@/components/ArticleList";
 
 const app = getApp();
@@ -78,7 +78,6 @@ export default {
      * @returns {Promise<void>}
      */
     async getHotArticlesList() {
-      uni.showLoading();
       const res         = await getHotArticles()
       this.hot_articles = res.hot_articles
       await this.getArticlesList()
@@ -89,12 +88,10 @@ export default {
      * @returns {Promise<void>}
      */
     async getArticlesList() {
-      const res            = await searchArticles()
-      const articlesId     = res.articles
-      const res1 = await getArticles(articlesId)
-      this.allArticles = res1.articles
-      this.displayArticles = res1.articles.slice(0, 4)
-      uni.hideLoading();
+      await searchArticle().then(async (res) => {
+        this.allArticles = res;
+        this.displayArticles = res.slice(0, 4)
+      })
     },
 
     onPulling() {

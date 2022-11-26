@@ -18,6 +18,17 @@ export async function searchArticles(key) {
 }
 
 /**
+ * 搜索相关的文章
+ * @returns {Promise<unknown>}
+ */
+export async function searchArticle(key) {
+  const res         = await searchArticles(key)
+  const articlesId  = res.articles
+  const res1        = await getArticles(articlesId)
+  return res1.articles
+}
+
+/**
  * AT0202 文章内容批量获取
  * @param id 文章id数组
  * @returns {Promise<unknown>}
