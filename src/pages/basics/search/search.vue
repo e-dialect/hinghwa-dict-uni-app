@@ -338,7 +338,7 @@ export default {
      */
     async searchPinyin(key) {
       await searchCharacters(key).then(async (res) => {
-        if (res.characters[0].characters.length === 0) {
+        if (res.characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
             icon: 'none'
@@ -354,7 +354,7 @@ export default {
      */
     async searchCharacter(key) {
       await searchCharacters(key).then(async (res) => {
-        if (res.characters[0].characters.length === 0) {
+        if (res.characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
             icon: 'none'
