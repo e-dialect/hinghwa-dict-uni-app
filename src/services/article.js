@@ -14,7 +14,10 @@ export async function getArticle(id) {
  * @returns {Promise<unknown>}
  */
 export async function searchArticles(key) {
-  return request.get(`/articles`, {search: key})
+  if (key)
+    return request.get(`/articles`, {search: key})
+  else
+    return request.get(`/articles`,)
 }
 
 /**
@@ -22,9 +25,9 @@ export async function searchArticles(key) {
  * @returns {Promise<unknown>}
  */
 export async function searchArticle(key) {
-  const res         = await searchArticles(key)
-  const articlesId  = res.articles
-  const res1        = await getArticles(articlesId)
+  const res        = await searchArticles(key)
+  const articlesId = res.articles
+  const res1       = await getArticles(articlesId)
   return res1.articles
 }
 
