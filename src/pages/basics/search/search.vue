@@ -80,8 +80,8 @@
         <view
           v-for="(item, index1) in words"
           :key="index1"
-          class="cu-item arrow"
-          style="min-height: 240rpx"
+          class="cu-item arrow "
+          style="min-height: 240rpx;border-bottom: 1upx solid rgba(0, 0, 0, 0.07);"
           :data-index="index1"
           @tap="word"
         >
@@ -93,11 +93,8 @@
             </view>
             <view class="margin-bottom-xs">
               <text>{{ item.word.standard_pinyin }}</text>
-              <text
-                class="text-grey"
-                decode
-              >
-                &nbsp;&nbsp;/{{ item.word.standard_ipa }}/
+              <text class="text-grey padding-left">
+                /{{ item.word.standard_ipa }}/
               </text>
               <text
                 v-if="item.pronunciation.url.length > 4"
@@ -121,21 +118,27 @@
             :key="index1"
             class="cu-item arrow"
             style="min-height: 150rpx"
-            :data-id="kid.id"
+            :data-id="kid.characters[0].id"
             @tap="character"
           >
             <view class="flex flex-direction justify-between">
-              <view class="margin-bottom-sm">
+              <view class="margin-bottom-sm margin-top-sm">
                 <text class="text-xxl text-bold">
                   {{ item.label }}
                 </text>
                 <!-- <text class="cuIcon-notificationfill text-blue margin-left"></text> -->
               </view>
-              <view>
-                <text>{{ kid.pinyin }}</text>
-                <text class="text-grey margin-left">
-                  /{{ kid.ipa }}/
-                </text>
+              <view class="text-lg flex flex-wrap margin-bottom-sm">
+                <view
+                  v-for="(k, index2) in kid.characters"
+                  :key="index2"
+                  class="margin-right-xl"
+                >
+                  <text>{{ k.pinyin }}</text>
+                  <text class="text-grey margin-left">
+                    /{{ k.ipa }}/
+                  </text>
+                </view>
               </view>
             </view>
           </view>
@@ -166,11 +169,7 @@
                 {{ j.county }} / {{ j.town }}
               </text>
             </view>
-
-            <view
-              class="text-lg margin-top-xs"
-              style="display: flex;flex-wrap: wrap;"
-            >
+            <view class="text-lg margin-top-xs flex flex-wrap">
               <view
                 v-for="(k, index2) in j.characters"
                 :key="index2"
@@ -206,41 +205,26 @@
         </view>
       </view>
       <view v-if="index == 3 && status == 1">
-        <view
-          v-for="(item, index1) in articles"
-          :key="index1"
-          class="flex article solid-bottom"
-          :data-id="item.article.id"
-          @tap="toArticle"
-        >
-          <image
-            :src="item.article.cover"
-            mode="aspectFill"
-          />
-
-          <view style="flex: 1">
-            <view class="flex justify-between">
-              <view class="text-bold-less text-lg">
-                {{ item.article.title }}
-              </view>
-              <view class="text-grey margin-top-mini">
-                <text class="cuIcon-attention" />
-                {{ item.article.views }}
-              </view>
-            </view>
-            <view class="content">
-              {{ item.article.description }}
-            </view>
-          </view>
-        </view>
+        <ArticleList
+          v-if="articles.length !== 0"
+          :article-list="articles"
+        />
       </view>
     </scroll-view>
   </view>
 </template>
 
 <script>
+import {searchCharacters} from "@/services/character";
+import {getWords, searchWords} from "@/services/word";
+import {searchArticle} from "@/services/article";
+import ArticleList from "@/components/ArticleList";
+
 const app = getApp();
 export default {
+  components: {
+    ArticleList
+  },
   data() {
     return {
       status: 0,
@@ -281,17 +265,11 @@ export default {
   },
   onLoad(option) {
     if (option.index) {
-      this.setData({
-        index: option.index
-      });
+      this.index = option.index
     }
-
-    var history = uni.getStorageSync('history');
-
+    let history = uni.getStorageSync('history');
     if (history) {
-      this.setData({
-        history: history
-      });
+      this.history = history
     }
   },
   /**
@@ -319,39 +297,26 @@ export default {
   },
   methods: {
     sortFun(e) {
-      this.setData({
-        index: e.detail.value
-      });
+      this.index = e.detail.value
     },
 
     keyFun(e) {
-      this.setData({
-        key: e.detail.value
-      });
+      this.key = e.detail.value
     },
 
     search() {
       if (this.key == '') {
         uni.showModal({
           content: '搜索内容为空！',
-          showCancel: false,
-
-          success(res) {
-            console.log(res.confirm);
-          }
+          showCancel: false
         });
         return;
       }
-
-      this.setData({
-        status: 1
-      });
+      this.status = 1;
       this.history.push(this.key);
       uni.setStorageSync('history', this.history);
-      uni.showLoading();
-      var key = this.key;
-      var index = this.index;
-
+      let key = this.key;
+      let index = this.index;
       if (index == 0) {
         // 词语
         this.searchWord(key);
@@ -363,161 +328,77 @@ export default {
         this.searchPinyin(key);
       } else if (index == 3) {
         // 文章
-        this.searchArticle(key);
+        this.searchArticleList(key);
       }
     },
 
-    searchPinyin(key) {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'characters/words/v2?search=' + key,
-        method: 'GET',
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            uni.hideLoading();
-            console.log(res.data.characters);
-            that.setData({
-              characters: res.data.characters
-            });
-          }
-        }
-      });
-    },
-
-    searchCharacter(key) {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'characters/words?search=' + key,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            uni.hideLoading();
-            console.log(res.data.characters);
-
-            if (res.data.characters[0].characters.length === 0) {
-              uni.showToast({
-                title: '搜索结果为空',
-                icon: 'none'
-              });
-            } else {
-              that.setData({
-                pronunciation: res.data.characters
-              });
-            }
-          }
-        }
-      });
-    },
-
-    searchWord(key) {
-      var that = this;
-      uni.request({
-        url: app.globalData.server + 'words?search=' + key,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode == 200) {
-            var arr = res.data.words;
-            uni.request({
-              url: app.globalData.server + 'words',
-              method: 'PUT',
-              data: {
-                words: arr
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-
-              success(res) {
-                if (res.statusCode == 200) {
-                  uni.hideLoading();
-
-                  if (res.data.words.length === 0) {
-                    uni.showToast({
-                      title: '搜索结果为空',
-                      icon: 'none'
-                    });
-                  } else {
-                    that.setData({
-                      words: res.data.words
-                    });
-                  }
-                }
-              }
-            });
-          } else {
-            uni.showToast({
-              title: '服务器错误'
-            });
-          }
-        },
-
-        fail(err) {
+    /**
+     * 搜索拼音
+     * @returns {Promise<void>}
+     */
+    async searchPinyin(key) {
+      await searchCharacters(key).then(async (res) => {
+        if (res.characters.length === 0) {
           uni.showToast({
-            title: '网络异常'
+            title: '搜索结果为空',
+            icon: 'none'
           });
+        } else {
+          this.characters = res.characters
         }
-      });
+      })
+    },
+    /**
+     * 搜索单字
+     * @returns {Promise<void>}
+     */
+    async searchCharacter(key) {
+      await searchCharacters(key).then(async (res) => {
+        if (res.characters.length === 0) {
+          uni.showToast({
+            title: '搜索结果为空',
+            icon: 'none'
+          });
+        } else {
+          this.pronunciation = res.characters
+        }
+      })
     },
 
-    searchArticle(key) {
-      var that = this;
-      uni.request({
-        url: app.globalData.server + 'articles?search=' + key,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode === 200) {
-            var arr = res.data.articles;
-            uni.request({
-              url: app.globalData.server + 'articles',
-              method: 'PUT',
-              data: {
-                articles: arr
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-
-              success(res) {
-                if (res.statusCode === 200) {
-                  uni.hideLoading();
-                  that.setData({
-                    articles: res.data.articles
-                  });
-                }
-              }
-            });
-          } else {
-            uni.showToast({
-              title: '服务器错误'
-            });
-          }
-        },
-
-        fail(err) {
+    /**
+     * 搜索词语
+     * @returns {Promise<void>}
+     */
+    async searchWord(key) {
+      const res      = await searchWords(key)
+      const wordsId  = res.words
+      await getWords(wordsId).then(async (res1) => {
+        if (res1.words.length === 0) {
           uni.showToast({
-            title: '网络异常'
+            title: '搜索结果为空',
+            icon: 'none'
           });
+        } else {
+          this.words = res1.words;
         }
-      });
+      })
+    },
+
+    /**
+     * 搜索文章
+     * @returns {Promise<void>}
+     */
+    async searchArticleList(key) {
+      await searchArticle(key).then(async (res) => {
+        if (res.length === 0) {
+          uni.showToast({
+            title: '搜索结果为空',
+            icon: 'none'
+          });
+        } else {
+          this.articles = res;
+        }
+      })
     },
 
     deleteHistory() {
@@ -603,30 +484,6 @@ export default {
   word-break: break-all;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.article {
-  padding: 20rpx;
-  background-color: white;
-}
-
-.article image {
-  width: 240rpx;
-  height: 6.4em;
-  margin-right: 10rpx;
-}
-
-.content {
-  margin-top: 15rpx;
-  font-size: 26rpx;
-  color: #888;
-  height: 4.2em;
-  display: -webkit-box;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
 }

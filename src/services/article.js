@@ -13,8 +13,19 @@ export async function getArticle(id) {
  * AT0201 搜索符合条件的文章
  * @returns {Promise<unknown>}
  */
-export async function searchArticles() {
-  return request.get(`/articles`)
+export async function searchArticles(key) {
+  return request.get(`/articles`, {search: key})
+}
+
+/**
+ * 搜索相关的文章
+ * @returns {Promise<unknown>}
+ */
+export async function searchArticle(key) {
+  const res         = await searchArticles(key)
+  const articlesId  = res.articles
+  const res1        = await getArticles(articlesId)
+  return res1.articles
 }
 
 /**

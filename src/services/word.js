@@ -50,6 +50,23 @@ export async function getWordDetails(id) {
 }
 
 /**
+ * WD0201 获取符合条件的字词的列表
+ * @returns {Promise<unknown>}
+ */
+export async function searchWords(key) {
+    return request.get(`/words`, {search: key})
+}
+
+/**
+ * WD0202 词语内容批量获取
+ * @param id 词语id数组
+ * @returns {Promise<unknown>}
+ */
+export async function getWords(id) {
+    return request.put(`/words`, {words: id})
+}
+
+/**
  * 具体解析一个待解析的字符串
  * @param definition 具体待解析的字符串
  * @param order 当前的释义序号
