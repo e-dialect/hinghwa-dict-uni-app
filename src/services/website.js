@@ -1,6 +1,14 @@
 import request from "@/utils/request";
 
 /**
+ * WS01 发送邮箱验证码
+ * @returns {Promise<unknown>}
+ */
+export async function sendEmailCode(email , scene) {
+    return request.post(`/website/email`,{email: email, scene: scene})
+}
+
+/**
  * WS03 公告文章列表
  * @param id 文章id
  * @returns {Promise<unknown>}

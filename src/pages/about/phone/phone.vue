@@ -25,88 +25,49 @@
 </template>
 
 <script>
+import {changeUserInfo, getUserInfo} from "@/services/user";
+
 const app = getApp();
 export default {
-    data() {
-        return {
-            phone: ''
-        };
+  data() {
+    return {
+      phone: ''
+    };
+  },
+  methods: {
+    setPhone(e) {
+      this.phone = e.detail.value
     },
-    methods: {
-        setPhone(e) {
-            this.setData({
-                phone: e.detail.value
+
+    /**
+     * 更改手机号
+     */
+    async savePhone() {
+      const userInfo = await getUserInfo(app.globalData.id)
+      userInfo.user.telephone = this.phone;
+      if (this.phone.length != 11) {
+        uni.showModal({
+          title: '提示',
+          content: '请输入正确格式的手机号码',
+          showCancel: false,
+        });
+      } else {
+        changeUserInfo(app.globalData.id, userInfo.user).then(async (res) => {
+          uni.setStorageSync('token', res.token);
+          setTimeout(() => {
+            uni.showToast({
+              title: '修改成功'
             });
-        },
-
-        savePhone() {
-            var phone = this.phone;
-
-            if (phone.length != 11) {
-                uni.showModal({
-                    title: '提示',
-                    content: '请输入正确格式的手机号码',
-                    showCancel: false,
-
-                    success(res) {
-                        console.log(res.confirm);
-                    }
-                });
-            } else {
-                app.globalData.userInfo.telephone = phone;
-                uni.request({
-                    url: app.globalData.server + 'users/' + app.globalData.id,
-                    // url: 'http://127.0.0.1:4523/mock/404238/users/1',
-                    method: 'PUT',
-                    data: {
-                        user: app.globalData.userInfo
-                    },
-                    header: {
-                        'content-type': 'application/json',
-                        token: app.globalData.token
-                    },
-
-                    success(res) {
-                        console.log(res.data);
-
-                        if (res.statusCode == 200) {
-                            uni.setStorage({
-                                data: res.data.token,
-                                key: 'token'
-                            });
-                            uni.showToast({
-                                title: '修改成功'
-                            }); // 返回上一页面
-
-                            uni.navigateBack({
-                                delta: 1
-                            });
-                        } else if (res.statusCode == 400) {
-                            uni.showToast({
-                                title: '格式错误'
-                            });
-                        } else if (res.statusCode == 409) {
-                            uni.showToast({
-                                title: '用户名重复'
-                            });
-                        } else {
-                            uni.showToast({
-                                title: '服务器错误'
-                            });
-                        }
-                    },
-
-                    fail(err) {
-                        uni.showToast({
-                            title: '网络异常'
-                        });
-                    }
-                });
-            }
-        }
+            // 返回上一个页面
+            uni.navigateBack({
+              delta: 1
+            });
+          }, 100)
+        });
+      }
     }
+  }
 };
 </script>
 <style>
-/* pages/about/phone/phone.wxss */
 </style>
