@@ -27,6 +27,25 @@ export function toIndexPage(closeAll = false) {
 }
 
 /**
+ * 前往用户信息页面
+ */
+export function toUserInfoPage() {
+  uni.navigateTo({
+    url: '/pages/about/userinfo/userinfo'
+  });
+}
+
+/**
+ * 前往用户贡献语音页面
+ * @param id 用户id
+ */
+export function toMyRecordsPage(id) {
+  uni.navigateTo({
+    url: '/pages/component/voice/voice?id=' + id
+  })
+}
+
+/**
  * 前往更改用户昵称页面
  */
 export function toChangeNicknamePage() {

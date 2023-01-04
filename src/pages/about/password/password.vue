@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import {changeUserPassword} from "@/services/user";
+
 const app = getApp();
 export default {
   data() {
@@ -80,9 +82,7 @@ export default {
         pwd[index].icon = 'cuIcon-attention';
       }
 
-      this.setData({
-        pwd: pwd
-      });
+      this.pwd = pwd;
     },
 
     changePassword(e) {
@@ -104,46 +104,20 @@ export default {
         return;
       } // 修改密码
 
-      uni.request({
-        url: app.globalData.server + 'users/' + app.globalData.id + '/password',
-        method: 'PUT',
-        data: {
-          oldpassword: old,
-          newpassword: new1
-        },
-        header: {
-          'content-type': 'application/json',
-          token: app.globalData.token
-        },
-
-        success(res) {
-          console.log(res);
-
-          if (res.statusCode == 200) {
-            uni.showToast({
-              title: '修改成功'
-            });
-            setTimeout(function () {
-              uni.navigateBack({
-                delta: 1
-              });
-            }, 500);
-          } else if (res.statusCode == 401) {
-            uni.showModal({
-              content: '没有权限或原密码错误'
-            });
-          } else if (res.statusCode == 500) {
-            uni.showToast({
-              title: '服务器错误',
-              icon: 'error'
-            });
-          }
-        }
+      changeUserPassword(app.globalData.id , old , new1).then(async (res) => {
+        uni.setStorageSync('token', res.token);
+        setTimeout(() => {
+          uni.showToast({
+            title: '修改成功'
+          });
+          uni.navigateBack({
+            delta: 1
+          }); // 返回上一个页面
+        }, 100)
       });
     }
   }
 };
 </script>
 <style>
-/* pages/about/password/password.wxss */
 </style>

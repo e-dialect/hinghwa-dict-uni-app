@@ -21,12 +21,12 @@ export async function changeUserInfo(id , userInfo) {
 /**
  * US0302 更新用户密码
  * @param id 用户id
- * @param oldpassword 旧密码
- * @param newpassword 新密码
+ * @param old_password 旧密码
+ * @param new_password 新密码
  * @returns {Promise<unknown>}
  */
-export async function changeUserPassword(id , oldpassword , newpassword) {
-    return request.put(`/users/${id}/password`,{oldpassword: oldpassword, newpassword: newpassword})
+export async function changeUserPassword(id , old_password , new_password) {
+    return request.put(`/users/${id}/password`,{oldpassword: old_password, newpassword: new_password})
 }
 
 /**
@@ -38,4 +38,23 @@ export async function changeUserPassword(id , oldpassword , newpassword) {
  */
 export async function changeUserEmail(id , email , code) {
     return request.put(`/users/${id}/email`,{email: email, code: code})
+}
+
+/**
+ * US0304 绑定微信
+ * @param id 用户id
+ * @param jscode 微信code
+ * @returns {Promise<unknown>}
+ */
+export async function bindingWechat(id , jscode) {
+    return request.put(`/users/${id}/wechat`,{jscode: jscode})
+}
+
+/**
+ * US0305 取消绑定微信
+ * @param id 用户id
+ * @returns {Promise<unknown>}
+ */
+export async function cancelBindingWechat(id) {
+    return request.del(`/users/${id}/wechat`)
 }

@@ -58,6 +58,9 @@ export default {
             uni.showToast({
               title: '修改成功'
             });
+            uni.navigateBack({
+              delta: 1
+            }); // 返回上一个页面
           }, 100)
         });
       }
