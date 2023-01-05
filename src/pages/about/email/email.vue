@@ -49,109 +49,72 @@
 </template>
 
 <script>
+import {changeUserEmail, getUserInfo} from "@/services/user";
+import {sendEmailCode} from "@/services/website";
+
 const app = getApp();
 export default {
-    data() {
-        return {
-            old_email: '',
-            code: '',
-            new_email: ''
-        };
+  data() {
+    return {
+      old_email: '',
+      code: '',
+      new_email: ''
+    };
+  },
+  onLoad() {
+    this.getUserEmail()
+  },
+  methods: {
+    /**
+     * 获取用户未更改前的邮箱信息
+     * @returns {Promise<void>}
+     */
+    async getUserEmail() {
+      const userInfo = await getUserInfo(app.globalData.id);
+      this.old_email = userInfo.user.email;
     },
-    onLoad() {
-        this.setData({
-            old_email: app.globalData.userInfo.email
-        });
+
+    getCode(e) {
+      this.code = e.detail.value
     },
-    methods: {
-        getCode(e) {
-            this.setData({
-                code: e.detail.value
-            });
-        },
 
-        sendCode() {
-            var that = this;
-            uni.request({
-                url: app.globalData.server + 'website/email',
-                method: 'POST',
-                data: {
-                    email: that.new_email
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
+    getNewEmail(e) {
+      this.new_email = e.detail.value
+    },
 
-                success(res) {
-                    console.log(res.data);
+    /**
+     * 发送邮箱验证码
+     */
+    sendCode() {
+      const email = this.new_email;
+      sendEmailCode(email).then(async () => {
+        setTimeout(() => {
+          uni.showToast({
+            title: '发送成功'
+          });
+        }, 100)
+      });
+    },
 
-                    if (res.statusCode.toString()[0] === '2') {
-                        uni.showToast({
-                            title: '发送成功'
-                        });
-                    } else {
-                        uni.showToast({
-                            title: '发送失败'
-                        });
-                    }
-                },
-
-                fail(err) {
-                    uni.showToast({
-                        title: '网络异常'
-                    });
-                }
-            });
-        },
-
-        getNewEmail(e) {
-            this.setData({
-                new_email: e.detail.value
-            });
-        },
-
-        setNewEmail() {
-            var code = this.code;
-            var new_email = this.new_email;
-            app.globalData.userInfo.email = new_email;
-            uni.request({
-                url: app.globalData.server + 'users/' + app.globalData.id + '/email',
-                // url: 'http://127.0.0.1:4523/mock/404238/users/1/email',
-                method: 'PUT',
-                data: {
-                    code: code,
-                    email: new_email
-                },
-                header: {
-                    'content-type': 'application/json',
-                    token: app.globalData.token
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        app.globalData.userInfo.email = new_email;
-                        uni.showToast({
-                            title: '修改成功'
-                        }); // 返回上一页面
-
-                        uni.navigateBack({
-                            delta: 1
-                        });
-                    } else if (res.statusCode == 401) {
-                        uni.showToast({
-                            title: '没有权限'
-                        });
-                    } else if (res.statusCode == 500) {
-                        uni.showToast({
-                            title: '服务器错误'
-                        });
-                    }
-                }
-            });
-        }
+    /**
+     * 发送新邮箱
+     */
+    setNewEmail() {
+      const code  = this.code;
+      const email = this.new_email;
+      changeUserEmail(app.globalData.id , email , code).then(async () => {
+        setTimeout(() => {
+          uni.showToast({
+            title: '修改成功'
+          });
+        }, 100)
+        uni.navigateBack({
+          delta: 1
+        }); // 返回上一个页面
+      });
     }
+  }
 };
 </script>
 <style>
-/* pages/about/email/email.wxss */
 </style>

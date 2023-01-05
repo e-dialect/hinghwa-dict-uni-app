@@ -4,8 +4,8 @@ import request from "@/utils/request";
  * WS01 发送邮箱验证码
  * @returns {Promise<unknown>}
  */
-export async function sendEmailCode(email , scene) {
-    return request.post(`/website/email`,{email: email, scene: scene})
+export async function sendEmailCode(email) {
+    return request.post(`/website/email`,{email: email})
 }
 
 /**
