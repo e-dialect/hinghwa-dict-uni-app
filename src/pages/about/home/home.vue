@@ -12,7 +12,7 @@
       <view class="bg-info">
         <view
           class="avatar"
-          @tap="userInfo"
+          @tap="toUserInfoPage"
         >
           <image
             class="cu-avatar round"
@@ -27,7 +27,7 @@
       <view class="padding flex text-center text-grey bg-white shadow-warp">
         <view
           class="flex flex-sub flex-direction solid-right"
-          @tap="getMyRecords"
+          @tap="toMyRecordsPage(id)"
         >
           <view class="text-xlp text-orange">
             {{ recordsCount }}
@@ -156,275 +156,150 @@
 </template>
 
 <script>
-import {toIndexPage} from "@/routers";
+import {toIndexPage, toMyRecordsPage, toUserInfoPage} from "@/routers";
+import {bindingWechat, cancelBindingWechat, getUserInfo} from "@/services/user";
 
 const app = getApp();
 export default {
-    data() {
-        return {
-            avatar: '',
-            nickname: '',
-            recordsCount: 0,
-            wordsCount: 0,
-            visitTotal: 0
-        };
+  data() {
+    return {
+      toUserInfoPage: toUserInfoPage,
+      toMyRecordsPage: toMyRecordsPage,
+      id: '',
+      avatar: '',
+      nickname: '',
+      recordsCount: 0,
+      wordsCount: 0,
+      visitTotal: 0
+    };
+  },
+  beforeMount() {
+    this.getInfo();
+  },
+  methods: {
+    /**
+     * 获取用户信息
+     * @returns {Promise<void>}
+     */
+    async getInfo() {
+      const userInfo = await getUserInfo(app.globalData.id);
+      this.id = userInfo.user.id;
+      this.avatar = userInfo.user.avatar;
+      this.nickname = userInfo.user.nickname;
+      this.recordsCount = userInfo.contribution.pronunciation;
+      this.wordsCount = userInfo.contribution.word;
+      this.visitTotal = userInfo.contribution.listened;
     },
-    options: {
-        addGlobalClass: true
-    },
-    beforeMount() {
-        var that = this;
-        app.globalData.watch(function (value) {
-            if (value.avatar) {
-                that.setData({
-                    avatar: value.avatar
-                });
-            }
 
-            if (value.nickname) {
-                that.setData({
-                    nickname: value.nickname
-                });
+    /**
+     * 退出登录
+     */
+    exit() {
+      uni.showModal({
+        content: '是否退出当前登录？',
+
+        success:async(res)=> {
+          if (res.confirm) {
+            uni.clearStorageSync();
+            app.globalData.status = 0;
+            await toIndexPage(uni.getSystemInfoSync().uniPlatform==='web');
+            uni.showToast({
+              title: '登出成功！'
+            });
+          }
+        }
+      });
+    },
+
+    /**
+     * 绑定微信
+     */
+    async bindingWechat() {
+      const userInfo = await getUserInfo(app.globalData.id);
+      if (userInfo.user.wechat === true) {
+        uni.showModal({
+          content: '当前用户已经绑定微信！',
+          cancelText: '取消绑定',
+
+          success(res) {
+            if (res.cancel) {
+              // 取消绑定微信
+              uni.login({
+                success(res1) {
+                  if (res1.code) {
+                    cancelBindingWechat(app.globalData.id).then(async () => {
+                      setTimeout(() => {
+                        uni.showToast({
+                          title: '解除绑定'
+                        });
+                      }, 100)
+                    });
+                  }
+                }
+              });
             }
+          }
         });
-        this.getInfo();
-        let i = 0;
-        numDH();
+      } else {
+        uni.showModal({
+          content: '是否绑定微信？',
 
-        function numDH() {
-            if (i < 20) {
-                setTimeout(function () {
-                    that.setData({
-                        recordsCount: i,
-                        wordsCount: i,
-                        visitTotal: i
-                    });
-                    i++;
-                    numDH();
-                }, 20);
-            } else {
-                that.setData({
-                    recordsCount: that.coutNum(app.globalData.contribution.pronunciation),
-                    wordsCount: that.coutNum(app.globalData.contribution.word),
-                    visitTotal: that.coutNum(app.globalData.contribution.listened)
-                });
-            }
-        }
-    },
-    methods: {
-        // 获取用户信息
-        getInfo() {
-            uni.showLoading();
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'users/' + app.globalData.id,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        app.globalData.userInfo = res.data.user;
-                        app.globalData.publish_articles = res.data.publish_articles;
-                        app.globalData.publish_comments = res.data.publish_comments;
-                        app.globalData.like_articles = res.data.like_articles;
-                        app.globalData.contribution = res.data.contribution;
-                        that.setData({
-                            avatar: app.globalData.userInfo.avatar,
-                            nickname: app.globalData.userInfo.nickname
-                        });
-                        uni.hideLoading();
-                    } else {
+          success(res) {
+            if (res.confirm) {
+              uni.login({
+                success(res1) {
+                  if (res1.code) {
+                    bindingWechat(app.globalData.id , res1.code).then(async () => {
+                      setTimeout(() => {
                         uni.showToast({
-                            title: '服务器错误'
+                          title: '绑定成功'
                         });
-                    }
-                },
-
-                fail(err) {
-                    uni.showToast({
-                        title: '网络异常'
+                      }, 100)
                     });
+                  }
                 }
-            });
-        },
-
-        coutNum(e) {
-            if (e > 1000 && e < 10000) {
-                e = (e / 1000).toFixed(1) + 'k';
+              });
             }
-
-            if (e > 10000) {
-                e = (e / 10000).toFixed(1) + 'W';
-            }
-
-            return e;
-        },
-
-        //进入个人信息页面
-        userInfo() {
-            uni.navigateTo({
-                url: '/pages/about/userinfo/userinfo'
-            });
-        },
-
-        getMyRecords() {
-            let id = app.globalData.id;
-            uni.navigateTo({
-                url: '/pages/component/voice/voice?id=' + id
-            });
-        },
-
-        // 退出登录
-        exit() {
-            uni.showModal({
-                content: '是否退出当前登录？',
-
-                success:async(res)=> {
-                    if (res.confirm) {
-                        uni.clearStorageSync();
-                        app.globalData.status = 0;
-                        await toIndexPage(uni.getSystemInfoSync().uniPlatform==='web');
-                        uni.showToast({
-                            title: '登出成功！'
-                        });
-                    }
-                }
-            });
-        },
-
-        //绑定微信
-        bindingWechat() {
-            if (app.globalData.userInfo.wechat === true) {
-                uni.showModal({
-                    content: '当前用户已经绑定微信！',
-                    cancelText: '取消绑定',
-
-                    success(res) {
-                        if (res.cancel) {
-                            // 取消绑定微信
-                            uni.login({
-                                success(res1) {
-                                    if (res1.code) {
-                                        uni.request({
-                                            url: app.globalData.server + 'users/' + app.globalData.id + '/wechat',
-                                            method: 'DELETE',
-                                            data: {
-                                                jscode: res1.code
-                                            },
-                                            header: {
-                                                'content-type': 'application/json',
-                                                token: app.globalData.token
-                                            },
-
-                                            success(res2) {
-                                                if (res2.statusCode == 200) {
-                                                    uni.showToast({
-                                                        title: '解除绑定'
-                                                    });
-                                                    app.globalData.userInfo.wechat = false;
-                                                } else if (res2.statusCode == 401) {
-                                                    uni.showModal({
-                                                        content: '没有权限'
-                                                    });
-                                                } else if (res2.statusCode == 500) {
-                                                    uni.showToast({
-                                                        title: '服务器错误',
-                                                        icon: 'error'
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            } else {
-                uni.showModal({
-                    content: '是否绑定微信？',
-
-                    success(res) {
-                        if (res.confirm) {
-                            uni.login({
-                                success(res1) {
-                                    if (res1.code) {
-                                        uni.request({
-                                            url: app.globalData.server + 'users/' + app.globalData.id + '/wechat',
-                                            method: 'PUT',
-                                            data: {
-                                                jscode: res1.code
-                                            },
-                                            header: {
-                                                'content-type': 'application/json',
-                                                token: app.globalData.token
-                                            },
-
-                                            success(res2) {
-                                                if (res2.statusCode == 200) {
-                                                    uni.showToast({
-                                                        title: '绑定成功'
-                                                    });
-                                                    app.globalData.userInfo.wechat = true;
-                                                } else if (res2.statusCode == 401) {
-                                                    uni.showModal({
-                                                        content: '没有权限'
-                                                    });
-                                                } else if (res2.statusCode == 500) {
-                                                    uni.showToast({
-                                                        title: '服务器错误',
-                                                        icon: 'error'
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
+          }
+        });
+      }
     }
+  }
 };
 </script>
 <style>
 .bg-image {
-    z-index: 0;
-    position: absolute;
-    width: 100vw;
-    height: 28vh;
+  z-index: 0;
+  position: absolute;
+  width: 100vw;
+  height: 28vh;
 }
 
 .bg-info {
-    z-index: 1024;
-    height: 28vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  z-index: 1024;
+  height: 28vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .bg-info .avatar {
-    width: 190rpx;
-    height: 190rpx;
+  width: 190rpx;
+  height: 190rpx;
 }
 
 .bg-info .text {
-    position: absolute;
-    top: 22vh;
-    font-size: 36rpx;
-    font-weight: 700;
-    color: white;
+  position: absolute;
+  top: 22vh;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: white;
 }
 
 .bg-info image {
-    width: 180rpx;
-    height: 180rpx;
-    margin-left: 6rpx;
+  width: 180rpx;
+  height: 180rpx;
+  margin-left: 6rpx;
 }
 </style>
