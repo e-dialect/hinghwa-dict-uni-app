@@ -299,6 +299,7 @@ export default {
       else{
         this.showAnswer[this.subjectIndex] = 0;
       }
+      this.showAnswer = [...this.showAnswer]
     },
 
     /**
