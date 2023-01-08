@@ -224,6 +224,7 @@ export default {
         this.showAnswer[i] = 0
         this.rightAnswer[i] = res.quiz.answer
       }
+      this.subjectList=[...this.subjectList]
     },
 
     /**
