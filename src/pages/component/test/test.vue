@@ -71,9 +71,9 @@
     <form>
       <swiper
         :current="subjectIndex"
+        :style="{'height':swiperHeight}"
         class="swiper-box margin"
         @change="swiperChange"
-        :style="{'height':swiperHeight}"
       >
         <swiper-item
           v-for="(subject,index1) in subjectList"
@@ -146,7 +146,6 @@
       id="foot-box"
       class="cu-bar tabbar bg-white shadow foot"
     >
-
       <view
         class="action"
         @click="moveSubject(-1)"
