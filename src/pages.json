@@ -44,22 +44,26 @@
       "path": "pages/component/playmusic/playmusic",
       "style": {}
     },
-	{
-	  "path": "pages/component/quiz/quiz",
-	  "style": {}
-	},
+    {
+      "path": "pages/component/quiz/quiz",
+      "style": {}
+    },
     {
       "path": "pages/component/quizzes/quizzes",
       "style": {}
     },
-	{
-	  "path": "pages/component/RandomQuiz/RandomQuiz",
-	  "style": {}
-	},
-	{
-	  "path": "pages/component/SearchQuiz/SearchQuiz",
-	  "style": {}
-	},
+    {
+      "path": "pages/component/RandomQuiz/RandomQuiz",
+      "style": {}
+    },
+    {
+      "path": "pages/component/SearchQuiz/SearchQuiz",
+      "style": {}
+    },
+    {
+      "path": "pages/component/test/test",
+      "style": {}
+    },
     {
       "path": "pages/component/uploadmusic/uploadmusic",
       "style": {}

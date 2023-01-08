@@ -40,7 +40,7 @@
         <text class="text-content indent">
           让我们通过一些小测试，来看看你对莆仙文化的了解，并在测试中加深对莆仙文化的学习吧~
         </text>
-        <!--开始答题按钮-->
+        <!--开始答题按钮
         <view class="quiz-btn">
           <button
             style="height: 100upx;width: 200upx"
@@ -51,9 +51,10 @@
               开始答题
             </text>
           </button>
-        </view>
+        </view>-->
       </view>
-      <!--      <view
+      <!--随机测试-->
+      <view
         class="cu-item padding"
         style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
       >
@@ -68,7 +69,7 @@
           <text class="text-content padding-left">
             方言俚语、莆仙文化小知识等等有趣的莆仙话小测试都在这里~
           </text>
-          &lt;!&ndash;开始答题按钮&ndash;&gt;
+          <!--开始答题按钮-->
           <view class="quiz-btn">
             <button
               style="height: 80upx;width: 160upx"
@@ -82,9 +83,10 @@
           </view>
         </view>
       </view>
+      <!--试卷-->
       <view
         class="cu-item padding"
-        style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);width: 90%;align-self: center"
+        style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
       >
         <view class="cu-bar">
           <view class="action">
@@ -95,14 +97,14 @@
         </view>
         <view class="flex">
           <text class="text-content padding-left">
-            一个小小的能力测验~快看看你能拿多少分吧！
+            一个小小的能力测验~快看看你能拿多少分数吧！
           </text>
-          &lt;!&ndash;开始答题按钮&ndash;&gt;
+          <!--开始答题按钮-->
           <view class="quiz-btn">
             <button
               style="height: 80upx;width: 160upx"
               class="cu-btn bg-blue shadow"
-              @tap="toRandomQuizPage()"
+              @tap="toTestPage()"
             >
               <text class="text-sm">
                 开始测验
@@ -110,7 +112,7 @@
             </button>
           </view>
         </view>
-      </view>-->
+      </view>
     </view>
     <!--添题和纠错
     <view class="cu-bar tabbar bg-white shadow foot">
@@ -135,13 +137,14 @@
 </template>
 
 <script>
-import {toRandomQuizPage, toSearchQuizPage}   from "@/routers";
+import {toRandomQuizPage, toSearchQuizPage, toTestPage} from "@/routers";
 const app = getApp();
 
 export default {
   data(){
     return{
       toRandomQuizPage: toRandomQuizPage,
+      toTestPage: toTestPage,
       toSearchQuizPage: toSearchQuizPage,
     }
   },
