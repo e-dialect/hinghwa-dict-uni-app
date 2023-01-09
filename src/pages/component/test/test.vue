@@ -1,7 +1,10 @@
 <template>
   <view>
     <cu-custom title="语记·试卷" />
-    <view class="cu-bar bg-white solid-bottom card shadow -gray margin-top margin-xs">
+    <view
+      id="top-box"
+      class="cu-bar bg-white solid-bottom card shadow -gray margin-top margin-xs"
+    >
       <progress
         class="margin-left"
         style="width: 50%"
@@ -185,31 +188,64 @@
 
 <script>
 import {getRandomQuiz} from "@/services/quiz";
+import {toPosterPage} from "@/routers";
+
 const app = getApp();
 
 export default {
   data() {
     return {
+      toPosterPage: toPosterPage,
       percent: 0,
       current: [], // 选中的选项
       showAnswer: [],
       rightAnswer: [],
       subjectIndex: 0, // 跳转索引
-      swiperHeight: 0,
+      swiperHeight: '800px',
       subjectList: [],
       modalCard: null ,//显示答题卡
+      totalScore: 0
     }
   },
+  /*  onReady() {
+      let tempHeight = 800;
+      uni.getSystemInfo({
+        success: (res) => {
+          tempHeight = res.windowHeight;
+          uni.createSelectorQuery().select("#top-box").fields({
+            size: true,
+            scrollOffset: true
+          }, (data) => {
+              tempHeight -= data.height;  //减去顶部元素高度
+            uni.createSelectorQuery().select("#foot-box").fields({
+              size: true,
+              scrollOffset: true
+            }, (data) => {
+               tempHeight -= data.height;  //减去底部元素高度
+               this.swiperHeight = tempHeight + 'px';
+            }).exec();
+          }).exec();
+        }
+      }); // swiper高度自适应
+    },*/
   onLoad() {
     this.getTest();
     uni.getSystemInfo({
       success: (res) => {
-        this.swiperHeight = res.windowHeight - app.globalData.CustomBar + 'px';
+        this.swiperHeight = res.windowHeight + 'px';
       }
     });
-/*    for (let i = 0; i < 20; i++) {
-      this.$set(this.subjectList[i],"showAnswer",false);
-    } //添加用户显示答案字段*/
+    /*    // select中的参数就如css选择器一样选择元素
+        let info = uni.createSelectorQuery().in(this).select("#swiper-view");
+        info.boundingClientRect(function(data) {
+          //	data - 包含元素的高度等信息
+          console.log(data.height)  // 获取元素宽度
+          this.swiperHeight = data.height
+        }).exec(function(res) {
+          // 注意：exec方法必须执行，即便什么也不做不会获取到任何数据
+        }
+       )
+     */
   },
   methods: {
     /**
@@ -252,7 +288,7 @@ export default {
      * 点击提交按钮
      */
     submit() {
-      let totalScore = 0;
+      this.totalScore = 0;
       uni.showModal({
         title: "提交",
         content: "确定要提交吗？",
@@ -260,13 +296,15 @@ export default {
           if (res.confirm) {
             for (let i=0; i < 20; i++) {
               if (this.current[i] === this.rightAnswer[i]) {
-                totalScore += 5
+                this.totalScore += 5
               }
             }
-            console.log(totalScore)
+            console.log(this.totalScore)
+            this.toPosterPage(this.totalScore);
           }
         }
       });
+
     },
 
     /**

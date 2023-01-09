@@ -135,6 +135,15 @@ export function toTestPage() {
 }
 
 /**
+ * 前往海报页面
+ */
+export function toPosterPage(totalScore) {
+  uni.navigateTo({
+    url: "/pages/component/poster/poster?totalScore=" + totalScore,
+  });
+}
+
+/**
  * 前往单个测试页面
  */
 export function toOneQuizPage(id) {

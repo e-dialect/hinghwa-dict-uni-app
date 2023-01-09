@@ -45,6 +45,10 @@
       "style": {}
     },
     {
+      "path": "pages/component/poster/poster",
+      "style": {}
+    },
+    {
       "path": "pages/component/quiz/quiz",
       "style": {}
     },
