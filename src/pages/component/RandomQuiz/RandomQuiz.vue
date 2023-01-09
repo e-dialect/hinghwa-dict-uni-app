@@ -261,7 +261,6 @@ export default {
       if (endTime - this.startTime < 1500 && moveX < -70) {
         this.changeQuiz()
       }
-      console.log();
     },
     /**
      * 显示答案

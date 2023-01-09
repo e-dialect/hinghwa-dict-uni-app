@@ -100,7 +100,6 @@ export async function toUploadPronunciationPage(id) {
     url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`
   });
 }
-
 /**
  * 前往文章页面
  * @param id 文章id
@@ -123,6 +122,24 @@ export function toLoginPage() {
 export function toRandomQuizPage() {
   uni.navigateTo({
     url: "/pages/component/RandomQuiz/RandomQuiz",
+  });
+}
+
+/**
+ * 前往试卷页面
+ */
+export function toTestPage() {
+  uni.navigateTo({
+    url: "/pages/component/test/test",
+  });
+}
+
+/**
+ * 前往海报页面
+ */
+export function toPosterPage(totalScore) {
+  uni.navigateTo({
+    url: "/pages/component/poster/poster?totalScore=" + totalScore,
   });
 }
 
