@@ -3,7 +3,7 @@
     <cu-custom title="语记·分数海报" />
     <view>
       <image
-        :src= "imagesUrl"
+        :src="imagesUrl"
         mode="widthFix"
       />
     </view>
