@@ -1,16 +1,14 @@
-name: test-build
+name: Receive PR
 on:
-  push:
-    branches:
-      - master
-  workflow_dispatch: {}
   pull_request:
-    branches:
-      - master
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   test-build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -25,7 +23,19 @@ jobs:
           yarn run lint
       - name: Build H5
         run: |
-          yarn run build:h5
+          yarn run build-dev:h5
       - name: Build Weixin Miniprogram
         run: |
           yarn run build:mp-weixin
+
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pr
+          path: |
+            ./pr/NR
+            ./dist/dev/h5
