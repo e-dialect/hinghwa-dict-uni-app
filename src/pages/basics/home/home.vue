@@ -111,8 +111,8 @@
 </template>
 
 <script>
-import {mpLogin, refreshToken}                   from "../../../services/login.js";
-import {getAnnouncements, getWordOfTheDay}       from "@/services/website";
+import {mpLogin, getLoginStatus}           from "../../../services/login.js";
+import {getAnnouncements, getWordOfTheDay} from "@/services/website";
 import {toArticlePage, toSearchPage, toWordPage} from "@/routers";
 
 const app = getApp();
@@ -135,7 +135,7 @@ export default {
   async mounted() {
     this.word          = await getWordOfTheDay()
     this.announcements = await getAnnouncements()
-    this.hasLogin      = await refreshToken()
+    this.hasLogin      = await getLoginStatus()
   },
   methods: {
     /**

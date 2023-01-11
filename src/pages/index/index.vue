@@ -31,8 +31,8 @@ import {COS_URL}               from "../../const/urls";
 import basics                  from "../basics/home/home";
 import tools                   from "../component/home/home";
 import InteractionPage         from "../plugin/home/home";
-import me                      from "../about/home/home";
-import {mpLogin, refreshToken} from "../../services/login";
+import me                        from "../about/home/home";
+import {mpLogin, getLoginStatus} from "../../services/login";
 
 const app = getApp();
 export default {
@@ -91,7 +91,7 @@ export default {
      */
     async changePage(page) {
       if (page === "me") {
-        const hasLogin = await refreshToken()
+        const hasLogin = await getLoginStatus()
         if (!hasLogin) {
           uni.showModal({
             content: "请先登录",

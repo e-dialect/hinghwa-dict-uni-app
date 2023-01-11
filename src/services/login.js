@@ -111,7 +111,7 @@ async function afterLogin(res) {
  * 更新 Token 并登录
  * @returns {Promise<boolean>} 是否登录成功
  */
-export async function refreshToken() {
+export async function getLoginStatus() {
   let flag = false
   await request.put('/login', {}, true).then(async (res) => {
     uni.setStorageSync('token', res.token);
@@ -134,6 +134,10 @@ export async function refreshToken() {
   return flag
 }
 
+/**
+ * 加载用户信息到 app.globalData
+ * @returns {Promise<null>}
+ */
 export async function loadUserInfo() {
   const id = uni.getStorageSync('id')
   if (!id) {
