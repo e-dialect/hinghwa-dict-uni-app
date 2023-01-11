@@ -213,7 +213,7 @@ export default {
       uni.showModal({
         content: '当前用户已经绑定微信！',
         cancelText: '返回',
-        confirmText: '继续',
+        confirmText: '继续操作',
 
         success(res) {
           // 继续操作
