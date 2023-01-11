@@ -33,7 +33,7 @@
             {{ recordsCount }}
           </view>
           <view class="margin-top-sm">
-            <text class="cuIcon-voice"/>
+            <text class="cuIcon-voice" />
             语音量
           </view>
         </view>
@@ -42,7 +42,7 @@
             {{ wordsCount }}
           </view>
           <view class="margin-top-sm">
-            <text class="cuIcon-font"/>
+            <text class="cuIcon-font" />
             词语量
           </view>
         </view>
@@ -51,7 +51,7 @@
             {{ visitTotal }}
           </view>
           <view class="margin-top-sm">
-            <text class="cuIcon-attention"/>
+            <text class="cuIcon-attention" />
             播放量
           </view>
         </view>
@@ -63,7 +63,7 @@
             hover-class="none"
             url="/pages/about/articlesliked/articlesliked"
           >
-            <text class="cuIcon-appreciate text-grey"/>
+            <text class="cuIcon-appreciate text-grey" />
             <text class="text-grey">
               点赞文章
             </text>
@@ -75,7 +75,7 @@
             hover-class="none"
             url="/pages/about/myarticles/myarticles"
           >
-            <text class="cuIcon-edit text-grey"/>
+            <text class="cuIcon-edit text-grey" />
             <text class="text-grey">
               我的文章
             </text>
@@ -87,7 +87,7 @@
             hover-class="none"
             url="/pages/about/mycomments/mycomments"
           >
-            <text class="cuIcon-comment text-grey"/>
+            <text class="cuIcon-comment text-grey" />
             <text class="text-grey">
               我的评论
             </text>
@@ -109,7 +109,7 @@
       <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
         <view class="cu-item arrow">
           <view class="content">
-            <text class="cuIcon-write text-grey"/>
+            <text class="cuIcon-write text-grey" />
             <text class="text-grey">
               修改密码
             </text>
@@ -120,7 +120,7 @@
           @tap="bindingWechat"
         >
           <view class="content">
-            <text class="cuIcon-group text-grey"/>
+            <text class="cuIcon-group text-grey" />
             <text class="text-grey">
               绑定微信
             </text>
@@ -131,7 +131,7 @@
           @tap="tuxiaochao"
         >
           <view class="content">
-            <text class="cuIcon-question text-grey"/>
+            <text class="cuIcon-question text-grey" />
             <text class="text-grey">
               问题反馈
             </text>
@@ -142,14 +142,14 @@
           @tap="exit"
         >
           <view class="content">
-            <text class="cuIcon-exit text-grey"/>
+            <text class="cuIcon-exit text-grey" />
             <text class="text-grey">
               退出登录
             </text>
           </view>
         </view>
       </view>
-      <view class="stand-view"/>
+      <view class="stand-view" />
     </scroll-view>
   </view>
 </template>
