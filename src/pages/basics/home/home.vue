@@ -51,7 +51,7 @@
             @tap="search"
           >
             <view class="search-form round">
-              <text class="cuIcon-search"/>
+              <text class="cuIcon-search" />
               <input
                 type="text"
                 placeholder="搜索词语、单字、拼音和文章"
@@ -104,7 +104,7 @@
           />
         </view>
 
-        <view class="stand-view"/>
+        <view class="stand-view" />
       </view>
     </scroll-view>
   </view>
