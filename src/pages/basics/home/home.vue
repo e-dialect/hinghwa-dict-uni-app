@@ -211,16 +211,4 @@ export default {
   border-radius: 20 rpx;
   margin-right: 1vw;
 }
-
-.search-card {
-  background-color: #ffffff;
-  border-radius: 20 rpx;
-  margin-left: 1vw;
-}
-
-.article-card {
-  background-color: #ffffff;
-  border-radius: 20 rpx;
-  margin-top: 2vw;
-}
 </style>
