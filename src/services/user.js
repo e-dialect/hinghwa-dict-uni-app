@@ -6,7 +6,7 @@ import request from "@/utils/request";
  * @returns {Promise<unknown>}
  */
 export async function getUserInfo(id) {
-    return request.get(`/users/${id}`)
+  return request.get(`/users/${id}`)
 }
 
 /**
@@ -14,8 +14,8 @@ export async function getUserInfo(id) {
  * @param id 用户id
  * @returns {Promise<unknown>}
  */
-export async function changeUserInfo(id , userInfo) {
-    return request.put(`/users/${id}`,{user: userInfo})
+export async function changeUserInfo(id, userInfo) {
+  return request.put(`/users/${id}`, {user: userInfo})
 }
 
 /**
@@ -25,8 +25,8 @@ export async function changeUserInfo(id , userInfo) {
  * @param new_password 新密码
  * @returns {Promise<unknown>}
  */
-export async function changeUserPassword(id , old_password , new_password) {
-    return request.put(`/users/${id}/password`,{oldpassword: old_password, newpassword: new_password})
+export async function changeUserPassword(id, old_password, new_password) {
+  return request.put(`/users/${id}/password`, {oldpassword: old_password, newpassword: new_password})
 }
 
 /**
@@ -36,18 +36,38 @@ export async function changeUserPassword(id , old_password , new_password) {
  * @param code 验证码
  * @returns {Promise<unknown>}
  */
-export async function changeUserEmail(id , email , code) {
-    return request.put(`/users/${id}/email`,{email: email, code: code})
+export async function changeUserEmail(id, email, code) {
+  return request.put(`/users/${id}/email`, {email: email, code: code})
 }
 
 /**
  * US0304 绑定微信
- * @param id 用户id
- * @param jscode 微信code
+ * @param id{number} 用户id
+ * @param overwrite{boolean} 是否覆盖
  * @returns {Promise<unknown>}
  */
-export async function bindingWechat(id , jscode) {
-    return request.put(`/users/${id}/wechat`,{jscode: jscode})
+export async function bindingWechat(id, overwrite) {
+  await uni.login({
+    async success(res) {
+      if (!res.code) {
+        uni.showToast({
+          title: '获取账号失败',
+          icon: 'error'
+        })
+      }
+      await request.put(`/users/${id}/wechat`, {jscode: res.code, overwrite}).then(() => {
+        uni.showToast({
+          title: '绑定成功'
+        });
+      }).catch(err => {
+        uni.showToast({
+          title: err.msg,
+          icon: 'none'
+        })
+      });
+    }
+  });
+  return
 }
 
 /**
@@ -56,5 +76,14 @@ export async function bindingWechat(id , jscode) {
  * @returns {Promise<unknown>}
  */
 export async function cancelBindingWechat(id) {
-    return request.del(`/users/${id}/wechat`)
+  return request.del(`/users/${id}/wechat`).then(() => {
+    uni.showToast({
+      title: '解除绑定成功！'
+    });
+  }).catch(err => {
+    uni.showToast({
+      title: err.msg,
+      icon: 'none'
+    })
+  })
 }
