@@ -55,7 +55,8 @@
         },
         "plugins" : {},
         "cloudfunctionRoot" : "cloudfunctions/",
-        "requiredBackgroundModes" : [ "audio", "location" ]
+        "requiredBackgroundModes" : [ "audio", "location" ],
+        "embeddedAppIdList": ["wx8abaf00ee8c3202e"]
     },
     "mp-alipay" : {
         "usingComponents" : true

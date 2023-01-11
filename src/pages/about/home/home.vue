@@ -128,6 +128,17 @@
         </view>
         <view
           class="cu-item arrow"
+          @tap="tuxiaochao"
+        >
+          <view class="content">
+            <text class="cuIcon-question text-grey" />
+            <text class="text-grey">
+              问题反馈
+            </text>
+          </view>
+        </view>
+        <view
+          class="cu-item arrow"
           @tap="exit"
         >
           <view class="content">
@@ -241,6 +252,29 @@ export default {
           }
         }
       });
+    },
+
+    /**
+     * 接入兔小巢
+     * @returns {Promise<void>}
+     */
+    async tuxiaochao(){
+      switch (uni.getSystemInfoSync().uniPlatform) {
+        case 'mp-weixin':
+          uni.openEmbeddedMiniProgram(
+            {
+              appId: 'wx8abaf00ee8c3202e',
+              extraData: {
+                id: "420021"
+              }
+            }
+          )
+          break;
+        case 'web':
+          // 跳转到兴化语记兔小巢页面
+          window.location= 'https://support.qq.com/product/420021';
+          break;
+      }
     }
   }
 };
