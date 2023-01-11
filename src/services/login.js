@@ -1,5 +1,6 @@
 import request                              from "../utils/request";
 import {toIndexPage, toLoginPage, toMePage} from "@/routers";
+import {getUserInfo}                        from "@/services/user";
 
 /**
  * 小程序一键登录
@@ -24,8 +25,8 @@ export async function mpLogin() {
           {
             jscode: res.code,
           }, true)
-          .then(res2 => {
-            afterLogin(res2)
+          .then(async (res2) => {
+            await afterLogin(res2)
           })
           .catch((err) => {
             switch (err.statusCode) {
@@ -76,8 +77,8 @@ export async function normalLogin(username, password) {
   request.post("/login", {
     username: username,
     password: password
-  }, true).then(res => {
-    afterLogin(res)
+  }, true).then(async res => {
+    await afterLogin(res)
   }).catch(err => {
     switch (err.statusCode) {
       case 401:
@@ -90,17 +91,60 @@ export async function normalLogin(username, password) {
   })
 }
 
-function afterLogin(res) {
+async function afterLogin(res) {
   uni.showToast({
     title: '登录成功',
     icon: 'success'
   });
   uni.setStorageSync('token', res.token);
   uni.setStorageSync('id', res.id);
+  await loadUserInfo()
 //#ifdef H5
   toIndexPage(true);
 //#endif
 //#ifndef H5
   toMePage();
 //#endif
+}
+
+/**
+ * 更新 Token 并登录
+ * @returns {Promise<boolean>} 是否登录成功
+ */
+export async function refreshToken() {
+  let flag = false
+  await request.put('/login', {}, true).then(async (res) => {
+    uni.setStorageSync('token', res.token);
+    uni.setStorageSync('id', res.id);
+    await loadUserInfo()
+    flag = true
+  }).catch(err => {
+    switch (err.statusCode) {
+      case 401:
+        if (!uni.getStorageSync('token')) break;
+        uni.removeStorageSync('token')
+        uni.removeStorageSync('id')
+        uni.showToast({
+          title: err.data.msg || '登录已过期，请重新登录',
+          icon: 'error'
+        })
+        break;
+    }
+  })
+  return flag
+}
+
+export async function loadUserInfo() {
+  const id = uni.getStorageSync('id')
+  if (!id) {
+    return null
+  }
+  const app = getApp()
+  await getUserInfo(id).then(res => {
+    app.globalData.userInfo         = res.user;
+    app.globalData.publish_articles = res.publish_articles;
+    app.globalData.publish_comments = res.publish_comments;
+    app.globalData.like_articles    = res.like_articles;
+    app.globalData.contribution     = res.contribution;
+  })
 }
