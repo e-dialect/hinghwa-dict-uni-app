@@ -146,5 +146,6 @@ export async function loadUserInfo() {
     app.globalData.publish_comments = res.publish_comments;
     app.globalData.like_articles    = res.like_articles;
     app.globalData.contribution     = res.contribution;
+    app.globalData.id               = res.user.id
   })
 }
