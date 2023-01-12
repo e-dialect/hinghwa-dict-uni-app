@@ -153,7 +153,7 @@ export default {
           content: '未填写昵称将会用用户名暂代哦~',
           success: async (res) => {
             if (res.confirm) {
-              registerWechatUser(username, password, nickname, avatar)
+              registerWechatUser(username, password, username, avatar)
             }
           }
         });
