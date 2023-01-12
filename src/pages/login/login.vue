@@ -48,19 +48,21 @@
       >
         用户注册
       </view>
+      <!-- #ifdef MP-WEIXIN -->
       <view
         class="flex-sub"
         @tap="toWechatRegisterPage()"
       >
         微信注册
       </view>
+      <!-- #endif -->
     </view>
   </view>
 </template>
 
 <script>
-import {COS_URL}     from "@/const/urls";
-import {normalLogin} from "@/services/login";
+import {COS_URL}                                            from "@/const/urls";
+import {normalLogin}                                        from "@/services/login";
 import {toForgetPage, toRegisterPage, toWechatRegisterPage} from "@/routers";
 
 const app = getApp();
@@ -102,10 +104,10 @@ page {
 
 .info {
   background-color: var(--white);
-  padding: 1rpx 30rpx;
+  padding: 1 rpx 30 rpx;
   display: flex;
   align-items: center;
-  min-height: 100rpx;
+  min-height: 100 rpx;
   justify-content: center;
   margin-bottom: 16px;
 }
@@ -113,16 +115,16 @@ page {
 .info input {
   color: #555;
   background-color: #f5f5f5;
-  height: 80rpx;
+  height: 80 rpx;
   width: 60vw;
-  padding-left: 20rpx;
-  border-radius: 10rpx;
-  font-size: 32rpx;
-  margin-left:16px;
+  padding-left: 20 rpx;
+  border-radius: 10 rpx;
+  font-size: 32 rpx;
+  margin-left: 16px;
 }
 
 .info > text[class*='cuIcon-'] {
-  font-size: 40rpx;
+  font-size: 40 rpx;
   box-sizing: border-box;
 }
 </style>
