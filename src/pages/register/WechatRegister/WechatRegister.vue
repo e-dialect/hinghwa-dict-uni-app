@@ -110,7 +110,6 @@ export default {
     },
 
     wechatRegister(e) {
-      console.log(e.detail.value)
       let username           = e.detail.value.username;
       let password           = e.detail.value.password;
       let password_confirmed = e.detail.value.password_confirmed;
