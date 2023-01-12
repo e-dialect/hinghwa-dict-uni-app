@@ -45,27 +45,27 @@
       "style": {}
     },
     {
-      "path": "pages/component/poster/poster",
+      "path": "pages/tools/quiz/poster/poster",
       "style": {}
     },
     {
-      "path": "pages/component/quiz/quiz",
+      "path": "pages/tools/quiz/quiz/quiz",
       "style": {}
     },
     {
-      "path": "pages/component/quizzes/quizzes",
+      "path": "pages/tools/quiz/quizzes/quizzes",
       "style": {}
     },
     {
-      "path": "pages/component/RandomQuiz/RandomQuiz",
+      "path": "pages/tools/quiz/RandomQuiz/RandomQuiz",
       "style": {}
     },
     {
-      "path": "pages/component/SearchQuiz/SearchQuiz",
+      "path": "pages/tools/quiz/SearchQuiz/SearchQuiz",
       "style": {}
     },
     {
-      "path": "pages/component/test/test",
+      "path": "pages/tools/quiz/test/test",
       "style": {}
     },
     {
