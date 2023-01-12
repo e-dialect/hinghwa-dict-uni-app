@@ -11,7 +11,7 @@
         忘记密码
       </view>
     </cu-custom>
-    <block v-if="status == 0">
+    <block v-if="status === 0">
       <view class="cu-form-group">
         <view class="text-df text-bold-less margin-right-sm">
           用户名
@@ -31,7 +31,7 @@
       </button>
     </block>
     <form
-      v-if="status == 1"
+      v-if="status === 1"
       @submit="reset"
     >
       <view class="cu-form-group">
@@ -86,7 +86,8 @@
 </template>
 
 <script>
-import {sendEmailCode} from "@/services/website";
+import {sendEmailCode}                     from "@/services/website";
+import {getEmailByUsername, resetPassword} from "@/services/login";
 
 const app = getApp();
 export default {
@@ -100,36 +101,14 @@ export default {
     },
     methods: {
         getUsername(e) {
-            this.setData({
-                username: e.detail.value
-            });
+          this.username=e.detail.value
         },
 
         next() {
-            let username = this.username;
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'login/forget?username=' + username,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            email: res.data.email,
-                            status: 1
-                        });
-                    } else if (res.statusCode == 500) {
-                        uni.showToast({
-                            title: '服务器错误',
-                            icon: 'error'
-                        });
-                    }
-                }
-            });
+            getEmailByUsername(this.username).then(res=>{
+              this.email=res.email
+              this.status=1
+            })
         },
 
         // 获取验证码
@@ -142,43 +121,20 @@ export default {
         },
 
         reset(e) {
-            let username = this.username;
-            let email = this.email;
-            let code = e.detail.value.code;
-            let password = e.detail.value.password;
-            uni.request({
-                url: app.globalData.server + 'login/forget',
-                method: 'PUT',
-                data: {
-                    username: username,
-                    email: email,
-                    code: code,
-                    password: password
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        uni.showToast({
-                            title: '重置成功'
-                        });
-                        setTimeout(function () {
-                            uni.navigateBack({
-                                delta: 1
-                            });
-                        }, 500);
-                    } else if (res.statusCode == 401) {
-                        uni.showToast({
-                            title: '验证码错误',
-                            icon: 'error'
-                        });
-                    } else {
-                        uni.showToast({
-                            title: '服务器错误',
-                            icon: 'error'
-                        });
-                    }
-                }
+          const username = this.username;
+          const email    = this.email;
+          const code     = e.detail.value.code;
+          const password = e.detail.value.password;
+          resetPassword(username, email, code, password).then(() => {
+            uni.showToast({
+              title: '重置成功',
+              icon: 'success',
+              duration: 2000
             });
+            uni.navigateBack({
+              delta: 1
+            });
+          })
         }
     }
 };
