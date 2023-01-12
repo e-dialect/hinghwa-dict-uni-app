@@ -110,8 +110,9 @@
 </template>
 
 <script>
-import {changeUserInfo, getUserInfo} from "@/services/user";
+import {changeUserInfo, getUserInfo}                                from "@/services/user";
 import {toChangeEmailPage, toChangeNicknamePage, toChangePhonePage} from "@/routers";
+import {uploadFile}                                                 from "@/services/file";
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];
@@ -169,17 +170,8 @@ export default {
         //从相册选择
         success: (res) => {
           const tempFilePaths = res.tempFilePaths[0];
-          uni.uploadFile({
-            url: app.globalData.server + 'website/files',
-            filePath: tempFilePaths,
-            name: 'file',
-            header: {
-              token: app.globalData.token
-            },
-            success: (res) => {
-                let url = JSON.parse(res.data).url;
-                this.changeAvatar(url);
-            }
+          uploadFile(tempFilePaths).then((res2) => {
+            this.changeAvatar(res2.url);
           });
         }
       });
