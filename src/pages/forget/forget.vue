@@ -44,7 +44,7 @@
           placeholder="请输入新密码"
         >
         <text
-          :class="is_pwd == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
+          :class="is_pwd === true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
           @tap="ear"
         />
       </view>
@@ -138,15 +138,7 @@ export default {
         },
 
         ear() {
-            if (this.is_pwd == true) {
-                this.setData({
-                    is_pwd: false
-                });
-            } else {
-                this.setData({
-                    is_pwd: true
-                });
-            }
+          this.is_pwd = !this.is_pwd
         },
 
         reset(e) {
