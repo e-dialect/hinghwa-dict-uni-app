@@ -124,7 +124,7 @@ page {
 }
 
 .info > text[class*='cuIcon-'] {
-  font-size: 40 rpx;
+  font-size: 40rpx;
   box-sizing: border-box;
 }
 </style>
