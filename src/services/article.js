@@ -33,11 +33,11 @@ export async function searchArticle(key) {
 
 /**
  * AT0202 文章内容批量获取
- * @param id 文章id数组
+ * @param idList{number[]} 文章id数组
  * @returns {Promise<unknown>}
  */
-export async function getArticles(id) {
-  return request.put(`/articles`, {articles: id})
+export async function getArticles(idList) {
+  return request.put(`/articles`, {articles: idList})
 }
 
 /**

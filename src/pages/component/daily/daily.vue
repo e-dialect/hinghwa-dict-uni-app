@@ -93,6 +93,8 @@
 </template>
 
 <script>
+import {getDailyExpressions} from "@/services/website";
+
 const app = getApp();
 export default {
   data() {
@@ -137,53 +139,28 @@ export default {
   },
   methods: {
     getPageData(keyword, page) {
-      uni.showLoading();
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'website/daily-expression?keyword=' + keyword + '&pageSize=10&page=' + page,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          uni.hideLoading();
-
-          if (res.statusCode == 200) {
-            that.setData({
-              pageData: res.data.results,
-              pageNum: res.data.total.page,
-              itemNum: res.data.total.item
-            });
-          } else {
-            uni.showToast({
-              title: '服务器错误'
-            });
-          }
-        }
+      getDailyExpressions(keyword, page, 15).then(res => {
+        this.pageData = res.results
+        this.pageNum  = res.total.page
+        this.itemNum  = res.total.item
       });
     },
 
     getInput(e) {
-      this.setData({
-        keywordTmp: e.detail.value
-      });
+      this.keywordTmp = e.detail.value;
     },
 
     search() {
       let keywordTmp = this.keywordTmp;
 
-      if (keywordTmp == '') {
+      if (keywordTmp === '') {
         uni.showToast({
           title: '搜索内容为空！',
           icon: 'none'
         });
       } else {
-        this.setData({
-          keyword: keywordTmp,
-          curPage: 1
-        });
+        this.keyword=keywordTmp
+        this.curPage=1
         this.getPageData(this.keyword, 1);
       }
     },
@@ -191,15 +168,13 @@ export default {
     previous() {
       let curPage = this.curPage;
 
-      if (curPage == 1) {
+      if (curPage === 1) {
         uni.showToast({
           title: '当前页为第一页！',
           icon: 'none'
         });
       } else {
-        this.setData({
-          curPage: curPage - 1
-        });
+        this.curPage=curPage-1
         this.getPageData(this.keyword, curPage - 1);
       }
     },
@@ -213,9 +188,7 @@ export default {
           icon: 'none'
         });
       } else {
-        this.setData({
-          curPage: curPage + 1
-        });
+        this.curPage=curPage + 1
         this.getPageData(this.keyword, curPage + 1);
       }
     }

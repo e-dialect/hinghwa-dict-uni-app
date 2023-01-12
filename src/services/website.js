@@ -6,7 +6,11 @@ import {getWordDetails} from "@/services/word";
  * @returns {Promise<unknown>}
  */
 export async function sendEmailCode(email) {
-    return request.post(`/website/email`,{email: email})
+    return request.post(`/website/email`,{email: email}).then(()=>{
+        uni.showToast({
+            title: '验证码已发送'
+        })
+    })
 }
 
 /**
@@ -36,4 +40,15 @@ export async function getWordOfTheDay(){
     } catch (e) {
         return null
     }
+}
+
+/**
+ * WS0701 批量获取日常用语
+ * @param keyword 关键词
+ * @param page 页码
+ * @param pageSize 每页数量
+ * @returns {Promise<void>}
+ */
+export async function getDailyExpressions(keyword = "", page = 1, pageSize = 10) {
+    return request.get(`/website/daily-expression`, {keyword: keyword, page: page, pageSize: pageSize})
 }

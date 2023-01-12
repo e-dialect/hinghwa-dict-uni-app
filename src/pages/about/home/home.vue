@@ -157,6 +157,7 @@
 <script>
 import {toIndexPage, toMyRecordsPage, toUserInfoPage}    from "@/routers";
 import {bindingWechat, cancelBindingWechat, getUserInfo} from "@/services/user";
+import {clearUserInfo}                                   from "@/services/login";
 
 const app = getApp();
 export default {
@@ -199,8 +200,7 @@ export default {
 
         success: async (res) => {
           if (res.confirm) {
-            uni.clearStorageSync();
-            app.globalData.status = 0;
+            clearUserInfo()
             await toIndexPage(uni.getSystemInfoSync().uniPlatform === 'web');
             uni.showToast({
               title: '登出成功！'

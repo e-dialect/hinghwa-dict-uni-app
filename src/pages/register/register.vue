@@ -166,57 +166,6 @@ export default {
             });
         },
 
-        // uploadAvatar() {
-        //   console.log('yl')
-        //   console.log(app.globalData.token)
-        //   //获取图片信息
-        //   wx.getImageInfo({
-        //     src: app.globalData.userInfo.avatar,
-        //     success: function (sres) {
-        //       console.log(sres)
-        //       //上传图片
-        //       wx.uploadFile({
-        //         url: app.globalData.server + 'website/files',
-        //         filePath: sres.path,
-        //         name: "file",
-        //         header: {
-        //           'token': app.globalData.token
-        //         },
-        //         success: function (res) {
-        //           console.log(res)
-        //         },
-        //         error: function (rev) {
-        //           console.log(rev);
-        //         }
-        //       });
-        //     },
-        //     fail: function (srev) {
-        //       console.log(srev);
-        //     }
-        //   })
-        //   wx.uploadFile({
-        //     url: app.globalData.server + 'website/files',
-        //     filePath: tempFilePaths,
-        //     name: 'file',
-        //     header: {
-        //       'token': app.globalData.token
-        //     },
-        //     success(res) {
-        //       console.log(res)
-        //       if (res.statusCode == 200) {
-        //         console.log(url)
-        //         let url = JSON.parse(res.data).url
-        //         app.globalData.data = {
-        //           'avatar': url
-        //         }
-        //         that.setData({
-        //           avatar: url
-        //         })
-        //         that.changeAvatar(url)
-        //       }
-        //     }
-        //   })
-        // }
         register(e) {
             console.log(e);
             var username = e.detail.value.username;

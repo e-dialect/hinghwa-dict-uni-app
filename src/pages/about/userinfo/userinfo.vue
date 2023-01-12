@@ -81,15 +81,6 @@
       </picker>
     </view>
 
-    <!-- <view class="cu-form-group">
-  <view class="title">现居地</view>
-  <picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
-    <view class="picker text-grey">
-      <text >{{region[1]}} {{region[2]}}</text>
-    </view>
-  </picker>
-</view> -->
-
     <view class="cu-form-group">
       <view class="title">
         居住地
@@ -110,8 +101,9 @@
 </template>
 
 <script>
-import {changeUserInfo, getUserInfo} from "@/services/user";
+import {changeUserInfo, getUserInfo}                                from "@/services/user";
 import {toChangeEmailPage, toChangeNicknamePage, toChangePhonePage} from "@/routers";
+import {uploadFile}                                                 from "@/services/file";
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];
@@ -169,17 +161,8 @@ export default {
         //从相册选择
         success: (res) => {
           const tempFilePaths = res.tempFilePaths[0];
-          uni.uploadFile({
-            url: app.globalData.server + 'website/files',
-            filePath: tempFilePaths,
-            name: 'file',
-            header: {
-              token: app.globalData.token
-            },
-            success: (res) => {
-                let url = JSON.parse(res.data).url;
-                this.changeAvatar(url);
-            }
+          uploadFile(tempFilePaths).then((res2) => {
+            this.changeAvatar(res2.url);
           });
         }
       });
@@ -192,14 +175,7 @@ export default {
     async changeAvatar(url) {
       const userInfo = await getUserInfo(app.globalData.id)
       userInfo.user.avatar = url;
-      changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
-        uni.setStorageSync('token', res.token);
-        setTimeout(() => {
-          uni.showToast({
-            title: '修改成功'
-          });
-        }, 100)
-      });
+      await changeUserInfo(app.globalData.id , userInfo.user)
       this.user.avatar = url;
     },
 
@@ -211,53 +187,8 @@ export default {
       this.date = e.detail.value;
       const userInfo = await getUserInfo(app.globalData.id)
       userInfo.user.birthday = e.detail.value;
-      changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
-        uni.setStorageSync('token', res.token);
-        setTimeout(() => {
-          uni.showToast({
-            title: '修改成功'
-          });
-        }, 100)
-      });
+      await changeUserInfo(app.globalData.id , userInfo.user)
     },
-
-    // RegionChange(e) {
-    //   var region = e.detail.value
-    //   this.setData({
-    //     region: region
-    //   })
-    //   app.globalData.userInfo.county = region[1]
-    //   app.globalData.userInfo.town = region[2]
-    //   wx.request({
-    //     url: app.globalData.server + 'users/' + app.globalData.id,
-    //     method: 'PUT',
-    //     data: {
-    //       user: app.globalData.userInfo
-    //     },
-    //     header: {
-    //       'content-type': 'application/json',
-    //       'token': app.globalData.token
-    //     },
-    //     success(res) {
-    //       console.log(res.data)
-    //       if (res.statusCode == 200) {
-    //         wx.setStorage({
-    //           data: res.data.token,
-    //           key: 'token',
-    //         })
-    //       } else {
-    //         wx.showToast({
-    //           title: '服务器错误',
-    //         })
-    //       }
-    //     },
-    //     fail(err) {
-    //       wx.showToast({
-    //         title: '网络异常',
-    //       })
-    //     }
-    //   })
-    // },
 
     /**
      * 更改区县选择
@@ -268,44 +199,24 @@ export default {
       const userInfo = await getUserInfo(app.globalData.id)
       userInfo.user.county = this.multiArray[0][this.multiIndex[0]];
       userInfo.user.town = this.multiArray[1][this.multiIndex[1]];
-      changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
-        uni.setStorageSync('token', res.token);
-        setTimeout(() => {
-          uni.showToast({
-            title: '修改成功'
-          });
-        }, 100)
-      });
+      await changeUserInfo(app.globalData.id , userInfo.user)
     },
 
     /**
-     * 切换区县列表
+     * 切换县区/乡镇列表
      * @returns {Promise<void>}
      */
     columnChange(e) {
-      this.multiIndex[e.detail.column] = e.detail.value;
-      if (e.detail.column === 0) {
-        switch (this.multiIndex[0]) {
-          case 0:
-            this.$set(this.multiArray, 1, towns[0]);   //小程序直接赋值无效；在H5环境下,$set会导致一级分类无法滚动，小程序中正常
-            break;
-
-          case 1:
-            this.$set(this.multiArray, 1, towns[1]);
-            break;
-
-          case 2:
-            this.$set(this.multiArray, 1, towns[2]);
-            break;
-
-          case 3:
-            this.$set(this.multiArray, 1, towns[3]);
-            break;
-
-          case 4:
-            this.$set(this.multiArray, 1, towns[4]);
-            break;
-        }
+      switch (e.detail.column){
+        // 如果是修改县区
+        case 0:
+          this.multiArray[1] = [...towns[e.detail.value]]; // 更新乡镇列表
+          this.multiIndex = [e.detail.value, 0] // 重置乡镇选择
+          break;
+        // 如果是修改乡镇
+        case 1:
+          this.multiIndex.splice(1, 1, e.detail.value)
+          break;
       }
     }
   }

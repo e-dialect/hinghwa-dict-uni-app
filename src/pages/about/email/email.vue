@@ -87,13 +87,7 @@ export default {
      */
     sendCode() {
       const email = this.new_email;
-      sendEmailCode(email).then(async () => {
-        setTimeout(() => {
-          uni.showToast({
-            title: '发送成功'
-          });
-        }, 100)
-      });
+      sendEmailCode(email)
     },
 
     /**

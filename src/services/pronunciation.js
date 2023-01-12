@@ -65,3 +65,15 @@ export async function combinePronunciationByIpa(ipa) {
   return await combinePronunciation({ipas: ipa})
 }
 
+/**
+ * PN0101 获取指定的语音
+ * @param id 语音ID
+ * @returns {Promise<void>}
+ */
+export async function getPronunciationDetails(id){
+  try{
+    return (await request.get(`/pronunciation/${id}`)).pronunciation
+  }catch (e){
+    return null
+  }
+}

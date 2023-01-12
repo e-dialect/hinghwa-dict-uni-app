@@ -6,7 +6,7 @@
         拼音方案
       </view>
     </cu-custom>
-	
+
     <view class="padding-sm">
       <view class="flex flex-wrap justify-around">
         <button
@@ -308,33 +308,7 @@ export default {
     },
 
     tabSelect(e) {
-      // wx.chooseVideo({
-      //   sourceType: ['album'],
-      //   maxDuration: 60,
-      //   camera: 'back',
-      //   success(res) {
-      //     let tempFilePaths = res.tempFilePath
-      //     wx.uploadFile({
-      //       url: app.globalData.server + 'website/files',
-      //       filePath: tempFilePaths,
-      //       name: 'file',
-      //       header: {
-      //         'token': app.globalData.token
-      //       },
-      //       success(res) {
-      //         if (res.statusCode == 200) {
-      //           let url = JSON.parse(res.data).url
-      //           console.log(url)
-      //         }
-      //       }
-      //     })
-      //   }, fail(err) {
-      //     console.log(err)
-      //   }
-      // })
-      this.setData({
-        TabCur: e.currentTarget.dataset.id,
-      });
+      this.TabCur=e.currentTarget.dataset.id
     },
 
     playYunmu(e) {
