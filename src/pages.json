@@ -157,7 +157,11 @@
       "style": {}
     },
     {
-      "path": "pages/register/register",
+      "path": "pages/register/register/register",
+      "style": {}
+    },
+    {
+      "path": "pages/register/WechatRegister/WechatRegister",
       "style": {}
     },
     {

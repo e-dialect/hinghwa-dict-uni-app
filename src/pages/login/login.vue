@@ -38,50 +38,47 @@
     >
       <view
         class="flex-sub solid-right"
-        @tap="forget"
+        @tap="toForgetPage()"
       >
         忘记密码
       </view>
       <view
-        class="flex-sub"
-        @tap="register"
+        class="flex-sub solid-right"
+        @tap="toRegisterPage()"
       >
         用户注册
+      </view>
+      <view
+        class="flex-sub"
+        @tap="toWechatRegisterPage()"
+      >
+        微信注册
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import {COS_URL}     from "../../const/urls";
-import {normalLogin} from "../../services/login";
+import {COS_URL}     from "@/const/urls";
+import {normalLogin} from "@/services/login";
+import {toForgetPage, toRegisterPage, toWechatRegisterPage} from "@/routers";
 
 const app = getApp();
 export default {
   data() {
     return {
+      toForgetPage: toForgetPage,
+      toRegisterPage: toRegisterPage,
+      toWechatRegisterPage: toWechatRegisterPage,
       logo: COS_URL + '/images/logo.png',
     };
   },
   methods: {
-
     login(e) {
       const username = e.detail.value.username;
       const password = e.detail.value.password;
       normalLogin(username, password);
     },
-
-    forget() {
-      uni.navigateTo({
-        url: '/pages/forget/forget'
-      });
-    },
-
-    register() {
-      uni.navigateTo({
-        url: '/pages/register/register'
-      });
-    }
   }
 };
 </script>
