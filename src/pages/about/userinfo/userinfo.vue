@@ -232,12 +232,11 @@ export default {
         // 如果是修改县区
         case 0:
           this.multiArray[1] = [...towns[e.detail.value]]; // 更新乡镇列表
-          this.multiIndex[0] = e.detail.value;
-          this.multiIndex[1] = 0;
+          this.multiIndex = [e.detail.value, 0] // 重置乡镇选择
           break;
         // 如果是修改乡镇
         case 1:
-          this.multiIndex[1] = e.detail.value;
+          this.multiIndex.splice(1, 1, e.detail.value)
           break;
       }
     }
