@@ -311,21 +311,21 @@ export default {
 }
 
 .bg-info .avatar {
-  width: 190 rpx;
-  height: 190 rpx;
+  width: 190rpx;
+  height: 190rpx;
 }
 
 .bg-info .text {
   position: absolute;
   top: 22vh;
-  font-size: 36 rpx;
+  font-size: 36rpx;
   font-weight: 700;
   color: white;
 }
 
 .bg-info image {
-  width: 180 rpx;
-  height: 180 rpx;
-  margin-left: 6 rpx;
+  width: 180rpx;
+  height: 180rpx;
+  margin-left: 6rpx;
 }
 </style>

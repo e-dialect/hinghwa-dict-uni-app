@@ -1,6 +1,49 @@
 import request from "@/utils/request";
 
 /**
+ * US0101 新建用户（普通）
+ * @returns {Promise<unknown>}
+ */
+export async function registerUser(username, password, email, code) {
+  return request.post(`/users`, {username: username, password: password, email: email, code: code})
+}
+
+/**
+ * US0102 新建用户（微信）
+ * @param username 用户名
+ * @param password 密码
+ * @param nickname 昵称
+ * @param avatar 头像
+ */
+export function registerWechatUser(username, password, nickname, avatar) {
+  uni.login({
+    async success(res) {
+      if (res.code) {
+        await request.post(`/users/wechat/register`, {
+            username: username,
+            password: password,
+            jscode: res.code,
+            nickname: nickname,
+            avatar: avatar
+          }
+        ).then(async () => {
+          uni.showToast({
+            title: '注册成功'
+          });
+          uni.navigateBack({
+            delta: 1
+          });
+        });
+      } else {
+        uni.showToast({
+          title: '当前平台不支持'
+        });
+      }
+    }
+  });
+}
+
+/**
  * US0201 获取指定用户信息
  * @param id 用户id
  * @returns {Promise<unknown>}
@@ -15,7 +58,7 @@ export async function getUserInfo(id) {
  * @returns {Promise<unknown>}
  */
 export async function changeUserInfo(id, userInfo) {
-  return request.put(`/users/${id}`, {user: userInfo}).then(res=>{
+  return request.put(`/users/${id}`, {user: userInfo}).then(res => {
     uni.setStorageSync('token', res.token);
     uni.showToast({
       title: '修改成功'
