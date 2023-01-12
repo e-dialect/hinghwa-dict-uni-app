@@ -91,7 +91,7 @@
 import {registerWechatUser} from "@/services/user";
 
 const app = getApp();
-const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg'
 export default {
   data() {
     return {
@@ -148,22 +148,50 @@ export default {
         return;
       }
 
-      uni.login({
-        success(res) {
-          if (res.code) {
-            registerWechatUser(username, password, res.code, nickname, avatar).then(async (res) => {
-              setTimeout(() => {
-                uni.showToast({
-                  title: '注册成功'
-                });
-                uni.navigateBack({
-                  delta: 1
-                });
-              }, 100)
-            });
+      if (!nickname) {
+        uni.showModal({
+          content: '未填写昵称将会用用户名暂代哦~',
+          success: async (res) => {
+            if (res.confirm) {
+              uni.login({
+                success(res) {
+                  if (res.code) {
+                    registerWechatUser(username, password, res.code, nickname, avatar).then(async () => {
+
+                      setTimeout(() => {
+                        uni.showToast({
+                          title: '注册成功'
+                        });
+                        uni.navigateBack({
+                          delta: 1
+                        });
+                      }, 100)
+                    });
+                  }
+                }
+              });
+            }
           }
-        }
-      });
+        });
+      }else{
+        uni.login({
+          success(res) {
+            if (res.code) {
+              registerWechatUser(username, password, res.code, nickname, avatar).then(async () => {
+
+                setTimeout(() => {
+                  uni.showToast({
+                    title: '注册成功'
+                  });
+                  uni.navigateBack({
+                    delta: 1
+                  });
+                }, 100)
+              });
+            }
+          }
+        });
+      }
     },
   }
 };
