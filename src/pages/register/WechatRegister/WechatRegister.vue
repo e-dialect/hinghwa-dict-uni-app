@@ -1,16 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        微信注册
-      </view>
-    </cu-custom>
+    <cu-custom title="微信注册" />
     <form @submit="wechatRegister">
       <view class="cu-form-group">
         <view class="text-df text-bold-less margin-right-sm">
@@ -89,10 +79,12 @@
 
 <script>
 import {registerWechatUser} from "@/services/user";
+import CuCustom             from "@/colorui/components/cu-custom.vue";
 
 const app              = getApp();
 const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg'
 export default {
+  components: {CuCustom},
   data() {
     return {
       is_pwd1: true,
@@ -101,7 +93,6 @@ export default {
       avatarUrl: defaultAvatarUrl
     };
   },
-
   methods: {
     onChooseAvatar(e) {
       console.log(e.detail)
