@@ -153,3 +153,14 @@ export async function loadUserInfo() {
     app.globalData.id               = res.user.id
   })
 }
+
+export function clearUserInfo(){
+  uni.clearStorageSync();
+  const app = getApp()
+  app.globalData.remove('userInfo')
+  app.globalData.remove('publish_articles')
+  app.globalData.remove('publish_comments')
+  app.globalData.remove('like_articles')
+  app.globalData.remove('contribution')
+  app.globalData.remove('id')
+}
