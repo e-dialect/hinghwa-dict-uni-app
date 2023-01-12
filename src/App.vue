@@ -21,8 +21,6 @@ export default {
         });
     },
     globalData: {
-        server: 'https://api.pxm.edialect.top/',
-
         watch: function (method) {
             var obj = this;
             Object.defineProperty(obj, 'data', {
