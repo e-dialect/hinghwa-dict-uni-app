@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import {getPronunciationDetails} from "@/services/pronunciation";
+
 const app = getApp();
 export default {
     data() {
@@ -97,22 +99,7 @@ export default {
     methods: {
         // 获取字词发音
         getPronunciation() {
-            let id = this.id;
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'pronunciation?word=' + id,
-                method: 'GET',
-                data: {},
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    that.setData({
-                        pronunciation: res.data.pronunciation
-                    });
-                }
-            });
+            this.pronunciation=getPronunciationDetails(this.id)
         },
 
         toVisitor(e) {

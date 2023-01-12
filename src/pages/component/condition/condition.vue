@@ -110,6 +110,8 @@
 </template>
 
 <script>
+import {searchCharactersByFilters} from "@/services/character";
+
 const app = getApp();
 
 const utils = require('../../../const/sheng-yun-diao.js');
@@ -137,18 +139,16 @@ export default {
     for (let k in utils.shengmu) {
       shengmu.push(utils.shengmu[k]);
     }
+    this.shengmu = [...shengmu]
 
-    this.setData({
-      shengmu: shengmu
-    }); // 获取韵母
-
+    // 获取韵母
     let yunmu = [
       [],
       []
     ];
 
     for (let i = 0; i < utils.yunmu.length; i++) {
-      if (i == 0) {
+      if (i === 0) {
         for (let j = 0; j < utils.yunmu[0].children.length; j++) {
           yunmu[1].push(utils.yunmu[0].children[j].label);
         }
@@ -156,11 +156,9 @@ export default {
 
       yunmu[0].push(utils.yunmu[i].label);
     }
+    this.yunmu = [...yunmu]
 
-    this.setData({
-      yunmu: yunmu
-    }); // 获取声调
-
+    // 获取声调
     let shengdiao = [];
 
     for (let k in utils.shengdiao) {
@@ -169,9 +167,7 @@ export default {
 
     shengdiao.unshift(shengdiao[shengdiao.length - 1]);
     shengdiao.pop();
-    this.setData({
-      shengdiao: shengdiao
-    });
+    this.shengdiao = [...shengdiao]
   },
   /**
    * 右上角分享事件
@@ -198,15 +194,11 @@ export default {
   },
   methods: {
     PickerChange(e) {
-      this.setData({
-        index: e.detail.value
-      });
+      this.index = e.detail.value
     },
 
     MultiChange(e) {
-      this.setData({
-        multiIndex: e.detail.value
-      });
+      this.multiIndex = e.detail.value
     },
 
     MultiColumnChange(e) {
@@ -253,21 +245,19 @@ export default {
           data.multiIndex[1] = 0;
           break;
       }
-
+      // TODO refactor
       this.setData(data);
     },
 
     PickerChange1(e) {
-      this.setData({
-        index1: e.detail.value
-      });
+      this.index1 = e.detail.value
     },
 
     getShengmu() {
       let shengmu = this.shengmu[this.index];
 
       for (let k in utils.shengmu) {
-        if (utils.shengmu[k] == shengmu) {
+        if (utils.shengmu[k] === shengmu) {
           return k;
         }
       }
@@ -275,9 +265,9 @@ export default {
 
     getYunmu() {
       for (let i = 0; i < utils.yunmu.length; i++) {
-        if (utils.yunmu[i].label == this.yunmu[0][this.multiIndex[0]]) {
+        if (utils.yunmu[i].label === this.yunmu[0][this.multiIndex[0]]) {
           for (let j = 0; j < utils.yunmu[i].children.length; j++) {
-            if (utils.yunmu[i].children[j].label == this.yunmu[1][this.multiIndex[1]]) {
+            if (utils.yunmu[i].children[j].label === this.yunmu[1][this.multiIndex[1]]) {
               return utils.yunmu[i].children[j].value;
             }
           }
@@ -289,7 +279,7 @@ export default {
       let shengdiao = this.shengdiao[this.index1];
 
       for (let k in utils.shengdiao) {
-        if (utils.shengdiao[k] == shengdiao) {
+        if (utils.shengdiao[k] === shengdiao) {
           return k;
         }
       }
@@ -301,8 +291,7 @@ export default {
       let yunmu     = this.getYunmu();
       let shengdiao = this.getShengdiao();
 
-      if (shengmu == 'all' && yunmu == 'all' && shengdiao == 'all') {
-        let that = this;
+      if (shengmu === 'all' && yunmu === 'all' && shengdiao === 'all') {
         uni.showModal({
           content: '有超过500个可能拼音，过于宽泛！请再详细一些~',
           showCancel: false
@@ -313,56 +302,16 @@ export default {
     },
 
     search(shengmu, yunmu, shengdiao) {
-      if (shengmu == 'all') {
-        shengmu = '';
-      } else {
-        shengmu = 'shengmu=' + shengmu;
-      }
-
-      if (yunmu == 'all') {
-        yunmu = '';
-      } else {
-        yunmu = '&yunmu=' + yunmu;
-      }
-
-      if (shengdiao == 'all') {
-        shengdiao = '';
-      } else {
-        shengdiao = '&shengdiao=' + shengdiao;
-      }
-
-      uni.showLoading(); // 发起条件检索
-
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'characters/pinyin?' + shengmu + yunmu + shengdiao,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode == 200) {
-            if (res.data.result.length === 0) {
-              uni.showToast({
-                title: '检索结果为空',
-                icon: none
-              });
-            } else {
-              uni.hideLoading();
-              console.log(res.data.result);
-              that.setData({
-                result: res.data.result
-              });
-            }
-          } else {
-            uni.showToast({
-              title: '服务器错误'
-            });
-          }
+      searchCharactersByFilters({shengmu, yunmu, shengdiao}).then(res => {
+        this.result = res.result
+        // TODO 直接显示结果而不是弹窗
+        if (!this.result.length) {
+          uni.showToast({
+            title: '检索结果为空',
+            icon: none
+          })
         }
-      });
+      })
     },
 
     getCharacter(e) {
@@ -382,4 +331,3 @@ export default {
   }
 };
 </script>
-<style></style>

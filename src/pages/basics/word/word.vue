@@ -150,6 +150,9 @@
 </template>
 
 <script>
+import {getArticles} from "@/services/article";
+import {getWords}    from "@/services/word";
+
 const app = getApp();
 export default {
     data() {
@@ -181,7 +184,7 @@ export default {
 
         this.getRelatedWords(); // 获取相关文章
 
-        this.getAriticles();
+        this.getRelatedArticles();
     },
     methods: {
         getDate() {
@@ -204,50 +207,14 @@ export default {
         },
 
         getRelatedWords() {
-            uni.showLoading();
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'words',
-                method: 'PUT',
-                data: {
-                    words: that.word.related_words
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            related_words: res.data.words
-                        });
-                        uni.hideLoading();
-                    }
-                }
-            });
+          getWords(this.word.related_words).then(res=>{
+            this.related_words=this.words
+          })
         },
 
-        getAriticles() {
-            uni.showLoading();
-            let that = this;
-            uni.request({
-                url: app.globalData.server + 'articles',
-                method: 'PUT',
-                data: {
-                    articles: that.word.related_articles
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            related_articles: res.data.articles
-                        });
-                        uni.hideLoading();
-                    }
-                }
+        getRelatedArticles() {
+            getArticles(this.word.related_articles).then(res => {
+              this.related_articles=this.articles
             });
         },
 

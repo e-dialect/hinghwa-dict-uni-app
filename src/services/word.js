@@ -59,11 +59,11 @@ export async function searchWords(key) {
 
 /**
  * WD0202 词语内容批量获取
- * @param id 词语id数组
+ * @param idList{number[]} 词语id数组
  * @returns {Promise<unknown>}
  */
-export async function getWords(id) {
-    return request.put(`/words`, {words: id})
+export async function getWords(idList) {
+    return request.put(`/words`, {words: idList})
 }
 
 /**

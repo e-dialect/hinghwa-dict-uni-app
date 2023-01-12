@@ -75,6 +75,8 @@
 </template>
 
 <script>
+import {getCharacterDetails} from "@/services/character";
+
 const app = getApp();
 export default {
   data() {
@@ -119,40 +121,8 @@ export default {
     };
   },
   methods: {
-    // 获取单字信息
-    // 获取ipa发音
-    // getIpaPronunciation() {
-    //   let that = this
-    //   wx.request({
-    //     url: app.globalData.server + 'pronunciation/' + that.data.character.ipa,
-    //     method: 'GET',
-    //     data: {},
-    //     header: {
-    //       'content-type': 'application/json'
-    //     },
-    //     success(res) {
-    //       console.log(res)
-    //     }
-    //   })
-    // }
     getCharacter(id) {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'characters/' + id,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          if (res.statusCode == 200) {
-            that.setData({
-              character: res.data.character
-            }); // that.getIpaPronunciation()
-          }
-        }
-      });
+      this.character=getCharacterDetails(id)
     },
   }
 };

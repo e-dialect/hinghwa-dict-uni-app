@@ -153,3 +153,30 @@ export async function loadUserInfo() {
     app.globalData.id               = res.user.id
   })
 }
+
+/**
+ * 清理登录状态
+ */
+export function clearUserInfo() {
+  uni.clearStorageSync();
+  const app = getApp()
+  app.globalData.remove('userInfo')
+  app.globalData.remove('publish_articles')
+  app.globalData.remove('publish_comments')
+  app.globalData.remove('like_articles')
+  app.globalData.remove('contribution')
+  app.globalData.remove('id')
+}
+
+/**
+ * 通过用户名获取账号关联邮箱
+ * @param username 用户名
+ * @returns {Promise<unknown>}
+ */
+export function getEmailByUsername(username) {
+  return request.get('/login/forget', {username: username})
+}
+
+export function resetPassword(username, password, email, code) {
+  return request.put('/login/forget', {username: username, password: password, email: email, code: code})
+}
