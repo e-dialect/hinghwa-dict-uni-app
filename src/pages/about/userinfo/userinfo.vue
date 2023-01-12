@@ -175,14 +175,7 @@ export default {
     async changeAvatar(url) {
       const userInfo = await getUserInfo(app.globalData.id)
       userInfo.user.avatar = url;
-      changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
-        uni.setStorageSync('token', res.token);
-        setTimeout(() => {
-          uni.showToast({
-            title: '修改成功'
-          });
-        }, 100)
-      });
+      await changeUserInfo(app.globalData.id , userInfo.user)
       this.user.avatar = url;
     },
 
@@ -194,14 +187,7 @@ export default {
       this.date = e.detail.value;
       const userInfo = await getUserInfo(app.globalData.id)
       userInfo.user.birthday = e.detail.value;
-      changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
-        uni.setStorageSync('token', res.token);
-        setTimeout(() => {
-          uni.showToast({
-            title: '修改成功'
-          });
-        }, 100)
-      });
+      await changeUserInfo(app.globalData.id , userInfo.user)
     },
 
     /**
@@ -213,14 +199,7 @@ export default {
       const userInfo = await getUserInfo(app.globalData.id)
       userInfo.user.county = this.multiArray[0][this.multiIndex[0]];
       userInfo.user.town = this.multiArray[1][this.multiIndex[1]];
-      changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
-        uni.setStorageSync('token', res.token);
-        setTimeout(() => {
-          uni.showToast({
-            title: '修改成功'
-          });
-        }, 100)
-      });
+      await changeUserInfo(app.globalData.id , userInfo.user)
     },
 
     /**
