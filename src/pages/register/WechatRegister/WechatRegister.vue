@@ -6,17 +6,20 @@
         <view class="text-df text-bold-less margin-right-sm">
           头像
         </view>
-        <button
-          class="margin-right-xs cu-avatar lg round"
-          open-type="chooseAvatar"
-          :chooseAvater="onChooseAvatar"
-        >
-          <image
-            :src="avatarUrl"
-            class="cu-avatar lg round"
-            mode="aspectFill"
-          />
-        </button>
+        <view class="padding-bottom-xs">
+          <button
+            class="margin-right-xs cu-avatar lg round"
+            open-type="chooseAvatar"
+            @chooseavatar="onChooseAvatar"
+          >
+            <image
+              :class="avatarUrl === ''?'avatar-img':'' "
+              :src="avatarUrl"
+              class="cu-avatar lg round"
+              mode="aspectFill"
+            />
+          </button>
+        </view>
       </view>
       <view class="cu-form-group">
         <view class="text-df text-bold-less margin-right-sm">
@@ -95,7 +98,6 @@ export default {
   },
   methods: {
     onChooseAvatar(e) {
-      console.log(e.detail)
       this.avatarUrl = e.detail.avatarUrl
     },
 
@@ -108,6 +110,7 @@ export default {
     },
 
     wechatRegister(e) {
+      console.log(e.detail.value)
       let username           = e.detail.value.username;
       let password           = e.detail.value.password;
       let password_confirmed = e.detail.value.password_confirmed;
