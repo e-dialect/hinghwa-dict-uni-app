@@ -271,33 +271,21 @@ export default {
     },
 
     /**
-     * 切换区县列表
+     * 切换县区/乡镇列表
      * @returns {Promise<void>}
      */
     columnChange(e) {
-      this.multiIndex[e.detail.column] = e.detail.value;
-      if (e.detail.column === 0) {
-        switch (this.multiIndex[0]) {
-          case 0:
-            this.$set(this.multiArray, 1, towns[0]);   //小程序直接赋值无效；在H5环境下,$set会导致一级分类无法滚动，小程序中正常
-            break;
-
-          case 1:
-            this.$set(this.multiArray, 1, towns[1]);
-            break;
-
-          case 2:
-            this.$set(this.multiArray, 1, towns[2]);
-            break;
-
-          case 3:
-            this.$set(this.multiArray, 1, towns[3]);
-            break;
-
-          case 4:
-            this.$set(this.multiArray, 1, towns[4]);
-            break;
-        }
+      switch (e.detail.column){
+        // 如果是修改县区
+        case 0:
+          this.multiArray[1] = [...towns[e.detail.value]]; // 更新乡镇列表
+          this.multiIndex[0] = e.detail.value;
+          this.multiIndex[1] = 0;
+          break;
+        // 如果是修改乡镇
+        case 1:
+          this.multiIndex[1] = e.detail.value;
+          break;
       }
     }
   }
