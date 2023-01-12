@@ -149,6 +149,19 @@
       id="foot-box"
       class="cu-bar tabbar bg-white shadow foot"
     >
+      <!--播放音频-->
+      <view
+        v-if="subjectList[subjectIndex].voice_source"
+        class="action"
+        @tap="play(subjectList[subjectIndex].voice_source)"
+      >
+        <view class="cuIcon-cu-image">
+          <text class="lg text-gray cuIcon-notification" />
+        </view>
+        <view class="text-gray">
+          播放关键词
+        </view>
+      </view>
       <view
         class="action"
         @click="moveSubject(-1)"
@@ -189,6 +202,7 @@
 <script>
 import {getRandomQuiz} from "@/services/quiz";
 import {toPosterPage} from "@/routers";
+import {playAudio} from "@/utils/audio";
 
 const app = getApp();
 
@@ -324,6 +338,13 @@ export default {
     radioChange(e) {
       this.current[this.subjectIndex] = Number(e.detail.value);
       this.setProgress()
+    },
+
+    /**
+     * 播放语音
+     */
+    play(url) {
+      playAudio(url)
     },
 
     /**
