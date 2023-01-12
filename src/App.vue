@@ -22,16 +22,6 @@ export default {
     },
     globalData: {
         server: 'https://api.pxm.edialect.top/',
-        id: '',
-        token: '',
-        userInfo: {},
-        publish_articles: [],
-        publish_comments: [],
-        like_articles: [],
-        contribution: {},
-        status: 0,
-        word: {},
-        data: {},
 
         watch: function (method) {
             var obj = this;
