@@ -81,15 +81,6 @@
       </picker>
     </view>
 
-    <!-- <view class="cu-form-group">
-  <view class="title">现居地</view>
-  <picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
-    <view class="picker text-grey">
-      <text >{{region[1]}} {{region[2]}}</text>
-    </view>
-  </picker>
-</view> -->
-
     <view class="cu-form-group">
       <view class="title">
         居住地
