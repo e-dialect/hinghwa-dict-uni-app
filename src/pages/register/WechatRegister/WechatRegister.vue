@@ -34,9 +34,18 @@
         </view>
         <input
           name="username"
+          placeholder="请输入用户名"
+        >
+      </view>
+      <view class="cu-form-group">
+        <view class="text-df text-bold-less margin-right-sm">
+          昵称
+        </view>
+        <input
+          name="nickname"
           type="nickname"
           class="weui-input"
-          placeholder="请输入用户名"
+          placeholder="请输入昵称"
         >
       </view>
       <view class="cu-form-group">
@@ -46,7 +55,7 @@
         <input
           name="password"
           :password="is_pwd1"
-          placeholder="请输入6~11位密码"
+          placeholder="请输入6~32位密码"
         >
         <text
           :class="is_pwd1 === true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
@@ -79,7 +88,7 @@
 </template>
 
 <script>
-import {addWechatUser} from "@/services/user";
+import {registerWechatUser} from "@/services/user";
 
 const app = getApp();
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
@@ -96,15 +105,14 @@ export default {
   methods: {
     onChooseAvatar(e) {
       this.avatarUrl = e.detail
-      app.globalData.userInfo.avatar = this.avatarUrl
-    }, // 将头像替换成用户自己选择的头像，并将其放入缓存
+    },
 
     ear1() {
-      this.is_pwd1 = this.is_pwd1 !== true;
+      this.is_pwd1= !this.is_pwd1
     },
 
     ear2() {
-      this.is_pwd2 = this.is_pwd2 !== true;
+      this.is_pwd2= !this.is_pwd2
     },
 
     wechatRegister(e) {
@@ -112,8 +120,9 @@ export default {
       let username = e.detail.value.username;
       let password = e.detail.value.password;
       let password_confirmed = e.detail.value.password_confirmed;
-      let nickname = app.globalData.userInfo.nickname;
-      let avatar = app.globalData.userInfo.avatar;
+      let nickname = e.detail.value.nickname;
+      let avatar = e.detail;
+
 
       if (!username || !password || !password_confirmed) {
         uni.showToast({
@@ -138,20 +147,18 @@ export default {
         });
         return;
       }
+
       uni.login({
         success(res) {
           if (res.code) {
-            addWechatUser(username, password, res.code, nickname, avatar).then(async (res) => {
+            registerWechatUser(username, password, res.code, nickname, avatar).then(async (res) => {
               setTimeout(() => {
                 uni.showToast({
                   title: '注册成功'
                 });
-                uni.setStorageSync('id', res.data.id);
-                setTimeout(function () {
-                  uni.navigateBack({
-                    delta: 1
-                  });
-                }, 500);
+                uni.navigateBack({
+                  delta: 1
+                });
               }, 100)
             });
           }

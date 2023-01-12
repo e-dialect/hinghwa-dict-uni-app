@@ -28,10 +28,10 @@
         <input
           name="password"
           :password="is_pwd1"
-          placeholder="请输入6~11位密码"
+          placeholder="请输入6~32位密码"
         >
         <text
-          :class="is_pwd1 == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
+          :class="is_pwd1 === true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
           @tap="ear1"
         />
       </view>
@@ -45,7 +45,7 @@
           placeholder="请再次输入密码"
         >
         <text
-          :class="is_pwd2 == true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
+          :class="is_pwd2 === true ? 'cuIcon-attention' : 'cuIcon-attentionforbid'"
           @tap="ear2"
         />
       </view>
@@ -56,6 +56,7 @@
         <input
           name="email"
           placeholder="请输入邮箱"
+          inputmode="email"
           @input="getEmail"
         >
       </view>
@@ -88,7 +89,7 @@
 
 <script>
 import {sendEmailCode} from "@/services/website";
-import {addUser} from "@/services/user";
+import {registerUser} from "@/services/user";
 
 const app = getApp();
 export default {
@@ -100,15 +101,12 @@ export default {
     };
   },
   methods: {
-    // onLoad() {
-    //   this.uploadAvatar()
-    // },
     ear1() {
-      this.is_pwd1 = this.is_pwd1 !== true;
+      this.is_pwd1= !this.is_pwd1
     },
 
     ear2() {
-      this.is_pwd2 = this.is_pwd2 !== true;
+      this.is_pwd2= !this.is_pwd2
     },
 
     getEmail(e) {
@@ -126,58 +124,6 @@ export default {
       });
     },
 
-    // uploadAvatar() {
-    //   console.log('yl')
-    //   console.log(app.globalData.token)
-    //   //获取图片信息
-    //   wx.getImageInfo({
-    //     src: app.globalData.userInfo.avatar,
-    //     success: function (sres) {
-    //       console.log(sres)
-    //       //上传图片
-    //       wx.uploadFile({
-    //         url: app.globalData.server + 'website/files',
-    //         filePath: sres.path,
-    //         name: "file",
-    //         header: {
-    //           'token': app.globalData.token
-    //         },
-    //         success: function (res) {
-    //           console.log(res)
-    //         },
-    //         error: function (rev) {
-    //           console.log(rev);
-    //         }
-    //       });
-    //     },
-    //     fail: function (srev) {
-    //       console.log(srev);
-    //     }
-    //   })
-    //   wx.uploadFile({
-    //     url: app.globalData.server + 'website/files',
-    //     filePath: tempFilePaths,
-    //     name: 'file',
-    //     header: {
-    //       'token': app.globalData.token
-    //     },
-    //     success(res) {
-    //       console.log(res)
-    //       if (res.statusCode == 200) {
-    //         console.log(url)
-    //         let url = JSON.parse(res.data).url
-    //         app.globalData.data = {
-    //           'avatar': url
-    //         }
-    //         that.setData({
-    //           avatar: url
-    //         })
-    //         that.changeAvatar(url)
-    //       }
-    //     }
-    //   })
-    // }
-
     register(e) {
       console.log(e);
       let username = e.detail.value.username;
@@ -185,8 +131,6 @@ export default {
       let password_confirmed = e.detail.value.password_confirmed;
       let email = e.detail.value.email;
       let code = e.detail.value.code;
-      let nickname = app.globalData.userInfo.nickname;
-      let avatar = app.globalData.userInfo.avatar;
 
       if (!username || !password || !password_confirmed || !email || !code) {
         uni.showToast({
@@ -211,17 +155,14 @@ export default {
         });
         return;
       }
-      addUser(username, password, email, code, nickname, avatar).then(async (res) => {
+      registerUser(username, password, email, code).then(async (res) => {
         setTimeout(() => {
           uni.showToast({
             title: '注册成功'
           });
-          uni.setStorageSync('id', res.data.id);
-          setTimeout(function () {
-            uni.navigateBack({
-              delta: 1
-            });
-          }, 500);
+          uni.navigateBack({
+            delta: 1
+          });
         }, 100)
       });
     },

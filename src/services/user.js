@@ -4,16 +4,16 @@ import request from "@/utils/request";
  * US0101 新建用户（普通）
  * @returns {Promise<unknown>}
  */
-export async function addUser(username , password, email, code, nickname, avatar) {
-    return request.post(`/users`,{username: username, password: password, email: email, code: code, nickname: nickname, avatar: avatar})
+export async function registerUser(username , password, email, code) {
+    return request.post(`/users`,{username: username, password: password, email: email, code: code})
 }
 
 /**
  * US0102 新建用户（微信）
  * @returns {Promise<unknown>}
  */
-export async function addWechatUser(username , password, jscode, nickname, avatar) {
-    return request.post(`/users/wechat/register`,{username: username, password: password, jscode: jscode, nickname: nickname, avatar: avatar})
+export async function registerWechatUser(username , password, jscode, nickname, avatar) {
+    return request.post(`/users/wechat/register`,{username: username, password: password, jscode: jscode, nickname, avatar}, true)
 }
 
 /**
