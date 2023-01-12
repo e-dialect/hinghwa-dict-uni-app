@@ -90,7 +90,7 @@
 <script>
 import {registerWechatUser} from "@/services/user";
 
-const app = getApp();
+const app              = getApp();
 const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg'
 export default {
   data() {
@@ -108,20 +108,20 @@ export default {
     },
 
     ear1() {
-      this.is_pwd1= !this.is_pwd1
+      this.is_pwd1 = !this.is_pwd1
     },
 
     ear2() {
-      this.is_pwd2= !this.is_pwd2
+      this.is_pwd2 = !this.is_pwd2
     },
 
     wechatRegister(e) {
       console.log(e);
-      let username = e.detail.value.username;
-      let password = e.detail.value.password;
+      let username           = e.detail.value.username;
+      let password           = e.detail.value.password;
       let password_confirmed = e.detail.value.password_confirmed;
-      let nickname = e.detail.value.nickname;
-      let avatar = e.detail;
+      let nickname           = e.detail.value.nickname;
+      let avatar             = e.detail;
 
 
       if (!username || !password || !password_confirmed) {
@@ -153,49 +153,14 @@ export default {
           content: '未填写昵称将会用用户名暂代哦~',
           success: async (res) => {
             if (res.confirm) {
-              uni.login({
-                success(res) {
-                  if (res.code) {
-                    registerWechatUser(username, password, res.code, nickname, avatar).then(async () => {
-
-                      setTimeout(() => {
-                        uni.showToast({
-                          title: '注册成功'
-                        });
-                        uni.navigateBack({
-                          delta: 1
-                        });
-                      }, 100)
-                    });
-                  }
-                }
-              });
+              registerWechatUser(username, password, nickname, avatar)
             }
           }
         });
-      }else{
-        uni.login({
-          success(res) {
-            if (res.code) {
-              registerWechatUser(username, password, res.code, nickname, avatar).then(async () => {
-
-                setTimeout(() => {
-                  uni.showToast({
-                    title: '注册成功'
-                  });
-                  uni.navigateBack({
-                    delta: 1
-                  });
-                }, 100)
-              });
-            }
-          }
-        });
+      } else {
+        registerWechatUser(username, password, nickname, avatar)
       }
     },
   }
 };
 </script>
-<style>
-
-</style>
