@@ -90,7 +90,7 @@
           <text class="lg text-gray cuIcon-notification" />
         </view>
         <view class="text-gray">
-          播放关键词
+          播放题目
         </view>
       </view>
       <!--重置题目-->

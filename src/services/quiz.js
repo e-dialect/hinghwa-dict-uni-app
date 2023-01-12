@@ -25,3 +25,12 @@ export async function searchQuiz(key) {
 export async function getRandomQuiz() {
   return request.get(`/quizzes/random`)
 }
+
+/**
+ * QZ0203 测试题组卷
+ * @param number 试卷总题数
+ * @returns {Promise<unknown>}
+ */
+export async function getTestPaper(number) {
+  return request.get(`/quizzes/paper`, {number: number})
+}

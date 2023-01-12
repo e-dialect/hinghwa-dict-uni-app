@@ -159,7 +159,7 @@
           <text class="lg text-gray cuIcon-notification" />
         </view>
         <view class="text-gray">
-          播放关键词
+          播放题目
         </view>
       </view>
       <view
@@ -200,7 +200,7 @@
 </template>
 
 <script>
-import {getRandomQuiz} from "@/services/quiz";
+import {getTestPaper} from "@/services/quiz";
 import {toPosterPage} from "@/routers";
 import {playAudio} from "@/utils/audio";
 
@@ -267,14 +267,14 @@ export default {
      * @returns {Promise<void>}
      */
     async getTest() {
+      const res = await getTestPaper(20)
+      this.subjectList = res.paper
       for(let i=0 ; i < 20 ; i++) {
-        const res = await getRandomQuiz()
-        this.subjectList[i] = res.quiz
         this.current[i] = 99
         this.showAnswer[i] = 0
-        this.rightAnswer[i] = res.quiz.answer
+        this.rightAnswer[i] = res.paper[i].answer
       }
-      this.subjectList=[...this.subjectList]
+      this.subjectList = [...this.subjectList]
     },
 
     /**
