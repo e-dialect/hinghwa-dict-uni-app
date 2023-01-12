@@ -104,6 +104,7 @@ export default {
 
   methods: {
     onChooseAvatar(e) {
+      console.log(e.detail)
       this.avatarUrl = e.detail.avatarUrl
     },
 
@@ -116,7 +117,6 @@ export default {
     },
 
     wechatRegister(e) {
-      console.log(e);
       let username           = e.detail.value.username;
       let password           = e.detail.value.password;
       let password_confirmed = e.detail.value.password_confirmed;
