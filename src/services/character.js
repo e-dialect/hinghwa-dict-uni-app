@@ -30,3 +30,18 @@ export async function getCharacterDetails(id) {
         return null
     }
 }
+
+/**
+ * CH0204 拼音查字
+ * @param shengmu 声母
+ * @param yunmu 韵母
+ * @param shengdiao 声调
+ * @returns {Promise<void>}
+ */
+export async function searchCharactersByFilters({shengmu='all',yunmu='all',shengdiao='all'}){
+    const data = {}
+    if (shengmu !== 'all') data.shengmu = shengmu
+    if (yunmu !== 'all') data.yunmu = yunmu
+    if (shengdiao !== 'all') data.shengdiao = shengdiao
+    return request.get(`/characters/pinyin`,data)
+}
