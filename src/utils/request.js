@@ -94,7 +94,7 @@ const request = (method = 'GET', url = '', data = {}, noPrompt = false) => {
 }
 
 
-export function get(url, data, noPrompt = false) {
+export function get(url, data=null, noPrompt = false) {
   return request('get', url, data, noPrompt)
 }
 
@@ -106,7 +106,7 @@ export function put(url, data, noPrompt = false) {
   return request('put', url, data, noPrompt)
 }
 
-export function del(url, data, noPrompt = false) {
+export function del(url, data=null, noPrompt = false) {
   return request('delete', url, data, noPrompt)
 }
 

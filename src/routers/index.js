@@ -100,6 +100,7 @@ export async function toUploadPronunciationPage(id) {
     url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`
   });
 }
+
 /**
  * 前往文章页面
  * @param id 文章id
@@ -171,4 +172,13 @@ export function toMePage(closeAll = false) {
       url: "/pages/index/index?status=me",
     });
   }
+}
+
+/**
+ * 前往搜索页面
+ */
+export function toSearchPage() {
+  uni.navigateTo({
+    url: '/pages/basics/search/search'
+  });
 }

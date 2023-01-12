@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import {COS_URL}       from "../../const/urls";
-import basics          from "../basics/home/home";
-import tools           from "../component/home/home";
-import InteractionPage from "../plugin/home/home";
-import me              from "../about/home/home";
-import {mpLogin}       from "../../services/login";
+import {COS_URL}               from "../../const/urls";
+import basics                  from "../basics/home/home";
+import tools                   from "../component/home/home";
+import InteractionPage         from "../plugin/home/home";
+import me                        from "../about/home/home";
+import {mpLogin, getLoginStatus} from "../../services/login";
 
 const app = getApp();
 export default {
@@ -89,16 +89,19 @@ export default {
      * 切换页面
      * @param page 新页面
      */
-    changePage(page) {
-      if (app.globalData.status === 0 && page === "me") {
-        uni.showModal({
-          content: "请先登录",
-          showCancel: false,
-          success: () => {
-            mpLogin();
-          },
-        });
-        return;
+    async changePage(page) {
+      if (page === "me") {
+        const hasLogin = await getLoginStatus()
+        if (!hasLogin) {
+          uni.showModal({
+            content: "请先登录",
+            showCancel: false,
+            success: () => {
+              mpLogin();
+            },
+          });
+          return;
+        }
       }
       this.currentPage = page
     },
