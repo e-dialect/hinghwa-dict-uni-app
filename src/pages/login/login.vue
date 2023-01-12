@@ -104,10 +104,10 @@ page {
 
 .info {
   background-color: var(--white);
-  padding: 1 rpx 30 rpx;
+  padding: 1rpx 30rpx;
   display: flex;
   align-items: center;
-  min-height: 100 rpx;
+  min-height: 100rpx;
   justify-content: center;
   margin-bottom: 16px;
 }
@@ -115,11 +115,11 @@ page {
 .info input {
   color: #555;
   background-color: #f5f5f5;
-  height: 80 rpx;
+  height: 80rpx;
   width: 60vw;
-  padding-left: 20 rpx;
-  border-radius: 10 rpx;
-  font-size: 32 rpx;
+  padding-left: 20rpx;
+  border-radius: 10rpx;
+  font-size: 32rpx;
   margin-left: 16px;
 }
 
