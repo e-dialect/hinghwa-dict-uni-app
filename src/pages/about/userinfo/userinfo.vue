@@ -213,44 +213,6 @@ export default {
       });
     },
 
-    // RegionChange(e) {
-    //   var region = e.detail.value
-    //   this.setData({
-    //     region: region
-    //   })
-    //   app.globalData.userInfo.county = region[1]
-    //   app.globalData.userInfo.town = region[2]
-    //   wx.request({
-    //     url: app.globalData.server + 'users/' + app.globalData.id,
-    //     method: 'PUT',
-    //     data: {
-    //       user: app.globalData.userInfo
-    //     },
-    //     header: {
-    //       'content-type': 'application/json',
-    //       'token': app.globalData.token
-    //     },
-    //     success(res) {
-    //       console.log(res.data)
-    //       if (res.statusCode == 200) {
-    //         wx.setStorage({
-    //           data: res.data.token,
-    //           key: 'token',
-    //         })
-    //       } else {
-    //         wx.showToast({
-    //           title: '服务器错误',
-    //         })
-    //       }
-    //     },
-    //     fail(err) {
-    //       wx.showToast({
-    //         title: '网络异常',
-    //       })
-    //     }
-    //   })
-    // },
-
     /**
      * 更改区县选择
      * @returns {Promise<void>}
