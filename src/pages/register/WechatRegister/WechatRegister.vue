@@ -37,7 +37,7 @@
           type="nickname"
           class="weui-input"
           placeholder="请输入用户名"
-        />
+        >
       </view>
       <view class="cu-form-group">
         <view class="text-df text-bold-less margin-right-sm">
