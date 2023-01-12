@@ -11,9 +11,6 @@
         语记·语音
       </view>
     </cu-custom>
-    <!-- <button class="cu-btn icon lg bg-blue shadow write" bindtap="uploadPronunciation">
-<text class="cuIcon-voice"></text>
-</button> -->
     <view
       v-if="pronunciation.length === 0"
       class="text-lg margin"
@@ -71,6 +68,10 @@
 </template>
 
 <script>
+import {getPronunciations} from "@/services/pronunciation";
+import {playAudio}         from "@/utils/audio";
+import {toUserPage}        from "@/routers";
+
 const app = getApp();
 export default {
   data() {
@@ -80,54 +81,19 @@ export default {
     };
   },
   onLoad(options) {
-    this.setData({
-      id: options.id
+    this.id = options.id
+    getPronunciations({contributor: this.id}).then(res => {
+      this.pronunciation = res.pronunciation
     });
-    this.getPronunciation(); // 创建播放器
-
-    this.innerAudioContext = uni.createInnerAudioContext();
   },
   methods: {
-    // 获取字词发音
-    getPronunciation() {
-      let that = this;
-      uni.request({
-        url: app.globalData.server + 'pronunciation?contributor=' + that.id,
-        method: 'GET',
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-
-        success(res) {
-          that.setData({
-            pronunciation: res.data.pronunciation
-          });
-        }
-      });
-    },
 
     play(e) {
-      uni.showToast({
-        title: '正在播放录音...',
-        icon: 'none'
-      });
-      let index = e.currentTarget.dataset.index;
-      this.innerAudioContext.src = this.pronunciation[index].pronunciation.source;
-      this.innerAudioContext.play();
-    },
-
-    uploadPronunciation() {
-      // wx.navigateTo({
-      //   url: '/pages/Words/PronunciationUpload/PronunciationUpload'
-      // })
+      playAudio(this.pronunciation[index].pronunciation.source)
     },
 
     toVisitor(e) {
-      let id = e.currentTarget.dataset.id;
-      uni.navigateTo({
-        url: '/pages/about/visitor/visitor?id=' + id
-      });
+      toUserPage(e.currentTarget.dataset.id)
     }
   }
 };
