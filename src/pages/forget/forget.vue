@@ -86,6 +86,8 @@
 </template>
 
 <script>
+import {sendEmailCode} from "@/services/website";
+
 const app = getApp();
 export default {
     data() {
@@ -132,37 +134,7 @@ export default {
 
         // 获取验证码
         getCode() {
-            var that = this;
-            uni.request({
-                url: app.globalData.server + 'website/email',
-                method: 'POST',
-                data: {
-                    email: that.email
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
-
-                success(res) {
-                    console.log(res.data);
-
-                    if (res.statusCode.toString()[0] === '2') {
-                        uni.showToast({
-                            title: '发送成功'
-                        });
-                    } else {
-                        uni.showToast({
-                            title: '发送失败'
-                        });
-                    }
-                },
-
-                fail(err) {
-                    uni.showToast({
-                        title: '网络异常'
-                    });
-                }
-            });
+           sendEmailCode(this.email)
         },
 
         ear() {

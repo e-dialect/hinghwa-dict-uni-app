@@ -6,7 +6,11 @@ import {getWordDetails} from "@/services/word";
  * @returns {Promise<unknown>}
  */
 export async function sendEmailCode(email) {
-    return request.post(`/website/email`,{email: email})
+    return request.post(`/website/email`,{email: email}).then(()=>{
+        uni.showToast({
+            title: '验证码已发送'
+        })
+    })
 }
 
 /**
