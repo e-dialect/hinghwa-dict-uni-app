@@ -104,7 +104,7 @@ export default {
 
   methods: {
     onChooseAvatar(e) {
-      this.avatarUrl = e.detail
+      this.avatarUrl = e.detail.avatarUrl
     },
 
     ear1() {
