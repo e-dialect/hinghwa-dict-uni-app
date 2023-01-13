@@ -100,11 +100,11 @@ function get(url, data = null, noPrompt = false) {
   return request('get', url, data, noPrompt);
 }
 
-function post(url, data, noPrompt = false) {
+function post(url, data = {}, noPrompt = false) {
   return request('post', url, data, noPrompt);
 }
 
-function put(url, data, noPrompt = false) {
+function put(url, data = {}, noPrompt = false) {
   return request('put', url, data, noPrompt);
 }
 

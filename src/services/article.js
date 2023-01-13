@@ -11,22 +11,11 @@ export async function getArticle(id) {
 
 /**
  * AT0201 搜索符合条件的文章
- * @returns {Promise<unknown>}
+ * @returns {Promise<number[]>} 文章id列表
  */
-export async function searchArticles(key) {
+export async function searchArticleId(key) {
   if (key) return request.get('/articles', { search: key });
   return request.get('/articles');
-}
-
-/**
- * 搜索相关的文章
- * @returns {Promise<unknown>}
- */
-export async function searchArticle(key) {
-  const res = await searchArticles(key);
-  const articlesId = res.articles;
-  const res1 = await getArticles(articlesId);
-  return res1.articles;
 }
 
 /**
@@ -36,6 +25,21 @@ export async function searchArticle(key) {
  */
 export async function getArticles(idList) {
   return request.put('/articles', { articles: idList });
+}
+
+/**
+ * 搜索相关文章并返回文章列表
+ * @returns {Promise<unknown>}
+ */
+export async function searchArticles(key) {
+  try {
+    const res = await searchArticleId(key);
+    const articleIds = res.articles;
+    const res1 = await getArticles(articleIds);
+    return res1.articles;
+  } catch (e) {
+    return [];
+  }
 }
 
 /**
@@ -86,13 +90,13 @@ export async function getComments(id) {
   const { comments } = res;
   const map = []; // 获取根评论
 
-  for (let i = 0; i < comments.length; i++) {
+  for (let i = 0; i < comments.length; i += 1) {
     comments[i].kids = [];
     map[comments[i].id] = i;
   }
 
   // 获取子孙评论
-  for (let i = 0; i < comments.length; i++) {
+  for (let i = 0; i < comments.length; i += 1) {
     if (comments[i].parent !== 0) {
       let p = comments[i].parent;
 

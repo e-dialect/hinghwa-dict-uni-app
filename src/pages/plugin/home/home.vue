@@ -45,7 +45,7 @@
 
 <script>
 import { getHotArticles } from '@/services/website';
-import { searchArticle } from '@/services/article';
+import { searchArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
@@ -88,7 +88,7 @@ export default {
      * @returns {Promise<void>}
      */
     async getArticlesList() {
-      await searchArticle().then(async (res) => {
+      await searchArticles().then(async (res) => {
         this.allArticles = res;
         this.displayArticles = res.slice(0, 4);
       });

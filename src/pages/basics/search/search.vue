@@ -217,7 +217,7 @@
 <script>
 import { searchCharacters } from '@/services/character';
 import { getWords, searchWords } from '@/services/word';
-import { searchArticle } from '@/services/article';
+import { searchArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
@@ -389,7 +389,7 @@ export default {
      * @returns {Promise<void>}
      */
     async searchArticleList(key) {
-      await searchArticle(key).then(async (res) => {
+      await searchArticles(key).then(async (res) => {
         if (res.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
