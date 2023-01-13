@@ -230,11 +230,12 @@
 <script>
 import { getWordDetails } from '@/services/word.js';
 import {
-  toIndexPage, toUploadPronunciationPage, toUserPage, toWordPage,
+  toIndexPage, toUserPage,
 } from '@/routers';
 import { playAudio } from '@/utils/audio';
 import { getPronunciations } from '@/services/pronunciation';
 import WordPronunciationButton from '@/components/WordPronunciationButton';
+import { toUploadPronunciationPage, toWordPage } from '@/routers/word';
 
 const app = getApp();
 export default {

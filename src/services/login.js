@@ -1,12 +1,46 @@
 import { toIndexPage, toLoginPage, toMePage } from '@/routers';
-import { getUserInfo } from '@/services/user';
-import request from '../utils/request';
+import rawRequest from '../utils/rawRequest';
+
+/**
+ * 加载用户信息到 app.globalData
+ */
+export async function loadUserInfo() {
+  const id = uni.getStorageSync('id');
+  if (!id) {
+    return;
+  }
+  const app = getApp();
+  await rawRequest.get(`/users/${id}`).then((res) => {
+    app.globalData.userInfo = res.user;
+    app.globalData.publish_articles = res.publish_articles;
+    app.globalData.publish_comments = res.publish_comments;
+    app.globalData.like_articles = res.like_articles;
+    app.globalData.contribution = res.contribution;
+    app.globalData.id = res.user.id;
+  });
+}
+
+export async function afterLogin(res) {
+  uni.showToast({
+    title: '登录成功',
+    icon: 'success',
+  });
+  uni.setStorageSync('token', res.token);
+  uni.setStorageSync('id', res.id);
+  await loadUserInfo();
+  // #ifdef H5
+  toIndexPage(true);
+  // #endif
+  // #ifndef H5
+  toMePage();
+// #endif
+}
 
 /**
  * 小程序一键登录
  */
 export async function mpLogin() {
-// #ifdef H5
+  // #ifdef H5
   toLoginPage();
   // #endif
 
@@ -20,7 +54,7 @@ export async function mpLogin() {
         return;
       }
       // 尝试进行微信登录
-      request.post(
+      rawRequest.post(
         '/login/wechat',
         {
           jscode: res.code,
@@ -32,7 +66,7 @@ export async function mpLogin() {
         })
         .catch((err) => {
           switch (err.statusCode) {
-            case 404: {
+            case 404:
               uni.showModal({
                 content: err.data.msg || '当前用户未注册或未绑定微信',
                 showCancel: false,
@@ -42,7 +76,10 @@ export async function mpLogin() {
                 },
               });
               break;
-            }
+            default:
+              uni.showToast({
+                title: err.data.msg || '登录失败',
+              });
           }
         });
     },
@@ -75,7 +112,7 @@ export async function normalLogin(username, password) {
     });
     return;
   }
-  request.post('/login', {
+  rawRequest.post('/login', {
     username,
     password,
   }, true).then(async (res) => {
@@ -88,24 +125,12 @@ export async function normalLogin(username, password) {
           icon: 'error',
         });
         break;
+      default:
+        uni.showToast({
+          title: err.data.msg || '登录失败',
+        });
     }
   });
-}
-
-async function afterLogin(res) {
-  uni.showToast({
-    title: '登录成功',
-    icon: 'success',
-  });
-  uni.setStorageSync('token', res.token);
-  uni.setStorageSync('id', res.id);
-  await loadUserInfo();
-  // #ifdef H5
-  toIndexPage(true);
-  // #endif
-  // #ifndef H5
-  toMePage();
-// #endif
 }
 
 /**
@@ -114,7 +139,7 @@ async function afterLogin(res) {
  */
 export async function getLoginStatus() {
   let flag = false;
-  await request.put('/login', {}, true).then(async (res) => {
+  await rawRequest.put('/login', {}).then(async (res) => {
     uni.setStorageSync('token', res.token);
     uni.setStorageSync('id', res.id);
     await loadUserInfo();
@@ -130,56 +155,9 @@ export async function getLoginStatus() {
           icon: 'error',
         });
         break;
+      default:
+        break;
     }
   });
   return flag;
-}
-
-/**
- * 加载用户信息到 app.globalData
- * @returns {Promise<null>}
- */
-export async function loadUserInfo() {
-  const id = uni.getStorageSync('id');
-  if (!id) {
-    return null;
-  }
-  const app = getApp();
-  await getUserInfo(id).then((res) => {
-    app.globalData.userInfo = res.user;
-    app.globalData.publish_articles = res.publish_articles;
-    app.globalData.publish_comments = res.publish_comments;
-    app.globalData.like_articles = res.like_articles;
-    app.globalData.contribution = res.contribution;
-    app.globalData.id = res.user.id;
-  });
-}
-
-/**
- * 清理登录状态
- */
-export function clearUserInfo() {
-  uni.clearStorageSync();
-  const app = getApp();
-  app.globalData.remove('userInfo');
-  app.globalData.remove('publish_articles');
-  app.globalData.remove('publish_comments');
-  app.globalData.remove('like_articles');
-  app.globalData.remove('contribution');
-  app.globalData.remove('id');
-}
-
-/**
- * 通过用户名获取账号关联邮箱
- * @param username 用户名
- * @returns {Promise<unknown>}
- */
-export function getEmailByUsername(username) {
-  return request.get('/login/forget', { username });
-}
-
-export function resetPassword(username, password, email, code) {
-  return request.put('/login/forget', {
-    username, password, email, code,
-  });
 }

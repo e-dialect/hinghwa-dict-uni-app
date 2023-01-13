@@ -156,8 +156,9 @@
 
 <script>
 import { toIndexPage, toMyRecordsPage, toUserInfoPage } from '@/routers';
-import { bindingWechat, cancelBindingWechat, getUserInfo } from '@/services/user';
-import { clearUserInfo } from '@/services/login';
+import {
+  bindingWechat, cancelBindingWechat, clearUserInfo, getUserInfo,
+} from '@/services/user';
 
 const app = getApp();
 export default {

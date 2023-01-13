@@ -87,7 +87,7 @@
 
 <script>
 import { sendEmailCode } from '@/services/website';
-import { getEmailByUsername, resetPassword } from '@/services/login';
+import { getEmailByUsername, resetPassword } from '@/services/user';
 
 const app = getApp();
 export default {
