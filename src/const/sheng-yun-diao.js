@@ -1,6 +1,6 @@
 /**
  * 声母及其例字
- * @type {{all: string, b: string, c: string, d: string, g: string, h: string, k: string, l: string, m: string, n: string, p: string, s: string, t: string, ng: string, z: string, Ǿ: string}}
+ * @type {object} 声母:样例
  */
 const shengmu = {
   all: 'all：全部声母',
@@ -23,7 +23,7 @@ const shengmu = {
 
 /**
  * 声母及其例字
- * @type {[{children: [{label: string, value: string}], label: string, value: string},{children: [{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},null,null,null,null,null,null,null,null,null,null,null,null,null,null], label: string, value: string},{children: [{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},null,null,null,null,null,null,null], label: string, value: string},{children: [{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},{label: string, value: string},null,null,null,null,null,null,null,null], label: string, value: string}]}
+ * @type {[{children: [{label: string, value: string}], label: string, value: string}]}
  */
 const yunmu = [
   {
@@ -234,7 +234,7 @@ const yunmu = [
 
 /**
  * 声调及其例字
- * @type {{all: string, "1": string, "2": string, "3": string, "4": string, "5": string, "6": string, "7": string}}
+ * @type {Object} 声调:例子
  */
 const shengdiao = {
   all: 'all：全部声调',
