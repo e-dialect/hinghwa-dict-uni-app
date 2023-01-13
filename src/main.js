@@ -21,11 +21,12 @@ const app = new Vue({
   ...App,
 });
 app.$mount();
+// eslint-disable-next-line import/prefer-default-export
 export function createApp() {
-  const app = createSSRApp(App);
-  app.mixin(Mixin);
+  const app2 = createSSRApp(App);
+  app2.mixin(Mixin);
   return {
-    app,
+    app2,
   };
 }
 // #endif

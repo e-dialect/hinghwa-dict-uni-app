@@ -56,23 +56,7 @@
           </text>
         </view>
       </view>
-      <!-- <view class="cu-bar bg-white text-grey" wx:if="{{status==0}}">
-    <view class="action">历史搜索</view>
-    <image src="/images/home/delete.png" mode="widthFix" bindtap="deleteHistory"
-      style="width:5vw;height:auto;margin-right:30rpx;">
-    </image>
-  </view> -->
-      <!-- <view class="history" wx:if="{{status==0}}">
-    <view class="padding-xs" wx:for="{{history}}">
-      <view class="cu-tag round">{{item}}</view>
-    </view>
-  </view> -->
-      <!-- <view class="bg-white flex text-df text-black" wx:if="{{status!=0}}">
-    <view class="flex-sub padding {{status==1?'text-bold':''}}" bindtap="sort" data-index="1">单字</view>
-    <view class="flex-sub padding {{status==2?'text-bold':''}}" bindtap="sort" data-index="2">词语</view>
-    <view class="flex-sub padding line {{status==3?'text-bold':''}}" bindtap="sort" data-index="3">文章</view>
-    <view class="flex-sub padding text-center" bindtap="sort" data-index="3">更多</view>
-  </view> -->
+      <!-- TODO 重构-->
       <view
         v-if="index === 0 && status === 1"
         class="cu-list menu"

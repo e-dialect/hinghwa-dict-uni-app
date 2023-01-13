@@ -228,7 +228,7 @@
 </template>
 
 <script>
-import { getWordDetails } from '@/services/word.js';
+import { getWordDetails } from '@/services/word';
 import {
   toIndexPage, toUserPage,
 } from '@/routers';

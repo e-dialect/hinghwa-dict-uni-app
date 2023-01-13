@@ -114,7 +114,7 @@
 import { getAnnouncements, getWordOfTheDay } from '@/services/website';
 import { toArticlePage, toSearchPage } from '@/routers';
 import { toWordPage } from '@/routers/word';
-import { mpLogin } from '../../../services/login.js';
+import { mpLogin } from '../../../services/login';
 
 const app = getApp();
 export default {

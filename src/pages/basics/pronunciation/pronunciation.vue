@@ -52,7 +52,8 @@
                 {{ item.contributor.nickname }}
               </text>
               <text decode>
-                &nbsp;&nbsp;（{{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}）
+                &nbsp;&nbsp;
+                （{{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}）
               </text>
             </view>
           </view>
@@ -67,6 +68,7 @@
 
 <script>
 import { getPronunciationDetails } from '@/services/pronunciation';
+import { playAudio } from '@/utils/audio';
 
 const app = getApp();
 export default {
@@ -79,21 +81,15 @@ export default {
     };
   },
   onLoad(options) {
-    this.setData({
-      id: options.id,
-      word: options.word,
-    });
-    this.getPronunciation(); // 创建播放器
-
-    this.innerAudioContext = uni.createInnerAudioContext();
+    this.id = options.id;
+    this.word = options.word;
+    this.getPronunciation();
   },
   onShow() {
     if (this.return) {
       this.getPronunciation();
     } else {
-      this.setData({
-        return: true,
-      });
+      this.return = true;
     }
   },
   methods: {
@@ -120,22 +116,7 @@ export default {
     play(e) {
       const { index } = e.currentTarget.dataset;
       const src = this.pronunciation[index].pronunciation.source;
-      console.log(src);
-
-      if (src === '') {
-        uni.showToast({
-          title: '音源为空！',
-          icon: 'error',
-        });
-        return;
-      }
-
-      uni.showToast({
-        title: '正在播放录音..',
-        icon: 'none',
-      });
-      this.innerAudioContext.src = src;
-      this.innerAudioContext.play();
+      playAudio(src);
     },
   },
 };

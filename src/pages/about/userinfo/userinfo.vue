@@ -217,6 +217,12 @@ export default {
         case 1:
           this.multiIndex.splice(1, 1, e.detail.value);
           break;
+        default:
+          uni.showToast({
+            title: '出错了',
+            icon: 'none',
+          });
+          break;
       }
     },
   },

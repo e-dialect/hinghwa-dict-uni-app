@@ -227,9 +227,9 @@ export default {
         cancelText: '返回',
         confirmText: '继续操作',
 
-        success(res) {
+        success(continueOperating) {
           // 继续操作
-          if (res.confirm) {
+          if (continueOperating.confirm) {
             // 取消绑定
             uni.showModal({
               content: '是否解除绑定？',
@@ -268,13 +268,13 @@ export default {
               extraData: {
                 id: '420021',
               },
-              fail(res) {
+              fail() {
                 uni.navigateToMiniProgram({
                   appId: 'wx8abaf00ee8c3202e',
                   extraData: {
                     id: '420021',
                   },
-                  fail(res) {
+                  fail() {
                     uni.showToast({
                       title: '跳转失败！',
                       icon: 'none',
@@ -289,6 +289,11 @@ export default {
           // 跳转到兴化语记兔小巢页面
           window.location = 'https://support.qq.com/product/420021';
           break;
+        default:
+          uni.showToast({
+            title: '暂不支持此平台！',
+            icon: 'none',
+          });
       }
     },
   },

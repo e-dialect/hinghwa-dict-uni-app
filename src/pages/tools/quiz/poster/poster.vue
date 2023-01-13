@@ -74,8 +74,8 @@ export default {
       uni.showModal({
         title: '图片保存',
         content: '确定要保存图片吗',
-        success: (res) => {
-          if (res.confirm) {
+        success: (modal) => {
+          if (modal.confirm) {
             uni.downloadFile({
               url,
               success: (res) => {
