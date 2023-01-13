@@ -1,6 +1,8 @@
 /**
- * 播放录音
+ * 播放音频
+ * @param src 音频地址
  */
+// eslint-disable-next-line import/prefer-default-export
 export function playAudio(src) {
   if (!src) {
     uni.showToast({
