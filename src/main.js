@@ -26,7 +26,7 @@ export function createApp() {
   const app2 = createSSRApp(App);
   app2.mixin(Mixin);
   return {
-    app2,
+    app: app2,
   };
 }
 // #endif
