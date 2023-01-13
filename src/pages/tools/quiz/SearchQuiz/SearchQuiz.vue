@@ -86,7 +86,6 @@
 <script>
 import {searchQuiz}     from "@/services/quiz";
 import {toOneQuizPage}  from "@/routers";
-import MarkdownViewer from "@/components/MarkdownViewer";
 const app = getApp();
 
 export default {
@@ -100,7 +99,11 @@ export default {
     }
   },
   onLoad() {
-      this.historyList = JSON.parse(uni.getStorageSync('search_history'));
+    try {
+      this.historyList = JSON.parse(uni.getStorageSync('search_history'))
+    }catch(error) {
+      this.historyList = []
+    }
   },
   methods: {
     /**
