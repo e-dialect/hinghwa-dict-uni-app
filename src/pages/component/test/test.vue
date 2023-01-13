@@ -55,7 +55,7 @@
         </view>
         <view class="grid col-5 ">
           <view
-            v-for="(subject,index) in subjectList"
+            v-for="index in [...Array(subjectList.length).keys()]"
             :key="index"
             class="margin-tb-sm text-center"
           >
@@ -189,10 +189,12 @@
 <script>
 import { getRandomQuiz } from '@/services/quiz';
 import { toPosterPage } from '@/routers';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 
 export default {
+  components: { CuCustom },
   data() {
     return {
       toPosterPage,
@@ -235,17 +237,16 @@ export default {
         this.swiperHeight = `${res.windowHeight}px`;
       },
     });
-    /*    // select中的参数就如css选择器一样选择元素
-        let info = uni.createSelectorQuery().in(this).select("#swiper-view");
-        info.boundingClientRect(function(data) {
-          //	data - 包含元素的高度等信息
-          console.log(data.height)  // 获取元素宽度
-          this.swiperHeight = data.height
-        }).exec(function(res) {
-          // 注意：exec方法必须执行，即便什么也不做不会获取到任何数据
-        }
-       )
-     */
+
+    // // select中的参数就如css选择器一样选择元素
+    // const info = uni.createSelectorQuery().in(this).select('#swiper-view');
+    // info.boundingClientRect(function (data) {
+    //   // data - 包含元素的高度等信息
+    //   console.log(data.height); // 获取元素宽度
+    //   this.swiperHeight = data.height;
+    // }).exec((res) => {
+    //   // 注意：exec方法必须执行，即便什么也不做不会获取到任何数据
+    // });
   },
   methods: {
     /**
@@ -253,7 +254,7 @@ export default {
      * @returns {Promise<void>}
      */
     async getTest() {
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 20; i += 1) {
         const res = await getRandomQuiz();
         this.subjectList[i] = res.quiz;
         this.current[i] = 99;
@@ -294,12 +295,11 @@ export default {
         content: '确定要提交吗？',
         success: (res) => {
           if (res.confirm) {
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 20; i += 1) {
               if (this.current[i] === this.rightAnswer[i]) {
                 this.totalScore += 5;
               }
             }
-            console.log(this.totalScore);
             this.toPosterPage(this.totalScore);
           }
         },
@@ -311,7 +311,7 @@ export default {
      */
     setProgress() {
       this.percent = 0;
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 20; i += 1) {
         if (this.current[i] !== 99) this.percent += 5;
       }
     },
