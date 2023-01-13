@@ -149,6 +149,19 @@
       id="foot-box"
       class="cu-bar tabbar bg-white shadow foot"
     >
+      <!--播放音频-->
+      <view
+        v-if="subjectList[subjectIndex].voice_source"
+        class="action"
+        @tap="play(subjectList[subjectIndex].voice_source)"
+      >
+        <view class="cuIcon-cu-image">
+          <text class="lg text-gray cuIcon-notification" />
+        </view>
+        <view class="text-gray">
+          播放题目
+        </view>
+      </view>
       <view
         class="action"
         @click="moveSubject(-1)"
@@ -187,9 +200,10 @@
 </template>
 
 <script>
-import { getRandomQuiz } from '@/services/quiz';
+import { getTestPaper } from '@/services/quiz';
 import { toPosterPage } from '@/routers';
 import CuCustom from '@/colorui/components/cu-custom';
+import { playAudio } from '@/utils/audio';
 
 const app = getApp();
 
@@ -254,12 +268,12 @@ export default {
      * @returns {Promise<void>}
      */
     async getTest() {
-      for (let i = 0; i < 20; i += 1) {
-        const res = await getRandomQuiz();
-        this.subjectList[i] = res.quiz;
+      const res = await getTestPaper(20);
+      this.subjectList = res.paper;
+      for (let i = 0; i < 20; i++) {
         this.current[i] = 99;
         this.showAnswer[i] = 0;
-        this.rightAnswer[i] = res.quiz.answer;
+        this.rightAnswer[i] = res.paper[i].answer;
       }
       this.subjectList = [...this.subjectList];
     },
@@ -322,6 +336,13 @@ export default {
     radioChange(e) {
       this.current[this.subjectIndex] = Number(e.detail.value);
       this.setProgress();
+    },
+
+    /**
+     * 播放语音
+     */
+    play(url) {
+      playAudio(url);
     },
 
     /**

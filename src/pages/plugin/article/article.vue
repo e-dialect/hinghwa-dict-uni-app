@@ -360,37 +360,37 @@ page {
 
 .like {
   background-color: #f5f5f5;
-  border-radius: 5000 rpx;
-  padding: 10 rpx 20 rpx;
-  margin-left: 25 rpx;
-  font-size: 30 rpx;
+  border-radius: 5000rpx;
+  padding: 10rpx 20rpx;
+  margin-left: 25rpx;
+  font-size: 30rpx;
 }
 
 .input-box {
   flex: 1;
-  margin-left: 20 rpx;
-  margin-right: 20 rpx;
-  border-radius: 5000 rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  border-radius: 5000rpx;
   background-color: #f5f5f5;
 }
 
 .border {
-  border: 2 rpx solid #0081ff;
+  border: 2rpx solid #0081ff;
 }
 
 .text-name {
   color: #666666;
-  font-size: 30 rpx;
+  font-size: 30rpx;
 }
 
 .text-date {
   color: #9b9b9b;
-  font-size: 24 rpx;
+  font-size: 24rpx;
 }
 
 .text-dz {
   color: #999999;
-  font-size: 36 rpx;
+  font-size: 36rpx;
   align-self: center;
 }
 
@@ -398,7 +398,7 @@ page {
   position: relative;
   width: 85vw;
   left: 10vw;
-  margin-top: 15 rpx;
+  margin-top: 15rpx;
 }
 
 .text-reply {
@@ -406,8 +406,8 @@ page {
   position: relative;
   width: 85vw;
   left: 12vw;
-  margin-top: 10 rpx;
-  padding: 20 rpx;
-  border-radius: 10 rpx;
+  margin-top: 10rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
 }
 </style>

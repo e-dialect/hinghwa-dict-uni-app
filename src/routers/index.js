@@ -1,3 +1,6 @@
+import { mpLogin } from '@/services/login';
+import { getWordDetails } from '@/services/word';
+
 /**
  * 前往用户页面
  * @param id 用户id
@@ -70,6 +73,35 @@ export function toChangePhonePage() {
 }
 
 /**
+ * 跳转至词语页面
+ * @param id 词语id
+ */
+export function toWordPage(id) {
+  uni.navigateTo({
+    url: `/pages/basics/words/words?id=${id}`,
+  });
+}
+
+/**
+ * 跳转至贡献语音界面
+ * @param id 词语id
+ */
+export async function toUploadPronunciationPage(id) {
+  if (!uni.getStorageSync('id')) {
+    uni.showToast({
+      title: '请先登录',
+      icon: 'none',
+    });
+    await mpLogin();
+    return;
+  }
+  const word = await getWordDetails(id);
+  uni.navigateTo({
+    url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`,
+  });
+}
+
+/**
  * 前往文章页面
  * @param id 文章id
  */
@@ -102,7 +134,7 @@ export function toLoginPage() {
  */
 export function toRandomQuizPage() {
   uni.navigateTo({
-    url: '/pages/component/RandomQuiz/RandomQuiz',
+    url: '/pages/tools/quiz/RandomQuiz/RandomQuiz',
   });
 }
 
@@ -111,7 +143,7 @@ export function toRandomQuizPage() {
  */
 export function toTestPage() {
   uni.navigateTo({
-    url: '/pages/component/test/test',
+    url: '/pages/tools/quiz/test/test',
   });
 }
 
@@ -120,7 +152,7 @@ export function toTestPage() {
  */
 export function toPosterPage(totalScore) {
   uni.navigateTo({
-    url: `/pages/component/poster/poster?totalScore=${totalScore}`,
+    url: `/pages/tools/quiz/poster/poster?totalScore=${totalScore}`,
   });
 }
 
@@ -129,7 +161,7 @@ export function toPosterPage(totalScore) {
  */
 export function toOneQuizPage(id) {
   uni.navigateTo({
-    url: `/pages/component/quiz/quiz?id=${id}`,
+    url: `/pages/tools/quiz/quiz/quiz?id=${id}`,
   });
 }
 
@@ -138,7 +170,7 @@ export function toOneQuizPage(id) {
  */
 export function toSearchQuizPage() {
   uni.navigateTo({
-    url: '/pages/component/SearchQuiz/SearchQuiz',
+    url: '/pages/tools/quiz/SearchQuiz/SearchQuiz',
   });
 }
 

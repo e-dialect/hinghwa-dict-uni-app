@@ -89,6 +89,19 @@
         </view>-->
     <!--底部-->
     <view class="cu-bar tabbar bg-white shadow foot">
+      <!--播放音频-->
+      <view
+        v-if="quiz.voice_source"
+        class="action"
+        @tap="play(quiz.voice_source)"
+      >
+        <view class="cuIcon-cu-image">
+          <text class="lg text-gray cuIcon-notification" />
+        </view>
+        <view class="text-gray">
+          播放题目
+        </view>
+      </view>
       <!--重置题目-->
       <view
         class="action"
@@ -155,6 +168,7 @@
 
 <script>
 import { getRandomQuiz } from '@/services/quiz';
+import { playAudio } from '@/utils/audio';
 
 const app = getApp();
 
@@ -167,6 +181,7 @@ export default {
         answer: 0,
         explanation: '',
         id: 0,
+        voice_source: '',
       },
       isShow1: false,
       isShow2: false,
@@ -259,6 +274,12 @@ export default {
       if (endTime - this.startTime < 1500 && moveX < -70) {
         this.changeQuiz();
       }
+    },
+    /**
+     * 播放语音
+     */
+    play(url) {
+      playAudio(url);
     },
     /**
      * 显示答案
