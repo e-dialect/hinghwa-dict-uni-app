@@ -134,7 +134,7 @@ export function toLoginPage() {
  */
 export function toRandomQuizPage() {
   uni.navigateTo({
-    url: "/pages/component/RandomQuiz/RandomQuiz",
+    url: "/pages/tools/quiz/RandomQuiz/RandomQuiz",
   });
 }
 
@@ -143,7 +143,7 @@ export function toRandomQuizPage() {
  */
 export function toTestPage() {
   uni.navigateTo({
-    url: "/pages/component/test/test",
+    url: "/pages/tools/quiz/test/test",
   });
 }
 
@@ -152,7 +152,7 @@ export function toTestPage() {
  */
 export function toPosterPage(totalScore) {
   uni.navigateTo({
-    url: "/pages/component/poster/poster?totalScore=" + totalScore,
+    url: "/pages/tools/quiz/poster/poster?totalScore=" + totalScore,
   });
 }
 
@@ -161,7 +161,7 @@ export function toPosterPage(totalScore) {
  */
 export function toOneQuizPage(id) {
   uni.navigateTo({
-    url: "/pages/component/quiz/quiz?id=" + id
+    url: "/pages/tools/quiz/quiz/quiz?id=" + id
   });
 }
 
@@ -170,7 +170,7 @@ export function toOneQuizPage(id) {
  */
 export function toSearchQuizPage() {
   uni.navigateTo({
-    url: "/pages/component/SearchQuiz/SearchQuiz",
+    url: "/pages/tools/quiz/SearchQuiz/SearchQuiz",
   });
 }
 
