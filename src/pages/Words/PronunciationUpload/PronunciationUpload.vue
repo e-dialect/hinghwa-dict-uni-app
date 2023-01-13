@@ -168,7 +168,8 @@ export default {
    * @param options {id,word,ipa,pinyin}
    */
   onLoad(options) {
-    // 读取页面参数
+    // 读取页面参数 FIXME
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const i in options) {
       this[i] = options[i];
     }
@@ -203,7 +204,7 @@ export default {
             chunks = [];
           };
           // 录音过程中
-          this.recorderManager.ondataavailable = function (e) {
+          this.recorderManager.ondataavailable = (e) => {
             chunks.push(e.data);
           };
           // 录音停止
@@ -306,6 +307,8 @@ export default {
         county: counties[this.pickerIndex[0]],
         town: towns[this.pickerIndex[0]][this.pickerIndex[1]],
       };
+      // FIXME
+      // eslint-disable-next-line no-restricted-syntax
       for (const i in pronunciation) {
         if (!pronunciation[i]) {
           uni.showToast({
@@ -319,7 +322,8 @@ export default {
       // 上传录音文件
       uploadFile(pronunciation.source).then((res) => {
         pronunciation.source = JSON.parse(res).url;
-        createPronunciation(pronunciation).then((res) => {
+        // TODO refactor
+        createPronunciation(pronunciation).then(() => {
           uni.showToast({
             title: '语音贡献成功',
             icon: 'success',

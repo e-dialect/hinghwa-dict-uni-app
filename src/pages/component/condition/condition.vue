@@ -114,8 +114,8 @@ import { searchCharactersByFilters } from '@/services/character';
 
 const app = getApp();
 
-const utils = require('../../../const/sheng-yun-diao.js');
-
+const utils = require('@/const/sheng-yun-diao');
+// TODO refactor
 export default {
   data() {
     return {
@@ -136,6 +136,7 @@ export default {
     // 获取声母
     const shengmu = [];
 
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const k in utils.shengmu) {
       shengmu.push(utils.shengmu[k]);
     }
@@ -161,6 +162,7 @@ export default {
     // 获取声调
     const shengdiao = [];
 
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const k in utils.shengdiao) {
       shengdiao.push(utils.shengdiao[k]);
     }
@@ -208,42 +210,41 @@ export default {
       };
       data.multiIndex[e.detail.column] = e.detail.value;
 
-      switch (e.detail.column) {
-        case 0:
-          data.yunmu[1] = [];
+      if (e.detail.column === 0) {
+        data.yunmu[1] = [];
 
-          switch (data.multiIndex[0]) {
-            case 0:
-              for (let i = 0; i < utils.yunmu[0].children.length; i += 1) {
-                data.yunmu[1].push(utils.yunmu[0].children[i].label);
-              }
+        switch (data.multiIndex[0]) {
+          case 0:
+            for (let i = 0; i < utils.yunmu[0].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[0].children[i].label);
+            }
+            break;
 
-              break;
+          case 1:
+            for (let i = 0; i < utils.yunmu[1].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[1].children[i].label);
+            }
+            break;
 
-            case 1:
-              for (let i = 0; i < utils.yunmu[1].children.length; i += 1) {
-                data.yunmu[1].push(utils.yunmu[1].children[i].label);
-              }
+          case 2:
+            for (let i = 0; i < utils.yunmu[2].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[2].children[i].label);
+            }
+            break;
 
-              break;
+          case 3:
+            for (let i = 0; i < utils.yunmu[3].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[3].children[i].label);
+            }
+            break;
+          default:
+            uni.showToast({
+              title: '出错啦',
+              icon: 'none',
+            });
+        }
 
-            case 2:
-              for (let i = 0; i < utils.yunmu[2].children.length; i += 1) {
-                data.yunmu[1].push(utils.yunmu[2].children[i].label);
-              }
-
-              break;
-
-            case 3:
-              for (let i = 0; i < utils.yunmu[3].children.length; i += 1) {
-                data.yunmu[1].push(utils.yunmu[3].children[i].label);
-              }
-
-              break;
-          }
-
-          data.multiIndex[1] = 0;
-          break;
+        data.multiIndex[1] = 0;
       }
       // TODO refactor
       this.setData(data);
@@ -255,12 +256,13 @@ export default {
 
     getShengmu() {
       const shengmu = this.shengmu[this.index];
-
+      // eslint-disable-next-line no-restricted-syntax
       for (const k in utils.shengmu) {
         if (utils.shengmu[k] === shengmu) {
           return k;
         }
       }
+      return null;
     },
 
     getYunmu() {
@@ -273,16 +275,18 @@ export default {
           }
         }
       }
+      return null;
     },
 
     getShengdiao() {
       const shengdiao = this.shengdiao[this.index1];
-
+      // eslint-disable-next-line no-restricted-syntax
       for (const k in utils.shengdiao) {
         if (utils.shengdiao[k] === shengdiao) {
           return k;
         }
       }
+      return null;
     },
 
     searchByConditions() {
