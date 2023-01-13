@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {mpLogin, getLoginStatus}           from "../../../services/login.js";
+import {mpLogin}           from "../../../services/login.js";
 import {getAnnouncements, getWordOfTheDay} from "@/services/website";
 import {toArticlePage, toSearchPage, toWordPage} from "@/routers";
 
@@ -133,9 +133,9 @@ export default {
     addGlobalClass: true
   },
   async mounted() {
+    this.hasLogin      = !!uni.getStorageSync('token');
     this.word          = await getWordOfTheDay()
     this.announcements = await getAnnouncements()
-    this.hasLogin      = await getLoginStatus()
   },
   methods: {
     /**
