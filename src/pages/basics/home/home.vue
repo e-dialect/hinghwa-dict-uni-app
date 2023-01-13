@@ -144,10 +144,10 @@ export default {
      * @returns {Promise<void>}
      */
     async onRefresh() {
-      if (this._freshing) {
+      if (this.freshing) {
         return;
       }
-      this._freshing = true;
+      this.freshing = true;
       uni.showLoading({
         title: '刷新中',
       });
@@ -155,7 +155,7 @@ export default {
       this.announcements = await getAnnouncements();
       uni.hideLoading();
       this.triggered = false;
-      this._freshing = false;
+      this.freshing = false;
     },
 
     /**

@@ -64,7 +64,7 @@ export default {
     };
   },
   onLoad() {
-    this._freshing = false;
+    this.freshing = false;
   },
   options: {
     addGlobalClass: true,
@@ -100,16 +100,16 @@ export default {
 
     // 下拉刷新
     onRefresh() {
-      if (this._freshing) {
+      if (this.freshing) {
         return;
       }
-      this._freshing = true;
+      this.freshing = true;
       this.getHotArticlesList();
       setTimeout(() => {
         this.setData({
           triggered: false,
         });
-        this._freshing = false;
+        this.freshing = false;
       }, 500);
     },
 
