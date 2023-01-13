@@ -16,31 +16,29 @@ const request = (method = 'GET', url = '', data = {}) => {
           token: uni.getStorageSync('token'),
         },
         dataType: 'json',
-        success: (response) => {
-          uni.hideLoading();
-          const [error, res] = response;
-          // 如果有错误，则抛出错误
-          if (error) {
-            uni.showToast({
-              title: '网络错误',
-              icon: 'error',
-            });
-            reject(error);
-          }
-          // 如果正常返回，则根据状态码进行处理
-          if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
-          else {
-            reject(res);
-          }
-        },
-        fail: (error) => {
-          uni.hideLoading();
+      }).then((response) => {
+        uni.hideLoading();
+        const [error, res] = response;
+        // 如果有错误，则抛出错误
+        if (error) {
           uni.showToast({
             title: '网络错误',
             icon: 'error',
           });
           reject(error);
-        },
+        }
+        // 如果正常返回，则根据状态码进行处理
+        if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
+        else {
+          reject(res);
+        }
+      }).catch((error) => {
+        uni.hideLoading();
+        uni.showToast({
+          title: '网络错误',
+          icon: 'error',
+        });
+        reject(error);
       });
     },
   );
