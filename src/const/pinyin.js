@@ -218,7 +218,7 @@ const kai = [
 
 /**
  * 鼻尾韵列表
- * @type {[{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},{pinyin: string, IPA: string, key: number, example: string},null,null,null,null,null,null,null]}
+ * @type {{pinyin: string, IPA: string, key: number, example: string}[]}
  */
 const bi = [
   {
