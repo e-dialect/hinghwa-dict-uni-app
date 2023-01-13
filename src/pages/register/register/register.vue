@@ -1,16 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        用户注册
-      </view>
-    </cu-custom>
+    <cu-custom title="用户注册" />
     <form @submit="register">
       <view class="cu-form-group">
         <view class="text-df text-bold-less margin-right-sm">
@@ -40,7 +30,7 @@
           确认密码
         </view>
         <input
-          name="password_confirmed"
+          name="passwordConfirmed"
           :password="is_pwd2"
           placeholder="请再次输入密码"
         >
@@ -90,9 +80,11 @@
 <script>
 import { sendEmailCode } from '@/services/website';
 import { registerUser } from '@/services/user';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 export default {
+  components: { CuCustom },
   data() {
     return {
       is_pwd1: true,
@@ -125,14 +117,15 @@ export default {
     },
 
     register(e) {
-      console.log(e);
-      const { username } = e.detail.value;
-      const { password } = e.detail.value;
-      const { password_confirmed } = e.detail.value;
-      const { email } = e.detail.value;
-      const { code } = e.detail.value;
+      const {
+        username,
+        password,
+        passwordConfirmed,
+        email,
+        code,
+      } = e.detail.value;
 
-      if (!username || !password || !password_confirmed || !email || !code) {
+      if (!username || !password || !passwordConfirmed || !email || !code) {
         uni.showToast({
           title: '信息不完整',
           icon: 'error',
@@ -148,22 +141,20 @@ export default {
         return;
       }
 
-      if (password !== password_confirmed) {
+      if (password !== passwordConfirmed) {
         uni.showToast({
           title: '两次密码不相同',
           icon: 'error',
         });
         return;
       }
-      registerUser(username, password, email, code).then(async (res) => {
-        setTimeout(() => {
-          uni.showToast({
-            title: '注册成功',
-          });
-          uni.navigateBack({
-            delta: 1,
-          });
-        }, 100);
+      registerUser(username, password, email, code).then(() => {
+        uni.showToast({
+          title: '注册成功',
+        });
+        uni.navigateBack({
+          delta: 1,
+        });
       });
     },
   },
