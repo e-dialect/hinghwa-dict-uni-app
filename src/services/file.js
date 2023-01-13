@@ -77,7 +77,6 @@ export async function chooseAndUploadImages(maxNumber = 1) {
       success: (res) => {
         const { tempFilePaths } = res;
         const promises = [];
-        console.log(tempFilePaths);
         tempFilePaths.forEach((path) => {
           promises.push(uploadFile(path));
         });
@@ -96,7 +95,6 @@ export async function chooseAndUploadImages(maxNumber = 1) {
     promises.push(uploadFile(image));
   });
   const ans = await Promise.all(promises);
-  console.log(ans);
   return ans.map((item) => JSON.parse(item).url);
 }
 
