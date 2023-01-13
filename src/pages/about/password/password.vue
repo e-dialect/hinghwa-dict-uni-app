@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {changeUserPassword} from "@/services/user";
+import { changeUserPassword } from '@/services/user';
 
 const app = getApp();
 export default {
@@ -50,31 +50,31 @@ export default {
           ph: '请输入原密码',
           is_pwd: true,
           icon: 'cuIcon-attention',
-          name: 'old'
+          name: 'old',
         },
         {
           str: '新密码',
           ph: '请输入新密码',
           is_pwd: true,
           icon: 'cuIcon-attention',
-          name: 'new1'
+          name: 'new1',
         },
         {
           str: '确认密码',
           ph: '请确认新密码',
           is_pwd: true,
           icon: 'cuIcon-attention',
-          name: 'new2'
-        }
-      ]
+          name: 'new2',
+        },
+      ],
     };
   },
   methods: {
     changeStatus(e) {
-      let index = e.currentTarget.dataset.index;
-      let pwd = this.pwd;
+      const { index } = e.currentTarget.dataset;
+      const { pwd } = this;
 
-      if (pwd[index].is_pwd == true) {
+      if (pwd[index].is_pwd === true) {
         pwd[index].is_pwd = false;
         pwd[index].icon = 'cuIcon-attentionforbid';
       } else {
@@ -86,37 +86,37 @@ export default {
     },
 
     changePassword(e) {
-      let old = e.detail.value.old;
-      let new1 = e.detail.value.new1.trim();
-      let new2 = e.detail.value.new2.trim();
+      const { old } = e.detail.value;
+      const new1 = e.detail.value.new1.trim();
+      const new2 = e.detail.value.new2.trim();
 
-      if (old == '' || new1 == '' || new2 == '') {
+      if (old === '' || new1 === '' || new2 === '') {
         uni.showToast({
           title: '内容不完整',
-          icon: 'error'
+          icon: 'error',
         });
         return;
-      } else if (new1 != new2) {
+      } if (new1 !== new2) {
         uni.showToast({
           title: '两次密码不一样',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       } // 修改密码
 
-      changeUserPassword(app.globalData.id , old , new1).then(async (res) => {
+      changeUserPassword(app.globalData.id, old, new1).then(async (res) => {
         uni.setStorageSync('token', res.token);
         setTimeout(() => {
           uni.showToast({
-            title: '修改成功'
+            title: '修改成功',
           });
           uni.navigateBack({
-            delta: 1
+            delta: 1,
           }); // 返回上一个页面
-        }, 100)
+        }, 100);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

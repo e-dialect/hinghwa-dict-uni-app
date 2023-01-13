@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {toIndexPage} from "@/routers";
+import { toIndexPage } from '@/routers';
 
 const app = getApp();
 export default {
@@ -45,30 +45,30 @@ export default {
   props: {
     bgColor: {
       type: String,
-      default: 'bg-white'
+      default: 'bg-white',
     },
     isCustom: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     isBack: {
       type: [Boolean, String],
-      default: true
+      default: true,
     },
     bgImage: {
       type: String,
-      default: ''
+      default: '',
     },
     title: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       StatusBar: app.globalData.StatusBar,
       CustomBar: app.globalData.CustomBar,
-      Custom: app.globalData.Custom
+      Custom: app.globalData.Custom,
     };
   },
   /**
@@ -76,7 +76,7 @@ export default {
    */
   options: {
     addGlobalClass: true,
-    multipleSlots: true
+    multipleSlots: true,
   },
   /**
    * 组件的方法列表
@@ -92,6 +92,6 @@ export default {
         toIndexPage();
       }
     },
-  }
+  },
 };
 </script>

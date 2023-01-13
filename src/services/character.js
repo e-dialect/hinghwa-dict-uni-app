@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 /**
  * CH0201 单字信息批量获取
@@ -6,7 +6,7 @@ import request from "@/utils/request";
  * @returns {Promise<unknown>}
  */
 export async function getCharacters(idList) {
-    return request.put(`/characters`, {characters: idList})
+  return request.put('/characters', { characters: idList });
 }
 
 /**
@@ -14,7 +14,7 @@ export async function getCharacters(idList) {
  * @returns {Promise<unknown>}
  */
 export async function searchCharacters(key) {
-    return request.get(`/characters/words/v2`, {search: key})
+  return request.get('/characters/words/v2', { search: key });
 }
 
 /**
@@ -23,12 +23,12 @@ export async function searchCharacters(key) {
  * @returns {Promise<string|default.methods.character|string|*>}
  */
 export async function getCharacterDetails(id) {
-    try {
-        const res = await request.get(`/characters/${id}`);
-        return res.character;
-    } catch (e){
-        return null
-    }
+  try {
+    const res = await request.get(`/characters/${id}`);
+    return res.character;
+  } catch (e) {
+    return null;
+  }
 }
 
 /**
@@ -38,10 +38,10 @@ export async function getCharacterDetails(id) {
  * @param shengdiao 声调
  * @returns {Promise<void>}
  */
-export async function searchCharactersByFilters({shengmu='all',yunmu='all',shengdiao='all'}){
-    const data = {}
-    if (shengmu !== 'all') data.shengmu = shengmu
-    if (yunmu !== 'all') data.yunmu = yunmu
-    if (shengdiao !== 'all') data.shengdiao = shengdiao
-    return request.get(`/characters/pinyin`,data)
+export async function searchCharactersByFilters({ shengmu = 'all', yunmu = 'all', shengdiao = 'all' }) {
+  const data = {};
+  if (shengmu !== 'all') data.shengmu = shengmu;
+  if (yunmu !== 'all') data.yunmu = yunmu;
+  if (shengdiao !== 'all') data.shengdiao = shengdiao;
+  return request.get('/characters/pinyin', data);
 }

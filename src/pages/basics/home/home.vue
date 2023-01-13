@@ -111,9 +111,10 @@
 </template>
 
 <script>
-import {mpLogin}           from "../../../services/login.js";
-import {getAnnouncements, getWordOfTheDay} from "@/services/website";
-import {toArticlePage, toSearchPage, toWordPage} from "@/routers";
+import { getAnnouncements, getWordOfTheDay } from '@/services/website';
+import { toArticlePage, toSearchPage } from '@/routers';
+import { toWordPage } from '@/routers/word';
+import { mpLogin } from '../../../services/login';
 
 const app = getApp();
 export default {
@@ -122,20 +123,20 @@ export default {
       hasLogin: false,
       word: {
         word: '',
-        definition: ''
+        definition: '',
       },
       carousels: [],
       triggered: false,
-      announcements: []
+      announcements: [],
     };
   },
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
   async mounted() {
-    this.hasLogin      = !!uni.getStorageSync('token');
-    this.word          = await getWordOfTheDay()
-    this.announcements = await getAnnouncements()
+    this.hasLogin = !!uni.getStorageSync('token');
+    this.word = await getWordOfTheDay();
+    this.announcements = await getAnnouncements();
   },
   methods: {
     /**
@@ -143,41 +144,41 @@ export default {
      * @returns {Promise<void>}
      */
     async onRefresh() {
-      if (this._freshing) {
+      if (this.freshing) {
         return;
       }
-      this._freshing = true;
+      this.freshing = true;
       uni.showLoading({
-        title: '刷新中'
+        title: '刷新中',
       });
-      this.word          = await getWordOfTheDay()
-      this.announcements = await getAnnouncements()
+      this.word = await getWordOfTheDay();
+      this.announcements = await getAnnouncements();
       uni.hideLoading();
-      this.triggered = false
-      this._freshing = false;
+      this.triggered = false;
+      this.freshing = false;
     },
 
     /**
      * 一键登录模块
      */
     login() {
-      mpLogin()
+      mpLogin();
     },
 
     /**
      * 随机跳词
      */
     randomWord() {
-      const random_id = Math.floor(Math.random() * 6099) + 1;
-      toWordPage(random_id)
+      const randomId = Math.floor(Math.random() * 6099) + 1;
+      toWordPage(randomId);
     },
 
     /**
      * 获取每日一词的详细信息
      */
     getWordDetails() {
-      const id = this.word.id;
-      toWordPage(id)
+      const { id } = this.word;
+      toWordPage(id);
     },
 
     /**
@@ -185,18 +186,18 @@ export default {
      * @param e
      */
     toArticle(e) {
-      const index = e.currentTarget.dataset.index;
-      const id    = this.announcements[index].article.id;
-      toArticlePage(id)
+      const { index } = e.currentTarget.dataset;
+      const { id } = this.announcements[index].article;
+      toArticlePage(id);
     },
 
     /**
      * 跳转到搜索页面
      */
     search() {
-      toSearchPage()
+      toSearchPage();
     },
-  }
+  },
 };
 </script>
 <style>

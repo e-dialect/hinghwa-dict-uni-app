@@ -84,25 +84,26 @@
 </template>
 
 <script>
-import {searchQuiz}     from "@/services/quiz";
-import {toOneQuizPage}  from "@/routers";
+import { searchQuiz } from '@/services/quiz';
+import { toOneQuizPage } from '@/routers';
+
 const app = getApp();
 
 export default {
   data() {
-    return{
-      toOneQuizPage: toOneQuizPage,
+    return {
+      toOneQuizPage,
       key: '',
       result: [],
       historyList: [],
-      isShow: false
-    }
+      isShow: false,
+    };
   },
   onLoad() {
     try {
-      this.historyList = JSON.parse(uni.getStorageSync('search_history'))
-    }catch(error) {
-      this.historyList = []
+      this.historyList = JSON.parse(uni.getStorageSync('search_history'));
+    } catch (error) {
+      this.historyList = [];
     }
   },
   methods: {
@@ -110,9 +111,9 @@ export default {
      * 同步关键词
      */
     keyFun(e) {
-      this.key = e.detail.value
-      if( e.detail.value === '') {
-        this.isShow = false
+      this.key = e.detail.value;
+      if (e.detail.value === '') {
+        this.isShow = false;
       }
     },
 
@@ -122,35 +123,34 @@ export default {
     searchQuizzes(key) {
       if (key === '') {
         uni.showToast({
-          icon: "error",
-          title: '搜索内容为空'
+          icon: 'error',
+          title: '搜索内容为空',
         });
-      }
-      else{
-        searchQuiz(key).then(res => {
-          if(res.result.length === 0) {
+      } else {
+        searchQuiz(key).then((res) => {
+          if (res.result.length === 0) {
             uni.showToast({
-              icon: "none",
-              title: '没有搜索到相关内容'
+              icon: 'none',
+              title: '没有搜索到相关内容',
             });
           }
-          this.result = res.result
-          this.isShow = true
+          this.result = res.result;
+          this.isShow = true;
         });
         if (!this.historyList.includes(this.key)) {
           this.historyList.unshift(this.key);
           uni.setStorage({
             key: 'search_history',
-            data: JSON.stringify(this.historyList)
+            data: JSON.stringify(this.historyList),
           });
         } else {
-          //已有搜索记录
-          let i = this.historyList.indexOf(this.key);
+          // 已有搜索记录
+          const i = this.historyList.indexOf(this.key);
           this.historyList.splice(i, 1);
           this.historyList.unshift(this.key);
           uni.setStorage({
             key: 'search_history',
-            data: JSON.stringify(this.historyList)
+            data: JSON.stringify(this.historyList),
           });
         }
       }
@@ -159,27 +159,27 @@ export default {
      * 清空历史记录
      */
     cleanHistory() {
-      if(this.historyList.length === 0) {
+      if (this.historyList.length === 0) {
         uni.showToast({
-          icon: "none",
-          title: '没有任何搜索记录'
+          icon: 'none',
+          title: '没有任何搜索记录',
         });
       } else {
         uni.showModal({
-          content: "确定要清空全部历史记录吗？",
+          content: '确定要清空全部历史记录吗？',
           success: (res) => {
             if (res.confirm) {
               uni.removeStorage({
-                key: 'search_history'
+                key: 'search_history',
               });
               this.historyList = [];
             }
-          }
+          },
         });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>

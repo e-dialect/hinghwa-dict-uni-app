@@ -55,7 +55,7 @@
         </view>
         <view class="grid col-5 ">
           <view
-            v-for="(subject,index) in subjectList"
+            v-for="index in [...Array(subjectList.length).keys()]"
             :key="index"
             class="margin-tb-sm text-center"
           >
@@ -200,16 +200,18 @@
 </template>
 
 <script>
-import {getTestPaper} from "@/services/quiz";
-import {toPosterPage} from "@/routers";
-import {playAudio} from "@/utils/audio";
+import { getTestPaper } from '@/services/quiz';
+import { toPosterPage } from '@/routers';
+import CuCustom from '@/colorui/components/cu-custom';
+import { playAudio } from '@/utils/audio';
 
 const app = getApp();
 
 export default {
+  components: { CuCustom },
   data() {
     return {
-      toPosterPage: toPosterPage,
+      toPosterPage,
       percent: 0,
       current: [], // 选中的选项
       showAnswer: [],
@@ -217,9 +219,9 @@ export default {
       subjectIndex: 0, // 跳转索引
       swiperHeight: '800px',
       subjectList: [],
-      modalCard: null ,//显示答题卡
-      totalScore: 0
-    }
+      modalCard: null, // 显示答题卡
+      totalScore: 0,
+    };
   },
   /*  onReady() {
       let tempHeight = 800;
@@ -241,25 +243,24 @@ export default {
           }).exec();
         }
       }); // swiper高度自适应
-    },*/
+    }, */
   onLoad() {
     this.getTest();
     uni.getSystemInfo({
       success: (res) => {
-        this.swiperHeight = res.windowHeight + 'px';
-      }
+        this.swiperHeight = `${res.windowHeight}px`;
+      },
     });
-    /*    // select中的参数就如css选择器一样选择元素
-        let info = uni.createSelectorQuery().in(this).select("#swiper-view");
-        info.boundingClientRect(function(data) {
-          //	data - 包含元素的高度等信息
-          console.log(data.height)  // 获取元素宽度
-          this.swiperHeight = data.height
-        }).exec(function(res) {
-          // 注意：exec方法必须执行，即便什么也不做不会获取到任何数据
-        }
-       )
-     */
+
+    // // select中的参数就如css选择器一样选择元素
+    // const info = uni.createSelectorQuery().in(this).select('#swiper-view');
+    // info.boundingClientRect(function (data) {
+    //   // data - 包含元素的高度等信息
+    //   console.log(data.height); // 获取元素宽度
+    //   this.swiperHeight = data.height;
+    // }).exec((res) => {
+    //   // 注意：exec方法必须执行，即便什么也不做不会获取到任何数据
+    // });
   },
   methods: {
     /**
@@ -267,28 +268,28 @@ export default {
      * @returns {Promise<void>}
      */
     async getTest() {
-      const res = await getTestPaper(20)
-      this.subjectList = res.paper
-      for(let i=0 ; i < 20 ; i++) {
-        this.current[i] = 99
-        this.showAnswer[i] = 0
-        this.rightAnswer[i] = res.paper[i].answer
+      const res = await getTestPaper(20);
+      this.subjectList = res.paper;
+      for (let i = 0; i < 20; i += 1) {
+        this.current[i] = 99;
+        this.showAnswer[i] = 0;
+        this.rightAnswer[i] = res.paper[i].answer;
       }
-      this.subjectList = [...this.subjectList]
+      this.subjectList = [...this.subjectList];
     },
 
     /**
      * 显示答题卡
      */
     showCardModal(e) {
-      this.modalCard = e.currentTarget.dataset.target
+      this.modalCard = e.currentTarget.dataset.target;
     },
 
     /**
      * 隐藏答题卡
      */
     hideCardModal() {
-      this.modalCard = null
+      this.modalCard = null;
     },
 
     /**
@@ -304,31 +305,28 @@ export default {
     submit() {
       this.totalScore = 0;
       uni.showModal({
-        title: "提交",
-        content: "确定要提交吗？",
+        title: '提交',
+        content: '确定要提交吗？',
         success: (res) => {
           if (res.confirm) {
-            for (let i=0; i < 20; i++) {
+            for (let i = 0; i < 20; i += 1) {
               if (this.current[i] === this.rightAnswer[i]) {
-                this.totalScore += 5
+                this.totalScore += 5;
               }
             }
-            console.log(this.totalScore)
             this.toPosterPage(this.totalScore);
           }
-        }
+        },
       });
-
     },
 
     /**
      * 设置进度条进度
      */
     setProgress() {
-      this.percent = 0
-      for(let i=0; i < 20; i++) {
-        if(this.current[i] !== 99)
-          this.percent += 5
+      this.percent = 0;
+      for (let i = 0; i < 20; i += 1) {
+        if (this.current[i] !== 99) this.percent += 5;
       }
     },
 
@@ -337,28 +335,26 @@ export default {
      */
     radioChange(e) {
       this.current[this.subjectIndex] = Number(e.detail.value);
-      this.setProgress()
+      this.setProgress();
     },
 
     /**
      * 播放语音
      */
     play(url) {
-      playAudio(url)
+      playAudio(url);
     },
 
     /**
      * 显示/隐藏答案
      */
     showAnswerChange() {
-      if(this.showAnswer[this.subjectIndex] === 0)
-      {
+      if (this.showAnswer[this.subjectIndex] === 0) {
         this.showAnswer[this.subjectIndex] = 1;
-      }
-      else{
+      } else {
         this.showAnswer[this.subjectIndex] = 0;
       }
-      this.showAnswer = [...this.showAnswer]
+      this.showAnswer = [...this.showAnswer];
     },
 
     /**
@@ -380,8 +376,8 @@ export default {
       this.modalCard = null;
       this.subjectIndex = count;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

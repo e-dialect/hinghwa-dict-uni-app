@@ -52,18 +52,18 @@
 </template>
 
 <script>
-import {getUserInfo} from "@/services/user";
-import {getComment} from "@/services/article";
-import {toArticlePage} from "@/routers";
+import { getUserInfo } from '@/services/user';
+import { getComment } from '@/services/article';
+import { toArticlePage } from '@/routers';
 
 const app = getApp();
 export default {
   data() {
     return {
-      toArticlePage: toArticlePage,
+      toArticlePage,
       avatar: '',
       nickname: '',
-      publish_comments: []
+      publish_comments: [],
     };
   },
   onLoad() {
@@ -75,13 +75,13 @@ export default {
      * @returns {Promise<void>}
      */
     async getMyComments() {
-      const userInfo = await getUserInfo(app.globalData.id)
-      this.avatar = userInfo.user.avatar
-      this.nickname =userInfo.user.nickname
-      const myComments = await getComment(userInfo.publish_comments)
-      this.publish_comments = myComments.comments
+      const userInfo = await getUserInfo(app.globalData.id);
+      this.avatar = userInfo.user.avatar;
+      this.nickname = userInfo.user.nickname;
+      const myComments = await getComment(userInfo.publish_comments);
+      this.publish_comments = myComments.comments;
     },
-  }
+  },
 };
 </script>
 <style>

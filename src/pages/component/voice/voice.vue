@@ -68,34 +68,34 @@
 </template>
 
 <script>
-import {getPronunciations} from "@/services/pronunciation";
-import {playAudio}         from "@/utils/audio";
-import {toUserPage}        from "@/routers";
+import { getPronunciations } from '@/services/pronunciation';
+import { playAudio } from '@/utils/audio';
+import { toUserPage } from '@/routers';
 
 const app = getApp();
 export default {
   data() {
     return {
       id: -1,
-      pronunciation: []
+      pronunciation: [],
     };
   },
   onLoad(options) {
-    this.id = options.id
-    getPronunciations({contributor: this.id}).then(res => {
-      this.pronunciation = res.pronunciation
+    this.id = options.id;
+    getPronunciations({ contributor: this.id }).then((res) => {
+      this.pronunciation = res.pronunciation;
     });
   },
   methods: {
 
     play(e) {
-      playAudio(this.pronunciation[index].pronunciation.source)
+      playAudio(this.pronunciation[index].pronunciation.source);
     },
 
     toVisitor(e) {
-      toUserPage(e.currentTarget.dataset.id)
-    }
-  }
+      toUserPage(e.currentTarget.dataset.id);
+    },
+  },
 };
 </script>
 <style>

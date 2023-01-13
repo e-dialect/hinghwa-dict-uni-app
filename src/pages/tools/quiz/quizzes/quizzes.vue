@@ -137,16 +137,17 @@
 </template>
 
 <script>
-import {toRandomQuizPage, toSearchQuizPage, toTestPage} from "@/routers";
+import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers';
+
 const app = getApp();
 
 export default {
-  data(){
-    return{
-      toRandomQuizPage: toRandomQuizPage,
-      toTestPage: toTestPage,
-      toSearchQuizPage: toSearchQuizPage,
-    }
+  data() {
+    return {
+      toRandomQuizPage,
+      toTestPage,
+      toSearchQuizPage,
+    };
   },
 
   /**
@@ -155,24 +156,24 @@ export default {
   onShareAppMessage() {
     return {
       title: '语记·测试',
-      path: `/pages/component/quizzes/quizzes`,
+      path: '/pages/component/quizzes/quizzes',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
-}
+};
 </script>
 
 <style>

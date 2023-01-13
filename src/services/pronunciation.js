@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 /**
  * PN0102 创建新的语音
@@ -6,9 +6,9 @@ import request from "@/utils/request";
  * @returns {Promise | Promise<unknown>}
  */
 export async function createPronunciation(pronunciation) {
-  return request.post("/pronunciation", {
-    pronunciation: pronunciation,
-  })
+  return request.post('/pronunciation', {
+    pronunciation,
+  });
 }
 
 /**
@@ -17,8 +17,8 @@ export async function createPronunciation(pronunciation) {
  * @returns {Promise<unknown>}
  */
 export async function getPronunciations(filter) {
-  const res = await request.get(`/pronunciation`, filter)
-  return res.pronunciation
+  const res = await request.get('/pronunciation', filter);
+  return res.pronunciation;
 }
 
 /**
@@ -28,13 +28,13 @@ export async function getPronunciations(filter) {
  */
 export async function combinePronunciation(body) {
   return new Promise((resolve, reject) => {
-    request.get("/pronunciation/combine", body).then(res => {
-      resolve(res.url)
+    request.get('/pronunciation/combine', body).then((res) => {
+      resolve(res.url);
     }).catch(() => {
       uni.hideToast();
-      resolve("")
-    })
-  })
+      resolve('');
+    });
+  });
 }
 
 /**
@@ -43,8 +43,8 @@ export async function combinePronunciation(body) {
  * @returns {Promise<*>}
  */
 export async function combinePronunciationByChinese(chinese) {
-  const res = await combinePronunciation({words: chinese})
-  return res.url
+  const res = await combinePronunciation({ words: chinese });
+  return res.url;
 }
 
 /**
@@ -53,7 +53,7 @@ export async function combinePronunciationByChinese(chinese) {
  * @returns {Promise<*>}
  */
 export async function combinePronunciationByPinyin(pinyin) {
-  return await combinePronunciation({pinyins: pinyin})
+  return combinePronunciation({ pinyins: pinyin });
 }
 
 /**
@@ -62,7 +62,7 @@ export async function combinePronunciationByPinyin(pinyin) {
  * @returns {Promise<*>}
  */
 export async function combinePronunciationByIpa(ipa) {
-  return await combinePronunciation({ipas: ipa})
+  return combinePronunciation({ ipas: ipa });
 }
 
 /**
@@ -70,10 +70,10 @@ export async function combinePronunciationByIpa(ipa) {
  * @param id 语音ID
  * @returns {Promise<void>}
  */
-export async function getPronunciationDetails(id){
-  try{
-    return (await request.get(`/pronunciation/${id}`)).pronunciation
-  }catch (e){
-    return null
+export async function getPronunciationDetails(id) {
+  try {
+    return (await request.get(`/pronunciation/${id}`)).pronunciation;
+  } catch (e) {
+    return null;
   }
 }

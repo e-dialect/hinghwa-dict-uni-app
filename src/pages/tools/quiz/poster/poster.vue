@@ -31,19 +31,19 @@ export default {
   data() {
     return {
       totalScore: 0,
-      imagesUrl: ''
-    }
+      imagesUrl: '',
+    };
   },
   onLoad(options) {
-    this.totalScore = options.totalScore
-    if(this.totalScore >= 60 && this.totalScore < 75) {
-      this.imagesUrl = 'https://cos.edialect.top/website/quiz/pass.png'
-    } else if(this.totalScore >= 75 && this.totalScore < 85) {
-      this.imagesUrl = 'https://cos.edialect.top/website/quiz/good.png'
-    } else if(this.totalScore >= 85) {
-      this.imagesUrl = 'https://cos.edialect.top/website/quiz/excellent.png'
+    this.totalScore = options.totalScore;
+    if (this.totalScore >= 60 && this.totalScore < 75) {
+      this.imagesUrl = 'https://cos.edialect.top/website/quiz/pass.png';
+    } else if (this.totalScore >= 75 && this.totalScore < 85) {
+      this.imagesUrl = 'https://cos.edialect.top/website/quiz/good.png';
+    } else if (this.totalScore >= 85) {
+      this.imagesUrl = 'https://cos.edialect.top/website/quiz/excellent.png';
     } else {
-      this.imagesUrl = 'https://cos.edialect.top/website/quiz/fail.png'
+      this.imagesUrl = 'https://cos.edialect.top/website/quiz/fail.png';
     }
   },
   /**
@@ -51,60 +51,60 @@ export default {
    */
   onShareAppMessage() {
     return {
-      title: "分享分数海报: " + this.totalScore + "分",
-      path: `/pages/component/poster/poster`,
+      title: `分享分数海报: ${this.totalScore}分`,
+      path: '/pages/component/poster/poster',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
-    save(url){
+    save(url) {
       uni.showModal({
         title: '图片保存',
         content: '确定要保存图片吗',
-        success: (res) => {
-          if (res.confirm) {
+        success: (modal) => {
+          if (modal.confirm) {
             uni.downloadFile({
-              url: url,
-              success:(res) => {
+              url,
+              success: (res) => {
                 if (res.statusCode === 200) {
-                  let file = res.tempFilePath;
+                  const file = res.tempFilePath;
                   uni.saveImageToPhotosAlbum({
                     filePath: file,
                     success: () => {
                       uni.hideLoading();
                       uni.showToast({
-                        title:"已保存至相册",
+                        title: '已保存至相册',
                       });
                     },
                     fail: () => {
                       uni.hideLoading();
                       uni.showToast({
-                        title:"图片保存失败",
+                        title: '图片保存失败',
                       });
-                    }
+                    },
                   });
                 }
-              }
+              },
             });
           }
-        }
+        },
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -167,8 +167,8 @@
 </template>
 
 <script>
-import {getRandomQuiz} from "@/services/quiz";
-import {playAudio} from "@/utils/audio";
+import { getRandomQuiz } from '@/services/quiz';
+import { playAudio } from '@/utils/audio';
 
 const app = getApp();
 
@@ -179,16 +179,16 @@ export default {
         question: '',
         options: [],
         answer: 0,
-        explanation:'',
+        explanation: '',
         id: 0,
-        voice_source: ''
+        voice_source: '',
       },
       isShow1: false,
       isShow2: false,
       current: 99, // 当前选中的选项
       startX: 0, // 滑动开始x轴位置
-      startTime: 0  // 滑动开始时间
-    }
+      startTime: 0, // 滑动开始时间
+    };
   },
   onLoad() {
     this.getRandomQuizzes();
@@ -199,47 +199,45 @@ export default {
      * @returns {Promise<void>}
      */
     async getRandomQuizzes() {
-      const res    = await getRandomQuiz()
-      this.current = 99
-      this.quiz    = res.quiz
+      const res = await getRandomQuiz();
+      this.current = 99;
+      this.quiz = res.quiz;
     },
     /**
      * 单选选中
      */
     radioChange(e) {
-      this.current = Number(e.detail.value)
+      this.current = Number(e.detail.value);
     },
     /**
      * 提交
      */
     submitResult(e) {
-      if(this.current === 99){
+      if (this.current === 99) {
         uni.showToast({
           title: '还没有做出选择哦',
           icon: 'none',
         });
-      }
-      else{
+      } else {
         uni.showModal({
-          title: "提交",
-          content: "确定要提交吗？",
+          title: '提交',
+          content: '确定要提交吗？',
           success: (res) => {
             if (res.confirm) {
               if (this.current === this.quiz.answer) {
                 uni.showToast({
-                  title: '答对啦！'
+                  title: '答对啦！',
                 });
-              }
-              else {
+              } else {
                 uni.showToast({
                   title: '太可惜了！',
                   icon: 'none',
                 });
               }
-              this.isShow1 = true
-              this.isShow2 = true
+              this.isShow1 = true;
+              this.isShow2 = true;
             }
-          }
+          },
         });
       }
     },
@@ -247,56 +245,56 @@ export default {
      * 换题
      */
     changeQuiz() {
-      this.getRandomQuizzes()
-      this.current = 99
-      this.isShow1 = false
-      this.isShow2 = false
+      this.getRandomQuizzes();
+      this.current = 99;
+      this.isShow1 = false;
+      this.isShow2 = false;
     },
     /**
      * 重置题目
      */
     resetQuiz() {
-      this.current = 99
-      this.isShow1 = false
-      this.isShow2 = false
+      this.current = 99;
+      this.isShow1 = false;
+      this.isShow2 = false;
     },
     /**
      * 手指触碰时触发
      */
     touchStart(e) {
       this.startTime = Date.now();
-      this.startX = e.changedTouches[0].clientX
+      this.startX = e.changedTouches[0].clientX;
     },
     /**
      * 手指离开屏幕时触发
      */
     touchEnd(e) {
       const endTime = Date.now();
-      const moveX = e.changedTouches[0].clientX - this.startX
+      const moveX = e.changedTouches[0].clientX - this.startX;
       if (endTime - this.startTime < 1500 && moveX < -70) {
-        this.changeQuiz()
+        this.changeQuiz();
       }
     },
     /**
      * 播放语音
      */
     play(url) {
-      playAudio(url)
+      playAudio(url);
     },
     /**
      * 显示答案
      */
     showAnswer() {
-      this.isShow1 = true
+      this.isShow1 = true;
     },
     /**
      * 显示解析
      */
     showExplain() {
-      this.isShow2 = true
+      this.isShow2 = true;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

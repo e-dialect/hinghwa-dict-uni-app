@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import {getCharacterDetails} from "@/services/character";
+import { getCharacterDetails } from '@/services/character';
 
 const app = getApp();
 export default {
@@ -89,8 +89,8 @@ export default {
         yunmu: '',
         shengdiao: '',
         county: '',
-        town: ''
-      }
+        town: '',
+      },
     };
   },
   onLoad(options) {
@@ -102,29 +102,29 @@ export default {
    */
   onShareAppMessage() {
     return {
-      title: this.character.character + "：" + this.character.pinyin,
+      title: `${this.character.character}：${this.character.pinyin}`,
       path: `/pages/basics/characters/characters?id=${this.id}`,
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     getCharacter(id) {
-      this.character=getCharacterDetails(id)
+      this.character = getCharacterDetails(id);
     },
-  }
+  },
 };
 </script>
 <style>

@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import {changeUserEmail, getUserInfo} from "@/services/user";
-import {sendEmailCode} from "@/services/website";
+import { changeUserEmail, getUserInfo } from '@/services/user';
+import { sendEmailCode } from '@/services/website';
 
 const app = getApp();
 export default {
@@ -58,11 +58,11 @@ export default {
     return {
       old_email: '',
       code: '',
-      new_email: ''
+      new_email: '',
     };
   },
   onLoad() {
-    this.getUserEmail()
+    this.getUserEmail();
   },
   methods: {
     /**
@@ -75,11 +75,11 @@ export default {
     },
 
     getCode(e) {
-      this.code = e.detail.value
+      this.code = e.detail.value;
     },
 
     getNewEmail(e) {
-      this.new_email = e.detail.value
+      this.new_email = e.detail.value;
     },
 
     /**
@@ -87,27 +87,27 @@ export default {
      */
     sendCode() {
       const email = this.new_email;
-      sendEmailCode(email)
+      sendEmailCode(email);
     },
 
     /**
      * 发送新邮箱
      */
     setNewEmail() {
-      const code  = this.code;
+      const { code } = this;
       const email = this.new_email;
-      changeUserEmail(app.globalData.id , email , code).then(async () => {
+      changeUserEmail(app.globalData.id, email, code).then(async () => {
         setTimeout(() => {
           uni.showToast({
-            title: '修改成功'
+            title: '修改成功',
           });
-        }, 100)
+        }, 100);
         uni.navigateBack({
-          delta: 1
+          delta: 1,
         }); // 返回上一个页面
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

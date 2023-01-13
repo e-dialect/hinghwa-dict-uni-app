@@ -1,64 +1,64 @@
 <script>
-//app.js
-import {getLoginStatus} from "@/services/login";
+// app.js
+import { getLoginStatus } from '@/services/login';
 
 export default {
-    data() {
-        return {};
-    },
-    onLaunch: async function () {
-        uni.getSystemInfo({
-            success: async (e) => {
-              // if widescreen device redirect to widescreen page
-              if (e.screenWidth / e.screenHeight > 0.5625) {
-                uni.showModal({
-                  title: '提示',
-                  content: '本页面为竖屏页面，是否跳转到 web 版本（https://hinghwa.cn）？',
-                  success: (res) => {
-                    if (res.confirm) {
-                      // redirect to https://hinghwa.cn
-                      window.location = 'https://hinghwa.cn'
-                    }
-                  }
-                });
+  data() {
+    return {};
+  },
+  async onLaunch() {
+    uni.getSystemInfo({
+      success: async (e) => {
+        // if widescreen device redirect to widescreen page
+        if (e.screenWidth / e.screenHeight > 0.5625) {
+          uni.showModal({
+            title: '提示',
+            content: '本页面为竖屏页面，是否跳转到 web 版本（https://hinghwa.cn）？',
+            success: (res) => {
+              if (res.confirm) {
+                // redirect to https://hinghwa.cn
+                window.location = 'https://hinghwa.cn';
               }
-              await getLoginStatus()
-              this.globalData.platform  = e.platform;
-              this.globalData.StatusBar = e.statusBarHeight;
-              let capsule               = uni.getMenuButtonBoundingClientRect();
-
-              if (capsule) {
-                this.globalData.Custom    = capsule;
-                this.globalData.CustomBar = capsule.bottom + capsule.top - e.statusBarHeight;
-              } else {
-                this.globalData.CustomBar = e.statusBarHeight + 50;
-              }
-            }
-        });
-    },
-    globalData: {
-        watch: function (method) {
-            var obj = this;
-            Object.defineProperty(obj, 'data', {
-                configurable: true,
-                enumerable: true,
-                set: function (value) {
-                    if (value.avatar) {
-                        this.userInfo.avatar = value.avatar;
-                    }
-
-                    if (value.nickname) {
-                        this.userInfo.nickname = value.nickname;
-                    }
-
-                    method(value);
-                },
-                get: function () {
-                    return this;
-                }
-            });
+            },
+          });
         }
-    }
+        await getLoginStatus();
+        this.globalData.platform = e.platform;
+        this.globalData.StatusBar = e.statusBarHeight;
+        const capsule = uni.getMenuButtonBoundingClientRect();
+
+        if (capsule) {
+          this.globalData.Custom = capsule;
+          this.globalData.CustomBar = capsule.bottom + capsule.top - e.statusBarHeight;
+        } else {
+          this.globalData.CustomBar = e.statusBarHeight + 50;
+        }
+      },
+    });
+  },
+  globalData: {
+    watch(method) {
+      const obj = this;
+      Object.defineProperty(obj, 'data', {
+        configurable: true,
+        enumerable: true,
+        set(value) {
+          if (value.avatar) {
+            this.userInfo.avatar = value.avatar;
+          }
+
+          if (value.nickname) {
+            this.userInfo.nickname = value.nickname;
+          }
+
+          method(value);
+        },
+        get() {
+          return this;
+        },
+      });
+    },
+  },
 };
 </script>
 <style>

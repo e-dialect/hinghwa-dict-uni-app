@@ -149,29 +149,31 @@
 </template>
 
 <script>
-import MarkdownViewer                                                       from "@/components/MarkdownViewer";
-import {toUserPage}                                                         from "@/routers";
-import {createComment, getArticle, getComments, likeArticle, unlikeArticle} from "@/services/article";
-import ArticleComment                                                       from "@/components/ArticleComment";
+import MarkdownViewer from '@/components/MarkdownViewer';
+import { toUserPage } from '@/routers';
+import {
+  createComment, getArticle, getComments, likeArticle, unlikeArticle,
+} from '@/services/article';
+import ArticleComment from '@/components/ArticleComment';
 
 const app = getApp();
 export default {
   components: {
     ArticleComment,
-    MarkdownViewer
+    MarkdownViewer,
   },
   data() {
     return {
-      toUserPage: toUserPage,
+      toUserPage,
       article: {
         title: '',
         author: {
-          avatar: ''
+          avatar: '',
         },
         publish_time: '',
         update_time: '',
         description: '',
-        content: ''
+        content: '',
       },
       me: {
         liked: false,
@@ -186,8 +188,8 @@ export default {
     };
   },
   onLoad(options) {
-    let id  = options.id;
-    this.id = id
+    const { id } = options;
+    this.id = id;
     this.getArticle(id);
   },
   /**
@@ -201,27 +203,26 @@ export default {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   computed: {
     ph_text() {
       if (this.parent > 0) {
-        const reply_user = this.comments[this.map[this.parent]].user.nickname;
-        return '@ ' + reply_user
-      } else {
-        return '评论...'
+        const replyUser = this.comments[this.map[this.parent]].user.nickname;
+        return `@ ${replyUser}`;
       }
-    }
+      return '评论...';
+    },
   },
   methods: {
     /**
@@ -230,10 +231,10 @@ export default {
      * @returns {Promise<void>}
      */
     async getArticle(id) {
-      const res    = await getArticle(id)
-      this.article = res.article
-      this.me      = res.me
-      await this.getComments(id)
+      const res = await getArticle(id);
+      this.article = res.article;
+      this.me = res.me;
+      await this.getComments(id);
     },
 
     /**
@@ -241,9 +242,9 @@ export default {
      * @param id 文章id
      */
     getComments(id) {
-      getComments(id).then(res => {
+      getComments(id).then((res) => {
         this.comments = res.comments;
-        this.map      = res.map;
+        this.map = res.map;
       });
     },
 
@@ -252,10 +253,10 @@ export default {
      * @param id 评论id
      */
     toCommentDetailsPage(id) {
-      let comment    = JSON.stringify(this.comments[this.map[id]]);
-      let article_id = this.id;
+      const comment = JSON.stringify(this.comments[this.map[id]]);
+      const articleId = this.id;
       uni.navigateTo({
-        url: '/pages/plugin/comment/comment?comment=' + comment + '&id=' + article_id
+        url: `/pages/plugin/comment/comment?comment=${comment}&id=${articleId}`,
       });
     },
 
@@ -264,33 +265,33 @@ export default {
      * @param id 0 表示直接评论文章，其他表示回复某评论的子评论
      */
     reply(id) {
-      this.parent  = id
-      this.comment = ''
+      this.parent = id;
+      this.comment = '';
     },
 
     /**
      * 发送评论
      */
     createComment() {
-      const comment = this.comment;
-      const parent  = this.parent;
-      const id      = this.article.id.toString();
+      const { comment } = this;
+      const { parent } = this;
+      const id = this.article.id.toString();
       if (comment.length === 0) {
         uni.showToast({
           title: '不能发送空评论',
-          icon: 'none'
+          icon: 'none',
         });
         return;
       }
       createComment(id, comment, parent).then(async () => {
         await this.getComments(id);
-        this.reply(0)
-        this.inEditing = false
+        this.reply(0);
+        this.inEditing = false;
         setTimeout(() => {
           uni.showToast({
-            title: '发表成功'
+            title: '发表成功',
           });
-        }, 100)
+        }, 100);
       });
     },
 
@@ -299,14 +300,14 @@ export default {
      * @param e
      */
     getText(e) {
-      this.comment = e.detail.value
+      this.comment = e.detail.value;
     },
 
     /**
      * 选中评论框，进入编辑状态
      */
     focus() {
-      this.inEditing = true
+      this.inEditing = true;
     },
 
     /**
@@ -314,9 +315,9 @@ export default {
      */
     blur() {
       if (this.comment === '') {
-        this.reply(0)
+        this.reply(0);
       }
-      this.inEditing = false
+      this.inEditing = false;
     },
 
     /**
@@ -325,27 +326,27 @@ export default {
     btnLike() {
       if (!this.me.liked) {
         // 点赞
-        likeArticle(this.id).then(res => {
+        likeArticle(this.id).then(() => {
           this.article.likes += 1;
           this.me.liked = true;
         });
       } else {
         // 取消点赞
         uni.showModal({
-          title: "取消点赞",
-          content: "确定取消点赞吗？",
+          title: '取消点赞',
+          content: '确定取消点赞吗？',
           success: (res) => {
             if (res.confirm) {
-              unlikeArticle(this.id).then(res => {
+              unlikeArticle(this.id).then(() => {
                 this.article.likes -= 1;
                 this.me.liked = false;
               });
             }
-          }
+          },
         });
       }
     },
-  }
+  },
 };
 </script>
 <style>
@@ -359,37 +360,37 @@ page {
 
 .like {
   background-color: #f5f5f5;
-  border-radius: 5000 rpx;
-  padding: 10 rpx 20 rpx;
-  margin-left: 25 rpx;
-  font-size: 30 rpx;
+  border-radius: 5000rpx;
+  padding: 10rpx 20rpx;
+  margin-left: 25rpx;
+  font-size: 30rpx;
 }
 
 .input-box {
   flex: 1;
-  margin-left: 20 rpx;
-  margin-right: 20 rpx;
-  border-radius: 5000 rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  border-radius: 5000rpx;
   background-color: #f5f5f5;
 }
 
 .border {
-  border: 2 rpx solid #0081ff;
+  border: 2rpx solid #0081ff;
 }
 
 .text-name {
   color: #666666;
-  font-size: 30 rpx;
+  font-size: 30rpx;
 }
 
 .text-date {
   color: #9b9b9b;
-  font-size: 24 rpx;
+  font-size: 24rpx;
 }
 
 .text-dz {
   color: #999999;
-  font-size: 36 rpx;
+  font-size: 36rpx;
   align-self: center;
 }
 
@@ -397,7 +398,7 @@ page {
   position: relative;
   width: 85vw;
   left: 10vw;
-  margin-top: 15 rpx;
+  margin-top: 15rpx;
 }
 
 .text-reply {
@@ -405,8 +406,8 @@ page {
   position: relative;
   width: 85vw;
   left: 12vw;
-  margin-top: 10 rpx;
-  padding: 20 rpx;
-  border-radius: 10 rpx;
+  margin-top: 10rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
 }
 </style>

@@ -1,14 +1,11 @@
-import {mpLogin}        from '@/services/login';
-import {getWordDetails} from '@/services/word';
-
 /**
  * 前往用户页面
  * @param id 用户id
  */
 export function toUserPage(id) {
   uni.navigateTo({
-    url: '/pages/about/visitor/visitor?id=' + id
-  })
+    url: `/pages/about/visitor/visitor?id=${id}`,
+  });
 }
 
 /**
@@ -17,11 +14,11 @@ export function toUserPage(id) {
 export function toIndexPage(closeAll = false) {
   if (closeAll) {
     uni.reLaunch({
-      url: '/pages/index/index'
-    })
+      url: '/pages/index/index',
+    });
   } else {
     uni.navigateTo({
-      url: '/pages/index/index'
+      url: '/pages/index/index',
     });
   }
 }
@@ -31,7 +28,7 @@ export function toIndexPage(closeAll = false) {
  */
 export function toUserInfoPage() {
   uni.navigateTo({
-    url: '/pages/about/userinfo/userinfo'
+    url: '/pages/about/userinfo/userinfo',
   });
 }
 
@@ -41,8 +38,8 @@ export function toUserInfoPage() {
  */
 export function toMyRecordsPage(id) {
   uni.navigateTo({
-    url: '/pages/component/voice/voice?id=' + id
-  })
+    url: `/pages/component/voice/voice?id=${id}`,
+  });
 }
 
 /**
@@ -50,8 +47,8 @@ export function toMyRecordsPage(id) {
  */
 export function toChangeNicknamePage() {
   uni.navigateTo({
-    url: '/pages/about/nickname/nickname'
-  })
+    url: '/pages/about/nickname/nickname',
+  });
 }
 
 /**
@@ -59,8 +56,8 @@ export function toChangeNicknamePage() {
  */
 export function toChangeEmailPage() {
   uni.navigateTo({
-    url: '/pages/about/email/email'
-  })
+    url: '/pages/about/email/email',
+  });
 }
 
 /**
@@ -68,8 +65,8 @@ export function toChangeEmailPage() {
  */
 export function toChangePhonePage() {
   uni.navigateTo({
-    url: '/pages/about/phone/phone'
-  })
+    url: '/pages/about/phone/phone',
+  });
 }
 
 /**
@@ -78,26 +75,7 @@ export function toChangePhonePage() {
  */
 export function toWordPage(id) {
   uni.navigateTo({
-    url: '/pages/basics/words/words?id=' + id
-  });
-}
-
-/**
- * 跳转至贡献语音界面
- * @param id 词语id
- */
-export async function toUploadPronunciationPage(id) {
-  if (!uni.getStorageSync('id')) {
-    uni.showToast({
-      title: '请先登录',
-      icon: 'none'
-    })
-    await mpLogin()
-    return
-  }
-  const word = await getWordDetails(id)
-  uni.navigateTo({
-    url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`
+    url: `/pages/basics/words/words?id=${id}`,
   });
 }
 
@@ -107,8 +85,8 @@ export async function toUploadPronunciationPage(id) {
  */
 export function toArticlePage(id) {
   uni.navigateTo({
-    url: '/pages/plugin/article/article?id=' + id
-  })
+    url: `/pages/plugin/article/article?id=${id}`,
+  });
 }
 
 /**
@@ -116,7 +94,7 @@ export function toArticlePage(id) {
  */
 export function toForgetPage() {
   uni.navigateTo({
-    url: '/pages/forget/forget'
+    url: '/pages/forget/forget',
   });
 }
 
@@ -125,7 +103,7 @@ export function toForgetPage() {
  */
 export function toLoginPage() {
   uni.navigateTo({
-    url: "/pages/login/login",
+    url: '/pages/login/login',
   });
 }
 
@@ -134,7 +112,7 @@ export function toLoginPage() {
  */
 export function toRandomQuizPage() {
   uni.navigateTo({
-    url: "/pages/tools/quiz/RandomQuiz/RandomQuiz",
+    url: '/pages/tools/quiz/RandomQuiz/RandomQuiz',
   });
 }
 
@@ -143,7 +121,7 @@ export function toRandomQuizPage() {
  */
 export function toTestPage() {
   uni.navigateTo({
-    url: "/pages/tools/quiz/test/test",
+    url: '/pages/tools/quiz/test/test',
   });
 }
 
@@ -152,7 +130,7 @@ export function toTestPage() {
  */
 export function toPosterPage(totalScore) {
   uni.navigateTo({
-    url: "/pages/tools/quiz/poster/poster?totalScore=" + totalScore,
+    url: `/pages/tools/quiz/poster/poster?totalScore=${totalScore}`,
   });
 }
 
@@ -161,7 +139,7 @@ export function toPosterPage(totalScore) {
  */
 export function toOneQuizPage(id) {
   uni.navigateTo({
-    url: "/pages/tools/quiz/quiz/quiz?id=" + id
+    url: `/pages/tools/quiz/quiz/quiz?id=${id}`,
   });
 }
 
@@ -170,18 +148,18 @@ export function toOneQuizPage(id) {
  */
 export function toSearchQuizPage() {
   uni.navigateTo({
-    url: "/pages/tools/quiz/SearchQuiz/SearchQuiz",
+    url: '/pages/tools/quiz/SearchQuiz/SearchQuiz',
   });
 }
 
 export function toMePage(closeAll = false) {
   if (closeAll) {
     uni.reLaunch({
-      url: "/pages/index/index?status=me"
-    })
+      url: '/pages/index/index?status=me',
+    });
   } else {
     uni.navigateTo({
-      url: "/pages/index/index?status=me",
+      url: '/pages/index/index?status=me',
     });
   }
 }
@@ -191,7 +169,7 @@ export function toMePage(closeAll = false) {
  */
 export function toSearchPage() {
   uni.navigateTo({
-    url: '/pages/basics/search/search'
+    url: '/pages/basics/search/search',
   });
 }
 
@@ -200,7 +178,7 @@ export function toSearchPage() {
  */
 export function toRegisterPage() {
   uni.navigateTo({
-    url: "/pages/register/register/register",
+    url: '/pages/register/register/register',
   });
 }
 
@@ -209,6 +187,6 @@ export function toRegisterPage() {
  */
 export function toWechatRegisterPage() {
   uni.navigateTo({
-    url: "/pages/register/WechatRegister/WechatRegister",
+    url: '/pages/register/WechatRegister/WechatRegister',
   });
 }

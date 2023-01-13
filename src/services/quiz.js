@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 /**
  * QZ0101 获取单个测试
@@ -6,7 +6,7 @@ import request from "@/utils/request";
  * @returns {Promise<unknown>}
  */
 export async function getQuiz(id) {
-  return request.get(`/quizzes/${id}`)
+  return request.get(`/quizzes/${id}`);
 }
 
 /**
@@ -15,7 +15,7 @@ export async function getQuiz(id) {
  * @returns {Promise<unknown>}
  */
 export async function searchQuiz(key) {
-  return await request.get(`/quizzes`, {keywords: key})
+  return request.get('/quizzes', { keywords: key });
 }
 
 /**
@@ -23,7 +23,7 @@ export async function searchQuiz(key) {
  * @returns {Promise<unknown>}
  */
 export async function getRandomQuiz() {
-  return request.get(`/quizzes/random`)
+  return request.get('/quizzes/random');
 }
 
 /**
@@ -32,5 +32,5 @@ export async function getRandomQuiz() {
  * @returns {Promise<unknown>}
  */
 export async function getTestPaper(number) {
-  return request.get(`/quizzes/paper`, {number: number})
+  return request.get('/quizzes/paper', { number });
 }

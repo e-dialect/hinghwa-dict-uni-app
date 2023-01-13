@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import {marked} from 'marked';
-import uParse   from '../utils/u-parse/u-parse';
+import { marked } from 'marked';
+import uParse from '../utils/u-parse/u-parse';
 
 export default {
-  name: "MarkdownViewer",
+  name: 'MarkdownViewer',
   components: {
-    uParse
+    uParse,
   },
   props: {
     markdown: {
@@ -22,9 +22,9 @@ export default {
   computed: {
     text() {
       return marked(this.markdown);
-    }
+    },
   },
-}
+};
 </script>
 
 <style scoped>

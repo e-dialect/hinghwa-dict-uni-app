@@ -101,50 +101,50 @@
 </template>
 
 <script>
-import {getUserInfo} from "@/services/user";
+import { getUserInfo } from '@/services/user';
 
 const app = getApp();
 export default {
-    data() {
-        return {
-            id: 0,
-            avatar: '',
-            nickname: '',
-            recordsCount: 0,
-            wordsCount: 0,
-            visitTotal: 0
-        };
+  data() {
+    return {
+      id: 0,
+      avatar: '',
+      nickname: '',
+      recordsCount: 0,
+      wordsCount: 0,
+      visitTotal: 0,
+    };
+  },
+  onLoad(options) {
+    const { id } = options;
+    this.getInfo(id);
+  },
+  methods: {
+    // 获取用户信息
+    getInfo(id) {
+      getUserInfo(id).then((res) => {
+        this.id = res.user.id;
+        this.avatar = res.user.avatar;
+        this.nickname = res.nickname;
+        this.recordsCount = res.contribution.pronunciation;
+        this.wordsCount = res.contribution.word;
+        this.visitTotal = res.contribution.listened;
+      });
     },
-    onLoad(options) {
-        let id = options.id;
-        this.getInfo(id);
-    },
-    methods: {
-        // 获取用户信息
-        getInfo(id) {
-          getUserInfo(id).then(res => {
-            this.id = res.user.id;
-            this.avatar = res.user.avatar;
-            this.nickname = res.nickname;
-            this.recordsCount = res.contribution.pronunciation;
-            this.wordsCount = res.contribution.word;
-            this.visitTotal = res.contribution.listened;
-          });
-        },
 
-        // 返回上一页面
-        // back() {
-        //   wx.navigateBack({
-        //     delta: 1
-        //   })
-        // }
-        getMyRecords() {
-            let id = this.id;
-            uni.navigateTo({
-                url: '/pages/component/voice/voice?id=' + id
-            });
-        }
-    }
+    // 返回上一页面
+    // back() {
+    //   wx.navigateBack({
+    //     delta: 1
+    //   })
+    // }
+    getMyRecords() {
+      const { id } = this;
+      uni.navigateTo({
+        url: `/pages/component/voice/voice?id=${id}`,
+      });
+    },
+  },
 };
 </script>
 <style>

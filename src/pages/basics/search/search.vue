@@ -16,7 +16,7 @@
       class="scrollPage"
     >
       <view
-        v-if="index == 2"
+        v-if="index === 2"
         class="bg-white padding-sm padding-left"
       >
         <view class="text-black text-bold text-xl">
@@ -56,25 +56,9 @@
           </text>
         </view>
       </view>
-      <!-- <view class="cu-bar bg-white text-grey" wx:if="{{status==0}}">
-    <view class="action">历史搜索</view>
-    <image src="/images/home/delete.png" mode="widthFix" bindtap="deleteHistory"
-      style="width:5vw;height:auto;margin-right:30rpx;">
-    </image>
-  </view> -->
-      <!-- <view class="history" wx:if="{{status==0}}">
-    <view class="padding-xs" wx:for="{{history}}">
-      <view class="cu-tag round">{{item}}</view>
-    </view>
-  </view> -->
-      <!-- <view class="bg-white flex text-df text-black" wx:if="{{status!=0}}">
-    <view class="flex-sub padding {{status==1?'text-bold':''}}" bindtap="sort" data-index="1">单字</view>
-    <view class="flex-sub padding {{status==2?'text-bold':''}}" bindtap="sort" data-index="2">词语</view>
-    <view class="flex-sub padding line {{status==3?'text-bold':''}}" bindtap="sort" data-index="3">文章</view>
-    <view class="flex-sub padding text-center" bindtap="sort" data-index="3">更多</view>
-  </view> -->
+      <!-- TODO 重构-->
       <view
-        v-if="index == 0 && status == 1"
+        v-if="index === 0 && status === 1"
         class="cu-list menu"
       >
         <view
@@ -107,7 +91,7 @@
           </view>
         </view>
       </view>
-      <view v-if="index == 1 && status == 1">
+      <view v-if="index === 1 && status === 1">
         <view
           v-for="(item, index11) in pronunciation"
           :key="index11"
@@ -145,7 +129,7 @@
         </view>
       </view>
       <view
-        v-if="index == 2 && status == 1"
+        v-if="index === 2 && status === 1"
         class="bg-white"
       >
         <view
@@ -204,7 +188,7 @@
           </view>
         </view>
       </view>
-      <view v-if="index == 3 && status == 1">
+      <view v-if="index === 3 && status === 1">
         <ArticleList
           v-if="articles.length !== 0"
           :article-list="articles"
@@ -215,15 +199,15 @@
 </template>
 
 <script>
-import {searchCharacters} from "@/services/character";
-import {getWords, searchWords} from "@/services/word";
-import {searchArticle} from "@/services/article";
-import ArticleList from "@/components/ArticleList";
+import { searchCharacters } from '@/services/character';
+import { getWords, searchWords } from '@/services/word';
+import { searchArticles } from '@/services/article';
+import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
 export default {
   components: {
-    ArticleList
+    ArticleList,
   },
   data() {
     return {
@@ -265,11 +249,11 @@ export default {
   },
   onLoad(option) {
     if (option.index) {
-      this.index = option.index
+      this.index = option.index;
     }
-    let history = uni.getStorageSync('history');
+    const history = uni.getStorageSync('history');
     if (history) {
-      this.history = history
+      this.history = history;
     }
   },
   /**
@@ -278,55 +262,55 @@ export default {
   onShareAppMessage() {
     return {
       title: '语记·搜索',
-      path: `/pages/component/search/search`,
+      path: '/pages/component/search/search',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     sortFun(e) {
-      this.index = e.detail.value
+      this.index = e.detail.value;
     },
 
     keyFun(e) {
-      this.key = e.detail.value
+      this.key = e.detail.value;
     },
 
     search() {
-      if (this.key == '') {
+      if (this.key === '') {
         uni.showModal({
           content: '搜索内容为空！',
-          showCancel: false
+          showCancel: false,
         });
         return;
       }
       this.status = 1;
       this.history.push(this.key);
       uni.setStorageSync('history', this.history);
-      let key = this.key;
-      let index = this.index;
-      if (index == 0) {
+      const { key } = this;
+      const { index } = this;
+      if (index === 0) {
         // 词语
         this.searchWord(key);
-      } else if (index == 1) {
+      } else if (index === 1) {
         // 单字 多字
         this.searchCharacter(key);
-      } else if (index == 2) {
+      } else if (index === 2) {
         // 拼音
         this.searchPinyin(key);
-      } else if (index == 3) {
+      } else if (index === 3) {
         // 文章
         this.searchArticleList(key);
       }
@@ -341,12 +325,12 @@ export default {
         if (res.characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
-          this.characters = res.characters
+          this.characters = res.characters;
         }
-      })
+      });
     },
     /**
      * 搜索单字
@@ -357,12 +341,12 @@ export default {
         if (res.characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
-          this.pronunciation = res.characters
+          this.pronunciation = res.characters;
         }
-      })
+      });
     },
 
     /**
@@ -370,18 +354,18 @@ export default {
      * @returns {Promise<void>}
      */
     async searchWord(key) {
-      const res      = await searchWords(key)
-      const wordsId  = res.words
+      const res = await searchWords(key);
+      const wordsId = res.words;
       await getWords(wordsId).then(async (res1) => {
         if (res1.words.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
           this.words = res1.words;
         }
-      })
+      });
     },
 
     /**
@@ -389,20 +373,20 @@ export default {
      * @returns {Promise<void>}
      */
     async searchArticleList(key) {
-      await searchArticle(key).then(async (res) => {
+      await searchArticles(key).then(async (res) => {
         if (res.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
           this.articles = res;
         }
-      })
+      });
     },
 
     deleteHistory() {
-      let that = this;
+      const that = this;
       uni.showModal({
         title: '提示',
         content: '是否清空历史记录？',
@@ -410,46 +394,46 @@ export default {
         success(res) {
           uni.setStorageSync('history', null);
           that.setData({
-            history: []
+            history: [],
           });
-        }
+        },
       });
     },
 
     character(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
       uni.navigateTo({
-        url: '/pages/basics/characters/characters?id=' + id
+        url: `/pages/basics/characters/characters?id=${id}`,
       });
     },
 
     word(e) {
-      let index = e.currentTarget.dataset.index;
-      let id = this.words[index].word.id;
+      const { index } = e.currentTarget.dataset;
+      const { id } = this.words[index].word;
       uni.navigateTo({
-        url: '/pages/basics/words/words?id=' + id
+        url: `/pages/basics/words/words?id=${id}`,
       });
     },
 
     toArticle(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
       uni.navigateTo({
-        url: '/pages/plugin/article/article?id=' + id
+        url: `/pages/plugin/article/article?id=${id}`,
       });
     },
 
     getWord(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
 
       if (!id) {
         return;
       }
 
       uni.navigateTo({
-        url: '/pages/basics/words/words?id=' + id
+        url: `/pages/basics/words/words?id=${id}`,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

@@ -110,12 +110,12 @@
 </template>
 
 <script>
-import {searchCharactersByFilters} from "@/services/character";
+import { searchCharactersByFilters } from '@/services/character';
 
 const app = getApp();
 
-const utils = require('../../../const/sheng-yun-diao.js');
-
+const utils = require('@/const/sheng-yun-diao');
+// TODO refactor
 export default {
   data() {
     return {
@@ -123,51 +123,53 @@ export default {
       shengmu: [],
       yunmu: [
         [],
-        []
+        [],
       ],
       multiIndex: [0, 0],
       index1: 0,
       shengdiao: [],
       result: [],
-      space: ' '
+      space: ' ',
     };
   },
   onLoad() {
     // 获取声母
-    let shengmu = [];
+    const shengmu = [];
 
-    for (let k in utils.shengmu) {
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const k in utils.shengmu) {
       shengmu.push(utils.shengmu[k]);
     }
-    this.shengmu = [...shengmu]
+    this.shengmu = [...shengmu];
 
     // 获取韵母
-    let yunmu = [
+    const yunmu = [
       [],
-      []
+      [],
     ];
 
-    for (let i = 0; i < utils.yunmu.length; i++) {
+    for (let i = 0; i < utils.yunmu.length; i += 1) {
       if (i === 0) {
-        for (let j = 0; j < utils.yunmu[0].children.length; j++) {
+        for (let j = 0; j < utils.yunmu[0].children.length; j += 1) {
           yunmu[1].push(utils.yunmu[0].children[j].label);
         }
       }
 
       yunmu[0].push(utils.yunmu[i].label);
     }
-    this.yunmu = [...yunmu]
+    this.yunmu = [...yunmu];
 
     // 获取声调
-    let shengdiao = [];
+    const shengdiao = [];
 
-    for (let k in utils.shengdiao) {
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const k in utils.shengdiao) {
       shengdiao.push(utils.shengdiao[k]);
     }
 
     shengdiao.unshift(shengdiao[shengdiao.length - 1]);
     shengdiao.pop();
-    this.shengdiao = [...shengdiao]
+    this.shengdiao = [...shengdiao];
   },
   /**
    * 右上角分享事件
@@ -175,126 +177,128 @@ export default {
   onShareAppMessage() {
     return {
       title: '条件查字',
-      path: `/pages/component/condition/condition`,
+      path: '/pages/component/condition/condition',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     PickerChange(e) {
-      this.index = e.detail.value
+      this.index = e.detail.value;
     },
 
     MultiChange(e) {
-      this.multiIndex = e.detail.value
+      this.multiIndex = e.detail.value;
     },
 
     MultiColumnChange(e) {
-      let data                         = {
+      const data = {
         yunmu: this.yunmu,
-        multiIndex: this.multiIndex
+        multiIndex: this.multiIndex,
       };
       data.multiIndex[e.detail.column] = e.detail.value;
 
-      switch (e.detail.column) {
-        case 0:
-          data.yunmu[1] = [];
+      if (e.detail.column === 0) {
+        data.yunmu[1] = [];
 
-          switch (data.multiIndex[0]) {
-            case 0:
-              for (let i = 0; i < utils.yunmu[0].children.length; i++) {
-                data.yunmu[1].push(utils.yunmu[0].children[i].label);
-              }
+        switch (data.multiIndex[0]) {
+          case 0:
+            for (let i = 0; i < utils.yunmu[0].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[0].children[i].label);
+            }
+            break;
 
-              break;
+          case 1:
+            for (let i = 0; i < utils.yunmu[1].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[1].children[i].label);
+            }
+            break;
 
-            case 1:
-              for (let i = 0; i < utils.yunmu[1].children.length; i++) {
-                data.yunmu[1].push(utils.yunmu[1].children[i].label);
-              }
+          case 2:
+            for (let i = 0; i < utils.yunmu[2].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[2].children[i].label);
+            }
+            break;
 
-              break;
+          case 3:
+            for (let i = 0; i < utils.yunmu[3].children.length; i += 1) {
+              data.yunmu[1].push(utils.yunmu[3].children[i].label);
+            }
+            break;
+          default:
+            uni.showToast({
+              title: '出错啦',
+              icon: 'none',
+            });
+        }
 
-            case 2:
-              for (let i = 0; i < utils.yunmu[2].children.length; i++) {
-                data.yunmu[1].push(utils.yunmu[2].children[i].label);
-              }
-
-              break;
-
-            case 3:
-              for (let i = 0; i < utils.yunmu[3].children.length; i++) {
-                data.yunmu[1].push(utils.yunmu[3].children[i].label);
-              }
-
-              break;
-          }
-
-          data.multiIndex[1] = 0;
-          break;
+        data.multiIndex[1] = 0;
       }
       // TODO refactor
       this.setData(data);
     },
 
     PickerChange1(e) {
-      this.index1 = e.detail.value
+      this.index1 = e.detail.value;
     },
 
     getShengmu() {
-      let shengmu = this.shengmu[this.index];
-
-      for (let k in utils.shengmu) {
+      const shengmu = this.shengmu[this.index];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const k in utils.shengmu) {
         if (utils.shengmu[k] === shengmu) {
           return k;
         }
       }
+      return null;
     },
 
     getYunmu() {
-      for (let i = 0; i < utils.yunmu.length; i++) {
+      for (let i = 0; i < utils.yunmu.length; i += 1) {
         if (utils.yunmu[i].label === this.yunmu[0][this.multiIndex[0]]) {
-          for (let j = 0; j < utils.yunmu[i].children.length; j++) {
+          for (let j = 0; j < utils.yunmu[i].children.length; j += 1) {
             if (utils.yunmu[i].children[j].label === this.yunmu[1][this.multiIndex[1]]) {
               return utils.yunmu[i].children[j].value;
             }
           }
         }
       }
+      return null;
     },
 
     getShengdiao() {
-      let shengdiao = this.shengdiao[this.index1];
-
-      for (let k in utils.shengdiao) {
+      const shengdiao = this.shengdiao[this.index1];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const k in utils.shengdiao) {
         if (utils.shengdiao[k] === shengdiao) {
           return k;
         }
       }
+      return null;
     },
 
     searchByConditions() {
       // 获取声母、韵母和声调
-      let shengmu   = this.getShengmu();
-      let yunmu     = this.getYunmu();
-      let shengdiao = this.getShengdiao();
+      const shengmu = this.getShengmu();
+      const yunmu = this.getYunmu();
+      const shengdiao = this.getShengdiao();
 
       if (shengmu === 'all' && yunmu === 'all' && shengdiao === 'all') {
         uni.showModal({
           content: '有超过500个可能拼音，过于宽泛！请再详细一些~',
-          showCancel: false
+          showCancel: false,
         });
       } else {
         this.search(shengmu, yunmu, shengdiao);
@@ -302,32 +306,32 @@ export default {
     },
 
     search(shengmu, yunmu, shengdiao) {
-      searchCharactersByFilters({shengmu, yunmu, shengdiao}).then(res => {
-        this.result = res.result
+      searchCharactersByFilters({ shengmu, yunmu, shengdiao }).then((res) => {
+        this.result = res.result;
         // TODO 直接显示结果而不是弹窗
         if (!this.result.length) {
           uni.showToast({
             title: '检索结果为空',
-            icon: none
-          })
+            icon: none,
+          });
         }
-      })
+      });
     },
 
     getCharacter(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
       uni.navigateTo({
-        url: '/pages/basics/characters/characters?id=' + id
+        url: `/pages/basics/characters/characters?id=${id}`,
       });
     },
 
     getWord(e) {
-      let id = e.currentTarget.dataset.id;
-      if (!id) return
+      const { id } = e.currentTarget.dataset;
+      if (!id) return;
       uni.navigateTo({
-        url: '/pages/basics/words/words?id=' + id
+        url: `/pages/basics/words/words?id=${id}`,
       });
-    }
-  }
+    },
+  },
 };
 </script>

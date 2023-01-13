@@ -44,14 +44,14 @@
 </template>
 
 <script>
-import {getHotArticles} from "@/services/website";
-import {searchArticle} from "@/services/article";
-import ArticleList from "@/components/ArticleList";
+import { getHotArticles } from '@/services/website';
+import { searchArticles } from '@/services/article';
+import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
 export default {
   components: {
-    ArticleList
+    ArticleList,
   },
   data() {
     return {
@@ -60,14 +60,14 @@ export default {
       displayArticles: [],
       page: 1,
       status: 0,
-      triggered: false
+      triggered: false,
     };
   },
   onLoad() {
-    this._freshing = false;
+    this.freshing = false;
   },
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
   beforeMount() {
     this.getHotArticlesList();
@@ -78,9 +78,9 @@ export default {
      * @returns {Promise<void>}
      */
     async getHotArticlesList() {
-      const res         = await getHotArticles()
-      this.hot_articles = res.hot_articles
-      await this.getArticlesList()
+      const res = await getHotArticles();
+      this.hot_articles = res.hot_articles;
+      await this.getArticlesList();
     },
 
     /**
@@ -88,10 +88,10 @@ export default {
      * @returns {Promise<void>}
      */
     async getArticlesList() {
-      await searchArticle().then(async (res) => {
+      await searchArticles().then(async (res) => {
         this.allArticles = res;
-        this.displayArticles = res.slice(0, 4)
-      })
+        this.displayArticles = res.slice(0, 4);
+      });
     },
 
     onPulling() {
@@ -100,45 +100,45 @@ export default {
 
     // 下拉刷新
     onRefresh() {
-      if (this._freshing) {
+      if (this.freshing) {
         return;
       }
-      this._freshing = true;
+      this.freshing = true;
       this.getHotArticlesList();
       setTimeout(() => {
         this.setData({
-          triggered: false
+          triggered: false,
         });
-        this._freshing = false;
+        this.freshing = false;
       }, 500);
     },
 
     // 加载更多文章
     loadMoreArticles() {
       uni.showLoading();
-      let page = this.page;
-      let origin_articles = this.displayArticles;
-      let concat_articles = this.allArticles.slice(page * 4, page * 4 + 4);
+      const { page } = this;
+      const originArticles = this.displayArticles;
+      const concatArticles = this.allArticles.slice(page * 4, page * 4 + 4);
       this.setData({
         page: page + 1,
-        displayArticles: origin_articles.concat(concat_articles)
+        displayArticles: originArticles.concat(concatArticles),
       });
-      setTimeout(function () {
+      setTimeout(() => {
         uni.hideLoading();
       }, 500);
     },
 
     changeStatus(e) {
-      let index = e.currentTarget.dataset.index;
-      this.status = Number(index)
+      const { index } = e.currentTarget.dataset;
+      this.status = Number(index);
     },
 
     writeArticle() {
       uni.navigateTo({
-        url: '/pages/plugin/write/write'
+        url: '/pages/plugin/write/write',
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -149,4 +149,3 @@ export default {
   z-index: 1024;
 }
 </style>
-

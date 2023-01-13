@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import {getDailyExpressions} from "@/services/website";
+import { getDailyExpressions } from '@/services/website';
 
 const app = getApp();
 export default {
@@ -106,12 +106,12 @@ export default {
       itemNum: 0,
       curPage: 1,
       keyword: '',
-      keywordTmp: ''
+      keywordTmp: '',
     };
   },
   onLoad() {
-    let keyword = '';
-    let page = 1;
+    const keyword = '';
+    const page = 1;
     this.getPageData(keyword, page);
   },
   /**
@@ -120,29 +120,29 @@ export default {
   onShareAppMessage() {
     return {
       title: '日常用语',
-      path: `/pages/component/daily/daily`,
+      path: '/pages/component/daily/daily',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     getPageData(keyword, page) {
-      getDailyExpressions(keyword, page, 15).then(res => {
-        this.pageData = res.results
-        this.pageNum  = res.total.page
-        this.itemNum  = res.total.item
+      getDailyExpressions(keyword, page, 15).then((res) => {
+        this.pageData = res.results;
+        this.pageNum = res.total.page;
+        this.itemNum = res.total.item;
       });
     },
 
@@ -151,48 +151,48 @@ export default {
     },
 
     search() {
-      let keywordTmp = this.keywordTmp;
+      const { keywordTmp } = this;
 
       if (keywordTmp === '') {
         uni.showToast({
           title: '搜索内容为空！',
-          icon: 'none'
+          icon: 'none',
         });
       } else {
-        this.keyword=keywordTmp
-        this.curPage=1
+        this.keyword = keywordTmp;
+        this.curPage = 1;
         this.getPageData(this.keyword, 1);
       }
     },
 
     previous() {
-      let curPage = this.curPage;
+      const { curPage } = this;
 
       if (curPage === 1) {
         uni.showToast({
           title: '当前页为第一页！',
-          icon: 'none'
+          icon: 'none',
         });
       } else {
-        this.curPage=curPage-1
+        this.curPage = curPage - 1;
         this.getPageData(this.keyword, curPage - 1);
       }
     },
 
     next() {
-      let curPage = this.curPage;
+      const { curPage } = this;
 
       if (curPage >= this.pageNum) {
         uni.showToast({
           title: '当前页为末尾页！',
-          icon: 'none'
+          icon: 'none',
         });
       } else {
-        this.curPage=curPage + 1
+        this.curPage = curPage + 1;
         this.getPageData(this.keyword, curPage + 1);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

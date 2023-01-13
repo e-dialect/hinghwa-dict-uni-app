@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 /**
  * AT0104 获取文章信息
@@ -6,29 +6,16 @@ import request from "@/utils/request";
  * @returns {Promise<unknown>}
  */
 export async function getArticle(id) {
-  return request.get(`/articles/${id}`)
+  return request.get(`/articles/${id}`);
 }
 
 /**
  * AT0201 搜索符合条件的文章
- * @returns {Promise<unknown>}
+ * @returns {Promise<number[]>} 文章id列表
  */
-export async function searchArticles(key) {
-  if (key)
-    return request.get(`/articles`, {search: key})
-  else
-    return request.get(`/articles`,)
-}
-
-/**
- * 搜索相关的文章
- * @returns {Promise<unknown>}
- */
-export async function searchArticle(key) {
-  const res        = await searchArticles(key)
-  const articlesId = res.articles
-  const res1       = await getArticles(articlesId)
-  return res1.articles
+export async function searchArticleId(key) {
+  if (key) return request.get('/articles', { search: key });
+  return request.get('/articles');
 }
 
 /**
@@ -37,7 +24,22 @@ export async function searchArticle(key) {
  * @returns {Promise<unknown>}
  */
 export async function getArticles(idList) {
-  return request.put(`/articles`, {articles: idList})
+  return request.put('/articles', { articles: idList });
+}
+
+/**
+ * 搜索相关文章并返回文章列表
+ * @returns {Promise<unknown>}
+ */
+export async function searchArticles(key) {
+  try {
+    const res = await searchArticleId(key);
+    const articleIds = res.articles;
+    const res1 = await getArticles(articleIds);
+    return res1.articles;
+  } catch (e) {
+    return [];
+  }
 }
 
 /**
@@ -46,7 +48,7 @@ export async function getArticles(idList) {
  * @returns {Promise<unknown>}
  */
 export async function likeArticle(id) {
-  return request.post(`/articles/${id}/like`)
+  return request.post(`/articles/${id}/like`);
 }
 
 /**
@@ -55,7 +57,7 @@ export async function likeArticle(id) {
  * @returns {Promise<*>}
  */
 export async function unlikeArticle(id) {
-  return request.del(`/articles/${id}/like`)
+  return request.del(`/articles/${id}/like`);
 }
 
 /**
@@ -66,7 +68,7 @@ export async function unlikeArticle(id) {
  * @returns {Promise<unknown>}
  */
 export async function createComment(id, comment, replyId) {
-  return request.post(`/articles/${id}/comments`, {content: comment, parent: replyId})
+  return request.post(`/articles/${id}/comments`, { content: comment, parent: replyId });
 }
 
 /**
@@ -75,7 +77,7 @@ export async function createComment(id, comment, replyId) {
  * @returns {Promise<unknown>}
  */
 export async function getComment(commentId) {
-  return request.put(`/articles/comments`, {comments: commentId})
+  return request.put('/articles/comments', { comments: commentId });
 }
 
 /**
@@ -84,17 +86,17 @@ export async function getComment(commentId) {
  * @returns {Promise<{comments: *, map: *[]}>}
  */
 export async function getComments(id) {
-  const res    = await request.get(`/articles/${id}/comments`)
-  let comments = res.comments;
-  let map      = []; // 获取根评论
+  const res = await request.get(`/articles/${id}/comments`);
+  const { comments } = res;
+  const map = []; // 获取根评论
 
-  for (let i = 0; i < comments.length; i++) {
-    comments[i].kids    = [];
+  for (let i = 0; i < comments.length; i += 1) {
+    comments[i].kids = [];
     map[comments[i].id] = i;
   }
 
   // 获取子孙评论
-  for (let i = 0; i < comments.length; i++) {
+  for (let i = 0; i < comments.length; i += 1) {
     if (comments[i].parent !== 0) {
       let p = comments[i].parent;
 
@@ -105,5 +107,5 @@ export async function getComments(id) {
       comments[map[p]].kids.push(comments[i]);
     }
   }
-  return {comments, map}
+  return { comments, map };
 }

@@ -61,27 +61,27 @@
 </template>
 
 <script>
-import {COS_URL}                                            from "@/const/urls";
-import {normalLogin}                                        from "@/services/login";
-import {toForgetPage, toRegisterPage, toWechatRegisterPage} from "@/routers";
+import { COS_URL } from '@/const/urls';
+import { normalLogin } from '@/services/login';
+import { toForgetPage, toRegisterPage, toWechatRegisterPage } from '@/routers';
 
 const app = getApp();
 export default {
   data() {
     return {
-      toForgetPage: toForgetPage,
-      toRegisterPage: toRegisterPage,
-      toWechatRegisterPage: toWechatRegisterPage,
-      logo: COS_URL + '/images/logo.png',
+      toForgetPage,
+      toRegisterPage,
+      toWechatRegisterPage,
+      logo: `${COS_URL}/images/logo.png`,
     };
   },
   methods: {
     login(e) {
-      const username = e.detail.value.username;
-      const password = e.detail.value.password;
+      const { username } = e.detail.value;
+      const { password } = e.detail.value;
       normalLogin(username, password);
     },
-  }
+  },
 };
 </script>
 <style>

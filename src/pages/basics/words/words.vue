@@ -228,43 +228,46 @@
 </template>
 
 <script>
-import {getWordDetails}                                                 from "@/services/word.js";
-import {toIndexPage, toUploadPronunciationPage, toUserPage, toWordPage} from "@/routers";
-import {playAudio}                                                      from "@/utils/audio";
-import {getPronunciations}                                              from "@/services/pronunciation";
-import WordPronunciationButton                                          from "@/components/WordPronunciationButton";
+import { getWordDetails } from '@/services/word';
+import {
+  toIndexPage, toUserPage,
+} from '@/routers';
+import { playAudio } from '@/utils/audio';
+import { getPronunciations } from '@/services/pronunciation';
+import WordPronunciationButton from '@/components/WordPronunciationButton';
+import { toUploadPronunciationPage, toWordPage } from '@/routers/word';
 
 const app = getApp();
 export default {
-  components: {WordPronunciationButton},
+  components: { WordPronunciationButton },
   data() {
     return {
-      ///////////////////////////////
-      playAudio: playAudio,
+      /// ////////////////////////////
+      playAudio,
       navigateToIndex: toIndexPage,
       toContributor: toUserPage,
-      toWordPage: toWordPage,
-      toUploadPronunciationPage: toUploadPronunciationPage,
-      ///////////////////////////////
+      toWordPage,
+      toUploadPronunciationPage,
+      /// ////////////////////////////
       id: 0,
       word: {
         id: 0,
-        word: "",
-        definition: "",
+        word: '',
+        definition: '',
         definitions: [],
         contributor: {
-          nickname: "",
-          avatar: "",
+          nickname: '',
+          avatar: '',
           id: 0,
         },
-        annotation: "",
+        annotation: '',
         mandarin: [],
         related_words: [],
         related_articles: [],
         views: 0,
-        standard_ipa: "",
-        standard_pinyin: "",
-        source: "",
+        standard_ipa: '',
+        standard_pinyin: '',
+        source: '',
       },
       definition: [],
       pronunciation: [],
@@ -278,27 +281,27 @@ export default {
    * 右上角分享事件
    */
   onShareAppMessage() {
-    let title = this.word.word + "：";
-    this.word.definitions.forEach(item => {
-      title += item.content + "；";
+    let title = `${this.word.word}：`;
+    this.word.definitions.forEach((item) => {
+      title += `${item.content}；`;
     });
     return {
-      title: title,
+      title,
       path: `/pages/basics/words/words?id=${this.id}&share=1`,
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
 
@@ -307,11 +310,11 @@ export default {
    * @param options
    */
   async onLoad(options) {
-    this.isShare       = !!options.share;
-    this.id            = options.id;
-    this.word          = await getWordDetails(options.id)
-    this.definition    = this.word.definitions
-    this.pronunciation = await getPronunciations({word: options.id})
+    this.isShare = !!options.share;
+    this.id = options.id;
+    this.word = await getWordDetails(options.id);
+    this.definition = this.word.definitions;
+    this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
     /**
@@ -319,8 +322,8 @@ export default {
      */
     tabSlide(e) {
       this.tabIndex = e.detail.current;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
