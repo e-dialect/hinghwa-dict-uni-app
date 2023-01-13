@@ -169,8 +169,8 @@ export default {
      * 随机跳词
      */
     randomWord() {
-      const random_id = Math.floor(Math.random() * 6099) + 1;
-      toWordPage(random_id);
+      const randomId = Math.floor(Math.random() * 6099) + 1;
+      toWordPage(randomId);
     },
 
     /**

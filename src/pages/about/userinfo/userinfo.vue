@@ -141,11 +141,11 @@ export default {
         this.date = userInfo.user.birthday;
       }
       if (userInfo.user.birthday) {
-        const index_0 = counties.indexOf(userInfo.user.county);
-        const index_1 = towns[index_0].indexOf(userInfo.user.town);
+        const index0 = counties.indexOf(userInfo.user.county);
+        const index1 = towns[index0].indexOf(userInfo.user.town);
         const { multiArray } = this;
-        multiArray[1] = towns[index_0];
-        this.multiIndex = [index_0, index_1];
+        multiArray[1] = towns[index0];
+        this.multiIndex = [index0, index1];
         this.multiArray = multiArray;
       }
     },
