@@ -10,5 +10,18 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
     'no-unused-vars': 'off',
+
+    // ignore for vue-cli-service
+    'import/extensions': ['error', 'always', {
+      js: 'never',
+      vue: 'never',
+    }],
+  },
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'node_modules/@vue/cli-service/webpack.config.js',
+      },
+    },
   },
 };
