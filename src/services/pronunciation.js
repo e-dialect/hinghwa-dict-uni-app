@@ -53,7 +53,7 @@ export async function combinePronunciationByChinese(chinese) {
  * @returns {Promise<*>}
  */
 export async function combinePronunciationByPinyin(pinyin) {
-  return await combinePronunciation({ pinyins: pinyin });
+  return combinePronunciation({ pinyins: pinyin });
 }
 
 /**
@@ -62,7 +62,7 @@ export async function combinePronunciationByPinyin(pinyin) {
  * @returns {Promise<*>}
  */
 export async function combinePronunciationByIpa(ipa) {
-  return await combinePronunciation({ ipas: ipa });
+  return combinePronunciation({ ipas: ipa });
 }
 
 /**

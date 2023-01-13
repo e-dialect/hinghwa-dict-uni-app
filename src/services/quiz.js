@@ -15,7 +15,7 @@ export async function getQuiz(id) {
  * @returns {Promise<unknown>}
  */
 export async function searchQuiz(key) {
-  return await request.get('/quizzes', { keywords: key });
+  return request.get('/quizzes', { keywords: key });
 }
 
 /**
