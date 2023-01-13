@@ -1,4 +1,4 @@
-import {BASE_URL} from "@/const/urls";
+import { BASE_URL } from '@/const/urls';
 
 /**
  * 上传文件
@@ -6,28 +6,28 @@ import {BASE_URL} from "@/const/urls";
  * @returns {Promise<unknown>}
  */
 export function uploadFile(file) {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     uni.showLoading({
       title: '上传中……',
-      mask: true
+      mask: true,
     });
     uni.uploadFile({
-      url: BASE_URL + '/website/files',
+      url: `${BASE_URL}/website/files`,
       filePath: file,
       name: 'file',
       header: {
-        token: uni.getStorageSync("token")
+        token: uni.getStorageSync('token'),
       },
     }).then((response) => {
       uni.hideLoading();
-      let [error, res] = response;
+      const [error, res] = response;
       // 如果有错误，则抛出错误
       if (error) {
         uni.showToast({
-          title: "网络错误",
-          icon: "error",
+          title: '网络错误',
+          icon: 'error',
         });
-        reject(error)
+        reject(error);
       }
       // 如果正常返回，则根据状态码进行处理
       if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
@@ -35,31 +35,31 @@ export function uploadFile(file) {
         switch (res.statusCode) {
           case 500:
             uni.showToast({
-              title: "服务器内部错误",
-              icon: "error",
+              title: '服务器内部错误',
+              icon: 'error',
             });
             break;
           case 401:
             uni.showToast({
-              title: "请先登录",
-              icon: "error",
+              title: '请先登录',
+              icon: 'error',
             });
             break;
           default:
             uni.showToast({
-              title: "上传失败！",
-              icon: "error",
-            })
+              title: '上传失败！',
+              icon: 'error',
+            });
         }
-        reject(res)
+        reject(res);
       }
-    }).catch(error => {
+    }).catch((error) => {
       uni.hideLoading();
       uni.showToast({
-        title: "网络错误",
-        icon: "error",
+        title: '网络错误',
+        icon: 'error',
       });
-      reject(error)
-    })
-  })
+      reject(error);
+    });
+  });
 }

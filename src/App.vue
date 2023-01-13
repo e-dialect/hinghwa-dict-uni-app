@@ -1,48 +1,48 @@
 <script>
-//app.js
+// app.js
 export default {
-    data() {
-        return {};
-    },
-    onLaunch: function () {
-        uni.getSystemInfo({
-            success: (e) => {
-                this.globalData.platform = e.platform;
-                this.globalData.StatusBar = e.statusBarHeight;
-                let capsule = uni.getMenuButtonBoundingClientRect();
+  data() {
+    return {};
+  },
+  onLaunch() {
+    uni.getSystemInfo({
+      success: (e) => {
+        this.globalData.platform = e.platform;
+        this.globalData.StatusBar = e.statusBarHeight;
+        const capsule = uni.getMenuButtonBoundingClientRect();
 
-                if (capsule) {
-                    this.globalData.Custom = capsule;
-                    this.globalData.CustomBar = capsule.bottom + capsule.top - e.statusBarHeight;
-                } else {
-                    this.globalData.CustomBar = e.statusBarHeight + 50;
-                }
-            }
-        });
-    },
-    globalData: {
-        watch: function (method) {
-            var obj = this;
-            Object.defineProperty(obj, 'data', {
-                configurable: true,
-                enumerable: true,
-                set: function (value) {
-                    if (value.avatar) {
-                        this.userInfo.avatar = value.avatar;
-                    }
-
-                    if (value.nickname) {
-                        this.userInfo.nickname = value.nickname;
-                    }
-
-                    method(value);
-                },
-                get: function () {
-                    return this;
-                }
-            });
+        if (capsule) {
+          this.globalData.Custom = capsule;
+          this.globalData.CustomBar = capsule.bottom + capsule.top - e.statusBarHeight;
+        } else {
+          this.globalData.CustomBar = e.statusBarHeight + 50;
         }
-    }
+      },
+    });
+  },
+  globalData: {
+    watch(method) {
+      const obj = this;
+      Object.defineProperty(obj, 'data', {
+        configurable: true,
+        enumerable: true,
+        set(value) {
+          if (value.avatar) {
+            this.userInfo.avatar = value.avatar;
+          }
+
+          if (value.nickname) {
+            this.userInfo.nickname = value.nickname;
+          }
+
+          method(value);
+        },
+        get() {
+          return this;
+        },
+      });
+    },
+  },
 };
 </script>
 <style>

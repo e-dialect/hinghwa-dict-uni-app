@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import {searchCharactersByFilters} from "@/services/character";
+import { searchCharactersByFilters } from '@/services/character';
 
 const app = getApp();
 
@@ -123,28 +123,28 @@ export default {
       shengmu: [],
       yunmu: [
         [],
-        []
+        [],
       ],
       multiIndex: [0, 0],
       index1: 0,
       shengdiao: [],
       result: [],
-      space: ' '
+      space: ' ',
     };
   },
   onLoad() {
     // 获取声母
-    let shengmu = [];
+    const shengmu = [];
 
-    for (let k in utils.shengmu) {
+    for (const k in utils.shengmu) {
       shengmu.push(utils.shengmu[k]);
     }
-    this.shengmu = [...shengmu]
+    this.shengmu = [...shengmu];
 
     // 获取韵母
-    let yunmu = [
+    const yunmu = [
       [],
-      []
+      [],
     ];
 
     for (let i = 0; i < utils.yunmu.length; i++) {
@@ -156,18 +156,18 @@ export default {
 
       yunmu[0].push(utils.yunmu[i].label);
     }
-    this.yunmu = [...yunmu]
+    this.yunmu = [...yunmu];
 
     // 获取声调
-    let shengdiao = [];
+    const shengdiao = [];
 
-    for (let k in utils.shengdiao) {
+    for (const k in utils.shengdiao) {
       shengdiao.push(utils.shengdiao[k]);
     }
 
     shengdiao.unshift(shengdiao[shengdiao.length - 1]);
     shengdiao.pop();
-    this.shengdiao = [...shengdiao]
+    this.shengdiao = [...shengdiao];
   },
   /**
    * 右上角分享事件
@@ -175,36 +175,36 @@ export default {
   onShareAppMessage() {
     return {
       title: '条件查字',
-      path: `/pages/component/condition/condition`,
+      path: '/pages/component/condition/condition',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     PickerChange(e) {
-      this.index = e.detail.value
+      this.index = e.detail.value;
     },
 
     MultiChange(e) {
-      this.multiIndex = e.detail.value
+      this.multiIndex = e.detail.value;
     },
 
     MultiColumnChange(e) {
-      let data                         = {
+      const data = {
         yunmu: this.yunmu,
-        multiIndex: this.multiIndex
+        multiIndex: this.multiIndex,
       };
       data.multiIndex[e.detail.column] = e.detail.value;
 
@@ -250,13 +250,13 @@ export default {
     },
 
     PickerChange1(e) {
-      this.index1 = e.detail.value
+      this.index1 = e.detail.value;
     },
 
     getShengmu() {
-      let shengmu = this.shengmu[this.index];
+      const shengmu = this.shengmu[this.index];
 
-      for (let k in utils.shengmu) {
+      for (const k in utils.shengmu) {
         if (utils.shengmu[k] === shengmu) {
           return k;
         }
@@ -276,9 +276,9 @@ export default {
     },
 
     getShengdiao() {
-      let shengdiao = this.shengdiao[this.index1];
+      const shengdiao = this.shengdiao[this.index1];
 
-      for (let k in utils.shengdiao) {
+      for (const k in utils.shengdiao) {
         if (utils.shengdiao[k] === shengdiao) {
           return k;
         }
@@ -287,14 +287,14 @@ export default {
 
     searchByConditions() {
       // 获取声母、韵母和声调
-      let shengmu   = this.getShengmu();
-      let yunmu     = this.getYunmu();
-      let shengdiao = this.getShengdiao();
+      const shengmu = this.getShengmu();
+      const yunmu = this.getYunmu();
+      const shengdiao = this.getShengdiao();
 
       if (shengmu === 'all' && yunmu === 'all' && shengdiao === 'all') {
         uni.showModal({
           content: '有超过500个可能拼音，过于宽泛！请再详细一些~',
-          showCancel: false
+          showCancel: false,
         });
       } else {
         this.search(shengmu, yunmu, shengdiao);
@@ -302,32 +302,32 @@ export default {
     },
 
     search(shengmu, yunmu, shengdiao) {
-      searchCharactersByFilters({shengmu, yunmu, shengdiao}).then(res => {
-        this.result = res.result
+      searchCharactersByFilters({ shengmu, yunmu, shengdiao }).then((res) => {
+        this.result = res.result;
         // TODO 直接显示结果而不是弹窗
         if (!this.result.length) {
           uni.showToast({
             title: '检索结果为空',
-            icon: none
-          })
+            icon: none,
+          });
         }
-      })
+      });
     },
 
     getCharacter(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
       uni.navigateTo({
-        url: '/pages/basics/characters/characters?id=' + id
+        url: `/pages/basics/characters/characters?id=${id}`,
       });
     },
 
     getWord(e) {
-      let id = e.currentTarget.dataset.id;
-      if (!id) return
+      const { id } = e.currentTarget.dataset;
+      if (!id) return;
       uni.navigateTo({
-        url: '/pages/basics/words/words?id=' + id
+        url: `/pages/basics/words/words?id=${id}`,
       });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -88,8 +88,8 @@
 </template>
 
 <script>
-import {sendEmailCode} from "@/services/website";
-import {registerUser} from "@/services/user";
+import { sendEmailCode } from '@/services/website';
+import { registerUser } from '@/services/user';
 
 const app = getApp();
 export default {
@@ -97,20 +97,20 @@ export default {
     return {
       is_pwd1: true,
       is_pwd2: true,
-      email: ''
+      email: '',
     };
   },
   methods: {
     ear1() {
-      this.is_pwd1= !this.is_pwd1
+      this.is_pwd1 = !this.is_pwd1;
     },
 
     ear2() {
-      this.is_pwd2= !this.is_pwd2
+      this.is_pwd2 = !this.is_pwd2;
     },
 
     getEmail(e) {
-        this.email = e.detail.value
+      this.email = e.detail.value;
     },
 
     // 获取验证码
@@ -118,24 +118,24 @@ export default {
       sendEmailCode(this.email).then(async () => {
         setTimeout(() => {
           uni.showToast({
-            title: '发送成功'
+            title: '发送成功',
           });
-        }, 100)
+        }, 100);
       });
     },
 
     register(e) {
       console.log(e);
-      let username = e.detail.value.username;
-      let password = e.detail.value.password;
-      let password_confirmed = e.detail.value.password_confirmed;
-      let email = e.detail.value.email;
-      let code = e.detail.value.code;
+      const { username } = e.detail.value;
+      const { password } = e.detail.value;
+      const { password_confirmed } = e.detail.value;
+      const { email } = e.detail.value;
+      const { code } = e.detail.value;
 
       if (!username || !password || !password_confirmed || !email || !code) {
         uni.showToast({
           title: '信息不完整',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
@@ -143,7 +143,7 @@ export default {
       if (password.length < 6 || password.length > 32) {
         uni.showToast({
           title: '密码长度 6 - 32 位',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
@@ -151,22 +151,22 @@ export default {
       if (password !== password_confirmed) {
         uni.showToast({
           title: '两次密码不相同',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
       registerUser(username, password, email, code).then(async (res) => {
         setTimeout(() => {
           uni.showToast({
-            title: '注册成功'
+            title: '注册成功',
           });
           uni.navigateBack({
-            delta: 1
+            delta: 1,
           });
-        }, 100)
+        }, 100);
       });
     },
-  }
+  },
 };
 </script>
 <style>

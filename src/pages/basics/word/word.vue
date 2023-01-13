@@ -150,88 +150,88 @@
 </template>
 
 <script>
-import {getArticles} from "@/services/article";
-import {getWords}    from "@/services/word";
+import { getArticles } from '@/services/article';
+import { getWords } from '@/services/word';
 
 const app = getApp();
 export default {
-    data() {
-        return {
-            word: {
-                word: '',
+  data() {
+    return {
+      word: {
+        word: '',
 
-                contributor: {
-                    username: ''
-                },
+        contributor: {
+          username: '',
+        },
 
-                definition: '',
-                related_words: [],
-                mandarin: [],
-                related_articles: [],
-                annotation: ''
-            },
-            date: '',
-            related_words: [],
-            related_articles: []
-        };
+        definition: '',
+        related_words: [],
+        mandarin: [],
+        related_articles: [],
+        annotation: '',
+      },
+      date: '',
+      related_words: [],
+      related_articles: [],
+    };
+  },
+  onLoad(options) {
+    this.setData({
+      word: JSON.parse(options.word),
+    }); // 获取日期
+
+    this.getDate(); // 获取相关词语
+
+    this.getRelatedWords(); // 获取相关文章
+
+    this.getRelatedArticles();
+  },
+  methods: {
+    getDate() {
+      const timestamp = Date.parse(new Date());
+      let date = new Date(timestamp);
+      const Y = date.getFullYear();
+      const M = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+      const D = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+      date = `${Y}-${M}-${D}`;
+      this.setData({
+        date,
+      });
     },
-    onLoad(options) {
-        this.setData({
-            word: JSON.parse(options.word)
-        }); // 获取日期
 
-        this.getDate(); // 获取相关词语
-
-        this.getRelatedWords(); // 获取相关文章
-
-        this.getRelatedArticles();
+    toVisitor() {
+      const { id } = this.word.contributor;
+      uni.navigateTo({
+        url: `/pages/about/visitor/visitor?id=${id}`,
+      });
     },
-    methods: {
-        getDate() {
-            var timestamp = Date.parse(new Date());
-            var date = new Date(timestamp);
-            var Y = date.getFullYear();
-            var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-            var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-            date = Y + '-' + M + '-' + D;
-            this.setData({
-                date: date
-            });
-        },
 
-        toVisitor() {
-            let id = this.word.contributor.id;
-            uni.navigateTo({
-                url: '/pages/about/visitor/visitor?id=' + id
-            });
-        },
+    getRelatedWords() {
+      getWords(this.word.related_words).then((res) => {
+        this.related_words = this.words;
+      });
+    },
 
-        getRelatedWords() {
-          getWords(this.word.related_words).then(res=>{
-            this.related_words=this.words
-          })
-        },
+    getRelatedArticles() {
+      getArticles(this.word.related_articles).then((res) => {
+        this.related_articles = this.articles;
+      });
+    },
 
-        getRelatedArticles() {
-            getArticles(this.word.related_articles).then(res => {
-              this.related_articles=this.articles
-            });
-        },
+    getMore(e) {
+      const index = e.currentTarget.dataset.id;
+      const word = JSON.stringify(this.related_words[index]);
+      uni.navigateTo({
+        url: `/pages/basics/word/word?word=${word}`,
+      });
+    },
 
-        getMore(e) {
-            let index = e.currentTarget.dataset.id;
-            let word = JSON.stringify(this.related_words[index]);
-            uni.navigateTo({
-                url: '/pages/basics/word/word?word=' + word
-            });
-        },
-
-        back() {
-            uni.navigateBack({
-                delta: 1
-            });
-        }
-    }
+    back() {
+      uni.navigateBack({
+        delta: 1,
+      });
+    },
+  },
 };
 </script>
 <style>

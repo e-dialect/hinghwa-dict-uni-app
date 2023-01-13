@@ -138,10 +138,10 @@
 </template>
 
 <script>
-import {uploadFile}          from "@/services/file";
-import {counties, towns}     from "@/const/location";
-import {createPronunciation} from "@/services/pronunciation";
-import {playAudio}           from "@/utils/audio";
+import { uploadFile } from '@/services/file';
+import { counties, towns } from '@/const/location';
+import { createPronunciation } from '@/services/pronunciation';
+import { playAudio } from '@/utils/audio';
 
 const app = getApp();
 export default {
@@ -154,13 +154,13 @@ export default {
       status: -1,
       source: '',
       pickerIndex: [0, 0],
-      playAudio: playAudio
+      playAudio,
     };
   },
   computed: {
     pickerRange() {
       return [counties, towns[this.pickerIndex[0]]];
-    }
+    },
   },
 
   /**
@@ -168,83 +168,81 @@ export default {
    * @param options {id,word,ipa,pinyin}
    */
   onLoad(options) {
-
-
     // 读取页面参数
-    for (let i in options) {
+    for (const i in options) {
       this[i] = options[i];
     }
 
     // 如果用户设置过地理位置信息
     if (app.globalData.userInfo.county) {
       const index0fCounty = counties.indexOf(app.globalData.userInfo.county);
-      const indexOfTown   = towns[index0fCounty].indexOf(app.globalData.userInfo.town);
-      this.pickerIndex    = [index0fCounty, indexOfTown]
+      const indexOfTown = towns[index0fCounty].indexOf(app.globalData.userInfo.town);
+      this.pickerIndex = [index0fCounty, indexOfTown];
     } else {
       uni.showModal({
         title: '地区tip',
         content: '在个人页面中点击头像可进入设置页面，设置地区之后默认读取到当前页面的地区项。',
-        showCancel: false
+        showCancel: false,
       });
     }
 
     const that = this;
-//#ifdef H5
+    // #ifdef H5
     // 查看是否支持本浏览器
     if (navigator.mediaDevices.getUserMedia) {
       // 尝试获取麦克风权限
-      const constraints = {audio: true}
+      const constraints = { audio: true };
       navigator.mediaDevices.getUserMedia(constraints).then(
-          // 成功回调
-          stream => {
-            this.recorderManager = new MediaRecorder(stream)
-            let chunks           = []
+        // 成功回调
+        (stream) => {
+          this.recorderManager = new MediaRecorder(stream);
+          let chunks = [];
 
-            // 录音开始
-            this.recorderManager.onstart         = () => {
-              chunks = []
-            }
-            // 录音过程中
-            this.recorderManager.ondataavailable = function (e) {
-              chunks.push(e.data)
-            }
-            // 录音停止
-            this.recorderManager.onstop          = () => {
-              const blob = new Blob(chunks, {type: this.recorderManager.mimeType})
-              that.setSource(window.URL.createObjectURL(blob))
-            }
+          // 录音开始
+          this.recorderManager.onstart = () => {
+            chunks = [];
+          };
+          // 录音过程中
+          this.recorderManager.ondataavailable = function (e) {
+            chunks.push(e.data);
+          };
+          // 录音停止
+          this.recorderManager.onstop = () => {
+            const blob = new Blob(chunks, { type: this.recorderManager.mimeType });
+            that.setSource(window.URL.createObjectURL(blob));
+          };
 
-            this.status = 0
-          },
-          // 失败回调
-          () => {
-            uni.showToast({
-              title: '授权录音失败',
-              icon: 'error'
-            });
-          }
-      )
+          this.status = 0;
+        },
+        // 失败回调
+        () => {
+          uni.showToast({
+            title: '授权录音失败',
+            icon: 'error',
+          });
+        },
+      );
     } else {
       uni.showToast({
         title: '不支持本浏览器',
-        icon: 'error'
+        icon: 'error',
       });
     }
-//#endif
+    // #endif
 
-//#ifndef H5
+    // #ifndef H5
     this.recorderManager = uni.getRecorderManager();
-    this.recorderManager.onError(function () {
+    this.recorderManager.onError(() => {
       uni.showToast({
         title: '录音失败',
-        icon: 'none'
+        icon: 'none',
       });
     });
-    this.recorderManager.onStop(function (res) {
+    this.recorderManager.onStop((res) => {
       that.setSource(res.tempFilePath);
     });
-    this.status = 0
-//#endif
+    this.status = 0;
+    // #endif
   },
 
   methods: {
@@ -255,14 +253,14 @@ export default {
       if (this.status === -1) {
         uni.showToast({
           title: '请先授权录音',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
-      this.status = 1
+      this.status = 1;
       uni.showToast({
         title: '正在录音...',
-        icon: 'none'
+        icon: 'none',
       });
       this.recorderManager.start();
     },
@@ -271,7 +269,7 @@ export default {
      * 停止录音
      */
     stopRecord() {
-      this.status = 0
+      this.status = 0;
       this.recorderManager.stop();
     },
 
@@ -280,9 +278,9 @@ export default {
      * @param source {string} 录音文件路径
      */
     setSource(source) {
-      this.source = source
+      this.source = source;
       uni.showToast({
-        title: '录音成功'
+        title: '录音成功',
       });
     },
 
@@ -300,49 +298,49 @@ export default {
      */
     submitRecord(e) {
       // 整理要提交的数据
-      let pronunciation = {
+      const pronunciation = {
         word: this.id,
         source: this.source,
         ipa: e.detail.value.ipa,
         pinyin: e.detail.value.pinyin,
         county: counties[this.pickerIndex[0]],
-        town: towns[this.pickerIndex[0]][this.pickerIndex[1]]
+        town: towns[this.pickerIndex[0]][this.pickerIndex[1]],
       };
-      for (let i in pronunciation) {
+      for (const i in pronunciation) {
         if (!pronunciation[i]) {
           uni.showToast({
             title: '请填写完整信息',
-            icon: 'none'
+            icon: 'none',
           });
           return;
         }
       }
 
       // 上传录音文件
-      uploadFile(pronunciation.source).then(res => {
+      uploadFile(pronunciation.source).then((res) => {
         pronunciation.source = JSON.parse(res).url;
-        createPronunciation(pronunciation).then(res => {
+        createPronunciation(pronunciation).then((res) => {
           uni.showToast({
             title: '语音贡献成功',
-            icon: 'success'
+            icon: 'success',
           });
           uni.navigateBack();
         }).catch(() => {
           uni.showToast({
             title: '语音贡献失败',
-            icon: 'error'
+            icon: 'error',
           });
         });
-      })
+      });
     },
 
     /**
      * 重新录音
      */
     reRecord() {
-      this.source = ''
-    }
-  }
+      this.source = '';
+    },
+  },
 };
 </script>
 <style>

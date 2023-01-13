@@ -215,15 +215,15 @@
 </template>
 
 <script>
-import {searchCharacters} from "@/services/character";
-import {getWords, searchWords} from "@/services/word";
-import {searchArticle} from "@/services/article";
-import ArticleList from "@/components/ArticleList";
+import { searchCharacters } from '@/services/character';
+import { getWords, searchWords } from '@/services/word';
+import { searchArticle } from '@/services/article';
+import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
 export default {
   components: {
-    ArticleList
+    ArticleList,
   },
   data() {
     return {
@@ -265,11 +265,11 @@ export default {
   },
   onLoad(option) {
     if (option.index) {
-      this.index = option.index
+      this.index = option.index;
     }
-    let history = uni.getStorageSync('history');
+    const history = uni.getStorageSync('history');
     if (history) {
-      this.history = history
+      this.history = history;
     }
   },
   /**
@@ -278,45 +278,45 @@ export default {
   onShareAppMessage() {
     return {
       title: '语记·搜索',
-      path: `/pages/component/search/search`,
+      path: '/pages/component/search/search',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     sortFun(e) {
-      this.index = e.detail.value
+      this.index = e.detail.value;
     },
 
     keyFun(e) {
-      this.key = e.detail.value
+      this.key = e.detail.value;
     },
 
     search() {
       if (this.key == '') {
         uni.showModal({
           content: '搜索内容为空！',
-          showCancel: false
+          showCancel: false,
         });
         return;
       }
       this.status = 1;
       this.history.push(this.key);
       uni.setStorageSync('history', this.history);
-      let key = this.key;
-      let index = this.index;
+      const { key } = this;
+      const { index } = this;
       if (index == 0) {
         // 词语
         this.searchWord(key);
@@ -341,12 +341,12 @@ export default {
         if (res.characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
-          this.characters = res.characters
+          this.characters = res.characters;
         }
-      })
+      });
     },
     /**
      * 搜索单字
@@ -357,12 +357,12 @@ export default {
         if (res.characters.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
-          this.pronunciation = res.characters
+          this.pronunciation = res.characters;
         }
-      })
+      });
     },
 
     /**
@@ -370,18 +370,18 @@ export default {
      * @returns {Promise<void>}
      */
     async searchWord(key) {
-      const res      = await searchWords(key)
-      const wordsId  = res.words
+      const res = await searchWords(key);
+      const wordsId = res.words;
       await getWords(wordsId).then(async (res1) => {
         if (res1.words.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
           this.words = res1.words;
         }
-      })
+      });
     },
 
     /**
@@ -393,16 +393,16 @@ export default {
         if (res.length === 0) {
           uni.showToast({
             title: '搜索结果为空',
-            icon: 'none'
+            icon: 'none',
           });
         } else {
           this.articles = res;
         }
-      })
+      });
     },
 
     deleteHistory() {
-      let that = this;
+      const that = this;
       uni.showModal({
         title: '提示',
         content: '是否清空历史记录？',
@@ -410,46 +410,46 @@ export default {
         success(res) {
           uni.setStorageSync('history', null);
           that.setData({
-            history: []
+            history: [],
           });
-        }
+        },
       });
     },
 
     character(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
       uni.navigateTo({
-        url: '/pages/basics/characters/characters?id=' + id
+        url: `/pages/basics/characters/characters?id=${id}`,
       });
     },
 
     word(e) {
-      let index = e.currentTarget.dataset.index;
-      let id = this.words[index].word.id;
+      const { index } = e.currentTarget.dataset;
+      const { id } = this.words[index].word;
       uni.navigateTo({
-        url: '/pages/basics/words/words?id=' + id
+        url: `/pages/basics/words/words?id=${id}`,
       });
     },
 
     toArticle(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
       uni.navigateTo({
-        url: '/pages/plugin/article/article?id=' + id
+        url: `/pages/plugin/article/article?id=${id}`,
       });
     },
 
     getWord(e) {
-      let id = e.currentTarget.dataset.id;
+      const { id } = e.currentTarget.dataset;
 
       if (!id) {
         return;
       }
 
       uni.navigateTo({
-        url: '/pages/basics/words/words?id=' + id
+        url: `/pages/basics/words/words?id=${id}`,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

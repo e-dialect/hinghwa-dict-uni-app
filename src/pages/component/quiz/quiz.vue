@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import {getQuiz} from "@/services/quiz";
+import { getQuiz } from '@/services/quiz';
 
 const app = getApp();
 export default {
@@ -145,16 +145,16 @@ export default {
         question: '',
         options: [],
         answer: 0,
-        explanation:'',
-        id: 0
+        explanation: '',
+        id: 0,
       },
       isShow1: false,
       isShow2: false,
-      current: 99
-    }
+      current: 99,
+    };
   },
   onLoad(options) {
-    let id = options.id
+    const { id } = options;
     this.getOneQuiz(id);
   },
   methods: {
@@ -162,46 +162,44 @@ export default {
      * 获取单个测试
      */
     async getOneQuiz(id) {
-      const res = await getQuiz(id)
-      this.quiz = res.quiz
+      const res = await getQuiz(id);
+      this.quiz = res.quiz;
     },
     /**
      * 单选选中
      */
     radioChange(e) {
-      this.current = Number(e.detail.value)
+      this.current = Number(e.detail.value);
     },
     /**
      * 提交
      */
     submitResult(e) {
-      if(this.current === 99){
+      if (this.current === 99) {
         uni.showToast({
           title: '还没有做出选择哦',
           icon: 'none',
         });
-      }
-      else{
+      } else {
         uni.showModal({
-          title: "提交",
-          content: "确定要提交吗？",
+          title: '提交',
+          content: '确定要提交吗？',
           success: (res) => {
             if (res.confirm) {
               if (this.current === this.quiz.answer) {
                 uni.showToast({
-                  title: '答对啦！'
+                  title: '答对啦！',
                 });
-              }
-              else {
+              } else {
                 uni.showToast({
                   title: '太可惜了！',
                   icon: 'none',
                 });
               }
-              this.isShow1 = true
-              this.isShow2 = true
+              this.isShow1 = true;
+              this.isShow2 = true;
             }
-          }
+          },
         });
       }
     },
@@ -209,24 +207,24 @@ export default {
      * 重置题目
      */
     resetQuiz() {
-      this.current = 99
-      this.isShow1 = false
-      this.isShow2 = false
+      this.current = 99;
+      this.isShow1 = false;
+      this.isShow2 = false;
     },
     /**
      * 显示答案
      */
     showAnswer() {
-      this.isShow1 = true
+      this.isShow1 = true;
     },
     /**
      * 显示解析
      */
     showExplain() {
-      this.isShow2 = true
+      this.isShow2 = true;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

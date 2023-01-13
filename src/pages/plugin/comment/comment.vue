@@ -70,31 +70,31 @@
 </template>
 
 <script>
-import {toUserPage}                 from "@/routers";
-import {createComment, getComments} from "@/services/article";
-import ArticleComment               from "@/components/ArticleComment";
+import { toUserPage } from '@/routers';
+import { createComment, getComments } from '@/services/article';
+import ArticleComment from '@/components/ArticleComment';
 
 const app = getApp();
 export default {
   components: {
-    ArticleComment
+    ArticleComment,
   },
   data() {
     return {
-      toUserPage: toUserPage,
+      toUserPage,
       id: 0,
       parent: 0,
 
       comment: {
         user: {
           avatar: '',
-          nickname: ''
+          nickname: '',
         },
 
         time: '',
         content: '',
         kids: [],
-        id: ''
+        id: '',
       },
 
       map: [],
@@ -103,33 +103,32 @@ export default {
     };
   },
   onLoad(options) {
-    let comment  = JSON.parse(options.comment);
-    let id       = options.id;
-    this.comment = comment
-    this.id      = id
+    const comment = JSON.parse(options.comment);
+    const { id } = options;
+    this.comment = comment;
+    this.id = id;
 
-    let map = [];
+    const map = [];
     for (let i = 0; i < this.comment.kids.length; i++) {
       map[this.comment.kids[i].id] = i;
     }
-    this.map = map
+    this.map = map;
   },
   computed: {
     ph_text() {
       if (this.parent > 0) {
         const reply_user = this.comment.kids[this.map[this.parent]].user.nickname;
-        return '@ ' + reply_user
-      } else {
-        return '评论...'
+        return `@ ${reply_user}`;
       }
-    }
+      return '评论...';
+    },
   },
   methods: {
     /**
      * 选中评论框，进入编辑状态
      */
     focus() {
-      this.inEditing = true
+      this.inEditing = true;
     },
 
     /**
@@ -137,9 +136,9 @@ export default {
      */
     blur() {
       if (this.text === '') {
-        this.reply(0)
+        this.reply(0);
       }
-      this.inEditing = false
+      this.inEditing = false;
     },
 
     /**
@@ -147,8 +146,8 @@ export default {
      * @param id 0 表示直接评论文章，其他表示回复某评论的子评论
      */
     reply(id) {
-      this.parent = id
-      this.text   = ''
+      this.parent = id;
+      this.text = '';
     },
 
     /**
@@ -156,7 +155,7 @@ export default {
      * @param e
      */
     getText(e) {
-      this.text = e.detail.value
+      this.text = e.detail.value;
     },
 
     /**
@@ -164,9 +163,9 @@ export default {
      * @param id 文章id
      */
     getComments(id) {
-      getComments(id).then(res => {
+      getComments(id).then((res) => {
         this.comment = res.comment;
-        this.map     = res.map;
+        this.map = res.map;
       });
     },
     /**
@@ -174,28 +173,28 @@ export default {
      */
     createComment() {
       const comment = this.text;
-      const parent  = this.parent;
-      const id      = this.id;
+      const { parent } = this;
+      const { id } = this;
       if (comment.length === 0) {
         uni.showToast({
           title: '不能发送空评论',
-          icon: 'none'
+          icon: 'none',
         });
         return;
       }
       createComment(id, comment, parent).then(async () => {
         await this.getComments(id);
-        this.reply(0)
-        this.inEditing = false
+        this.reply(0);
+        this.inEditing = false;
         setTimeout(() => {
           uni.showToast({
-            title: '发表成功'
+            title: '发表成功',
           });
-        }, 100)
+        }, 100);
       });
     },
 
-  }
+  },
 };
 </script>
 <style>

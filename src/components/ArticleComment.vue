@@ -49,31 +49,31 @@
 </template>
 
 <script>
-import {toUserPage} from "@/routers";
+import { toUserPage } from '@/routers';
 
 export default {
-  name: "ArticleComment",
+  name: 'ArticleComment',
   props: {
     comment: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     parentId: {
       type: Number,
-      default: 0
+      default: 0,
     },
     mention: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
 
   },
   data() {
     return {
-      toUserPage: toUserPage,
-    }
-  }
-}
+      toUserPage,
+    };
+  },
+};
 </script>
 
 <style scoped>

@@ -81,46 +81,45 @@
 </template>
 
 <script>
-import {registerWechatUser} from "@/services/user";
-import CuCustom             from "@/colorui/components/cu-custom.vue";
+import { registerWechatUser } from '@/services/user';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
-const app              = getApp();
-const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg'
+const app = getApp();
+const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg';
 export default {
-  components: {CuCustom},
+  components: { CuCustom },
   data() {
     return {
       is_pwd1: true,
       is_pwd2: true,
       email: '',
-      avatarUrl: defaultAvatarUrl
+      avatarUrl: defaultAvatarUrl,
     };
   },
   methods: {
     onChooseAvatar(e) {
-      this.avatarUrl = e.detail.avatarUrl
+      this.avatarUrl = e.detail.avatarUrl;
     },
 
     ear1() {
-      this.is_pwd1 = !this.is_pwd1
+      this.is_pwd1 = !this.is_pwd1;
     },
 
     ear2() {
-      this.is_pwd2 = !this.is_pwd2
+      this.is_pwd2 = !this.is_pwd2;
     },
 
     wechatRegister(e) {
-      let username           = e.detail.value.username;
-      let password           = e.detail.value.password;
-      let password_confirmed = e.detail.value.password_confirmed;
-      let nickname           = e.detail.value.nickname;
-      let avatar             = e.detail;
-
+      const { username } = e.detail.value;
+      const { password } = e.detail.value;
+      const { password_confirmed } = e.detail.value;
+      const { nickname } = e.detail.value;
+      const avatar = e.detail;
 
       if (!username || !password || !password_confirmed) {
         uni.showToast({
           title: '信息不完整',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
@@ -128,7 +127,7 @@ export default {
       if (password.length < 6 || password.length > 32) {
         uni.showToast({
           title: '密码长度 6 - 32 位',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
@@ -136,7 +135,7 @@ export default {
       if (password !== password_confirmed) {
         uni.showToast({
           title: '两次密码不相同',
-          icon: 'error'
+          icon: 'error',
         });
         return;
       }
@@ -146,14 +145,14 @@ export default {
           content: '未填写昵称将会用用户名暂代哦~',
           success: async (res) => {
             if (res.confirm) {
-              registerWechatUser(username, password, username, avatar)
+              registerWechatUser(username, password, username, avatar);
             }
-          }
+          },
         });
       } else {
-        registerWechatUser(username, password, nickname, avatar)
+        registerWechatUser(username, password, nickname, avatar);
       }
     },
-  }
+  },
 };
 </script>

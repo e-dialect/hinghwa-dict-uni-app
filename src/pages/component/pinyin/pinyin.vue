@@ -219,7 +219,7 @@
 <script>
 const app = getApp();
 
-const utils = require("../../../const/pinyin.js");
+const utils = require('../../../const/pinyin.js');
 
 export default {
   data() {
@@ -231,31 +231,31 @@ export default {
       TabCur: 0,
       list: [
         {
-          color: "red",
-          desc: "介绍",
+          color: 'red',
+          desc: '介绍',
         },
         {
-          color: "orange",
-          desc: "声母",
+          color: 'orange',
+          desc: '声母',
         },
         {
-          color: "cyan",
-          desc: "韵母",
+          color: 'cyan',
+          desc: '韵母',
         },
         {
-          color: "blue",
-          desc: "声调",
+          color: 'blue',
+          desc: '声调',
         },
       ],
-      list1: ["开尾韵", "鼻尾韵", "塞尾韵"],
+      list1: ['开尾韵', '鼻尾韵', '塞尾韵'],
       shengmu: utils.shengmu,
       yunmu: [utils.kai, utils.bi, utils.se],
       tone: utils.tone,
     };
   },
-  onLoad: function () {
-    let that = this;
-    setTimeout(function () {
+  onLoad() {
+    const that = this;
+    setTimeout(() => {
       that.setData({
         toggleDelay: false,
       });
@@ -270,64 +270,61 @@ export default {
   onShareAppMessage() {
     return {
       title: '拼音方案',
-      path: `/pages/component/pinyin/pinyin`,
+      path: '/pages/component/pinyin/pinyin',
       success: () => {
         uni.showToast({
           title: '分享成功',
           icon: 'success',
-          duration: 2000
+          duration: 2000,
         });
       },
       fail: () => {
         uni.showToast({
           title: '分享失败',
           icon: 'none',
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     };
   },
   methods: {
     selectModel(e) {
-      let index = e.currentTarget.dataset.id;
-      let display = [false, false, false, false];
+      const index = e.currentTarget.dataset.id;
+      const display = [false, false, false, false];
       display[index] = true;
       this.setData({
-        display: display,
+        display,
       });
     },
 
     playShengmu(e) {
-      let index = e.currentTarget.dataset.id;
-      let src =
-        "https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/" +
-        this.shengmu[index].pinyin +
-        "/static/pages/component/pinyin/.mp3";
+      const index = e.currentTarget.dataset.id;
+      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+        this.shengmu[index].pinyin
+      }/static/pages/component/pinyin/.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
 
     tabSelect(e) {
-      this.TabCur=e.currentTarget.dataset.id
+      this.TabCur = e.currentTarget.dataset.id;
     },
 
     playYunmu(e) {
-      let index1 = this.TabCur;
-      let index2 = e.currentTarget.dataset.id;
-      let src =
-        "https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/" +
-        this.yunmu[index1][index2].pinyin +
-        "/static/pages/component/pinyin/.mp3";
+      const index1 = this.TabCur;
+      const index2 = e.currentTarget.dataset.id;
+      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+        this.yunmu[index1][index2].pinyin
+      }/static/pages/component/pinyin/.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
 
     playTone(e) {
-      let index = e.currentTarget.dataset.id;
-      let src =
-        "https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/" +
-        this.tone[index].type +
-        "/static/pages/component/pinyin/.mp3";
+      const index = e.currentTarget.dataset.id;
+      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+        this.tone[index].type
+      }/static/pages/component/pinyin/.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },

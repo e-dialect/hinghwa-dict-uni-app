@@ -155,22 +155,22 @@
 </template>
 
 <script>
-import {toIndexPage, toMyRecordsPage, toUserInfoPage}    from "@/routers";
-import {bindingWechat, cancelBindingWechat, getUserInfo} from "@/services/user";
-import {clearUserInfo}                                   from "@/services/login";
+import { toIndexPage, toMyRecordsPage, toUserInfoPage } from '@/routers';
+import { bindingWechat, cancelBindingWechat, getUserInfo } from '@/services/user';
+import { clearUserInfo } from '@/services/login';
 
 const app = getApp();
 export default {
   data() {
     return {
-      toUserInfoPage: toUserInfoPage,
-      toMyRecordsPage: toMyRecordsPage,
+      toUserInfoPage,
+      toMyRecordsPage,
       id: '',
       avatar: '',
       nickname: '',
       recordsCount: 0,
       wordsCount: 0,
-      visitTotal: 0
+      visitTotal: 0,
     };
   },
   beforeMount() {
@@ -182,13 +182,13 @@ export default {
      * @returns {Promise<void>}
      */
     async getInfo() {
-      const userInfo    = await getUserInfo(app.globalData.id);
-      this.id           = userInfo.user.id;
-      this.avatar       = userInfo.user.avatar;
-      this.nickname     = userInfo.user.nickname;
+      const userInfo = await getUserInfo(app.globalData.id);
+      this.id = userInfo.user.id;
+      this.avatar = userInfo.user.avatar;
+      this.nickname = userInfo.user.nickname;
       this.recordsCount = userInfo.contribution.pronunciation;
-      this.wordsCount   = userInfo.contribution.word;
-      this.visitTotal   = userInfo.contribution.listened;
+      this.wordsCount = userInfo.contribution.word;
+      this.visitTotal = userInfo.contribution.listened;
     },
 
     /**
@@ -200,13 +200,13 @@ export default {
 
         success: async (res) => {
           if (res.confirm) {
-            clearUserInfo()
+            clearUserInfo();
             await toIndexPage(uni.getSystemInfoSync().uniPlatform === 'web');
             uni.showToast({
-              title: '登出成功！'
+              title: '登出成功！',
             });
           }
-        }
+        },
       });
     },
 
@@ -218,7 +218,7 @@ export default {
       // 尚未绑定微信
       if (!userInfo.user.wechat) {
         await bindingWechat(app.globalData.id, false);
-        return
+        return;
       }
       // 已经绑定微信
       uni.showModal({
@@ -236,7 +236,7 @@ export default {
                 if (res.confirm) {
                   await cancelBindingWechat(app.globalData.id);
                 }
-              }
+              },
             });
             // 绑定到此微信
             if (uni.getSystemInfoSync().uniPlatform === 'mp-weixin') {
@@ -246,11 +246,11 @@ export default {
                   if (res.confirm) {
                     await bindingWechat(app.globalData.id, true);
                   }
-                }
+                },
               });
             }
           }
-        }
+        },
       });
     },
 
@@ -265,32 +265,32 @@ export default {
             {
               appId: 'wx8abaf00ee8c3202e',
               extraData: {
-                id: "420021"
+                id: '420021',
               },
               fail(res) {
                 uni.navigateToMiniProgram({
                   appId: 'wx8abaf00ee8c3202e',
                   extraData: {
-                    id: "420021"
+                    id: '420021',
                   },
                   fail(res) {
                     uni.showToast({
                       title: '跳转失败！',
-                      icon: 'none'
+                      icon: 'none',
                     });
-                  }
-                })
-              }
-            }
-          )
+                  },
+                });
+              },
+            },
+          );
           break;
         case 'web':
           // 跳转到兴化语记兔小巢页面
           window.location = 'https://support.qq.com/product/420021';
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

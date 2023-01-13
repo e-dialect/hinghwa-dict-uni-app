@@ -6,19 +6,18 @@
 </template>
 
 <script>
-import {getUserInfo} from "@/services/user";
-import {getArticles} from "@/services/article";
-import ArticleList from "@/components/ArticleList";
-
+import { getUserInfo } from '@/services/user';
+import { getArticles } from '@/services/article';
+import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
 export default {
   components: {
-    ArticleList
+    ArticleList,
   },
   data() {
     return {
-      publish_articles: []
+      publish_articles: [],
     };
   },
   onLoad() {
@@ -30,11 +29,11 @@ export default {
      * @returns {Promise<void>}
      */
     async getPublishArticles() {
-      const userInfo = await getUserInfo(app.globalData.id)
-      const articleInfo = await getArticles(userInfo.publish_articles)
-      this.publish_articles = articleInfo.articles
+      const userInfo = await getUserInfo(app.globalData.id);
+      const articleInfo = await getArticles(userInfo.publish_articles);
+      this.publish_articles = articleInfo.articles;
     },
-  }
+  },
 };
 </script>
 <style>

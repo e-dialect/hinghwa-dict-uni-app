@@ -5,7 +5,7 @@ export function playAudio(src) {
   if (!src) {
     uni.showToast({
       title: '不是一个可用文件',
-      icon: 'error'
+      icon: 'error',
     });
     return;
   }
@@ -15,13 +15,13 @@ export function playAudio(src) {
   innerAudioContext.onError(() => {
     uni.showToast({
       title: '播放失败',
-      icon: 'none'
+      icon: 'none',
     });
   });
 
   uni.showToast({
     title: '正在播放...',
-    icon: 'none'
+    icon: 'none',
   });
 
   innerAudioContext.src = src;

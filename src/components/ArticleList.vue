@@ -79,21 +79,22 @@
 </template>
 
 <script>
-import {toArticlePage} from "@/routers";
+import { toArticlePage } from '@/routers';
+
 export default {
-  name: "ArticleList",
+  name: 'ArticleList',
   props: {
     articleList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
   },
   data() {
     return {
-      toArticlePage: toArticlePage,
-    }
-  }
-}
+      toArticlePage,
+    };
+  },
+};
 </script>
 
 <style scoped>

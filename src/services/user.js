@@ -1,11 +1,13 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 /**
  * US0101 新建用户（普通）
  * @returns {Promise<unknown>}
  */
 export async function registerUser(username, password, email, code) {
-  return request.post(`/users`, {username: username, password: password, email: email, code: code})
+  return request.post('/users', {
+    username, password, email, code,
+  });
 }
 
 /**
@@ -19,27 +21,26 @@ export function registerWechatUser(username, password, nickname, avatar) {
   uni.login({
     async success(res) {
       if (res.code) {
-        await request.post(`/users/wechat/register`, {
-            username: username,
-            password: password,
-            jscode: res.code,
-            nickname: nickname,
-            avatar: avatar
-          }
-        ).then(async () => {
+        await request.post('/users/wechat/register', {
+          username,
+          password,
+          jscode: res.code,
+          nickname,
+          avatar,
+        }).then(async () => {
           uni.showToast({
-            title: '注册成功'
+            title: '注册成功',
           });
           uni.navigateBack({
-            delta: 1
+            delta: 1,
           });
         });
       } else {
         uni.showToast({
-          title: '当前平台不支持'
+          title: '当前平台不支持',
         });
       }
-    }
+    },
   });
 }
 
@@ -49,7 +50,7 @@ export function registerWechatUser(username, password, nickname, avatar) {
  * @returns {Promise<unknown>}
  */
 export async function getUserInfo(id) {
-  return request.get(`/users/${id}`)
+  return request.get(`/users/${id}`);
 }
 
 /**
@@ -58,12 +59,12 @@ export async function getUserInfo(id) {
  * @returns {Promise<unknown>}
  */
 export async function changeUserInfo(id, userInfo) {
-  return request.put(`/users/${id}`, {user: userInfo}).then(res => {
+  return request.put(`/users/${id}`, { user: userInfo }).then((res) => {
     uni.setStorageSync('token', res.token);
     uni.showToast({
-      title: '修改成功'
+      title: '修改成功',
     });
-  })
+  });
 }
 
 /**
@@ -74,7 +75,7 @@ export async function changeUserInfo(id, userInfo) {
  * @returns {Promise<unknown>}
  */
 export async function changeUserPassword(id, old_password, new_password) {
-  return request.put(`/users/${id}/password`, {oldpassword: old_password, newpassword: new_password})
+  return request.put(`/users/${id}/password`, { oldpassword: old_password, newpassword: new_password });
 }
 
 /**
@@ -85,7 +86,7 @@ export async function changeUserPassword(id, old_password, new_password) {
  * @returns {Promise<unknown>}
  */
 export async function changeUserEmail(id, email, code) {
-  return request.put(`/users/${id}/email`, {email: email, code: code})
+  return request.put(`/users/${id}/email`, { email, code });
 }
 
 /**
@@ -100,22 +101,21 @@ export async function bindingWechat(id, overwrite) {
       if (!res.code) {
         uni.showToast({
           title: '获取账号失败',
-          icon: 'error'
-        })
-      }
-      await request.put(`/users/${id}/wechat`, {jscode: res.code, overwrite}).then(() => {
-        uni.showToast({
-          title: '绑定成功'
+          icon: 'error',
         });
-      }).catch(err => {
+      }
+      await request.put(`/users/${id}/wechat`, { jscode: res.code, overwrite }).then(() => {
+        uni.showToast({
+          title: '绑定成功',
+        });
+      }).catch((err) => {
         uni.showToast({
           title: err.msg,
-          icon: 'none'
-        })
+          icon: 'none',
+        });
       });
-    }
+    },
   });
-  return
 }
 
 /**
@@ -126,12 +126,12 @@ export async function bindingWechat(id, overwrite) {
 export async function cancelBindingWechat(id) {
   return request.del(`/users/${id}/wechat`).then(() => {
     uni.showToast({
-      title: '解除绑定成功！'
+      title: '解除绑定成功！',
     });
-  }).catch(err => {
+  }).catch((err) => {
     uni.showToast({
       title: err.msg,
-      icon: 'none'
-    })
-  })
+      icon: 'none',
+    });
+  });
 }

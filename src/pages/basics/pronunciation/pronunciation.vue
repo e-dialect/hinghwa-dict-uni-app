@@ -66,78 +66,78 @@
 </template>
 
 <script>
-import {getPronunciationDetails} from "@/services/pronunciation";
+import { getPronunciationDetails } from '@/services/pronunciation';
 
 const app = getApp();
 export default {
-    data() {
-        return {
-            id: 0,
-            word: '',
-            pronunciation: [],
-            return: false
-        };
-    },
-    onLoad(options) {
-        this.setData({
-            id: options.id,
-            word: options.word
-        });
-        this.getPronunciation(); // 创建播放器
+  data() {
+    return {
+      id: 0,
+      word: '',
+      pronunciation: [],
+      return: false,
+    };
+  },
+  onLoad(options) {
+    this.setData({
+      id: options.id,
+      word: options.word,
+    });
+    this.getPronunciation(); // 创建播放器
 
-        this.innerAudioContext = uni.createInnerAudioContext();
-    },
-    onShow() {
-        if (this.return) {
-            this.getPronunciation();
-        } else {
-            this.setData({
-                return: true
-            });
-        }
-    },
-    methods: {
-        // 获取字词发音
-        getPronunciation() {
-            this.pronunciation=getPronunciationDetails(this.id)
-        },
-
-        toVisitor(e) {
-            let id = e.currentTarget.dataset.id;
-            uni.navigateTo({
-                url: '/pages/about/visitor/visitor?id=' + id
-            });
-        },
-
-        uploadPronunciation() {
-            let id = this.id;
-            let word = this.word;
-            uni.navigateTo({
-                url: '/pages/Words/PronunciationUpload/PronunciationUpload?id=' + id + '&word=' + word
-            });
-        },
-
-        play(e) {
-            let index = e.currentTarget.dataset.index;
-            var src = this.pronunciation[index].pronunciation.source;
-            console.log(src);
-
-            if (src == '') {
-                uni.showToast({
-                    title: '音源为空！',
-                    icon: 'error'
-                });
-                return;
-            }
-
-            uni.showToast({
-                title: '正在播放录音..',
-                icon: 'none'
-            });
-            this.innerAudioContext.src = src;
-            this.innerAudioContext.play();
-        }
+    this.innerAudioContext = uni.createInnerAudioContext();
+  },
+  onShow() {
+    if (this.return) {
+      this.getPronunciation();
+    } else {
+      this.setData({
+        return: true,
+      });
     }
+  },
+  methods: {
+    // 获取字词发音
+    getPronunciation() {
+      this.pronunciation = getPronunciationDetails(this.id);
+    },
+
+    toVisitor(e) {
+      const { id } = e.currentTarget.dataset;
+      uni.navigateTo({
+        url: `/pages/about/visitor/visitor?id=${id}`,
+      });
+    },
+
+    uploadPronunciation() {
+      const { id } = this;
+      const { word } = this;
+      uni.navigateTo({
+        url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${id}&word=${word}`,
+      });
+    },
+
+    play(e) {
+      const { index } = e.currentTarget.dataset;
+      const src = this.pronunciation[index].pronunciation.source;
+      console.log(src);
+
+      if (src == '') {
+        uni.showToast({
+          title: '音源为空！',
+          icon: 'error',
+        });
+        return;
+      }
+
+      uni.showToast({
+        title: '正在播放录音..',
+        icon: 'none',
+      });
+      this.innerAudioContext.src = src;
+      this.innerAudioContext.play();
+    },
+  },
 };
 </script>
 <style>

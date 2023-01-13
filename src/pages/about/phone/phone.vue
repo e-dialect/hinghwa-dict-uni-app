@@ -25,25 +25,25 @@
 </template>
 
 <script>
-import {changeUserInfo, getUserInfo} from "@/services/user";
+import { changeUserInfo, getUserInfo } from '@/services/user';
 
 const app = getApp();
 export default {
   data() {
     return {
-      phone: ''
+      phone: '',
     };
   },
   methods: {
     setPhone(e) {
-      this.phone = e.detail.value
+      this.phone = e.detail.value;
     },
 
     /**
      * 更改手机号
      */
     async savePhone() {
-      const userInfo = await getUserInfo(app.globalData.id)
+      const userInfo = await getUserInfo(app.globalData.id);
       userInfo.user.telephone = this.phone;
       if (this.phone.length != 11) {
         uni.showModal({
@@ -56,17 +56,17 @@ export default {
           uni.setStorageSync('token', res.token);
           setTimeout(() => {
             uni.showToast({
-              title: '修改成功'
+              title: '修改成功',
             });
             // 返回上一个页面
             uni.navigateBack({
-              delta: 1
+              delta: 1,
             });
-          }, 100)
+          }, 100);
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

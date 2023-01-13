@@ -25,18 +25,18 @@
 </template>
 
 <script>
-import {changeUserInfo, getUserInfo} from "@/services/user";
+import { changeUserInfo, getUserInfo } from '@/services/user';
 
 const app = getApp();
 export default {
   data() {
     return {
-      nickname: ''
+      nickname: '',
     };
   },
   methods: {
     setNickname(e) {
-      this.nickname = e.detail.value
+      this.nickname = e.detail.value;
     },
 
     /**
@@ -50,22 +50,22 @@ export default {
           showCancel: false,
         });
       } else {
-        const userInfo = await getUserInfo(app.globalData.id)
+        const userInfo = await getUserInfo(app.globalData.id);
         userInfo.user.nickname = this.nickname;
-        changeUserInfo(app.globalData.id , userInfo.user).then(async (res) => {
+        changeUserInfo(app.globalData.id, userInfo.user).then(async (res) => {
           uni.setStorageSync('token', res.token);
           setTimeout(() => {
             uni.showToast({
-              title: '修改成功'
+              title: '修改成功',
             });
             uni.navigateBack({
-              delta: 1
+              delta: 1,
             }); // 返回上一个页面
-          }, 100)
+          }, 100);
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

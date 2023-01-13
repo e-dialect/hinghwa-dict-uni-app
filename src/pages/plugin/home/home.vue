@@ -44,14 +44,14 @@
 </template>
 
 <script>
-import {getHotArticles} from "@/services/website";
-import {searchArticle} from "@/services/article";
-import ArticleList from "@/components/ArticleList";
+import { getHotArticles } from '@/services/website';
+import { searchArticle } from '@/services/article';
+import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
 export default {
   components: {
-    ArticleList
+    ArticleList,
   },
   data() {
     return {
@@ -60,14 +60,14 @@ export default {
       displayArticles: [],
       page: 1,
       status: 0,
-      triggered: false
+      triggered: false,
     };
   },
   onLoad() {
     this._freshing = false;
   },
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
   beforeMount() {
     this.getHotArticlesList();
@@ -78,9 +78,9 @@ export default {
      * @returns {Promise<void>}
      */
     async getHotArticlesList() {
-      const res         = await getHotArticles()
-      this.hot_articles = res.hot_articles
-      await this.getArticlesList()
+      const res = await getHotArticles();
+      this.hot_articles = res.hot_articles;
+      await this.getArticlesList();
     },
 
     /**
@@ -90,8 +90,8 @@ export default {
     async getArticlesList() {
       await searchArticle().then(async (res) => {
         this.allArticles = res;
-        this.displayArticles = res.slice(0, 4)
-      })
+        this.displayArticles = res.slice(0, 4);
+      });
     },
 
     onPulling() {
@@ -107,7 +107,7 @@ export default {
       this.getHotArticlesList();
       setTimeout(() => {
         this.setData({
-          triggered: false
+          triggered: false,
         });
         this._freshing = false;
       }, 500);
@@ -116,29 +116,29 @@ export default {
     // 加载更多文章
     loadMoreArticles() {
       uni.showLoading();
-      let page = this.page;
-      let origin_articles = this.displayArticles;
-      let concat_articles = this.allArticles.slice(page * 4, page * 4 + 4);
+      const { page } = this;
+      const origin_articles = this.displayArticles;
+      const concat_articles = this.allArticles.slice(page * 4, page * 4 + 4);
       this.setData({
         page: page + 1,
-        displayArticles: origin_articles.concat(concat_articles)
+        displayArticles: origin_articles.concat(concat_articles),
       });
-      setTimeout(function () {
+      setTimeout(() => {
         uni.hideLoading();
       }, 500);
     },
 
     changeStatus(e) {
-      let index = e.currentTarget.dataset.index;
-      this.status = Number(index)
+      const { index } = e.currentTarget.dataset;
+      this.status = Number(index);
     },
 
     writeArticle() {
       uni.navigateTo({
-        url: '/pages/plugin/write/write'
+        url: '/pages/plugin/write/write',
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -149,4 +149,3 @@ export default {
   z-index: 1024;
 }
 </style>
-

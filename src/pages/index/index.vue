@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import {COS_URL}               from "../../const/urls";
-import basics                  from "../basics/home/home";
-import tools                   from "../component/home/home";
-import InteractionPage         from "../plugin/home/home";
-import me                        from "../about/home/home";
-import {mpLogin, getLoginStatus} from "../../services/login";
+import { COS_URL } from '../../const/urls';
+import basics from '../basics/home/home';
+import tools from '../component/home/home';
+import InteractionPage from '../plugin/home/home';
+import me from '../about/home/home';
+import { mpLogin, getLoginStatus } from '../../services/login';
 
 const app = getApp();
 export default {
@@ -44,44 +44,44 @@ export default {
   },
   data() {
     return {
-      cosUrl: COS_URL + '/images/tabbar/',
-      currentPage: "basics",
+      cosUrl: `${COS_URL}/images/tabbar/`,
+      currentPage: 'basics',
       tabBar: [
         {
           name: 'basics',
-          image: 'index'
+          image: 'index',
         },
         {
           name: 'tools',
-          image: 'tool'
+          image: 'tool',
         },
         {
           name: 'InteractionPage',
-          image: 'hd'
+          image: 'hd',
         },
         {
           name: 'me',
-          image: 'my'
-        }
-      ]
+          image: 'my',
+        },
+      ],
     };
   },
   // TODO: 更新分享界面
   onShareAppMessage() {
     return {
-      title: "",
-      path: "/pages/index/index",
-      success: function (res) {
+      title: '',
+      path: '/pages/index/index',
+      success(res) {
         // 转发成功
       },
-      fail: function (res) {
+      fail(res) {
         // 转发失败
       },
     };
   },
   onLoad(options) {
     if (options.status) {
-      this.currentPage = options.status
+      this.currentPage = options.status;
     }
   },
   methods: {
@@ -90,11 +90,11 @@ export default {
      * @param page 新页面
      */
     async changePage(page) {
-      if (page === "me") {
-        const hasLogin = await getLoginStatus()
+      if (page === 'me') {
+        const hasLogin = await getLoginStatus();
         if (!hasLogin) {
           uni.showModal({
-            content: "请先登录",
+            content: '请先登录',
             showCancel: false,
             success: () => {
               mpLogin();
@@ -103,7 +103,7 @@ export default {
           return;
         }
       }
-      this.currentPage = page
+      this.currentPage = page;
     },
   },
 };

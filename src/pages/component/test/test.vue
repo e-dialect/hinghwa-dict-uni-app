@@ -187,15 +187,15 @@
 </template>
 
 <script>
-import {getRandomQuiz} from "@/services/quiz";
-import {toPosterPage} from "@/routers";
+import { getRandomQuiz } from '@/services/quiz';
+import { toPosterPage } from '@/routers';
 
 const app = getApp();
 
 export default {
   data() {
     return {
-      toPosterPage: toPosterPage,
+      toPosterPage,
       percent: 0,
       current: [], // 选中的选项
       showAnswer: [],
@@ -203,9 +203,9 @@ export default {
       subjectIndex: 0, // 跳转索引
       swiperHeight: '800px',
       subjectList: [],
-      modalCard: null ,//显示答题卡
-      totalScore: 0
-    }
+      modalCard: null, // 显示答题卡
+      totalScore: 0,
+    };
   },
   /*  onReady() {
       let tempHeight = 800;
@@ -227,13 +227,13 @@ export default {
           }).exec();
         }
       }); // swiper高度自适应
-    },*/
+    }, */
   onLoad() {
     this.getTest();
     uni.getSystemInfo({
       success: (res) => {
-        this.swiperHeight = res.windowHeight + 'px';
-      }
+        this.swiperHeight = `${res.windowHeight}px`;
+      },
     });
     /*    // select中的参数就如css选择器一样选择元素
         let info = uni.createSelectorQuery().in(this).select("#swiper-view");
@@ -253,28 +253,28 @@ export default {
      * @returns {Promise<void>}
      */
     async getTest() {
-      for(let i=0 ; i < 20 ; i++) {
-        const res = await getRandomQuiz()
-        this.subjectList[i] = res.quiz
-        this.current[i] = 99
-        this.showAnswer[i] = 0
-        this.rightAnswer[i] = res.quiz.answer
+      for (let i = 0; i < 20; i++) {
+        const res = await getRandomQuiz();
+        this.subjectList[i] = res.quiz;
+        this.current[i] = 99;
+        this.showAnswer[i] = 0;
+        this.rightAnswer[i] = res.quiz.answer;
       }
-      this.subjectList=[...this.subjectList]
+      this.subjectList = [...this.subjectList];
     },
 
     /**
      * 显示答题卡
      */
     showCardModal(e) {
-      this.modalCard = e.currentTarget.dataset.target
+      this.modalCard = e.currentTarget.dataset.target;
     },
 
     /**
      * 隐藏答题卡
      */
     hideCardModal() {
-      this.modalCard = null
+      this.modalCard = null;
     },
 
     /**
@@ -290,31 +290,29 @@ export default {
     submit() {
       this.totalScore = 0;
       uni.showModal({
-        title: "提交",
-        content: "确定要提交吗？",
+        title: '提交',
+        content: '确定要提交吗？',
         success: (res) => {
           if (res.confirm) {
-            for (let i=0; i < 20; i++) {
+            for (let i = 0; i < 20; i++) {
               if (this.current[i] === this.rightAnswer[i]) {
-                this.totalScore += 5
+                this.totalScore += 5;
               }
             }
-            console.log(this.totalScore)
+            console.log(this.totalScore);
             this.toPosterPage(this.totalScore);
           }
-        }
+        },
       });
-
     },
 
     /**
      * 设置进度条进度
      */
     setProgress() {
-      this.percent = 0
-      for(let i=0; i < 20; i++) {
-        if(this.current[i] !== 99)
-          this.percent += 5
+      this.percent = 0;
+      for (let i = 0; i < 20; i++) {
+        if (this.current[i] !== 99) this.percent += 5;
       }
     },
 
@@ -323,21 +321,19 @@ export default {
      */
     radioChange(e) {
       this.current[this.subjectIndex] = Number(e.detail.value);
-      this.setProgress()
+      this.setProgress();
     },
 
     /**
      * 显示/隐藏答案
      */
     showAnswerChange() {
-      if(this.showAnswer[this.subjectIndex] === 0)
-      {
+      if (this.showAnswer[this.subjectIndex] === 0) {
         this.showAnswer[this.subjectIndex] = 1;
-      }
-      else{
+      } else {
         this.showAnswer[this.subjectIndex] = 0;
       }
-      this.showAnswer = [...this.showAnswer]
+      this.showAnswer = [...this.showAnswer];
     },
 
     /**
@@ -359,8 +355,8 @@ export default {
       this.modalCard = null;
       this.subjectIndex = count;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

@@ -86,57 +86,57 @@
 </template>
 
 <script>
-import {sendEmailCode}                     from "@/services/website";
-import {getEmailByUsername, resetPassword} from "@/services/login";
+import { sendEmailCode } from '@/services/website';
+import { getEmailByUsername, resetPassword } from '@/services/login';
 
 const app = getApp();
 export default {
-    data() {
-        return {
-            username: '',
-            email: '',
-            status: 0,
-            is_pwd: true
-        };
+  data() {
+    return {
+      username: '',
+      email: '',
+      status: 0,
+      is_pwd: true,
+    };
+  },
+  methods: {
+    getUsername(e) {
+      this.username = e.detail.value;
     },
-    methods: {
-        getUsername(e) {
-          this.username=e.detail.value
-        },
 
-        next() {
-            getEmailByUsername(this.username).then(res=>{
-              this.email=res.email
-              this.status=1
-            })
-        },
+    next() {
+      getEmailByUsername(this.username).then((res) => {
+        this.email = res.email;
+        this.status = 1;
+      });
+    },
 
-        // 获取验证码
-        getCode() {
-           sendEmailCode(this.email)
-        },
+    // 获取验证码
+    getCode() {
+      sendEmailCode(this.email);
+    },
 
-        ear() {
-          this.is_pwd = !this.is_pwd
-        },
+    ear() {
+      this.is_pwd = !this.is_pwd;
+    },
 
-        reset(e) {
-          const username = this.username;
-          const email    = this.email;
-          const code     = e.detail.value.code;
-          const password = e.detail.value.password;
-          resetPassword(username, email, code, password).then(() => {
-            uni.showToast({
-              title: '重置成功',
-              icon: 'success',
-              duration: 2000
-            });
-            uni.navigateBack({
-              delta: 1
-            });
-          })
-        }
-    }
+    reset(e) {
+      const { username } = this;
+      const { email } = this;
+      const { code } = e.detail.value;
+      const { password } = e.detail.value;
+      resetPassword(username, email, code, password).then(() => {
+        uni.showToast({
+          title: '重置成功',
+          icon: 'success',
+          duration: 2000,
+        });
+        uni.navigateBack({
+          delta: 1,
+        });
+      });
+    },
+  },
 };
 </script>
 <style>
