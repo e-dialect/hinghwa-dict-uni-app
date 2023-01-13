@@ -122,7 +122,7 @@ export default {
       const src = this.pronunciation[index].pronunciation.source;
       console.log(src);
 
-      if (src == '') {
+      if (src === '') {
         uni.showToast({
           title: '音源为空！',
           icon: 'error',

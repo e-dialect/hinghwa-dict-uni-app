@@ -74,7 +74,7 @@ export default {
       const { index } = e.currentTarget.dataset;
       const { pwd } = this;
 
-      if (pwd[index].is_pwd == true) {
+      if (pwd[index].is_pwd === true) {
         pwd[index].is_pwd = false;
         pwd[index].icon = 'cuIcon-attentionforbid';
       } else {
@@ -90,13 +90,13 @@ export default {
       const new1 = e.detail.value.new1.trim();
       const new2 = e.detail.value.new2.trim();
 
-      if (old == '' || new1 == '' || new2 == '') {
+      if (old === '' || new1 === '' || new2 === '') {
         uni.showToast({
           title: '内容不完整',
           icon: 'error',
         });
         return;
-      } if (new1 != new2) {
+      } if (new1 !== new2) {
         uni.showToast({
           title: '两次密码不一样',
           icon: 'error',

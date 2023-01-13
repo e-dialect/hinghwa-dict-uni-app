@@ -16,7 +16,7 @@
       class="scrollPage"
     >
       <view
-        v-if="index == 2"
+        v-if="index === 2"
         class="bg-white padding-sm padding-left"
       >
         <view class="text-black text-bold text-xl">
@@ -74,7 +74,7 @@
     <view class="flex-sub padding text-center" bindtap="sort" data-index="3">更多</view>
   </view> -->
       <view
-        v-if="index == 0 && status == 1"
+        v-if="index === 0 && status === 1"
         class="cu-list menu"
       >
         <view
@@ -107,7 +107,7 @@
           </view>
         </view>
       </view>
-      <view v-if="index == 1 && status == 1">
+      <view v-if="index === 1 && status === 1">
         <view
           v-for="(item, index11) in pronunciation"
           :key="index11"
@@ -145,7 +145,7 @@
         </view>
       </view>
       <view
-        v-if="index == 2 && status == 1"
+        v-if="index === 2 && status === 1"
         class="bg-white"
       >
         <view
@@ -204,7 +204,7 @@
           </view>
         </view>
       </view>
-      <view v-if="index == 3 && status == 1">
+      <view v-if="index === 3 && status === 1">
         <ArticleList
           v-if="articles.length !== 0"
           :article-list="articles"
@@ -305,7 +305,7 @@ export default {
     },
 
     search() {
-      if (this.key == '') {
+      if (this.key === '') {
         uni.showModal({
           content: '搜索内容为空！',
           showCancel: false,
@@ -317,16 +317,16 @@ export default {
       uni.setStorageSync('history', this.history);
       const { key } = this;
       const { index } = this;
-      if (index == 0) {
+      if (index === 0) {
         // 词语
         this.searchWord(key);
-      } else if (index == 1) {
+      } else if (index === 1) {
         // 单字 多字
         this.searchCharacter(key);
-      } else if (index == 2) {
+      } else if (index === 2) {
         // 拼音
         this.searchPinyin(key);
-      } else if (index == 3) {
+      } else if (index === 3) {
         // 文章
         this.searchArticleList(key);
       }

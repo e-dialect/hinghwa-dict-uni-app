@@ -45,7 +45,7 @@ export default {
     async savePhone() {
       const userInfo = await getUserInfo(app.globalData.id);
       userInfo.user.telephone = this.phone;
-      if (this.phone.length != 11) {
+      if (this.phone.length !== 11) {
         uni.showModal({
           title: '提示',
           content: '请输入正确格式的手机号码',
