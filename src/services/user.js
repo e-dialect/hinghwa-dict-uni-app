@@ -70,12 +70,12 @@ export async function changeUserInfo(id, userInfo) {
 /**
  * US0302 更新用户密码
  * @param id 用户id
- * @param old_password 旧密码
- * @param new_password 新密码
+ * @param oldPassword 旧密码
+ * @param newPassword 新密码
  * @returns {Promise<unknown>}
  */
-export async function changeUserPassword(id, old_password, new_password) {
-  return request.put(`/users/${id}/password`, { oldpassword: old_password, newpassword: new_password });
+export async function changeUserPassword(id, oldPassword, newPassword) {
+  return request.put(`/users/${id}/password`, { oldpassword: oldPassword, newpassword: newPassword });
 }
 
 /**
