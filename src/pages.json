@@ -107,10 +107,6 @@
       "style": {}
     },
     {
-      "path": "pages/plugin/write/write",
-      "style": {}
-    },
-    {
       "path": "pages/about/home/home",
       "style": {
         "component": true
@@ -166,6 +162,10 @@
     },
     {
       "path": "pages/forget/forget",
+      "style": {}
+    },
+    {
+      "path": "pages/articles/ArticleEditing/ArticleEditing",
       "style": {}
     }
   ],

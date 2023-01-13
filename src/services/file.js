@@ -64,3 +64,47 @@ export function uploadFile(file) {
     });
   });
 }
+
+/**
+ * 选择并上传图片
+ * @param maxNumber 最大数量
+ * @return{Promise<string[]>} URL 列表
+ */
+export async function chooseAndUploadImages(maxNumber = 1) {
+  const images = await new Promise((resolve) => {
+    uni.chooseImage({
+      count: maxNumber,
+      success: (res) => {
+        const { tempFilePaths } = res;
+        const promises = [];
+        console.log(tempFilePaths);
+        tempFilePaths.forEach((path) => {
+          promises.push(uploadFile(path));
+        });
+        resolve(Promise.all(promises));
+      },
+      fail: (err) => {
+        uni.showToast({
+          title: err.errMsg,
+        });
+        resolve([]);
+      },
+    });
+  });
+  const promises = [];
+  images.forEach(async (image) => {
+    promises.push(uploadFile(image));
+  });
+  const ans = await Promise.all(promises);
+  console.log(ans);
+  return ans.map((item) => JSON.parse(item).url);
+}
+
+/**
+ * 选择并上传一张图片
+ * @returns {Promise<string>} 图片的 url
+ */
+export async function chooseAndUploadAnImage() {
+  const images = await chooseAndUploadImages(1);
+  return images[0];
+}

@@ -1,6 +1,25 @@
 import request from '@/utils/request';
 
 /**
+ * AT0101 创建文章
+ * @param article{{title:string,description:string,content:string,cover:string}} 文章内容
+ * @returns {Promise<unknown>}
+ */
+export async function createArticle(article) {
+  return request.post('/article', article);
+}
+
+/**
+ * AT0103 更新文章
+ * @param id{number} 文章 id
+ * @param article{{title:string,description:string,content:string,cover:string}} 文章内容
+ * @returns {Promise<unknown>}
+ */
+export async function updateArticle(id, article) {
+  return request.put(`/article/${id}`, article);
+}
+
+/**
  * AT0104 获取文章信息
  * @param id 文章id
  * @returns {Promise<{}>} 文章和me对象
