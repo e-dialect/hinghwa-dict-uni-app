@@ -80,16 +80,6 @@ export function toWordPage(id) {
 }
 
 /**
- * 前往文章页面
- * @param id 文章id
- */
-export function toArticlePage(id) {
-  uni.navigateTo({
-    url: `/pages/plugin/article/article?id=${id}`,
-  });
-}
-
-/**
  * 前往忘记密码页面
  */
 export function toForgetPage() {

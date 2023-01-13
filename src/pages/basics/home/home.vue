@@ -112,8 +112,9 @@
 
 <script>
 import { getAnnouncements, getWordOfTheDay } from '@/services/website';
-import { toArticlePage, toSearchPage } from '@/routers';
+import { toSearchPage } from '@/routers';
 import { toWordPage } from '@/routers/word';
+import { toArticlePage } from '@/routers/article';
 import { mpLogin } from '../../../services/login';
 
 const app = getApp();

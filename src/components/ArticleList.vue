@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { toArticlePage } from '@/routers';
+import { toArticlePage } from '@/routers/article';
 
 export default {
   name: 'ArticleList',

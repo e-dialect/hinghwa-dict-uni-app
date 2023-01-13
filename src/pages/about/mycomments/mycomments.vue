@@ -54,7 +54,7 @@
 <script>
 import { getUserInfo } from '@/services/user';
 import { getComment } from '@/services/article';
-import { toArticlePage } from '@/routers';
+import { toArticlePage } from '@/routers/article';
 
 const app = getApp();
 export default {
