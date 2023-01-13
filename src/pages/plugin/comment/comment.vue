@@ -109,7 +109,7 @@ export default {
     this.id = id;
 
     const map = [];
-    for (let i = 0; i < this.comment.kids.length; i++) {
+    for (let i = 0; i < this.comment.kids.length; i += 1) {
       map[this.comment.kids[i].id] = i;
     }
     this.map = map;
@@ -117,8 +117,8 @@ export default {
   computed: {
     ph_text() {
       if (this.parent > 0) {
-        const reply_user = this.comment.kids[this.map[this.parent]].user.nickname;
-        return `@ ${reply_user}`;
+        const replyUser = this.comment.kids[this.map[this.parent]].user.nickname;
+        return `@ ${replyUser}`;
       }
       return '评论...';
     },

@@ -218,8 +218,8 @@ export default {
   computed: {
     ph_text() {
       if (this.parent > 0) {
-        const reply_user = this.comments[this.map[this.parent]].user.nickname;
-        return `@ ${reply_user}`;
+        const replyUser = this.comments[this.map[this.parent]].user.nickname;
+        return `@ ${replyUser}`;
       }
       return '评论...';
     },
@@ -254,9 +254,9 @@ export default {
      */
     toCommentDetailsPage(id) {
       const comment = JSON.stringify(this.comments[this.map[id]]);
-      const article_id = this.id;
+      const articleId = this.id;
       uni.navigateTo({
-        url: `/pages/plugin/comment/comment?comment=${comment}&id=${article_id}`,
+        url: `/pages/plugin/comment/comment?comment=${comment}&id=${articleId}`,
       });
     },
 
@@ -326,7 +326,7 @@ export default {
     btnLike() {
       if (!this.me.liked) {
         // 点赞
-        likeArticle(this.id).then((res) => {
+        likeArticle(this.id).then(() => {
           this.article.likes += 1;
           this.me.liked = true;
         });
@@ -337,7 +337,7 @@ export default {
           content: '确定取消点赞吗？',
           success: (res) => {
             if (res.confirm) {
-              unlikeArticle(this.id).then((res) => {
+              unlikeArticle(this.id).then(() => {
                 this.article.likes -= 1;
                 this.me.liked = false;
               });
