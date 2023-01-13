@@ -82,7 +82,7 @@
 
 <script>
 import { registerWechatUser } from '@/services/user';
-import CuCustom from '@/colorui/components/cu-custom.vue';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg';
@@ -112,11 +112,11 @@ export default {
     wechatRegister(e) {
       const { username } = e.detail.value;
       const { password } = e.detail.value;
-      const { password_confirmed } = e.detail.value;
+      const { password_confirmed: passwordConfirmed } = e.detail.value;
       const { nickname } = e.detail.value;
-      const avatar = e.detail;
+      const avatar = this.avatarUrl;
 
-      if (!username || !password || !password_confirmed) {
+      if (!username || !password || !passwordConfirmed) {
         uni.showToast({
           title: '信息不完整',
           icon: 'error',
@@ -132,7 +132,7 @@ export default {
         return;
       }
 
-      if (password !== password_confirmed) {
+      if (password !== passwordConfirmed) {
         uni.showToast({
           title: '两次密码不相同',
           icon: 'error',
