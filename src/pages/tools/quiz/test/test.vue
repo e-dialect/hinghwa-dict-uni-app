@@ -270,7 +270,7 @@ export default {
     async getTest() {
       const res = await getTestPaper(20);
       this.subjectList = res.paper;
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 20; i += 1) {
         this.current[i] = 99;
         this.showAnswer[i] = 0;
         this.rightAnswer[i] = res.paper[i].answer;

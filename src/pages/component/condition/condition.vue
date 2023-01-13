@@ -147,9 +147,9 @@ export default {
       [],
     ];
 
-    for (let i = 0; i < utils.yunmu.length; i++) {
+    for (let i = 0; i < utils.yunmu.length; i += 1) {
       if (i === 0) {
-        for (let j = 0; j < utils.yunmu[0].children.length; j++) {
+        for (let j = 0; j < utils.yunmu[0].children.length; j += 1) {
           yunmu[1].push(utils.yunmu[0].children[j].label);
         }
       }
@@ -214,28 +214,28 @@ export default {
 
           switch (data.multiIndex[0]) {
             case 0:
-              for (let i = 0; i < utils.yunmu[0].children.length; i++) {
+              for (let i = 0; i < utils.yunmu[0].children.length; i += 1) {
                 data.yunmu[1].push(utils.yunmu[0].children[i].label);
               }
 
               break;
 
             case 1:
-              for (let i = 0; i < utils.yunmu[1].children.length; i++) {
+              for (let i = 0; i < utils.yunmu[1].children.length; i += 1) {
                 data.yunmu[1].push(utils.yunmu[1].children[i].label);
               }
 
               break;
 
             case 2:
-              for (let i = 0; i < utils.yunmu[2].children.length; i++) {
+              for (let i = 0; i < utils.yunmu[2].children.length; i += 1) {
                 data.yunmu[1].push(utils.yunmu[2].children[i].label);
               }
 
               break;
 
             case 3:
-              for (let i = 0; i < utils.yunmu[3].children.length; i++) {
+              for (let i = 0; i < utils.yunmu[3].children.length; i += 1) {
                 data.yunmu[1].push(utils.yunmu[3].children[i].label);
               }
 
@@ -264,9 +264,9 @@ export default {
     },
 
     getYunmu() {
-      for (let i = 0; i < utils.yunmu.length; i++) {
+      for (let i = 0; i < utils.yunmu.length; i += 1) {
         if (utils.yunmu[i].label === this.yunmu[0][this.multiIndex[0]]) {
-          for (let j = 0; j < utils.yunmu[i].children.length; j++) {
+          for (let j = 0; j < utils.yunmu[i].children.length; j += 1) {
             if (utils.yunmu[i].children[j].label === this.yunmu[1][this.multiIndex[1]]) {
               return utils.yunmu[i].children[j].value;
             }
