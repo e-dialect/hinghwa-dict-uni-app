@@ -3,10 +3,14 @@ import request from '@/utils/request';
 /**
  * AT0104 获取文章信息
  * @param id 文章id
- * @returns {Promise<unknown>}
+ * @returns {Promise<{}>} 文章和me对象
  */
 export async function getArticle(id) {
-  return request.get(`/articles/${id}`);
+  try {
+    return await request.get(`/articles/${id}`);
+  } catch (e) {
+    return {};
+  }
 }
 
 /**

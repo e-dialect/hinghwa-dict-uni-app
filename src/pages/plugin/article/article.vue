@@ -232,17 +232,19 @@ export default {
      */
     async getArticle(id) {
       const res = await getArticle(id);
-      this.article = res.article;
-      this.me = res.me;
-      await this.getComments(id);
+      if ('me' in res) {
+        this.article = res.article;
+        this.me = res.me;
+        await this.getComments(id);
+      }
     },
 
     /**
      * 获取文章评论
      * @param id 文章id
      */
-    getComments(id) {
-      getComments(id).then((res) => {
+    async getComments(id) {
+      return getComments(id).then((res) => {
         this.comments = res.comments;
         this.map = res.map;
       });
