@@ -7,37 +7,43 @@
       <view
         v-for="(item,index) in wordList"
         :key="index"
+        class="padding"
       >
         <view
           :hoverable="true"
+          class="flex"
           style="width: 100%;"
         >
-          <view :description="item.definition.slice(0,100)">
-            <view>
-              <view class="text-xl text-bold">
-                <view
-                  :to="{name:'WordDetails',params:{id:item.id.toString()}}"
-                  style="color:black"
-                >
-                  {{ item.word }}
-                </view>
-              </view>
+          <view
+            :description="item.definition.slice(0,100)"
+            style="width: 75%;"
+          >
+            <view class="text-xl text-bold">
               <view
-                class="text-lg"
-                style="padding-left: 10px"
+                :to="{name:'WordDetails',params:{id:item.id.toString()}}"
+                style="color:black"
               >
-                {{ item.standard_pinyin }}
-              </view>
-              <view
-                class="text-lg"
-                style="color: rgb(155,155,155);padding-left: 10px"
-              >
-                / {{ item.standard_ipa }}/
+                {{ item.word }}
               </view>
             </view>
+            <view
+              class="text-lg"
+              style="padding-left: 10px"
+            >
+              {{ item.standard_pinyin }}
+            </view>
+            <view
+              class="text-lg"
+              style="color: rgb(155,155,155);padding-left: 10px"
+            >
+              / {{ item.standard_ipa }}/
+            </view>
           </view>
-          <view class="align-end">
-            <button type="link">
+          <view class="margin-right margin-bottom">
+            <button
+              type="link"
+              class="cu-btn bg-blue shadow"
+            >
               <view :to="{name:'WordDetails',params:{id:item.id.toString()}}">
                 更多
                 <view type="double-right" />
