@@ -38,7 +38,7 @@
     <!--答题卡-->
     <view
       class="cu-modal"
-      :class="modalCard==='modalCard'?'show':''"
+      :class="showModalCard?'show':''"
       @tap="hideCardModal"
     >
       <view
@@ -55,8 +55,8 @@
         </view>
         <view class="grid col-5 ">
           <view
-            v-for="index in [...Array(subjectList.length).keys()]"
-            :key="index"
+            v-for="index in Array(subjectList.length).keys()"
+            :key="'question_index_'+index"
             class="margin-tb-sm text-center"
           >
             <button
@@ -64,7 +64,7 @@
               :class="current[index]===99?'line-grey':'bg-blue'"
               @click="appointedSubject(index)"
             >
-              {{ index+1 }}
+              {{ index + 1 }}
             </button>
           </view>
         </view>
@@ -80,7 +80,7 @@
       >
         <swiper-item
           v-for="(subject,index1) in subjectList"
-          :key="index1"
+          :key="'question'+index1"
         >
           <view
             class="bg-cyan solid-bottom card shadow -gray margin-xs"
@@ -105,11 +105,11 @@
               >
                 <label
                   v-for="(option,index2) in subject.options"
-                  :key="index2"
+                  :key="'item'+index2"
                   class="cu-form-group"
                 >
                   <radio
-                    :value="index2"
+                    :value="index2.toString()"
                     :checked="index2 === current[index1]"
                   />
                   <view class="title text-black">
@@ -151,7 +151,7 @@
     >
       <!--播放音频-->
       <view
-        v-if="subjectList[subjectIndex].voice_source"
+        v-if="subjectIndex>=0&&subjectList[subjectIndex].voice_source"
         class="action"
         @tap="play(subjectList[subjectIndex].voice_source)"
       >
@@ -216,10 +216,10 @@ export default {
       current: [], // 选中的选项
       showAnswer: [],
       rightAnswer: [],
-      subjectIndex: 0, // 跳转索引
+      subjectIndex: -1, // 跳转索引
       swiperHeight: '800px',
       subjectList: [],
-      modalCard: null, // 显示答题卡
+      showModalCard: false, // 显示答题卡
       totalScore: 0,
     };
   },
@@ -276,20 +276,21 @@ export default {
         this.rightAnswer[i] = res.paper[i].answer;
       }
       this.subjectList = [...this.subjectList];
+      this.subjectIndex = 0;
     },
 
     /**
      * 显示答题卡
      */
-    showCardModal(e) {
-      this.modalCard = e.currentTarget.dataset.target;
+    showCardModal() {
+      this.showModalCard = true;
     },
 
     /**
      * 隐藏答题卡
      */
     hideCardModal() {
-      this.modalCard = null;
+      this.showModalCard = false;
     },
 
     /**
@@ -373,7 +374,7 @@ export default {
      * 题卡指定
      */
     appointedSubject(count) {
-      this.modalCard = null;
+      this.showModalCard = null;
       this.subjectIndex = count;
     },
   },
@@ -400,7 +401,7 @@ page {
   padding-right: 0upx;
 }
 
-.cu-form-group+.cu-form-group {
+.cu-form-group + .cu-form-group {
   border-top: none;
 }
 
