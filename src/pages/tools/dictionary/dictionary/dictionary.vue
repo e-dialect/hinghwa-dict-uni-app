@@ -14,10 +14,10 @@
           </view>
         </view>
         <text class="text-content block text-bold margin-top-sm">
-          兴化语记作为在线工具同样提供词语查询功能
+          兴化语记作为在线工具同样提供类似词典的词语查询功能
         </text>
         <text class="text-content block">
-          在输入框中输入词语，点击查询即可
+          点击相关拼音查询对应词语
         </text>
       </view>
       <!--选择拼音区域-->
@@ -71,15 +71,29 @@
               {{ String(list[0]).toUpperCase() }}
             </view>
             <view
-              v-for="(pinyin, index1) in list[1]"
-              :key="index1"
-              class="cu-btn margin-sm radius"
+              class="pinyin margin-left"
+              :class="{active:flag}"
             >
               <view
-                :key="pinyin"
-                @click="pushPinyin(pinyin)"
+                v-show="flag[index]?index1:index1 < 12"
+                v-for="(pinyin, index1) in list[1]"
+                :key="index1"
+                class="cu-btn radius margin-sm"
+                style="width: 18%;"
               >
-                {{ pinyin }}
+                <view
+                  :key="pinyin"
+                  @click="pushPinyin(pinyin)"
+                >
+                  {{ pinyin }}
+                </view>
+              </view>
+              <view
+                v-if="list[1].length > 12"
+                class="show cu-btn margin-sm radius text-blue"
+                @click="showTag(index)"
+              >
+                {{ flag[index]?"收起":"查看全部" }}
               </view>
             </view>
           </view>
@@ -110,6 +124,7 @@ export default {
       order: [],
       words: [],
       prefix: '',
+      flag: [].fill(false),
     };
   },
   computed: {
@@ -170,6 +185,10 @@ export default {
     this.record = { ...this.fullRecord };
   },
   methods: {
+    showTag(index){
+      this.flag[index] = !this.flag[index];
+      this.flag = [...this.flag];
+    },
     /**
      * 新选中拼音
      * @param pinyin{string} 拼音
@@ -196,5 +215,15 @@ export default {
 };
 </script>
 <style scoped>
-
+/* 初始高度，超出隐藏 */
+.pinyin{
+  overflow: hidden;
+  line-height: 70rpx;
+  border-bottom: 1px dashed #E8E7E7;
+}
+/*  高度自适应，全部显示 */
+.active{
+  height: auto;
+  overflow: visible;
+}
 </style>

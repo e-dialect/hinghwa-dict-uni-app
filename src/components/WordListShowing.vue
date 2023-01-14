@@ -22,14 +22,10 @@
               {{ item.word }}
             </view>
             <view>
-              <view
-                class="text-lg"
-              >
+              <view class="text-lg">
                 {{ item.standard_pinyin }}
               </view>
-              <view
-                class="text-lg text-gray"
-              >
+              <view class="text-lg text-gray">
                 {{ item.standard_ipa }}
               </view>
             </view>
