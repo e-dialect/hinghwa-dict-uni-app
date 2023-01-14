@@ -55,7 +55,7 @@
         </view>
         <view class="grid col-5 ">
           <view
-            v-for="(index) in subjectList"
+            v-for="index in [...Array(subjectList.length).keys()]"
             :key="index"
             class="margin-tb-sm text-center"
           >
