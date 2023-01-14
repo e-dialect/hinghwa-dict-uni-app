@@ -92,7 +92,7 @@
 
 <script>
 import { getPhoneticOrder, searchDictionary } from '@/services/word';
-import WordListShowing from '@/components/WordListShowing.vue';
+import WordListShowing from '@/components/WordListShowing';
 
 export default {
   components: {
@@ -125,12 +125,16 @@ export default {
       }
       // sort ans
       for (const i in ans) {
-        ans[i].sort();
+        if ({}.hasOwnProperty.call(ans, i)) {
+          ans[i].sort();
+        }
       }
       // convert to array
       const ansArray = [];
       for (const i in ans) {
-        ansArray.push([i, ans[i]]);
+        if ({}.hasOwnProperty.call(ans, i)) {
+          ansArray.push([i, ans[i]]);
+        }
       }
       ansArray.sort();
       return ansArray;
