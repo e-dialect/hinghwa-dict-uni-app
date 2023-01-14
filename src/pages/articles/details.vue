@@ -207,7 +207,9 @@ export default {
   onLoad(options) {
     const { id } = options;
     this.id = id;
-    this.getArticle(id);
+  },
+  async onShow() {
+    await this.getArticle(this.id);
   },
   /**
    * 右上角分享事件

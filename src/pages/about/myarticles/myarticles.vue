@@ -20,8 +20,8 @@ export default {
       publish_articles: [],
     };
   },
-  onLoad() {
-    this.getPublishArticles();
+  async onShow() {
+    await this.getPublishArticles();
   },
   methods: {
     /**
