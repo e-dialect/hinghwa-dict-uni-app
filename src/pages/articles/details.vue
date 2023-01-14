@@ -147,13 +147,12 @@
       <!--评论框-->
       <view class="input-box">
         <input
+          v-model="comment"
           :adjust-position="true"
           :placeholder="ph_text"
-          :value="comment"
           style="margin-left: 30rpx"
           @blur="blur"
           @focus="focus"
-          @input="getText"
         >
       </view>
       <button
@@ -176,7 +175,6 @@ import {
 import ArticleComment from '@/components/ArticleComment';
 import { toArticleEditPage } from '@/routers/article';
 
-const app = getApp();
 export default {
   components: {
     ArticleComment,
@@ -184,7 +182,6 @@ export default {
   },
   data() {
     return {
-      toUserPage,
       article: {
         title: '',
         author: {
@@ -245,7 +242,9 @@ export default {
     },
   },
   methods: {
+    toUserPage,
     toArticleEditPage,
+
     /**
      * 删除这篇文章
      * @returns {Promise<void>}
@@ -337,14 +336,6 @@ export default {
           });
         }, 100);
       });
-    },
-
-    /**
-     * 同步评论内容
-     * @param e
-     */
-    getText(e) {
-      this.comment = e.detail.value;
     },
 
     /**
