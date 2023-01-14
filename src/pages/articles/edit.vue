@@ -10,10 +10,9 @@
           value="标题"
         >
         <input
+          v-model="article.title"
           class="fileName"
           placeholder="请输入文章标题"
-          :value="article.title"
-          @input="getTitle"
         >
       </view>
 
@@ -47,11 +46,10 @@
           value="简介"
         >
         <textarea
+          v-model="article.description"
           class="description"
           placeholder="请输入文章简介"
-          :value="article.description"
           auto-height
-          @input="getDescription"
         />
       </view>
 
@@ -128,7 +126,7 @@
         </text>
         <text
           class="tip"
-          style="margin-left:70%;style"
+          style="margin-left:70%;"
           data-fh="table"
           @tap="tip"
         >
@@ -140,12 +138,12 @@
         <!--编辑状态-->
         <textarea
           v-if="!inPreviewStatus"
+          v-model="article.content"
           class="markDown"
           placeholder="开始你的markdown编写..."
           maxlength="-1"
-          :value="article.content"
           auto-height
-          @input="getContent"
+          @blur="e=>{cursor=e.detail.cursor}"
         />
         <!--预览状态-->
         <view
@@ -181,7 +179,7 @@ export default {
     return {
       rawMD: '',
       code: '</>',
-      inPreviewStatus: 0,
+      inPreviewStatus: false,
       id: 0, // 文章 id ，0 为新建文章
       article: {
         title: '',
@@ -189,6 +187,7 @@ export default {
         description: '',
         content: '',
       },
+      cursor: -1, // 编辑框中的光标位置
     };
   },
   async onLoad(options) {
@@ -199,9 +198,6 @@ export default {
     }
   },
   methods: {
-    getTitle(e) {
-      this.title = e.detail.value;
-    },
 
     async getCover() {
       try {
@@ -214,16 +210,8 @@ export default {
       }
     },
 
-    getDescription(e) {
-      this.article.description = e.detail.value;
-    },
-
     changeStatus() {
-      this.inPreviewStatus = 1 - this.inPreviewStatus;
-    },
-
-    getContent(e) {
-      this.article.content = e.detail.value;
+      this.inPreviewStatus = !this.inPreviewStatus;
     },
 
     tip(e) {
@@ -235,11 +223,31 @@ export default {
       } else if (tip === 'table') {
         tip = '|h|h|\n|--|--|\n|b|b|';
       }
-      this.article.content += tip;
-    },
 
+      if (this.cursor === -1) {
+        this.article.content += tip;
+      } else {
+        // insert tip
+        this.article.content = this.article.content.slice(0, this.cursor)
+          + tip
+          + this.article.content.slice(this.cursor);
+      }
+    },
     async uploadImg() {
-      this.article.content += `![image](${await chooseAndUploadAnImage()})`;
+      try {
+        const url = await chooseAndUploadAnImage();
+        if (this.cursor === -1) {
+          this.article.content += `![你的图片说明](${url})`;
+        } else {
+          this.article.content = `${this.article.content.slice(0, this.cursor)
+          }![你的图片说明](${url})${
+            this.article.content.slice(this.cursor)}`;
+        }
+      } catch (e) {
+        uni.showToast({
+          title: '上传图片失败',
+        });
+      }
     },
 
     release() {
