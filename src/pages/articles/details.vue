@@ -41,6 +41,25 @@
           </text>
         </view>
 
+        <!--文章操作-->
+        <view
+          v-if="me.is_author"
+          class="flex  text-df margin-top align-center"
+        >
+          <button
+            class="cu-btn bg-blue shadow"
+            @tap="toArticleEditPage(id)"
+          >
+            修改文章
+          </button>
+          <button
+            class="cu-btn bg-blue shadow margin-left-sm"
+            @tap="deleteThisArticle"
+          >
+            删除文章
+          </button>
+        </view>
+
         <!--文章简介-->
         <view class="solid-top solid-bottom margin-top-xl padding-top-sm padding-bottom-sm">
           <text class="text-xl text-grey line">
@@ -152,9 +171,10 @@
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { toUserPage } from '@/routers';
 import {
-  createComment, getArticle, getComments, likeArticle, unlikeArticle,
+  createComment, deleteArticle, getArticle, getComments, likeArticle, unlikeArticle,
 } from '@/services/article';
 import ArticleComment from '@/components/ArticleComment';
+import { toArticleEditPage } from '@/routers/article';
 
 const app = getApp();
 export default {
@@ -225,6 +245,28 @@ export default {
     },
   },
   methods: {
+    toArticleEditPage,
+    /**
+     * 删除这篇文章
+     * @returns {Promise<void>}
+     */
+    async deleteThisArticle() {
+      uni.showModal({
+        title: '提示',
+        content: '确定删除该文章吗？',
+        success: async (res) => {
+          if (res.confirm) {
+            await deleteArticle(this.id);
+            uni.showToast({
+              title: '删除成功',
+              icon: 'success',
+              duration: 2000,
+            });
+            uni.navigateBack();
+          }
+        },
+      });
+    },
     /**
      * 获取文章细节
      * @param id 文章id

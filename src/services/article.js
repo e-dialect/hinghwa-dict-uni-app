@@ -10,6 +10,15 @@ export async function createArticle(article) {
 }
 
 /**
+ * AT0102 删除文章
+ * @param id{number} 文章 id
+ * @returns {Promise<unknown>}
+ */
+export async function deleteArticle(id) {
+  return request.del(`/articles/${id}`);
+}
+
+/**
  * AT0103 更新文章
  * @param id{number} 文章 id
  * @param article{{title:string,description:string,content:string,cover:string}} 文章内容
