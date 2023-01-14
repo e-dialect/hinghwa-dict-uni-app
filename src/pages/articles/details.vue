@@ -207,6 +207,7 @@ export default {
   onLoad(options) {
     const { id } = options;
     this.id = id;
+    this.getArticle(this.id);
   },
   async onShow() {
     await this.getArticle(this.id);
