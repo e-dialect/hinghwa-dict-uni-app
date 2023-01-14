@@ -169,11 +169,11 @@
 </template>
 
 <script>
-import CuCustom from '@/colorui/components/cu-custom.vue';
+import CuCustom from '@/colorui/components/cu-custom';
 import { createArticle, getArticle, updateArticle } from '@/services/article';
 import { chooseAndUploadAnImage } from '@/services/file';
 import { DefaultArticleCover } from '@/const/urls';
-import MarkdownViewer from '@/components/MarkdownViewer.vue';
+import MarkdownViewer from '@/components/MarkdownViewer';
 
 export default {
   components: { MarkdownViewer, CuCustom },
