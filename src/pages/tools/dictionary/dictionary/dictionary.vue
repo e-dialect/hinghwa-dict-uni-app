@@ -39,31 +39,30 @@
         <view
           v-if="prefix"
           key="prefix"
+          class="cu-btn bg-blue round margin-sm"
         >
-          <view
-            class="bg-blue"
-            @close="prefix=''"
-          >
+          <view>
             {{ prefix.toUpperCase() }}
           </view>
+          <view
+            class="cuIcon-close"
+            @tap="prefix=''"
+          />
         </view>
       </view>
-      <!--显示查询词语-->
-      <WordListShowing
-        v-if="words.length"
-        :word-list="words"
-        class="cu-item padding-xs"
-      />
       <!--显示拼音区域-->
       <view
-        v-show="nextNodeList.length && words.length"
+        v-show="nextNodeList.length"
         class="cu-item padding-xs"
       >
         <view
           v-for="(list, index) in nextNodeList"
           :key="index"
         >
-          <view :key="list[0]">
+          <view
+            v-if="!prefix||list[0]===prefix"
+            :key="list[0]"
+          >
             <view
               class="margin-sm bg-blue round text-bold"
               style="padding-left: 30upx;padding-top: 18upx;font-size: 28upx; height: 64upx"
@@ -86,6 +85,12 @@
           </view>
         </view>
       </view>
+      <!--显示查询词语-->
+      <WordListShowing
+        v-if="words.length"
+        :word-list="words"
+        class="cu-item padding-xs"
+      />
     </view>
   </view>
 </template>
