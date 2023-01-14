@@ -6,7 +6,7 @@ import request from '@/utils/request';
  * @returns {Promise<unknown>}
  */
 export async function createArticle(article) {
-  return request.post('/article', article);
+  return request.post('/articles', article);
 }
 
 /**
@@ -16,7 +16,7 @@ export async function createArticle(article) {
  * @returns {Promise<unknown>}
  */
 export async function updateArticle(id, article) {
-  return request.put(`/article/${id}`, article);
+  return request.put(`/articles/${id}`, article);
 }
 
 /**
