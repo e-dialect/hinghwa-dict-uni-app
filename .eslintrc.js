@@ -10,6 +10,8 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
     'no-unused-vars': 'off',
+    'no-continue': 'off',
+    'no-restricted-syntax': 'off',
 
     // ignore for vue-cli-service
     'import/extensions': ['error', 'always', {
