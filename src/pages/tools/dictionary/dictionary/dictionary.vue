@@ -116,7 +116,7 @@ export default {
       const { record } = this;
       const ans = {};
       for (const i in record) {
-        if (i === 'has_word') continue;
+        if (i === 'word_count') continue;
         if (i[0] in ans) {
           ans[i[0]] = [...ans[i[0]], i];
         } else {
