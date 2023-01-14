@@ -75,9 +75,9 @@
               :class="{active:flag}"
             >
               <view
-                v-show="flag[index]?index1:index1 < 12"
                 v-for="(pinyin, index1) in list[1]"
                 :key="index1"
+                v-show="flag[index]?index1:index1 < 12"
                 class="cu-btn radius margin-sm"
                 style="width: 18%;"
               >
@@ -185,7 +185,7 @@ export default {
     this.record = { ...this.fullRecord };
   },
   methods: {
-    showTag(index){
+    showTag(index) {
       this.flag[index] = !this.flag[index];
       this.flag = [...this.flag];
     },
