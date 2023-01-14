@@ -139,7 +139,7 @@
         style="width:90vw;font-size:32rpx;"
         @tap="release"
       >
-        {{ id === 0 ? '发布' : '更新' }}
+        {{ id === 0 ? '发布' : '更新' }}（需审核）
       </button>
       <view class="stand-view" />
     </view>
@@ -293,17 +293,19 @@ export default {
         // 创建文章
         createArticle(this.article).then(() => {
           uni.showToast({
-            title: '发布成功，请等待审核',
+            title: '发布成功',
             icon: 'success',
           });
+          uni.navigateBack();
         });
       } else {
         // 更新文章
         updateArticle(this.id, this.article).then(() => {
           uni.showToast({
-            title: '更新成功，请等待审核',
+            title: '更新成功',
             icon: 'success',
           });
+          uni.navigateBack();
         });
       }
     },
