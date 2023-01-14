@@ -90,12 +90,7 @@ export async function chooseAndUploadImages(maxNumber = 1) {
       },
     });
   });
-  const promises = [];
-  images.forEach(async (image) => {
-    promises.push(uploadFile(image));
-  });
-  const ans = await Promise.all(promises);
-  return ans.map((item) => JSON.parse(item).url);
+  return images.map((item) => JSON.parse(item).url);
 }
 
 /**
