@@ -27,7 +27,7 @@
           <input
             class="extend text-grey"
             value="上传"
-            @tap="getCover"
+            @tap="uploadCover"
           >
         </view>
         <image
@@ -64,71 +64,50 @@
           class="extend text-grey"
           disabled
           :value="inPreviewStatus?'编辑':'预览'"
-          @tap="changeStatus"
+          @tap="inPreviewStatus=!inPreviewStatus"
         >
       </view>
       <!--内容-工具-->
-      <view class="tips">
+      <view class="tips flow">
         <text
           class="tip"
-          data-fh="#"
-          @tap="tip"
+          @tap="toolsHandler('#')"
         >
           #
         </text>
         <text
-          class="tip"
-          style="margin-left:10%;line-height:80rpx;"
-          data-fh="*"
-          @tap="tip"
+          class="tip text-bold"
+          style="margin-left:10%;"
+          @tap="toolsHandler('bold')"
         >
-          *
+          B
         </text>
         <text
           class="tip"
-          style="margin-left:20%;"
-          data-fh="-"
-          @tap="tip"
-        >
-          -
-        </text>
-        <text
-          class="tip"
-          style="margin-left:30%;font-size:24rpx"
-          data-fh="code"
-          @tap="tip"
+          style="margin-left:20%;font-size:24rpx"
+          @tap="toolsHandler('code')"
         >
           {{ code }}
         </text>
         <text
           class="tip"
-          style="margin-left:40%;"
-          data-fh="link"
-          @tap="tip"
+          style="margin-left:30%;"
+          @tap="toolsHandler('link')"
         >
           🔗
         </text>
         <text
           class="tip"
-          style="margin-left:50%;"
-          @tap="uploadImg"
+          style="margin-left:40%;"
+          @tap="insertImage"
         >
           图
         </text>
         <text
           class="tip"
-          style="margin-left:60%;"
-          decode="true"
-          data-fh=">"
-          @tap="tip"
-        >
-          >&nbsp;
-        </text>
-        <text
-          class="tip"
-          style="margin-left:70%;"
+          style="margin-left:50%;"
           data-fh="table"
-          @tap="tip"
+          @tap="toolsHandler('table')"
         >
           表
         </text>
@@ -141,8 +120,9 @@
           v-model="article.content"
           class="markDown"
           placeholder="开始你的markdown编写..."
-          maxlength="-1"
+          maxlength="10000"
           auto-height
+          style="min-height: 20vh;"
           @blur="e=>{cursor=e.detail.cursor}"
         />
         <!--预览状态-->
@@ -159,7 +139,7 @@
         style="width:90vw;font-size:32rpx;"
         @tap="release"
       >
-        {{ id===0?'发布':'更新' }}
+        {{ id === 0 ? '发布' : '更新' }}
       </button>
       <view class="stand-view" />
     </view>
@@ -177,8 +157,7 @@ export default {
   components: { MarkdownViewer, CuCustom },
   data() {
     return {
-      rawMD: '',
-      code: '</>',
+      code: '</>', // 为了显示代码块
       inPreviewStatus: false,
       id: 0, // 文章 id ，0 为新建文章
       article: {
@@ -199,7 +178,11 @@ export default {
   },
   methods: {
 
-    async getCover() {
+    /**
+     * 上传封面
+     * @returns {Promise<void>}
+     */
+    async uploadCover() {
       try {
         this.article.cover = await chooseAndUploadAnImage();
       } catch (e) {
@@ -210,30 +193,46 @@ export default {
       }
     },
 
-    changeStatus() {
-      this.inPreviewStatus = !this.inPreviewStatus;
-    },
-
-    tip(e) {
-      let tip = e.currentTarget.dataset.fh;
-      if (tip === 'code') {
-        tip = '``` js\ninput your code\n```';
-      } else if (tip === 'link') {
-        tip = '[url](https://)';
-      } else if (tip === 'table') {
-        tip = '|h|h|\n|--|--|\n|b|b|';
+    /**
+     * 工具栏点击事件
+     * @param tool 工具名
+     */
+    toolsHandler(tool) {
+      let content = ''; // 插入的 markdown 内容
+      switch (tool) {
+        case '#':
+          content = '# ';
+          break;
+        case 'bold':
+          content = '**粗体**';
+          break;
+        case 'code':
+          content = '```\n\n```';
+          break;
+        case 'link':
+          content = '[链接描述](链接地址)';
+          break;
+        case 'table':
+          content = '| 标题1 | 标题2 | 标题3 |\n| :--- | :---: | ---: |\n| 内容1 | 内容2 | 内容3 |\n';
+          break;
+        default:
+          content = tool;
       }
 
       if (this.cursor === -1) {
-        this.article.content += tip;
+        this.article.content += content;
       } else {
-        // insert tip
         this.article.content = this.article.content.slice(0, this.cursor)
-          + tip
+          + content
           + this.article.content.slice(this.cursor);
       }
     },
-    async uploadImg() {
+
+    /**
+     * 工具栏里插入图片
+     * @returns {Promise<void>}
+     */
+    async insertImage() {
       try {
         const url = await chooseAndUploadAnImage();
         if (this.cursor === -1) {
@@ -245,11 +244,15 @@ export default {
         }
       } catch (e) {
         uni.showToast({
-          title: '上传图片失败',
+          title: '出错了！',
+          icon: 'error',
         });
       }
     },
 
+    /**
+     * 发布文章
+     */
     release() {
       const {
         title,
