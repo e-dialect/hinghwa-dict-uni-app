@@ -13,7 +13,13 @@ export function toArticlePage(id) {
  * @param id 文章id（为0时表示新建）
  */
 export function toArticleEditPage(id = 0) {
-  uni.navigateTo({
-    url: `/pages/articles/ArticleEditing/ArticleEditing?id=${id}`,
-  });
+  if (id) {
+    uni.navigateTo({
+      url: `/pages/articles/edit?id=${id}`,
+    });
+  } else {
+    uni.navigateTo({
+      url: '/pages/articles/edit',
+    });
+  }
 }
