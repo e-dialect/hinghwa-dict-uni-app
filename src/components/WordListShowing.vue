@@ -11,7 +11,7 @@
       >
         <view
           :hoverable="true"
-          class="flex"
+          class="flex align-center"
           style="width: 100%;"
         >
           <view
@@ -19,24 +19,22 @@
             style="width: 75%;"
           >
             <view class="text-xl text-bold">
+              {{ item.word }}
+            </view>
+            <view>
               <view
-                :to="{name:'WordDetails',params:{id:item.id.toString()}}"
-                style="color:black"
+                class="text-lg"
               >
-                {{ item.word }}
+                {{ item.standard_pinyin }}
+              </view>
+              <view
+                class="text-lg text-gray"
+              >
+                {{ item.standard_ipa }}
               </view>
             </view>
-            <view
-              class="text-lg"
-              style="padding-left: 10px"
-            >
-              {{ item.standard_pinyin }}
-            </view>
-            <view
-              class="text-lg"
-              style="color: rgb(155,155,155);padding-left: 10px"
-            >
-              / {{ item.standard_ipa }}/
+            <view class="definition">
+              {{ item.definition }}
             </view>
           </view>
           <view class="margin-right margin-bottom">
@@ -44,7 +42,7 @@
               type="link"
               class="cu-btn bg-blue shadow"
             >
-              <view :to="{name:'WordDetails',params:{id:item.id.toString()}}">
+              <view @tap="toWordPage(item.id)">
                 更多
                 <view type="double-right" />
               </view>
@@ -57,6 +55,8 @@
 </template>
 
 <script>
+import { toWordPage } from '@/routers';
+
 export default {
   name: 'WordListShowing',
   props: {
@@ -67,6 +67,7 @@ export default {
   },
   data() {
     return {
+      toWordPage,
     };
   },
   computed: {
@@ -80,5 +81,11 @@ export default {
 </script>
 
 <style scoped>
-
+.definition{
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 </style>
