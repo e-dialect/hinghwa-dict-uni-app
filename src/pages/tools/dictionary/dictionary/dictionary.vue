@@ -76,8 +76,8 @@
             >
               <view
                 v-for="(pinyin, index1) in list[1]"
-                :key="index1"
                 v-show="flag[index]?index1:index1 < 12"
+                :key="index1"
                 class="cu-btn radius margin-sm"
                 style="width: 18%;"
               >
