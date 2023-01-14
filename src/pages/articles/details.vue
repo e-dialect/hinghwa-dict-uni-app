@@ -198,7 +198,7 @@ export default {
   onShareAppMessage() {
     return {
       title: this.article.title,
-      path: `/pages/plugin/article/article?id=${this.id}`,
+      path: `/pages/articles/details?id=${this.id}`,
       success: () => {
         uni.showToast({
           title: '分享成功',
