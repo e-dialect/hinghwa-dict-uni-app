@@ -25,7 +25,13 @@ export async function deleteArticle(id) {
  * @returns {Promise<unknown>}
  */
 export async function updateArticle(id, article) {
-  return request.put(`/articles/${id}`, article);
+  const data = {
+    title: article.title,
+    description: article.description,
+    content: article.content,
+    cover: article.cover,
+  };
+  return request.put(`/articles/${id}`, { article: data });
 }
 
 /**
