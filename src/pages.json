@@ -45,6 +45,10 @@
       "style": {}
     },
     {
+      "path": "pages/tools/dictionary/dictionary/dictionary",
+      "style": {}
+    },
+    {
       "path": "pages/tools/quiz/poster/poster",
       "style": {}
     },

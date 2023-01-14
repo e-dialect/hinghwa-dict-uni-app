@@ -51,6 +51,10 @@ export default {
         {
           img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
           url: '/tools/quiz/quizzes/quizzes',
+        },
+        {
+          img: '',
+          url: '/tools/dictionary/dictionary/dictionary',
         }, // {
         //   img: 'https://wx1.sinaimg.cn/mw690/0084vph8ly1gubp33fhtjj60p00dwn0x02.jpg',
         //   url: '/component/voice/voice'
