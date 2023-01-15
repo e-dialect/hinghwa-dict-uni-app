@@ -37,7 +37,7 @@ export default {
           url: '/component/pinyin/pinyin',
         },
         {
-          img: 'https://cos.edialect.top/website/音序查词.png',
+          img: 'https://cos.edialect.top/website/%E9%9F%B3%E5%BA%8F%E6%9F%A5%E8%AF%8D.png',
           url: '/tools/dictionary/dictionary/dictionary',
         },
         {
@@ -45,7 +45,7 @@ export default {
           url: '/basics/search/search?index=2',
         },
         {
-          img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
+          img: 'https://cos.edialect.top/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
           url: '/tools/quiz/quizzes/quizzes',
         },
         {
@@ -83,32 +83,5 @@ export default {
   transform: skew(-10deg, 0deg);
   position: relative;
   text-shadow: 0px 0px 6rpx rgba(0, 0, 0, 0.3);
-}
-
-.cardTitle::before {
-  content: '';
-  position: absolute;
-  width: 60rpx;
-  height: 6rpx;
-  border-radius: 20rpx;
-  background-color: #fff;
-  display: block;
-  top: 60rpx;
-  left: 50rpx;
-  transform: skew(10deg, 0deg);
-}
-
-.cardTitle::after {
-  content: '';
-  position: absolute;
-  width: 140rpx;
-  border-radius: 6rpx;
-  height: 24rpx;
-  background-color: #fff;
-  display: block;
-  bottom: 76rpx;
-  left: 90rpx;
-  transform: skew(10deg, 0deg);
-  opacity: 0.1;
 }
 </style>

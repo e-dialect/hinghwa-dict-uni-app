@@ -13,11 +13,11 @@
             </text>
           </view>
         </view>
-        <text class="text-content block text-bold margin-top-sm">
-          兴化语记作为在线工具同样提供类似词典的词语查询功能
+        <text class="text-content block margin-top-sm">
+          点击莆拼筛选以该拼音开头的词语
         </text>
         <text class="text-content block">
-          点击相关拼音查询对应词语
+          点击字母筛选全部以该字母开头的拼音
         </text>
       </view>
       <!--选择拼音区域-->
