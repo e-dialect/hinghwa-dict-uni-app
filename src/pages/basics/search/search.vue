@@ -267,7 +267,7 @@ export default {
       }
       this.hasSearched = 1;
       const { key } = this;
-      const { index } = this;
+      const index = this.searchItemIndex;
       if (index === 0) {
         // 词语
         this.searchWord(key);
