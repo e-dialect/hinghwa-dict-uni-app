@@ -88,6 +88,7 @@
               <view
                 v-if="list[1].length >= 7"
                 class="show cu-btn margin-sm radius text-blue"
+                style="width: 18%"
                 @click="showTag(index)"
               >
                 {{ flag[index]?"收起":"展开" }}
