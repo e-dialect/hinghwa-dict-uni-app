@@ -51,10 +51,7 @@
         </view>
       </view>
       <!--显示拼音区域-->
-      <view
-        v-show="nextNodeList.length"
-        class="cu-item padding-xs"
-      >
+      <view class="cu-item">
         <view
           v-for="(list, index) in nextNodeList"
           :key="index"
