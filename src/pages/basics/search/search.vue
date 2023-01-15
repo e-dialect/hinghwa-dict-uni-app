@@ -204,7 +204,6 @@ import { getWords, searchWords } from '@/services/word';
 import { searchArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
 
-const app = getApp();
 export default {
   components: {
     ArticleList,
@@ -214,46 +213,16 @@ export default {
       hasSearched: 0,
       searchItemIndex: 0,
       sort: ['词语', '单字', '拼音', '文章'],
-      history: [],
       key: '',
       characters: [],
       pronunciation: [],
       words: [],
       articles: [],
-      //
-      // kid: {
-      //     id: '',
-      //     pinyin: '',
-      //     ipa: ''
-      // },
-      //
-      // i: {
-      //     characters: [],
-      //     label: '',
-      //     lable: '',
-      //     traditional: ''
-      // },
-      //
-      // j: {
-      //     county: '',
-      //     town: '',
-      //     characters: []
-      // },
-      //
-      // k: {
-      //     word: '',
-      //     pinyin: '',
-      //     ipa: ''
-      // }
     };
   },
   onLoad(option) {
     if (option.index) {
       this.searchItemIndex = Number(option.index);
-    }
-    const history = uni.getStorageSync('history');
-    if (history) {
-      this.history = history;
     }
   },
   /**
@@ -297,8 +266,6 @@ export default {
         return;
       }
       this.hasSearched = 1;
-      this.history.push(this.key);
-      uni.setStorageSync('history', this.history);
       const { key } = this;
       const { index } = this;
       if (index === 0) {
@@ -385,21 +352,6 @@ export default {
       });
     },
 
-    deleteHistory() {
-      const that = this;
-      uni.showModal({
-        title: '提示',
-        content: '是否清空历史记录？',
-
-        success(res) {
-          uni.setStorageSync('history', null);
-          that.setData({
-            history: [],
-          });
-        },
-      });
-    },
-
     character(e) {
       const { id } = e.currentTarget.dataset;
       uni.navigateTo({
@@ -437,13 +389,6 @@ export default {
 };
 </script>
 <style>
-.history {
-  padding: 0 20rpx 20rpx 20rpx;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: white;
-}
-
 .line {
   position: relative;
 }
