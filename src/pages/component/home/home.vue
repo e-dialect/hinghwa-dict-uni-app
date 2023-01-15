@@ -37,8 +37,16 @@ export default {
           url: '/component/pinyin/pinyin',
         },
         {
+          img: 'https://cos.edialect.top/website/%E9%9F%B3%E5%BA%8F%E6%9F%A5%E8%AF%8D.png',
+          url: '/tools/dictionary/dictionary/dictionary',
+        },
+        {
           img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E6%8B%BC%E9%9F%B3%E9%80%9F%E6%9F%A5.png',
           url: '/basics/search/search?index=2',
+        },
+        {
+          img: 'https://cos.edialect.top/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
+          url: '/tools/quiz/quizzes/quizzes',
         },
         {
           img: 'https://HinghwaDict-1259415432.cos.ap-shanghai.myqcloud.com/files/image/6/2021/12/05/WrUXiZC8fTxXZAc.png',
@@ -47,10 +55,6 @@ export default {
         {
           img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E6%97%A5%E5%B8%B8%E7%94%A8%E8%AF%AD.png',
           url: '/component/daily/daily',
-        },
-        {
-          img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
-          url: '/tools/quiz/quizzes/quizzes',
         }, // {
         //   img: 'https://wx1.sinaimg.cn/mw690/0084vph8ly1gubp33fhtjj60p00dwn0x02.jpg',
         //   url: '/component/voice/voice'
@@ -79,32 +83,5 @@ export default {
   transform: skew(-10deg, 0deg);
   position: relative;
   text-shadow: 0px 0px 6rpx rgba(0, 0, 0, 0.3);
-}
-
-.cardTitle::before {
-  content: '';
-  position: absolute;
-  width: 60rpx;
-  height: 6rpx;
-  border-radius: 20rpx;
-  background-color: #fff;
-  display: block;
-  top: 60rpx;
-  left: 50rpx;
-  transform: skew(10deg, 0deg);
-}
-
-.cardTitle::after {
-  content: '';
-  position: absolute;
-  width: 140rpx;
-  border-radius: 6rpx;
-  height: 24rpx;
-  background-color: #fff;
-  display: block;
-  bottom: 76rpx;
-  left: 90rpx;
-  transform: skew(10deg, 0deg);
-  opacity: 0.1;
 }
 </style>
