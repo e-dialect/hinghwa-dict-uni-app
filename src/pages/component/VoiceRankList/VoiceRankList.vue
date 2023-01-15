@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       toUserPage,
-      menu: ['排名', '用户名', '语音数'],
+      menu: ['排名', '用户', '语音数'],
       rankList: [],
       rankingStatus: 0, // 标记榜单选中
       rankingCurrent: 0, // 标记榜单切换
