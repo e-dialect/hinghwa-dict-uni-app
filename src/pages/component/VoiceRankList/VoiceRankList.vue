@@ -86,7 +86,7 @@
                   >
                     <image
                       class="cu-avatar round margin-right-sm"
-                      :src='itemD.contributor.avatar'
+                      :src="itemD.contributor.avatar"
                       mode="aspectFill"
                     />
                     <text>{{ itemD.contributor.nickname }}</text>
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { getPronunciationRanking } from "@/services/pronunciation";
+import { getPronunciationRanking } from '@/services/pronunciation';
 import { toUserPage } from '@/routers';
 
 export default {
@@ -115,9 +115,9 @@ export default {
       toUserPage,
       menu: ['排名', '用户名', '语音数'],
       rankList: [],
-      rankingStatus: 0, //标记排行选中
-      rankingCurrent: 0, //标记排行切换
-    }
+      rankingStatus: 0, // 标记榜单选中
+      rankingCurrent: 0, // 标记榜单切换
+    };
   },
   onLoad() {
     this.changeRank(7);
@@ -133,8 +133,8 @@ export default {
       this.rankingStatus = index;
       this.rankingCurrent = index;
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
