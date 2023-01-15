@@ -79,16 +79,6 @@ export function toChangePhonePage() {
 }
 
 /**
- * 跳转至词语页面
- * @param id 词语id
- */
-export function toWordPage(id) {
-  uni.navigateTo({
-    url: `/pages/basics/words/words?id=${id}`,
-  });
-}
-
-/**
  * 前往忘记密码页面
  */
 export function toForgetPage() {
@@ -168,7 +158,7 @@ export function toMePage(closeAll = false) {
  */
 export function toSearchPage() {
   uni.navigateTo({
-    url: '/pages/basics/search/search',
+    url: '/pages/search',
   });
 }
 
