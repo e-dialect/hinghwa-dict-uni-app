@@ -1,14 +1,17 @@
 /**
  * 播放音频
  * @param src 音频地址
+ * @param warn 是否警告
  */
 // eslint-disable-next-line import/prefer-default-export
-export function playAudio(src) {
-  if (!src) {
-    uni.showToast({
-      title: '不是一个可用文件',
-      icon: 'error',
-    });
+export function playAudio(src, warn = true) {
+  if (!src || src === 'null') {
+    if (warn) {
+      uni.showToast({
+        title: '不是一个可用文件',
+        icon: 'error',
+      });
+    }
     return;
   }
 
