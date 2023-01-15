@@ -32,11 +32,11 @@
       <view class="flex">
         <view
           v-for="(scope,index) in searchScopes"
+          :key="index"
           class="flex-sub text-center"
         >
           <button
             v-if="index===searchScopeIndex"
-            :key="index"
             class="bg-blue text-white"
             @tap="checkout(index)"
           >
@@ -44,7 +44,6 @@
           </button>
           <button
             v-else
-            :key="index"
             class="flex-sub text-center text-black"
             @tap="checkout(index)"
           >
