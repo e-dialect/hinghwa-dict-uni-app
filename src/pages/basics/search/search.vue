@@ -16,7 +16,7 @@
       class="scrollPage"
     >
       <view
-        v-if="index === 2"
+        v-if="searchItemIndex === 2"
         class="bg-white padding-sm padding-left"
       >
         <view class="text-black text-bold text-xl">
@@ -27,11 +27,11 @@
       <view class="cu-bar search bg-white">
         <view class="action">
           <picker
-            :value="index"
+            :value="searchItemIndex"
             :range="sort"
             @change="sortFun"
           >
-            <text>{{ sort[index] }}</text>
+            <text>{{ sort[searchItemIndex] }}</text>
             <text class="cuIcon-triangledownfill" />
           </picker>
         </view>
@@ -58,7 +58,7 @@
       </view>
       <!-- TODO 重构-->
       <view
-        v-if="index === 0 && status === 1"
+        v-if="searchItemIndex === 0 && hasSearched === 1"
         class="cu-list menu"
       >
         <view
@@ -91,7 +91,7 @@
           </view>
         </view>
       </view>
-      <view v-if="index === 1 && status === 1">
+      <view v-if="searchItemIndex === 1 && hasSearched === 1">
         <view
           v-for="(item, index11) in pronunciation"
           :key="index11"
@@ -129,7 +129,7 @@
         </view>
       </view>
       <view
-        v-if="index === 2 && status === 1"
+        v-if="searchItemIndex === 2 && hasSearched === 1"
         class="bg-white"
       >
         <view
@@ -188,7 +188,7 @@
           </view>
         </view>
       </view>
-      <view v-if="index === 3 && status === 1">
+      <view v-if="searchItemIndex === 3 && hasSearched === 1">
         <ArticleList
           v-if="articles.length !== 0"
           :article-list="articles"
@@ -211,8 +211,8 @@ export default {
   },
   data() {
     return {
-      status: 0,
-      index: 0,
+      hasSearched: 0,
+      searchItemIndex: 0,
       sort: ['词语', '单字', '拼音', '文章'],
       history: [],
       key: '',
@@ -249,7 +249,7 @@ export default {
   },
   onLoad(option) {
     if (option.index) {
-      this.index = option.index;
+      this.searchItemIndex = Number(option.index);
     }
     const history = uni.getStorageSync('history');
     if (history) {
@@ -281,7 +281,7 @@ export default {
   },
   methods: {
     sortFun(e) {
-      this.index = e.detail.value;
+      this.searchItemIndex = Number(e.detail.value);
     },
 
     keyFun(e) {
@@ -296,7 +296,7 @@ export default {
         });
         return;
       }
-      this.status = 1;
+      this.hasSearched = 1;
       this.history.push(this.key);
       uni.setStorageSync('history', this.history);
       const { key } = this;
