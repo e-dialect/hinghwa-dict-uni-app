@@ -43,6 +43,15 @@ export function toMyRecordsPage(id) {
 }
 
 /**
+ * 前往贡献语音榜单页面
+ */
+export function toVoiceRankListPage() {
+  uni.navigateTo({
+    url: '/pages/component/VoiceRankList/VoiceRankList',
+  });
+}
+
+/**
  * 前往更改用户昵称页面
  */
 export function toChangeNicknamePage() {

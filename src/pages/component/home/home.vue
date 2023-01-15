@@ -55,6 +55,10 @@ export default {
         {
           img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E6%97%A5%E5%B8%B8%E7%94%A8%E8%AF%AD.png',
           url: '/component/daily/daily',
+        },
+        {
+          img: 'https://cos.edialect.top/website/排行榜单.png',
+          url: '/component/VoiceRankList/VoiceRankList',
         }, // {
         //   img: 'https://wx1.sinaimg.cn/mw690/0084vph8ly1gubp33fhtjj60p00dwn0x02.jpg',
         //   url: '/component/voice/voice'
