@@ -4,9 +4,12 @@
       title="语记·互动"
       :is-back="false"
     />
-    <!-- <button class="cu-btn icon lg bg-blue shadow write" bindtap="writeArticle">
-  <text class="cuIcon-write"></text>
-</button> -->
+    <button
+      class="cu-btn icon lg bg-blue shadow write"
+      @tap="writeArticle"
+    >
+      <text class="cuIcon-write" />
+    </button>
     <view
       class="flex padding text-center"
       style="background-color: white"
@@ -47,6 +50,7 @@
 import { getHotArticles } from '@/services/website';
 import { searchArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
+import { toArticleEditPage } from '@/routers/article';
 
 const app = getApp();
 export default {
@@ -134,9 +138,7 @@ export default {
     },
 
     writeArticle() {
-      uni.navigateTo({
-        url: '/pages/plugin/write/write',
-      });
+      toArticleEditPage(0);
     },
   },
 };

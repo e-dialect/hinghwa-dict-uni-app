@@ -29,6 +29,14 @@
                 {{ item.article.likes }}
               </text>
             </view>
+            <view
+              v-if="!item.article.visibility"
+              class="cu-tag bg-orange light sm round margin"
+            >
+              <text class="cuIcon-warn">
+                不可见
+              </text>
+            </view>
           </view>
           <text class="cuIcon-attention text-grey margin-top-sm margin-right">
             {{ item.article.views }}
@@ -79,7 +87,7 @@
 </template>
 
 <script>
-import { toArticlePage } from '@/routers';
+import { toArticlePage } from '@/routers/article';
 
 export default {
   name: 'ArticleList',

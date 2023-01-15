@@ -41,6 +41,25 @@
           </text>
         </view>
 
+        <!--文章操作-->
+        <view
+          v-if="me.is_author"
+          class="flex  text-df margin-top align-center"
+        >
+          <button
+            class="cu-btn bg-blue shadow"
+            @tap="toArticleEditPage(id)"
+          >
+            修改文章
+          </button>
+          <button
+            class="cu-btn bg-blue shadow margin-left-sm"
+            @tap="deleteThisArticle"
+          >
+            删除文章
+          </button>
+        </view>
+
         <!--文章简介-->
         <view class="solid-top solid-bottom margin-top-xl padding-top-sm padding-bottom-sm">
           <text class="text-xl text-grey line">
@@ -128,13 +147,12 @@
       <!--评论框-->
       <view class="input-box">
         <input
+          v-model="comment"
           :adjust-position="true"
           :placeholder="ph_text"
-          :value="comment"
           style="margin-left: 30rpx"
           @blur="blur"
           @focus="focus"
-          @input="getText"
         >
       </view>
       <button
@@ -152,11 +170,11 @@
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { toUserPage } from '@/routers';
 import {
-  createComment, getArticle, getComments, likeArticle, unlikeArticle,
+  createComment, deleteArticle, getArticle, getComments, likeArticle, unlikeArticle,
 } from '@/services/article';
 import ArticleComment from '@/components/ArticleComment';
+import { toArticleEditPage } from '@/routers/article';
 
-const app = getApp();
 export default {
   components: {
     ArticleComment,
@@ -164,7 +182,6 @@ export default {
   },
   data() {
     return {
-      toUserPage,
       article: {
         title: '',
         author: {
@@ -190,7 +207,10 @@ export default {
   onLoad(options) {
     const { id } = options;
     this.id = id;
-    this.getArticle(id);
+    this.getArticle(this.id);
+  },
+  async onShow() {
+    await this.getArticle(this.id);
   },
   /**
    * 右上角分享事件
@@ -198,7 +218,7 @@ export default {
   onShareAppMessage() {
     return {
       title: this.article.title,
-      path: `/pages/plugin/article/article?id=${this.id}`,
+      path: `/pages/articles/details?id=${this.id}`,
       success: () => {
         uni.showToast({
           title: '分享成功',
@@ -225,6 +245,30 @@ export default {
     },
   },
   methods: {
+    toUserPage,
+    toArticleEditPage,
+
+    /**
+     * 删除这篇文章
+     * @returns {Promise<void>}
+     */
+    async deleteThisArticle() {
+      uni.showModal({
+        title: '提示',
+        content: '确定删除该文章吗？',
+        success: async (res) => {
+          if (res.confirm) {
+            await deleteArticle(this.id);
+            uni.showToast({
+              title: '删除成功',
+              icon: 'success',
+              duration: 2000,
+            });
+            uni.navigateBack();
+          }
+        },
+      });
+    },
     /**
      * 获取文章细节
      * @param id 文章id
@@ -232,17 +276,19 @@ export default {
      */
     async getArticle(id) {
       const res = await getArticle(id);
-      this.article = res.article;
-      this.me = res.me;
-      await this.getComments(id);
+      if ('me' in res) {
+        this.article = res.article;
+        this.me = res.me;
+        await this.getComments(id);
+      }
     },
 
     /**
      * 获取文章评论
      * @param id 文章id
      */
-    getComments(id) {
-      getComments(id).then((res) => {
+    async getComments(id) {
+      return getComments(id).then((res) => {
         this.comments = res.comments;
         this.map = res.map;
       });
@@ -293,14 +339,6 @@ export default {
           });
         }, 100);
       });
-    },
-
-    /**
-     * 同步评论内容
-     * @param e
-     */
-    getText(e) {
-      this.comment = e.detail.value;
     },
 
     /**

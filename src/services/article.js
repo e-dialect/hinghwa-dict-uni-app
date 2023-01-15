@@ -1,12 +1,50 @@
 import request from '@/utils/request';
 
 /**
- * AT0104 获取文章信息
- * @param id 文章id
+ * AT0101 创建文章
+ * @param article{{title:string,description:string,content:string,cover:string}} 文章内容
  * @returns {Promise<unknown>}
  */
+export async function createArticle(article) {
+  return request.post('/articles', article);
+}
+
+/**
+ * AT0102 删除文章
+ * @param id{number} 文章 id
+ * @returns {Promise<unknown>}
+ */
+export async function deleteArticle(id) {
+  return request.del(`/articles/${id}`);
+}
+
+/**
+ * AT0103 更新文章
+ * @param id{number} 文章 id
+ * @param article{{title:string,description:string,content:string,cover:string}} 文章内容
+ * @returns {Promise<unknown>}
+ */
+export async function updateArticle(id, article) {
+  const data = {
+    title: article.title,
+    description: article.description,
+    content: article.content,
+    cover: article.cover,
+  };
+  return request.put(`/articles/${id}`, { article: data });
+}
+
+/**
+ * AT0104 获取文章信息
+ * @param id 文章id
+ * @returns {Promise<{}>} 文章和me对象
+ */
 export async function getArticle(id) {
-  return request.get(`/articles/${id}`);
+  try {
+    return await request.get(`/articles/${id}`);
+  } catch (e) {
+    return {};
+  }
 }
 
 /**
