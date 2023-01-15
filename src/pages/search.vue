@@ -30,16 +30,27 @@
 
       <!--搜索类型-->
       <view class="flex">
-        <button
+        <view
           v-for="(scope,index) in searchScopes"
-          :key="index"
-          :class="`flex-sub text-center ${
-            searchScopeIndex === index ? 'bg-blue text-white' : 'text-black'
-          }`"
-          @tap="checkout(index)"
+          class="flex-sub text-center"
         >
-          {{ scope }}
-        </button>
+          <button
+            v-if="index===searchScopeIndex"
+            :key="index"
+            class="bg-blue text-white"
+            @tap="checkout(index)"
+          >
+            {{ scope }}
+          </button>
+          <button
+            v-else
+            :key="index"
+            class="flex-sub text-center text-black"
+            @tap="checkout(index)"
+          >
+            {{ scope }}
+          </button>
+        </view>
       </view>
 
       <!--搜索结果-->
