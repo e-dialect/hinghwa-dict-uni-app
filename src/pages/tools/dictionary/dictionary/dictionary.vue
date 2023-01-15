@@ -76,7 +76,7 @@
             >
               <view
                 v-for="(pinyin, index1) in list[1]"
-                v-show="flag[index]?index1:index1 < 12"
+                v-show="flag[index]?true:index1 < 7"
                 :key="index1"
                 class="cu-btn radius margin-sm"
                 style="width: 18%;"
@@ -89,11 +89,11 @@
                 </view>
               </view>
               <view
-                v-if="list[1].length > 12"
+                v-if="list[1].length >= 7"
                 class="show cu-btn margin-sm radius text-blue"
                 @click="showTag(index)"
               >
-                {{ flag[index]?"收起":"查看全部" }}
+                {{ flag[index]?"收起":"展开" }}
               </view>
             </view>
           </view>
