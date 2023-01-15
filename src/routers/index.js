@@ -47,7 +47,7 @@ export function toMyRecordsPage(id) {
  */
 export function toVoiceRankListPage() {
   uni.navigateTo({
-    url: `/pages/component/VoiceRankList/VoiceRankList`,
+    url: '/pages/component/VoiceRankList/VoiceRankList',
   });
 }
 

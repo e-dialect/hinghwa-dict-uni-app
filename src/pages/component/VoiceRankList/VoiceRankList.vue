@@ -14,13 +14,22 @@
         <!--完整榜单-->
         <view>
           <view class="title flex">
-            <view @click="rankingTabs(0);changeRank(7)" :class="rankingStatus === 0 ? 'w_after' : 'w_active'">
+            <view
+              :class="rankingStatus === 0 ? 'w_after' : 'w_active'"
+              @click="rankingTabs(0);changeRank(7)"
+            >
               周榜
             </view>
-            <view @click="rankingTabs(1);changeRank(30)" :class="rankingStatus === 1 ? 'w_after' : 'w_active'">
+            <view
+              :class="rankingStatus === 1 ? 'w_after' : 'w_active'"
+              @click="rankingTabs(1);changeRank(30)"
+            >
               月榜
             </view>
-            <view @click="rankingTabs(2);changeRank(0)" :class="rankingStatus === 2 ? 'w_after' : 'w_active'">
+            <view
+              :class="rankingStatus === 2 ? 'w_after' : 'w_active'"
+              @click="rankingTabs(2);changeRank(0)"
+            >
               总榜
             </view>
           </view>
@@ -72,12 +81,12 @@
                     {{ indexD + 1 }}
                   </text>
                   <view
-                    @tap="toUserPage(itemD.contributor.id)"
                     class="td-view"
+                    @tap="toUserPage(itemD.contributor.id)"
                   >
                     <image
                       class="cu-avatar round margin-right-sm"
-                      :src="itemD.contributor.avatar"
+                      :src='itemD.contributor.avatar'
                       mode="aspectFill"
                     />
                     <text>{{ itemD.contributor.nickname }}</text>
@@ -101,23 +110,21 @@ import { toUserPage } from '@/routers';
 
 export default {
   name: 'RankList',
-  data () {
+  data() {
     return {
       toUserPage,
-      menu: ['排名' , '用户名' , '语音数'],
-      rankList: [
-
-      ],
+      menu: ['排名', '用户名', '语音数'],
+      rankList: [],
       rankingStatus: 0, //标记排行选中
       rankingCurrent: 0, //标记排行切换
     }
   },
   onLoad() {
-    this.changeRank(7)
+    this.changeRank(7);
   },
   methods: {
     changeRank(day) {
-      getPronunciationRanking(day).then(async(res) => {
+      getPronunciationRanking(day).then(async (res) => {
         this.rankList = res.ranking;
       });
     },

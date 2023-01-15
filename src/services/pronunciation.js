@@ -84,5 +84,5 @@ export async function getPronunciationDetails(id) {
  * @returns {Promise<*>}
  */
 export async function getPronunciationRanking(days) {
-  return request.get('/pronunciation/ranking', {days: days});
+  return request.get('/pronunciation/ranking', { days: days });
 }

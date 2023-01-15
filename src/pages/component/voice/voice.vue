@@ -80,7 +80,7 @@
 <script>
 import { getPronunciations } from '@/services/pronunciation';
 import { playAudio } from '@/utils/audio';
-import { toUserPage , toVoiceRankListPage } from '@/routers';
+import { toUserPage, toVoiceRankListPage } from '@/routers';
 
 const app = getApp();
 export default {
