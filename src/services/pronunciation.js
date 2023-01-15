@@ -77,3 +77,12 @@ export async function getPronunciationDetails(id) {
     return null;
   }
 }
+
+/**
+ * PN0205 语音上传榜单
+ * @param days 天数
+ * @returns {Promise<*>}
+ */
+export async function getPronunciationRanking(days) {
+  return request.get('/pronunciation/ranking', {days: days});
+}

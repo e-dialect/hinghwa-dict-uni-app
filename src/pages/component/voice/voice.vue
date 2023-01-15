@@ -11,6 +11,16 @@
         语记·语音
       </view>
     </cu-custom>
+    <view @tap="toVoiceRankListPage()">
+      <button
+        class="cu-btn bg-gradual-blue shadow text-df margin"
+        style="display: flex; justify-content: center"
+      >
+        <text class="cuIcon-rank">
+          语音排行榜
+        </text>
+      </button>
+    </view>
     <view
       v-if="pronunciation.length === 0"
       class="text-lg margin"
@@ -70,12 +80,13 @@
 <script>
 import { getPronunciations } from '@/services/pronunciation';
 import { playAudio } from '@/utils/audio';
-import { toUserPage } from '@/routers';
+import { toUserPage , toVoiceRankListPage } from '@/routers';
 
 const app = getApp();
 export default {
   data() {
     return {
+      toVoiceRankListPage,
       id: -1,
       pronunciation: [],
     };
