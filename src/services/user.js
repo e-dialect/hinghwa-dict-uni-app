@@ -142,12 +142,12 @@ export async function cancelBindingWechat(id) {
 export function clearUserInfo() {
   uni.clearStorageSync();
   const app = getApp();
-  app.globalData.remove('userInfo');
-  app.globalData.remove('publish_articles');
-  app.globalData.remove('publish_comments');
-  app.globalData.remove('like_articles');
-  app.globalData.remove('contribution');
-  app.globalData.remove('id');
+  delete app.globalData.userInfo;
+  delete app.globalData.publish_articles;
+  delete app.globalData.publish_comments;
+  delete app.globalData.like_articles;
+  delete app.globalData.contribution;
+  delete app.globalData.id;
 }
 
 /**
