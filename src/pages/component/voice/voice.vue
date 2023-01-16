@@ -94,11 +94,12 @@ export default {
   onLoad(options) {
     this.id = options.id;
     getPronunciations({ contributor: this.id }).then((res) => {
-      this.pronunciation = res.pronunciation;
+      if (res) {
+        this.pronunciation = res;
+      }
     });
   },
   methods: {
-
     play(e) {
       playAudio(this.pronunciation[index].pronunciation.source);
     },
