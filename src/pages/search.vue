@@ -41,20 +41,6 @@
           >
             {{ scope }}
           </view>
-          <!--          <button
-            v-if="index===searchScopeIndex"
-            class="bg-blue text-white"
-            @tap="checkout(index)"
-          >
-            {{ scope }}
-          </button>
-          <button
-            v-else
-            class="flex-sub text-center text-black"
-            @tap="checkout(index)"
-          >
-            {{ scope }}
-          </button>-->
         </view>
       </view>
 
