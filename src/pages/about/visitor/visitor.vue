@@ -35,7 +35,7 @@
       <view class="padding flex text-center text-grey bg-white shadow-warp">
         <view
           class="flex flex-sub flex-direction solid-right"
-          @tap="getMyRecords"
+          @tap="toMyRecordsPage(id)"
         >
           <view class="text-xlp text-orange">
             {{ recordsCount }}
@@ -64,52 +64,105 @@
           </view>
         </view>
       </view>
+      <!--统计文章-->
+      <view class="title flex">
+        <view
+          :class="status === 0 ? 'w_after' : 'w_active'"
+          @click="changingTabs(0);getArticlesList()"
+        >
+          ta创作的文章
+        </view>
+        <view
+          :class="status === 1 ? 'w_after' : 'w_active'"
+          @click="changingTabs(1);getArticlesList()"
+        >
+          ta点赞的文章
+        </view>
+      </view>
+      <ArticleList :article-list="articles" />
     </scroll-view>
   </view>
 </template>
 
 <script>
 import { getUserInfo } from '@/services/user';
+import { toMyRecordsPage } from '@/routers';
+import { getArticles } from "@/services/article";
+import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
 export default {
+  components: {
+    ArticleList,
+  },
   data() {
     return {
+      toMyRecordsPage,
       id: 0,
       avatar: '',
       nickname: '',
       recordsCount: 0,
       wordsCount: 0,
       visitTotal: 0,
+      status: 0,
+      current: 0,
+      articles: [],
+      publish_articles: [],
+      like_articles: []
     };
   },
   onLoad(options) {
     const { id } = options;
     this.getInfo(id);
+    this.getArticlesList();
   },
   methods: {
-    // 获取用户信息
+    /**
+     * 获取用户信息
+     * @returns {Promise<void>}
+     */
     getInfo(id) {
       getUserInfo(id).then((res) => {
         this.id = res.user.id;
         this.avatar = res.user.avatar;
-        this.nickname = res.nickname;
+        this.nickname = res.user.nickname;
         this.recordsCount = res.contribution.pronunciation;
         this.wordsCount = res.contribution.word;
         this.visitTotal = res.contribution.listened;
+        this.publish_articles = res.publish_articles;
+        this.like_articles = res.like_articles;
       });
     },
 
-    getMyRecords() {
-      const { id } = this;
-      uni.navigateTo({
-        url: `/pages/component/voice/voice?id=${id}`,
-      });
+    /**
+     * 改变状态
+     */
+    changingTabs(index) {
+      this.status = index;
+      this.current = index;
+    },
+
+    /**
+     * 获取文章列表
+     * @returns {Promise<void>}
+     */
+    async getArticlesList() {
+      if (this.status === 1) {
+        const articleInfo = await getArticles(this.like_articles);
+        this.articles = articleInfo.articles;
+      } else {
+        const articleInfo = await getArticles(this.publish_articles);
+        this.articles = articleInfo.articles;
+      }
     },
   },
 };
 </script>
 <style>
+page{
+  background-color: #FFFFFF;
+}
+
 .bg-image {
   z-index: 0;
   position: absolute;
@@ -143,5 +196,32 @@ export default {
   width: 180rpx;
   height: 180rpx;
   margin-left: 6rpx;
+}
+
+.title {
+  width: 530rpx;
+  height: 30rpx;
+  background: #FFFFFF;
+  margin: auto;
+  justify-content: space-between;
+  margin-top: 47rpx;
+  color: #7F7F7F;
+  font-size: 30rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.w_after {
+  color: #212121;
+}
+
+.w_after::after {
+  content: ' ';
+  display: block;
+  width: 50rpx;
+  height: 6rpx;
+  background: #2B87FF;
+  border-radius: 3rpx;
+  margin: auto;
 }
 </style>
