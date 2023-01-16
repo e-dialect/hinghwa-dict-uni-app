@@ -94,7 +94,7 @@ export default {
   onLoad(options) {
     this.id = options.id;
     getPronunciations({ contributor: this.id }).then((res) => {
-      if(res) {
+      if (res) {
         this.pronunciation = res;
       }
     });
