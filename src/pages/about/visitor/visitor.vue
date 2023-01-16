@@ -1,16 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        语记·用户
-      </view>
-    </cu-custom>
+    <cu-custom title="语记·用户" />
     <scroll-view
       scroll-y
       class="scrollPage"
@@ -24,12 +14,25 @@
         <view class="avatar">
           <image
             class="cu-avatar round"
-            :src="avatar"
+            :src="userInfo.user.avatar"
             mode="aspectFill"
           />
         </view>
-        <view class="text">
-          {{ nickname }}
+      </view>
+      <view class="padding-sm flex text-center text-black text-lg bg-white">
+        <view class="text flex flex-sub flex-direction">
+          昵称：{{ userInfo.user.nickname }}
+        </view>
+        <view class="text flex flex-sub flex-direction">
+          身份：{{ userInfo.user.is_admin ? '管理员' : '普通用户' }}
+        </view>
+      </view>
+      <view class="padding-sm flex text-center text-black text-lg bg-white">
+        <view class="text flex flex-sub flex-direction">
+          区县：{{ userInfo.user.county }}
+        </view>
+        <view class="text flex flex-sub flex-direction">
+          乡镇：{{ userInfo.user.town }}
         </view>
       </view>
       <view class="padding flex text-center text-grey bg-white shadow-warp">
@@ -38,7 +41,7 @@
           @tap="toMyRecordsPage(id)"
         >
           <view class="text-xlp text-orange">
-            {{ recordsCount }}
+            {{ userInfo.contribution.pronunciation }}
           </view>
           <view class="margin-top-sm">
             <text class="cuIcon-voice" />
@@ -47,7 +50,7 @@
         </view>
         <view class="flex flex-sub flex-direction solid-right">
           <view class="text-xlp text-blue">
-            {{ wordsCount }}
+            {{ userInfo.contribution.word }}
           </view>
           <view class="margin-top-sm">
             <text class="cuIcon-font" />
@@ -56,7 +59,7 @@
         </view>
         <view class="flex flex-sub flex-direction">
           <view class="text-xlp text-green">
-            {{ visitTotal }}
+            {{ userInfo.contribution.listened }}
           </view>
           <view class="margin-top-sm">
             <text class="cuIcon-attention" />
@@ -87,7 +90,7 @@
 <script>
 import { getUserInfo } from '@/services/user';
 import { toMyRecordsPage } from '@/routers';
-import { getArticles } from "@/services/article";
+import { getArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
 
 const app = getApp();
@@ -99,16 +102,12 @@ export default {
     return {
       toMyRecordsPage,
       id: 0,
-      avatar: '',
-      nickname: '',
-      recordsCount: 0,
-      wordsCount: 0,
-      visitTotal: 0,
+      userInfo: {},
       status: 0,
       current: 0,
       articles: [],
       publish_articles: [],
-      like_articles: []
+      like_articles: [],
     };
   },
   onLoad(options) {
@@ -121,17 +120,10 @@ export default {
      * 获取用户信息
      * @returns {Promise<void>}
      */
-    getInfo(id) {
-      getUserInfo(id).then((res) => {
-        this.id = res.user.id;
-        this.avatar = res.user.avatar;
-        this.nickname = res.user.nickname;
-        this.recordsCount = res.contribution.pronunciation;
-        this.wordsCount = res.contribution.word;
-        this.visitTotal = res.contribution.listened;
-        this.publish_articles = res.publish_articles;
-        this.like_articles = res.like_articles;
-      });
+    async getInfo(id) {
+      this.userInfo = await getUserInfo(id);
+      this.publish_articles = this.userInfo.publish_articles;
+      this.like_articles = this.userInfo.like_articles;
     },
 
     /**
@@ -159,9 +151,6 @@ export default {
 };
 </script>
 <style>
-page{
-  background-color: #FFFFFF;
-}
 
 .bg-image {
   z-index: 0;
@@ -200,8 +189,7 @@ page{
 
 .title {
   width: 530rpx;
-  height: 30rpx;
-  background: #FFFFFF;
+  height: 45rpx;
   margin: auto;
   justify-content: space-between;
   margin-top: 47rpx;
