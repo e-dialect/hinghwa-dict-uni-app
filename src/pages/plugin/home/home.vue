@@ -121,7 +121,7 @@ export default {
       const { page } = this;
       const originArticles = this.displayArticles;
       const concatArticles = this.allArticles.slice(page * 4, page * 4 + 4);
-      this.page ++;
+      this.page += 1;
       this.displayArticles = originArticles.concat(concatArticles);
       setTimeout(() => {
         uni.hideLoading();
