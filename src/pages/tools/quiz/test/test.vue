@@ -56,7 +56,7 @@
         <view class="grid col-5 ">
           <view
             v-for="index in Array(subjectList.length).keys()"
-            :key="'question_index_'+index"
+            :key="index"
             class="margin-tb-sm text-center"
           >
             <button
@@ -80,7 +80,7 @@
       >
         <swiper-item
           v-for="(subject,index1) in subjectList"
-          :key="'question'+index1"
+          :key="index1"
         >
           <view
             class="bg-cyan solid-bottom card shadow -gray margin-xs"
@@ -105,7 +105,7 @@
               >
                 <label
                   v-for="(option,index2) in subject.options"
-                  :key="'item'+index2"
+                  :key="index2"
                   class="cu-form-group"
                 >
                   <radio
