@@ -1,57 +1,58 @@
 <template>
-  <view>
+  <view class="cu-list">
     <view
-      :data-source="wordList || []"
-      :pagination="pagination"
+      v-for="(item,index) in wordList"
+      :key="index"
+      class="padding cu-item"
     >
       <view
-        v-for="(item,index) in wordList"
-        :key="index"
-        class="padding"
+        class="flex align-center "
+        style="width: 100%;"
       >
         <view
-          :hoverable="true"
-          class="flex align-center"
-          style="width: 100%;"
+          style="width: 75%;"
         >
-          <view
-            :description="item.definition.slice(0,100)"
-            style="width: 75%;"
-          >
-            <view class="text-xl text-bold">
-              {{ item.word }}
+          <view class="text-xl text-bold">
+            {{ item.word }}
+          </view>
+          <view>
+            <view class="text-lg">
+              {{ item.standard_pinyin }}
             </view>
-            <view>
-              <view class="text-lg">
-                {{ item.standard_pinyin }}
-              </view>
-              <view class="text-lg text-gray">
-                {{ item.standard_ipa }}
-              </view>
-            </view>
-            <view class="definition">
-              {{ item.definition }}
+            <view class="text-lg text-gray">
+              {{ item.standard_ipa }}
             </view>
           </view>
-          <view class="margin-right margin-bottom">
-            <button
-              type="link"
-              class="cu-btn bg-blue shadow"
-            >
-              <view @tap="toWordPage(item.id)">
-                更多
-                <view type="double-right" />
-              </view>
-            </button>
+          <view class="definition">
+            {{ item.definition }}
           </view>
         </view>
+        <view class="margin-right margin-bottom">
+          <button
+            type="link"
+            class="cu-btn bg-blue shadow"
+          >
+            <view @tap="toWordPage(item.id)">
+              更多
+              <view type="double-right" />
+            </view>
+          </button>
+        </view>
       </view>
+    </view>
+    <view
+      v-if="wordList.length === 0"
+      class="text-center margin"
+    >
+      <text class="text-lg text-gray">
+        --- 暂无数据 ---
+      </text>
     </view>
   </view>
 </template>
 
 <script>
-import { toWordPage } from '@/routers';
+import { toWordPage } from '@/routers/word';
 
 export default {
   name: 'WordListShowing',
@@ -65,13 +66,6 @@ export default {
     return {
       toWordPage,
     };
-  },
-  computed: {
-    pagination() {
-      return {
-        showQuickJumper: true,
-      };
-    },
   },
 };
 </script>

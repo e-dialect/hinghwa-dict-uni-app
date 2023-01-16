@@ -10,7 +10,7 @@ export default {
     uni.getSystemInfo({
       success: async (e) => {
         // if widescreen device redirect to widescreen page
-        if (e.screenWidth / e.screenHeight > 0.5625) {
+        if (e.platform === 'web' && e.screenWidth / e.screenHeight > 0.5625 && e.screenWidth > 400) {
           uni.showModal({
             title: '提示',
             content: '本页面为竖屏页面，是否跳转到 web 版本（https://hinghwa.cn）？',
