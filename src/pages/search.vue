@@ -29,13 +29,19 @@
       </view>
 
       <!--搜索类型-->
-      <view class="flex">
+      <view class="flex bg-white">
         <view
           v-for="(scope,index) in searchScopes"
           :key="index"
-          class="flex-sub text-center"
+          class="flex-sub text-center title"
         >
-          <button
+          <view
+            :class="index===searchScopeIndex ? 'w_after' : 'w_active'"
+            @click="checkout(index)"
+          >
+            {{ scope }}
+          </view>
+          <!--          <button
             v-if="index===searchScopeIndex"
             class="bg-blue text-white"
             @tap="checkout(index)"
@@ -48,7 +54,7 @@
             @tap="checkout(index)"
           >
             {{ scope }}
-          </button>
+          </button>-->
         </view>
       </view>
 
@@ -187,3 +193,31 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.title {
+width: 530rpx;
+height: 78rpx;
+margin: auto;
+justify-content: space-between;
+margin-top: 47rpx;
+color: #7F7F7F;
+font-size: 40rpx;
+font-weight: bold;
+text-align: center;
+}
+
+.w_after {
+color: #212121;
+}
+
+.w_after::after {
+content: ' ';
+display: block;
+width: 28rpx;
+height: 6rpx;
+background: #2B87FF;
+border-radius: 3rpx;
+margin: auto;
+}
+</style>
