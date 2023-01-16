@@ -2,8 +2,15 @@
   <view>
     <cu-custom title="语记·用户" />
     <scroll-view
-      scroll-y
-      class="scrollPage"
+      :scroll-y="true"
+      style="height: 85vh"
+      :refresher-enabled="true"
+      refresher-default-style="none"
+      refresher-background="white"
+      :refresher-triggered="triggered"
+      @refresherpulling="onPulling"
+      @refresherrefresh="onRefresh"
+      @scrolltolower="loadMoreArticles"
     >
       <image
         class="bg-image"
@@ -82,7 +89,7 @@
           ta点赞的文章
         </view>
       </view>
-      <ArticleList :article-list="articles" />
+      <ArticleList :article-list="displayArticles" />
     </scroll-view>
   </view>
 </template>
@@ -105,15 +112,21 @@ export default {
       userInfo: {},
       status: 0,
       current: 0,
+      page: 1,
+      displayArticles: [],
       articles: [],
       publish_articles: [],
       like_articles: [],
+      triggered: false,
     };
   },
-  onLoad(options) {
+  async onLoad(options) {
     const { id } = options;
-    this.getInfo(id);
-    this.getArticlesList();
+    await this.getInfo(id);
+    this.userInfo = await getUserInfo(id);
+    this.publish_articles = this.userInfo.publish_articles;
+    await this.getArticlesList();
+    this.freshing = false;
   },
   methods: {
     /**
@@ -134,6 +147,40 @@ export default {
       this.current = index;
     },
 
+    onPulling() {
+      this.triggered = true;
+    },
+
+    /**
+     * 下拉刷新
+     */
+    onRefresh() {
+      if (this.freshing) {
+        return;
+      }
+      this.freshing = true;
+      this.getArticlesList();
+      setTimeout(() => {
+        this.triggered = false;
+        this.freshing = false;
+      }, 500);
+    },
+
+    /**
+     * 加载更多文章
+     */
+    loadMoreArticles() {
+      uni.showLoading();
+      const { page } = this;
+      const originArticles = this.displayArticles;
+      const concatArticles = this.articles.slice(page * 4, page * 4 + 4);
+      this.page ++;
+      this.displayArticles = originArticles.concat(concatArticles);
+      setTimeout(() => {
+        uni.hideLoading();
+      }, 500);
+    },
+
     /**
      * 获取文章列表
      * @returns {Promise<void>}
@@ -146,6 +193,7 @@ export default {
         const articleInfo = await getArticles(this.publish_articles);
         this.articles = articleInfo.articles;
       }
+      this.displayArticles = this.articles.slice(0, 4);
     },
   },
 };
