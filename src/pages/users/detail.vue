@@ -3,7 +3,7 @@
     <cu-custom title="语记·用户" />
     <scroll-view
       :scroll-y="true"
-      style="height: 85vh"
+      style="height: 100vh"
       :refresher-enabled="true"
       refresher-default-style="none"
       refresher-background="white"
