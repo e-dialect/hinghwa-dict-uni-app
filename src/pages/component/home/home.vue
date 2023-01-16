@@ -42,7 +42,7 @@ export default {
         },
         {
           img: 'https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/website/%E6%8B%BC%E9%9F%B3%E9%80%9F%E6%9F%A5.png',
-          url: '/basics/search/search?index=2',
+          url: '/search',
         },
         {
           img: 'https://cos.edialect.top/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
