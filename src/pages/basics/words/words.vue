@@ -28,13 +28,14 @@
           <text
             :data-id="word.contributor.id"
             class="text-blue"
-            @tap="toContributor"
+            @tap="toUserPage(word.contributor.id)"
           >
             {{ word.contributor.nickname }}
           </text>
         </view>
       </view>
     </view>
+
     <!--标题栏：发音-->
     <view class="padding solid-bottom">
       <view>
@@ -77,6 +78,7 @@
         {{ item }}
       </view>
     </scroll-view>
+
     <!--标签内容-->
     <swiper
       :current="tabIndex"
@@ -138,7 +140,7 @@
       <!--发音-->
       <swiper-item>
         <view
-          v-if="pronunciation.length===0"
+          v-if="pronunciation.length === 0"
           class="margin"
         >
           <text class="text-grey">
@@ -168,7 +170,7 @@
                 <text>来源：</text>
                 <text
                   class="text-blue"
-                  @tap="toContributor(item.contributor.id)"
+                  @tap="toUserPage(item.contributor.id)"
                 >
                   {{ item.contributor.nickname }}
                 </text>
@@ -242,13 +244,10 @@ export default {
   components: { WordPronunciationButton },
   data() {
     return {
-      /// ////////////////////////////
       playAudio,
-      navigateToIndex: toIndexPage,
-      toContributor: toUserPage,
+      toUserPage,
       toWordPage,
       toUploadPronunciationPage,
-      /// ////////////////////////////
       id: 0,
       word: {
         id: 0,

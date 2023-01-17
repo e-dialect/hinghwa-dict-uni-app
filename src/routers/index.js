@@ -4,7 +4,7 @@
  */
 export function toUserPage(id) {
   uni.navigateTo({
-    url: `/pages/about/visitor/visitor?id=${id}`,
+    url: `/pages/users/detail?id=${id}`,
   });
 }
 

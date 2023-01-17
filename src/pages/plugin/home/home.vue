@@ -110,9 +110,7 @@ export default {
       this.freshing = true;
       this.getHotArticlesList();
       setTimeout(() => {
-        this.setData({
-          triggered: false,
-        });
+        this.triggered = false;
         this.freshing = false;
       }, 500);
     },
@@ -123,10 +121,8 @@ export default {
       const { page } = this;
       const originArticles = this.displayArticles;
       const concatArticles = this.allArticles.slice(page * 4, page * 4 + 4);
-      this.setData({
-        page: page + 1,
-        displayArticles: originArticles.concat(concatArticles),
-      });
+      this.page += 1;
+      this.displayArticles = originArticles.concat(concatArticles);
       setTimeout(() => {
         uni.hideLoading();
       }, 500);

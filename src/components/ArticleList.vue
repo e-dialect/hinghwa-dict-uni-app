@@ -1,7 +1,7 @@
 <template>
   <view class="padding-bottom-lg">
     <view
-      v-if="articleList.length === 0"
+      v-if="articleList && articleList.length === 0"
       class="text-lg margin"
     >
       <text>这里暂时空空如也~</text>
