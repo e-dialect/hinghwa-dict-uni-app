@@ -157,7 +157,7 @@ export default {
     chooseAvatar() {
       chooseAndUploadAnImage().then((res) => {
         this.changeAvatar(res);
-      })
+      });
     },
 
     /**
