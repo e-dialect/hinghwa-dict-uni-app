@@ -16,6 +16,7 @@
             :focus="true"
             confirm-type="search"
             @confirm="search"
+            @input="keyFun"
           >
         </view>
         <view
@@ -44,8 +45,54 @@
         </view>
       </view>
 
+      <!-- 搜索历史 -->
+      <view v-show="!isShow">
+        <view class="padding">
+          <view class="margin-bottom">
+            <text class="text-bold">
+              搜索历史:
+            </text>
+          </view>
+          <view
+            v-if="historyList.length === 0"
+            class="text-gray text-center"
+          >
+            <text>—— 暂时没有任何搜索记录 ——</text>
+          </view>
+          <view
+            v-else
+            class="flex flex-wrap"
+          >
+            <view
+              v-for="(item, index) in historyList"
+              :key="index"
+              class="cu-btn round bg-white margin-right-xs margin-bottom-sm"
+              style="height: 55upx;line-height: 55upx"
+            >
+              <text
+                @tap="keywords = item"
+                @click="search"
+              >
+                {{ item }}
+              </text>
+            </view>
+          </view>
+          <view class="margin-top-sm text-center">
+            <text
+              class="text-gray cuIcon-delete"
+              @click="cleanHistory"
+            >
+              清空历史
+            </text>
+          </view>
+        </view>
+      </view>
+
       <!--搜索结果-->
-      <view v-if="searchContent">
+      <view
+        v-show="isShow"
+        v-if="searchContent"
+      >
         <word-full-list
           v-if="searchScopes[searchScopeIndex]==='词语'"
           :words="words || []"
@@ -59,11 +106,6 @@
           :article-list="articles || []"
         />
       </view>
-
-      <!--TODO 搜索历史-->
-      <!--      <view v-else>-->
-      <!--        暂无搜索历史-->
-      <!--      </view>-->
     </scroll-view>
   </view>
 </template>
@@ -92,6 +134,8 @@ export default {
       characters: null, // 搜索结果：字音
       words: null, // 搜索结果：词语
       articles: null, // 搜索结果：文章
+      historyList: [], // 历史记录列表
+      isShow: false, // 历史记录展示
     };
   },
   onLoad(option) {
@@ -101,6 +145,11 @@ export default {
     if (option.keywords) {
       this.keywords = option.keywords;
       this.search();
+    }
+    try {
+      this.historyList = JSON.parse(uni.getStorageSync('search_history'));
+    } catch (error) {
+      this.historyList = [];
     }
   },
   /**
@@ -115,6 +164,15 @@ export default {
     };
   },
   methods: {
+    /**
+     * 调整历史记录显示
+     */
+    keyFun() {
+      if (this.keywords === '') {
+        this.isShow = false;
+      }
+    },
+
     /**
      * 搜索
      */
@@ -174,6 +232,47 @@ export default {
             title: '未知搜索项',
             icon: 'none',
           });
+      }
+      this.isShow = true;
+      if (!this.historyList.includes(keywords)) {
+        this.historyList.unshift(keywords);
+        uni.setStorage({
+          key: 'search_history',
+          data: JSON.stringify(this.historyList),
+        });
+      } else {
+        // 已有搜索记录
+        const i = this.historyList.indexOf(keywords);
+        this.historyList.splice(i, 1);
+        this.historyList.unshift(keywords);
+        uni.setStorage({
+          key: 'search_history',
+          data: JSON.stringify(this.historyList),
+        });
+      }
+    },
+
+    /**
+     * 清空历史记录
+     */
+    cleanHistory() {
+      if (this.historyList.length === 0) {
+        uni.showToast({
+          icon: 'none',
+          title: '没有任何搜索记录',
+        });
+      } else {
+        uni.showModal({
+          content: '确定要清空全部历史记录吗？',
+          success: (res) => {
+            if (res.confirm) {
+              uni.removeStorage({
+                key: 'search_history',
+              });
+              this.historyList = [];
+            }
+          },
+        });
       }
     },
   },
