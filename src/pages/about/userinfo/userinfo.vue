@@ -103,7 +103,7 @@
 <script>
 import { changeUserInfo, getUserInfo } from '@/services/user';
 import { toChangeEmailPage, toChangeNicknamePage, toChangePhonePage } from '@/routers';
-import { uploadFile } from '@/services/file';
+import { chooseAndUploadAnImage, uploadFile } from '@/services/file';
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];
@@ -150,22 +150,14 @@ export default {
       }
     },
 
+    /**
+     * 上传头像
+     * @returns {Promise<void>}
+     */
     chooseAvatar() {
-      uni.chooseImage({
-        count: 1,
-        // 默认9
-        sizeType: ['original', 'compressed'],
-        // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album'],
-
-        // 从相册选择
-        success: (res) => {
-          const tempFilePaths = res.tempFilePaths[0];
-          uploadFile(tempFilePaths).then((res2) => {
-            this.changeAvatar(res2.url);
-          });
-        },
-      });
+      chooseAndUploadAnImage().then((res) => {
+        this.changeAvatar(res);
+      })
     },
 
     /**
