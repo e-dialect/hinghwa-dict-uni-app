@@ -1,5 +1,6 @@
 <template>
   <view>
+    <!-- TODO 分页-->
     <cu-custom title="用户词语" />
     <word-list-showing :word-list="words || []" />
   </view>
