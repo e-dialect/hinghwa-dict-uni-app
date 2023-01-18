@@ -12,13 +12,13 @@
       </button>
     </view>
     <view
-      v-if="pronunciation.length === 0"
+      v-if="pronunciations.length === 0"
       class="text-lg margin cu-list"
     >
       <text>这里暂时空空如也~</text>
     </view>
     <view
-      v-for="(item, index) in pronunciation"
+      v-for="(item, index) in pronunciations"
       v-else
       :key="index"
       class="padding-sm cu-item"
@@ -80,14 +80,14 @@ export default {
   data() {
     return {
       id: -1,
-      pronunciation: [],
+      pronunciations: [],
     };
   },
   onLoad(options) {
     this.id = options.id;
     getPronunciations({ contributor: this.id }).then((res) => {
       if (res) {
-        this.pronunciation = res;
+        this.pronunciations = res;
       }
     });
   },

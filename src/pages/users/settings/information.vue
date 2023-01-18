@@ -1,47 +1,74 @@
 <template>
   <view>
     <cu-custom
-      bg-color="bg-white"
+      title="个人信息"
       :is-back="true"
     />
-    <view
-      class="cu-form-group padding"
-      @tap="chooseAvatar"
-    >
-      <view class="title">
-        头像
+    <view>
+      <view
+        class="cu-form-group padding"
+        @tap="chooseAvatar"
+      >
+        <view class="title">
+          头像
+        </view>
+        <view>
+          <image
+            :src="user.avatar"
+            class="margin-right-xs cu-avatar xl round"
+            mode="aspectFill"
+          />
+          <text class="cuIcon-right text-gray" />
+        </view>
       </view>
-      <view>
-        <image
-          :src="user.avatar"
-          class="margin-right-xs cu-avatar xl round"
-          mode="aspectFill"
-        />
-        <text class="cuIcon-right text-gray" />
+
+      <view
+        class="cu-form-group"
+        @tap="toChangeUsernamePage"
+      >
+        <view class="title">
+          用户名
+        </view>
+        <view class="text-grey">
+          {{ user.username }}
+          <text class="cuIcon-right text-gray" />
+        </view>
+      </view>
+
+      <view
+        class="cu-form-group"
+        @tap="toChangeNicknamePage"
+      >
+        <view class="title">
+          昵称
+        </view>
+        <view class="text-grey">
+          {{ user.nickname }}
+          <text class="cuIcon-right" />
+        </view>
+      </view>
+
+      <view
+        class="cu-form-group"
+        @tap="toChangeEmailPage"
+      >
+        <view class="title">
+          邮箱
+        </view>
+        <view class="text-grey">
+          {{ user.email }}
+          <text class="cuIcon-right text-gray" />
+        </view>
       </view>
     </view>
+
+    <!--个人信息-->
     <view
-      class="cu-form-group"
-      @tap="toChangeNicknamePage"
+      class="cu-form-group padding-top-xl"
+      style="background-color: #f7f7f7"
     >
-      <view class="title">
-        昵称
-      </view>
-      <view class="text-grey">
-        {{ user.nickname }}
-        <text class="cuIcon-right" />
-      </view>
-    </view>
-    <view
-      class="cu-form-group"
-      @tap="toChangeEmailPage"
-    >
-      <view class="title">
-        邮箱
-      </view>
-      <view class="text-grey">
-        {{ user.email }}
-        <text class="cuIcon-right text-gray" />
+      <view class="text-df text-gray">
+        个人信息（将会默认公开）
       </view>
     </view>
     <view
@@ -54,14 +81,6 @@
       <view class="text-grey">
         {{ user.telephone }}
         <text class="cuIcon-right text-gray" />
-      </view>
-    </view>
-    <view
-      class="cu-form-group padding-top-xl"
-      style="background-color: #f7f7f7"
-    >
-      <view class="text-df text-gray">
-        个人信息
       </view>
     </view>
     <view class="cu-form-group">
@@ -103,7 +122,9 @@
 <script>
 import { changeUserInfo, getUserInfo } from '@/services/user';
 import { chooseAndUploadAnImage, uploadFile } from '@/services/file';
-import { toChangeEmailPage, toChangeNicknamePage, toChangePhonePage } from '@/routers/user';
+import {
+  toChangeEmailPage, toChangeNicknamePage, toChangePhonePage, toChangeUsernamePage,
+} from '@/routers/user';
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];
@@ -130,6 +151,7 @@ export default {
     this.getInfo();
   },
   methods: {
+    toChangeUsernamePage,
     /**
      * 获取用户信息
      * @returns {Promise<void>}

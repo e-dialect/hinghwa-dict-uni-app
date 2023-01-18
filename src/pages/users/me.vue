@@ -37,7 +37,10 @@
             语音量
           </view>
         </view>
-        <view class="flex flex-sub flex-direction solid-right">
+        <view
+          class="flex flex-sub flex-direction solid-right"
+          @tap="toUserWordsPage(id)"
+        >
           <view class="text-xlp text-blue">
             {{ wordsCount }}
           </view>
@@ -61,7 +64,7 @@
           <navigator
             class="content"
             hover-class="none"
-            url="/pages/about/articlesliked/articlesliked"
+            url="/pages/users/me/likedarticles"
           >
             <text class="cuIcon-appreciate text-grey" />
             <text class="text-grey">
@@ -73,7 +76,7 @@
           <navigator
             class="content"
             hover-class="none"
-            url="/pages/about/myarticles/myarticles"
+            url="/pages/users/me/articles"
           >
             <text class="cuIcon-edit text-grey" />
             <text class="text-grey">
@@ -81,18 +84,18 @@
             </text>
           </navigator>
         </view>
-        <view class="cu-item arrow">
-          <navigator
-            class="content"
-            hover-class="none"
-            url="/pages/about/mycomments/mycomments"
-          >
-            <text class="cuIcon-comment text-grey" />
-            <text class="text-grey">
-              我的评论
-            </text>
-          </navigator>
-        </view>
+        <!--        <view class="cu-item arrow">-->
+        <!--          <navigator-->
+        <!--            class="content"-->
+        <!--            hover-class="none"-->
+        <!--            url="/pages/users/me/comments"-->
+        <!--          >-->
+        <!--            <text class="cuIcon-comment text-grey" />-->
+        <!--            <text class="text-grey">-->
+        <!--              我的评论-->
+        <!--            </text>-->
+        <!--          </navigator>-->
+        <!--        </view>-->
         <!--        <view class="cu-item arrow">-->
         <!--          <navigator-->
         <!--            class="content"-->
@@ -107,7 +110,10 @@
         <!--        </view>-->
       </view>
       <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-        <view class="cu-item arrow">
+        <view
+          class="cu-item arrow"
+          @tap="toChangePasswordPage()"
+        >
           <view class="content">
             <text class="cuIcon-write text-grey" />
             <text class="text-grey">
@@ -117,7 +123,7 @@
         </view>
         <view
           class="cu-item arrow"
-          @tap="bindingWechat"
+          @tap="bindingWechat()"
         >
           <view class="content">
             <text class="cuIcon-group text-grey" />
@@ -128,7 +134,7 @@
         </view>
         <view
           class="cu-item arrow"
-          @tap="tuxiaochao"
+          @tap="tuxiaochao()"
         >
           <view class="content">
             <text class="cuIcon-question text-grey" />
@@ -139,7 +145,7 @@
         </view>
         <view
           class="cu-item arrow"
-          @tap="exit"
+          @tap="exit()"
         >
           <view class="content">
             <text class="cuIcon-exit text-grey" />
@@ -159,7 +165,9 @@ import { toIndexPage } from '@/routers';
 import {
   bindingWechat, cancelBindingWechat, clearUserInfo, getUserInfo,
 } from '@/services/user';
-import { toPronunciationsPage, toUserInfoPage } from '@/routers/user';
+import {
+  toChangePasswordPage, toPronunciationsPage, toUserInfoPage, toUserWordsPage,
+} from '@/routers/user';
 
 const app = getApp();
 export default {
@@ -177,6 +185,8 @@ export default {
     this.getInfo();
   },
   methods: {
+    toUserWordsPage,
+    toChangePasswordPage,
     toUserInfoPage,
     toPronunciationsPage,
     /**

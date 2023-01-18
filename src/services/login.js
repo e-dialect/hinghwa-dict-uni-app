@@ -12,6 +12,7 @@ export async function loadUserInfo() {
   }
   const app = getApp();
   await rawRequest.get(`/users/${id}`).then((res) => {
+    console.log(res);
     app.globalData.userInfo = res.user;
     app.globalData.publish_articles = res.publish_articles;
     app.globalData.publish_comments = res.publish_comments;

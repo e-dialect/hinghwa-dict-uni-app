@@ -1,9 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    />
+    <cu-custom title="修改密码" />
     <form @submit="changePassword">
       <view
         v-for="(item, index) in pwd"

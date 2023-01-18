@@ -111,49 +111,58 @@
       "style": {}
     },
     {
-      "path": "pages/about/home/home",
+      "path": "pages/users/me",
       "style": {
         "component": true
       }
-    },
-    {
-      "path": "pages/about/userinfo/userinfo",
-      "style": {}
     },
     {
       "path": "pages/users/detail",
       "style": {}
     },
     {
-      "path": "pages/users/pronunciation",
+      "path": "pages/users/pronunciations",
       "style": {}
     },
     {
-      "path": "pages/about/nickname/nickname",
+      "path": "pages/users/words",
       "style": {}
     },
     {
-      "path": "pages/about/email/email",
+      "path": "pages/users/settings/information",
       "style": {}
     },
     {
-      "path": "pages/about/password/password",
+      "path": "pages/users/settings/username",
       "style": {}
     },
     {
-      "path": "pages/about/articlesliked/articlesliked",
+      "path": "pages/users/settings/nickname",
       "style": {}
     },
     {
-      "path": "pages/about/myarticles/myarticles",
+      "path": "pages/users/settings/email",
       "style": {}
     },
     {
-      "path": "pages/about/mycomments/mycomments",
+      "path": "pages/users/settings/password",
+      "style": {}
+    },
+
+    {
+      "path": "pages/users/me/likedarticles",
       "style": {}
     },
     {
-      "path": "pages/about/phone/phone",
+      "path": "pages/users/me/articles",
+      "style": {}
+    },
+    {
+      "path": "pages/users/me/comments",
+      "style": {}
+    },
+    {
+      "path": "pages/users/settings/phone",
       "style": {}
     },
     {

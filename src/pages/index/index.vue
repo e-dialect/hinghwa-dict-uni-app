@@ -31,7 +31,7 @@ import { COS_URL } from '../../const/urls';
 import basics from '../basics/home/home';
 import tools from '../component/home/home';
 import InteractionPage from '../plugin/home/home';
-import me from '../about/home/home';
+import me from '../users/me';
 import { mpLogin } from '../../services/login';
 
 const app = getApp();

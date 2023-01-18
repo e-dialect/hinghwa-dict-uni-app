@@ -13,7 +13,7 @@ export function toUserPage(id) {
  */
 export function toUserInfoPage() {
   uni.navigateTo({
-    url: '/pages/about/userinfo/userinfo',
+    url: '/pages/users/settings/information',
   });
 }
 
@@ -23,7 +23,13 @@ export function toUserInfoPage() {
  */
 export function toPronunciationsPage(id) {
   uni.navigateTo({
-    url: `/pages/users/pronunciation?id=${id}`,
+    url: `/pages/users/pronunciations?id=${id}`,
+  });
+}
+
+export function toUserWordsPage(id) {
+  uni.navigateTo({
+    url: `/pages/users/words?id=${id}`,
   });
 }
 
@@ -32,7 +38,16 @@ export function toPronunciationsPage(id) {
  */
 export function toChangeNicknamePage() {
   uni.navigateTo({
-    url: '/pages/about/nickname/nickname',
+    url: '/pages/users/settings/nickname',
+  });
+}
+
+/**
+ * 前往更改用户名页面
+ */
+export function toChangeUsernamePage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/username',
   });
 }
 
@@ -41,7 +56,7 @@ export function toChangeNicknamePage() {
  */
 export function toChangeEmailPage() {
   uni.navigateTo({
-    url: '/pages/about/email/email',
+    url: '/pages/users/settings/email',
   });
 }
 
@@ -50,7 +65,7 @@ export function toChangeEmailPage() {
  */
 export function toChangePhonePage() {
   uni.navigateTo({
-    url: '/pages/about/phone/phone',
+    url: '/pages/users/settings/phone',
   });
 }
 
@@ -64,4 +79,10 @@ export function toMePage(closeAll = false) {
       url: '/pages/index/index?status=me',
     });
   }
+}
+
+export function toChangePasswordPage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/password',
+  });
 }

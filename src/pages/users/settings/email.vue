@@ -1,9 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    />
+    <cu-custom title="修改邮箱" />
     <view class="cu-form-group">
       <view class="text-df text-bold-less margin-right-sm">
         原邮箱
