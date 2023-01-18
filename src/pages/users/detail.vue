@@ -107,7 +107,6 @@ export default {
   },
   data() {
     return {
-      toMyRecordsPage,
       id: 0,
       userInfo: {},
       status: 0,
@@ -130,6 +129,7 @@ export default {
     this.freshing = false;
   },
   methods: {
+    toMyRecordsPage,
     /**
      * 获取用户信息
      * @returns {Promise<void>}
