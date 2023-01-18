@@ -1,16 +1,6 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        语记·语音
-      </view>
-    </cu-custom>
+    <cu-custom title="语记·语音" />
     <view @tap="toVoiceRankListPage()">
       <button
         class="cu-btn bg-gradual-blue shadow text-df margin"
@@ -23,7 +13,7 @@
     </view>
     <view
       v-if="pronunciation.length === 0"
-      class="text-lg margin"
+      class="text-lg margin cu-list"
     >
       <text>这里暂时空空如也~</text>
     </view>
@@ -31,46 +21,46 @@
       v-for="(item, index) in pronunciation"
       v-else
       :key="index"
-      class="padding-sm"
+      class="padding-sm cu-item"
     >
       <view
-        class="voice"
+        class="voice flex align-center"
         :data-index="index"
-        @tap="play"
       >
-        <view class="word solid-right">
+        <view
+          class="word solid-right"
+          @tap="toWordPage(item.pronunciation.word_id)"
+        >
           {{ item.pronunciation.word_word }}
         </view>
-        <view class="info">
+        <view
+          class="info"
+          @tap="playAudio(item.pronunciation.source)"
+        >
           <view>
             <view class="text-df margin-bottom-sm">
               <text decode>
                 {{ item.pronunciation.pinyin }}&nbsp;&nbsp;
               </text>
-              <text class="text-blue cuIcon-notificationfill" />
             </view>
             <view class="text-df margin-bottom-sm">
               <text class="text-grey">
                 /{{ item.pronunciation.ipa }}/
               </text>
             </view>
-            <view class="text-df margin-bottom-sm">
+            <view class="text-df">
               <text>地区：</text>
               <text decode>
                 {{ item.pronunciation.county }}&nbsp;&nbsp;{{ item.pronunciation.town }}
               </text>
             </view>
-            <view class="text-df">
-              <text>来源：</text>
-              <text
-                class="text-blue"
-                :data-id="item.contributor.id"
-                @tap="toVisitor"
-              >
-                {{ item.contributor.nickname }}
-              </text>
-            </view>
           </view>
+        </view>
+        <view
+          class="margin-right"
+          @tap="playAudio(item.pronunciation.source)"
+        >
+          <text class="text-blue cuIcon-notificationfill" />
         </view>
       </view>
     </view>
@@ -80,13 +70,15 @@
 <script>
 import { getPronunciations } from '@/services/pronunciation';
 import { playAudio } from '@/utils/audio';
-import { toUserPage, toVoiceRankListPage } from '@/routers';
+import { toVoiceRankListPage } from '@/routers';
+import CuCustom from '@/colorui/components/cu-custom';
+import { toWordPage } from '@/routers/word';
 
 const app = getApp();
 export default {
+  components: { CuCustom },
   data() {
     return {
-      toVoiceRankListPage,
       id: -1,
       pronunciation: [],
     };
@@ -100,13 +92,9 @@ export default {
     });
   },
   methods: {
-    play(e) {
-      playAudio(this.pronunciation[index].pronunciation.source);
-    },
-
-    toVisitor(e) {
-      toUserPage(e.currentTarget.dataset.id);
-    },
+    toWordPage,
+    playAudio,
+    toVoiceRankListPage,
   },
 };
 </script>
@@ -134,7 +122,7 @@ page {
   justify-content: center;
   align-items: center;
   width: 30vw;
-  height: 28vw;
+  height: 20vw;
   margin-right: 20rpx;
   border-radius: 10rpx;
   font-size: 50rpx;
