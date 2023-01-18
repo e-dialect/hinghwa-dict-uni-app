@@ -60,7 +60,7 @@
                 &nbsp;{{ item.author.nickname }}&nbsp;&nbsp;
               </text>
             </view>
-            <view class="text-content">
+            <view class="text-content description">
               {{ item.article.description }}
             </view>
           </view>
@@ -110,5 +110,13 @@ export default {
   background-color: #ffffff;
   border-radius: 20rpx;
   margin-right: 1vw;
+}
+.description{
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-width: 50vw;
 }
 </style>
