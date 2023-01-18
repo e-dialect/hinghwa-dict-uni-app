@@ -80,7 +80,7 @@
 <script>
 import { sendEmailCode } from '@/services/website';
 import { registerUser } from '@/services/user';
-import CuCustom from '@/colorui/components/cu-custom.vue';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 export default {
