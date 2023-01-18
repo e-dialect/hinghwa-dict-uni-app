@@ -106,7 +106,7 @@
 
 <script>
 import { getPronunciationRanking } from '@/services/pronunciation';
-import { toUserPage } from '@/routers';
+import { toUserPage } from '@/routers/user';
 
 export default {
   name: 'RankList',

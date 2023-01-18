@@ -1,22 +1,26 @@
 <template>
   <view>
-    <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
-    />
+    <cu-custom title="修改昵称" />
+    <view class="cu-form-group text-df">
+      <view>
+        <text class="cuIcon-info" />
+        昵称用于用户之间的交流经常展示
+      </view>
+    </view>
     <view class="cu-form-group text-df">
       <view class="text-df text-bold-less margin-right-sm">
         昵称
       </view>
       <input
+        v-model="nickname"
         placeholder="不要超过20位嗷~"
         maxlength="20"
-        @input="setNickname"
       >
     </view>
     <button
       class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm"
       style="width: 16vw; margin-left: 80vw"
+      :disabled="nickname===currentNickname"
       @tap="saveNickname"
     >
       保存
@@ -26,6 +30,7 @@
 
 <script>
 import { changeUserInfo, getUserInfo } from '@/services/user';
+import { toLoginPage } from '@/routers';
 
 const app = getApp();
 export default {
@@ -34,13 +39,20 @@ export default {
       nickname: '',
     };
   },
-  methods: {
-    setNickname(e) {
-      this.nickname = e.detail.value;
+  computed: {
+    currentNickname() {
+      return app.globalData.userInfo.nickname;
     },
-
+  },
+  onShow() {
+    if (!this.currentNickname) {
+      toLoginPage();
+    }
+    this.nickname = this.currentNickname;
+  },
+  methods: {
     /**
-     * 更改头像
+     * 保存昵称
      * @returns {Promise<void>}
      */
     async saveNickname() {
@@ -50,19 +62,13 @@ export default {
           showCancel: false,
         });
       } else {
-        const userInfo = await getUserInfo(app.globalData.id);
-        userInfo.user.nickname = this.nickname;
-        changeUserInfo(app.globalData.id, userInfo.user).then(async (res) => {
-          uni.setStorageSync('token', res.token);
-          setTimeout(() => {
-            uni.showToast({
-              title: '修改成功',
-            });
-            uni.navigateBack({
-              delta: 1,
-            }); // 返回上一个页面
-          }, 100);
-        });
+        const userInfo = { ...app.globalData.userInfo };
+        userInfo.nickname = this.nickname;
+        await changeUserInfo(app.globalData.id, userInfo);
+        app.globalData.userInfo = userInfo;
+        setTimeout(() => {
+          uni.navigateBack();
+        }, 1500);
       }
     },
   },

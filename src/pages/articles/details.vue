@@ -168,12 +168,12 @@
 
 <script>
 import MarkdownViewer from '@/components/MarkdownViewer';
-import { toUserPage } from '@/routers';
 import {
   createComment, deleteArticle, getArticle, getComments, likeArticle, unlikeArticle,
 } from '@/services/article';
 import ArticleComment from '@/components/ArticleComment';
 import { toArticleEditPage } from '@/routers/article';
+import { toUserPage } from '@/routers/user';
 
 export default {
   components: {

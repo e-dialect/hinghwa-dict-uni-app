@@ -51,11 +51,20 @@ export async function getWordDetails(id) {
 }
 
 /**
- * WD0201 获取符合条件的字词的列表
+ * WD0201 获取符合条件的字词的列表-关键词
  * @returns {Promise<unknown>}
  */
 export async function searchWords(key) {
   return request.get('/words', { search: key });
+}
+
+/**
+ * WD0201 获取符合条件的字词的列表-用户
+ * @param id{number} 用户id
+ * @returns {Promise<unknown>}
+ */
+export async function filterUserWords(id) {
+  return request.get('/words', { contributor: id });
 }
 
 /**

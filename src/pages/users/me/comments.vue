@@ -1,4 +1,5 @@
 <template>
+  <!--  FIXME refactor-->
   <view>
     <cu-custom title="我的评论" />
     <view

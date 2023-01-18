@@ -45,7 +45,7 @@
       <view class="padding flex text-center text-grey bg-white shadow-warp">
         <view
           class="flex flex-sub flex-direction solid-right"
-          @tap="toMyRecordsPage(id)"
+          @tap="toPronunciationsPage(id)"
         >
           <view class="text-xlp text-orange">
             {{ userInfo.contribution.pronunciation }}
@@ -55,7 +55,10 @@
             语音量
           </view>
         </view>
-        <view class="flex flex-sub flex-direction solid-right">
+        <view
+          class="flex flex-sub flex-direction solid-right"
+          @tap="toUserWordsPage(id)"
+        >
           <view class="text-xlp text-blue">
             {{ userInfo.contribution.word }}
           </view>
@@ -66,11 +69,11 @@
         </view>
         <view class="flex flex-sub flex-direction">
           <view class="text-xlp text-green">
-            {{ userInfo.contribution.listened }}
+            {{ userInfo.contribution.article_views || 0 }}
           </view>
           <view class="margin-top-sm">
             <text class="cuIcon-attention" />
-            播放量
+            被阅读量
           </view>
         </view>
       </view>
@@ -96,9 +99,9 @@
 
 <script>
 import { getUserInfo } from '@/services/user';
-import { toMyRecordsPage } from '@/routers';
 import { getArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
+import { toPronunciationsPage, toUserWordsPage } from '@/routers/user';
 
 const app = getApp();
 export default {
@@ -107,9 +110,21 @@ export default {
   },
   data() {
     return {
-      toMyRecordsPage,
       id: 0,
-      userInfo: {},
+      userInfo: {
+        user: {
+          avatar: '',
+          nickname: '',
+          is_admin: false,
+          county: '',
+          town: '',
+        },
+        contribution: {
+          pronunciation: 0,
+          word: 0,
+          article_views: 0,
+        },
+      },
       status: 0,
       current: 0,
       page: 1,
@@ -122,13 +137,14 @@ export default {
   },
   async onLoad(options) {
     const { id } = options;
+    this.id = id;
     await this.getInfo(id);
-    this.userInfo = await getUserInfo(id);
-    this.publish_articles = this.userInfo.publish_articles;
     await this.getArticlesList();
     this.freshing = false;
   },
   methods: {
+    toUserWordsPage,
+    toPronunciationsPage,
     /**
      * 获取用户信息
      * @returns {Promise<void>}
@@ -169,16 +185,14 @@ export default {
     /**
      * 加载更多文章
      */
-    loadMoreArticles() {
-      uni.showLoading();
+    async loadMoreArticles() {
       const { page } = this;
       const originArticles = this.displayArticles;
-      const concatArticles = this.articles.slice(page * 4, page * 4 + 4);
+      let articles = this.status === 0 ? this.publish_articles : this.like_articles;
+      articles = articles.slice(page * 4, page * 4 + 4);
+      const concatArticles = (await getArticles(articles)).articles;
       this.page += 1;
       this.displayArticles = originArticles.concat(concatArticles);
-      setTimeout(() => {
-        uni.hideLoading();
-      }, 500);
     },
 
     /**
@@ -186,14 +200,9 @@ export default {
      * @returns {Promise<void>}
      */
     async getArticlesList() {
-      if (this.status === 1) {
-        const articleInfo = await getArticles(this.like_articles);
-        this.articles = articleInfo.articles;
-      } else {
-        const articleInfo = await getArticles(this.publish_articles);
-        this.articles = articleInfo.articles;
-      }
-      this.displayArticles = this.articles.slice(0, 4);
+      let articles = this.status === 0 ? this.publish_articles : this.like_articles;
+      articles = articles.slice(0, 4);
+      this.displayArticles = (await getArticles(articles)).articles;
     },
   },
 };

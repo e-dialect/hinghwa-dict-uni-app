@@ -70,9 +70,9 @@
 </template>
 
 <script>
-import { toUserPage } from '@/routers';
 import { createComment, getComments } from '@/services/article';
 import ArticleComment from '@/components/ArticleComment';
+import { toUserPage } from '@/routers/user';
 
 const app = getApp();
 export default {

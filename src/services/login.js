@@ -1,4 +1,5 @@
-import { toIndexPage, toLoginPage, toMePage } from '@/routers';
+import { toIndexPage, toLoginPage } from '@/routers';
+import { toMePage } from '@/routers/user';
 import rawRequest from '../utils/rawRequest';
 
 /**

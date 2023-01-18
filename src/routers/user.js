@@ -1,0 +1,88 @@
+/**
+ * 前往用户页面
+ * @param id 用户id
+ */
+export function toUserPage(id) {
+  uni.navigateTo({
+    url: `/pages/users/details?id=${id}`,
+  });
+}
+
+/**
+ * 前往用户信息页面
+ */
+export function toUserInfoPage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/information',
+  });
+}
+
+/**
+ * 前往用户贡献语音页面
+ * @param id 用户id
+ */
+export function toPronunciationsPage(id) {
+  uni.navigateTo({
+    url: `/pages/users/pronunciations?id=${id}`,
+  });
+}
+
+export function toUserWordsPage(id) {
+  uni.navigateTo({
+    url: `/pages/users/words?id=${id}`,
+  });
+}
+
+/**
+ * 前往更改用户昵称页面
+ */
+export function toChangeNicknamePage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/nickname',
+  });
+}
+
+/**
+ * 前往更改用户名页面
+ */
+export function toChangeUsernamePage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/username',
+  });
+}
+
+/**
+ * 前往更改邮箱页面
+ */
+export function toChangeEmailPage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/email',
+  });
+}
+
+/**
+ * 前往更改手机号页面
+ */
+export function toChangePhonePage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/phone',
+  });
+}
+
+export function toMePage(closeAll = false) {
+  if (closeAll) {
+    uni.reLaunch({
+      url: '/pages/index/index?status=me',
+    });
+  } else {
+    uni.navigateTo({
+      url: '/pages/index/index?status=me',
+    });
+  }
+}
+
+export function toChangePasswordPage() {
+  uni.navigateTo({
+    url: '/pages/users/settings/password',
+  });
+}
