@@ -50,6 +50,7 @@
           class="description"
           placeholder="请输入文章简介"
           auto-height
+          style="min-height: 5vh"
         />
       </view>
 
