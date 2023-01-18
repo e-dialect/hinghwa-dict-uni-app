@@ -122,6 +122,7 @@ export default {
   },
   async onLoad(options) {
     const { id } = options;
+    this.id = id;
     await this.getInfo(id);
     this.userInfo = await getUserInfo(id);
     this.publish_articles = this.userInfo.publish_articles;
