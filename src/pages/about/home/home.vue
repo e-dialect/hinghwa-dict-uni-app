@@ -52,7 +52,7 @@
           </view>
           <view class="margin-top-sm">
             <text class="cuIcon-attention" />
-            播放量
+            被阅读量
           </view>
         </view>
       </view>
@@ -189,7 +189,7 @@ export default {
       this.nickname = userInfo.user.nickname;
       this.recordsCount = userInfo.contribution.pronunciation;
       this.wordsCount = userInfo.contribution.word;
-      this.visitTotal = userInfo.contribution.listened;
+      this.visitTotal = userInfo.contribution.article_views || 0;
     },
 
     /**

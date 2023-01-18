@@ -66,11 +66,11 @@
         </view>
         <view class="flex flex-sub flex-direction">
           <view class="text-xlp text-green">
-            {{ userInfo.contribution.listened }}
+            {{ userInfo.contribution.article_views || 0 }}
           </view>
           <view class="margin-top-sm">
             <text class="cuIcon-attention" />
-            播放量
+            被阅读量
           </view>
         </view>
       </view>
