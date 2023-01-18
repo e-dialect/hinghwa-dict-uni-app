@@ -38,9 +38,9 @@
               <button
                 class="cu-btn bg-black shadow"
                 style="width: fit-content"
-                @tap="login"
+                @tap="toLoginPage()"
               >
-                一键登录
+                登录
               </button>
             </view>
           </view>
@@ -112,7 +112,7 @@
 
 <script>
 import { getAnnouncements, getWordOfTheDay } from '@/services/website';
-import { toSearchPage } from '@/routers';
+import { toLoginPage, toSearchPage } from '@/routers';
 import { toWordPage } from '@/routers/word';
 import { toArticlePage } from '@/routers/article';
 import { mpLogin } from '../../../services/login';
@@ -140,6 +140,7 @@ export default {
     this.announcements = await getAnnouncements();
   },
   methods: {
+    toLoginPage,
     /**
      * 下拉刷新
      * @returns {Promise<void>}
@@ -157,13 +158,6 @@ export default {
       uni.hideLoading();
       this.triggered = false;
       this.freshing = false;
-    },
-
-    /**
-     * 一键登录模块
-     */
-    login() {
-      mpLogin();
     },
 
     /**

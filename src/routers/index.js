@@ -35,9 +35,12 @@ export function toForgetPage() {
  * 前往登录页面
  */
 export function toLoginPage() {
-  uni.navigateTo({
-    url: '/pages/login/login',
-  });
+  const routes = getCurrentPages();
+  if (routes[routes.length - 1].route !== '/pages/login/login' && routes[routes.length - 1].route !== 'pages/login/login') {
+    uni.navigateTo({
+      url: '/pages/login/login',
+    });
+  }
 }
 
 /**
