@@ -45,7 +45,7 @@
       <view class="padding flex text-center text-grey bg-white shadow-warp">
         <view
           class="flex flex-sub flex-direction solid-right"
-          @tap="toMyRecordsPage(id)"
+          @tap="toPronunciationsPage(id)"
         >
           <view class="text-xlp text-orange">
             {{ userInfo.contribution.pronunciation }}
@@ -96,9 +96,9 @@
 
 <script>
 import { getUserInfo } from '@/services/user';
-import { toMyRecordsPage } from '@/routers';
 import { getArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
+import { toPronunciationsPage } from '@/routers/user';
 
 const app = getApp();
 export default {
@@ -129,7 +129,7 @@ export default {
     this.freshing = false;
   },
   methods: {
-    toMyRecordsPage,
+    toPronunciationsPage,
     /**
      * 获取用户信息
      * @returns {Promise<void>}

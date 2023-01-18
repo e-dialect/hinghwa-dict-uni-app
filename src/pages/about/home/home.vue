@@ -27,7 +27,7 @@
       <view class="padding flex text-center text-grey bg-white shadow-warp">
         <view
           class="flex flex-sub flex-direction solid-right"
-          @tap="toMyRecordsPage(id)"
+          @tap="toPronunciationsPage(id)"
         >
           <view class="text-xlp text-orange">
             {{ recordsCount }}
@@ -155,17 +155,16 @@
 </template>
 
 <script>
-import { toIndexPage, toMyRecordsPage, toUserInfoPage } from '@/routers';
+import { toIndexPage } from '@/routers';
 import {
   bindingWechat, cancelBindingWechat, clearUserInfo, getUserInfo,
 } from '@/services/user';
+import { toPronunciationsPage, toUserInfoPage } from '@/routers/user';
 
 const app = getApp();
 export default {
   data() {
     return {
-      toUserInfoPage,
-      toMyRecordsPage,
       id: '',
       avatar: '',
       nickname: '',
@@ -178,6 +177,8 @@ export default {
     this.getInfo();
   },
   methods: {
+    toUserInfoPage,
+    toPronunciationsPage,
     /**
      * 获取用户信息
      * @returns {Promise<void>}

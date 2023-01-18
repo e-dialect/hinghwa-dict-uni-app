@@ -102,8 +102,8 @@
 
 <script>
 import { changeUserInfo, getUserInfo } from '@/services/user';
-import { toChangeEmailPage, toChangeNicknamePage, toChangePhonePage } from '@/routers';
 import { chooseAndUploadAnImage, uploadFile } from '@/services/file';
+import { toChangeEmailPage, toChangeNicknamePage, toChangePhonePage } from '@/routers/user';
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];

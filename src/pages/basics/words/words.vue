@@ -232,12 +232,13 @@
 <script>
 import { getWordDetails } from '@/services/word';
 import {
-  toIndexPage, toUserPage,
+  toIndexPage,
 } from '@/routers';
 import { playAudio } from '@/utils/audio';
 import { getPronunciations } from '@/services/pronunciation';
 import WordPronunciationButton from '@/components/WordPronunciationButton';
 import { toUploadPronunciationPage, toWordPage } from '@/routers/word';
+import { toUserPage } from '@/routers/user';
 
 const app = getApp();
 export default {

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { toUserPage } from '@/routers';
+import { toUserPage } from '@/routers/user';
 
 export default {
   name: 'ArticleComment',
