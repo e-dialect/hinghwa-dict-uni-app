@@ -28,7 +28,7 @@
 
 <script>
 import { toLoginPage } from '@/routers';
-import { defaultMessage } from '@/routers/shareMessages';
+import { defaultMessage } from '@/services/shareMessages';
 import { COS_URL } from '../../const/urls';
 import basics from '../basics/home/home';
 import tools from '../component/home/home';
