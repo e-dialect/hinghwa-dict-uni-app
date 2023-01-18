@@ -244,23 +244,23 @@ export default {
             // 取消绑定
             uni.showModal({
               content: '是否解除绑定？',
-              success: async (res) => {
-                if (res.confirm) {
+              success: async (cancelBinding) => {
+                if (cancelBinding.confirm) {
                   await cancelBindingWechat(app.globalData.id);
+                  // 绑定到此微信
+                  if (uni.getSystemInfoSync().uniPlatform === 'mp-weixin') {
+                    uni.showModal({
+                      content: '是否绑定至此微信？',
+                      success: async (binding) => {
+                        if (binding.confirm) {
+                          await bindingWechat(app.globalData.id);
+                        }
+                      },
+                    });
+                  }
                 }
               },
             });
-            // 绑定到此微信
-            if (uni.getSystemInfoSync().uniPlatform === 'mp-weixin') {
-              uni.showModal({
-                content: '是否绑定至此微信？',
-                success: async (res) => {
-                  if (res.confirm) {
-                    await bindingWechat(app.globalData.id, true);
-                  }
-                },
-              });
-            }
           }
         },
       });
