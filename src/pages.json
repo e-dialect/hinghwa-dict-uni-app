@@ -85,10 +85,6 @@
       "style": {}
     },
     {
-      "path": "pages/component/voice/voice",
-      "style": {}
-    },
-    {
       "path": "pages/component/pinyin/pinyin",
       "style": {}
     },
@@ -126,6 +122,10 @@
     },
     {
       "path": "pages/users/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/users/pronunciation",
       "style": {}
     },
     {

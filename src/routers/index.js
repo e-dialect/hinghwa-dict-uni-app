@@ -38,7 +38,7 @@ export function toUserInfoPage() {
  */
 export function toMyRecordsPage(id) {
   uni.navigateTo({
-    url: `/pages/component/voice/voice?id=${id}`,
+    url: `/pages/users/pronunciation?id=${id}`,
   });
 }
 
