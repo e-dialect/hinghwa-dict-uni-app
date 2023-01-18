@@ -1,5 +1,6 @@
 <template>
   <view>
+    <cu-custom title="登录" />
     <view class="logo">
       <image
         :src="logo"
@@ -31,6 +32,17 @@
           登录
         </button>
       </view>
+      <!-- #ifdef MP-WEIXIN -->
+      <view class="flex justify-center">
+        <button
+          class="cu-btn round bg-gradual-blue shadow text-df margin-top"
+          style="width: 65vw"
+          @tap="mpLogin()"
+        >
+          微信一键登录
+        </button>
+      </view>
+      <!-- #endif -->
     </form>
     <view
       class="flex text-bold text-center"
@@ -62,11 +74,13 @@
 
 <script>
 import { COS_URL } from '@/const/urls';
-import { normalLogin } from '@/services/login';
+import { mpLogin, normalLogin } from '@/services/login';
 import { toForgetPage, toRegisterPage, toWechatRegisterPage } from '@/routers';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 export default {
+  components: { CuCustom },
   data() {
     return {
       toForgetPage,
@@ -76,6 +90,7 @@ export default {
     };
   },
   methods: {
+    mpLogin,
     login(e) {
       const { username } = e.detail.value;
       const { password } = e.detail.value;
@@ -90,8 +105,8 @@ page {
 }
 
 .logo {
-  margin-top: 20vh;
-  margin-bottom: 10vh;
+  margin-top: 15vh;
+  margin-bottom: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,4 +142,5 @@ page {
   font-size: 40rpx;
   box-sizing: border-box;
 }
+
 </style>

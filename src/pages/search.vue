@@ -117,7 +117,7 @@ import { searchArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
 import WordFullList from '@/components/WordFullList';
 import CharacterPinyinList from '@/components/CharacterPinyinList';
-import { defaultMessage } from '@/routers/shareMessages';
+import { defaultMessage } from '@/services/shareMessages';
 
 export default {
   components: {

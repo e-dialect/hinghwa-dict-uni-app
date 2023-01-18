@@ -27,12 +27,13 @@
 </template>
 
 <script>
+import { toLoginPage } from '@/routers';
+import { defaultMessage } from '@/services/shareMessages';
 import { COS_URL } from '../../const/urls';
 import basics from '../basics/home/home';
 import tools from '../component/home/home';
 import InteractionPage from '../plugin/home/home';
 import me from '../users/me';
-import { mpLogin } from '../../services/login';
 
 const app = getApp();
 export default {
@@ -66,17 +67,11 @@ export default {
       ],
     };
   },
-  // TODO: 更新分享界面
   onShareAppMessage() {
     return {
-      title: '',
+      title: '兴化语记',
       path: '/pages/index/index',
-      success(res) {
-        // 转发成功
-      },
-      fail(res) {
-        // 转发失败
-      },
+      ...defaultMessage(),
     };
   },
   onLoad(options) {
@@ -96,7 +91,7 @@ export default {
             content: '请先登录',
             showCancel: false,
             success: () => {
-              mpLogin();
+              toLoginPage();
             },
           });
           return;
