@@ -27,7 +27,7 @@ export function toVoiceRankListPage() {
  */
 export function toForgetPage() {
   uni.navigateTo({
-    url: '/pages/forget/forget',
+    url: '/pages/login/forget',
   });
 }
 
@@ -99,7 +99,7 @@ export function toSearchPage() {
  */
 export function toRegisterPage() {
   uni.navigateTo({
-    url: '/pages/register/register/register',
+    url: '/pages/login/register',
   });
 }
 
@@ -108,6 +108,6 @@ export function toRegisterPage() {
  */
 export function toWechatRegisterPage() {
   uni.navigateTo({
-    url: '/pages/register/WechatRegister/WechatRegister',
+    url: '/pages/login/register/wechat',
   });
 }

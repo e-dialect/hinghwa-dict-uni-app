@@ -82,7 +82,7 @@
 
 <script>
 import { registerWechatUser } from '@/services/user';
-import CuCustom from '@/colorui/components/cu-custom';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
 const app = getApp();
 const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg';

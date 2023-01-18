@@ -170,15 +170,15 @@
       "style": {}
     },
     {
-      "path": "pages/register/register/register",
+      "path": "pages/login/register",
       "style": {}
     },
     {
-      "path": "pages/register/WechatRegister/WechatRegister",
+      "path": "pages/login/register/wechat",
       "style": {}
     },
     {
-      "path": "pages/forget/forget",
+      "path": "pages/login/forget",
       "style": {}
     },
     {
