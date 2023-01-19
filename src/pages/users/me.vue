@@ -229,7 +229,14 @@ export default {
       const userInfo = await getUserInfo(app.globalData.id);
       // 尚未绑定微信
       if (!userInfo.user.wechat) {
+        // #ifndef MP-WEIXIN
+        uni.showToast({
+          title: '请在微信小程序中绑定微信',
+        });
+        // #endif
+        // #ifdef MP-WEIXIN
         await bindingWechat(app.globalData.id, false);
+        // #endif
         return;
       }
       // 已经绑定微信
