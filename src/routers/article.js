@@ -18,6 +18,7 @@ export function toArticleEditPage(id = 0) {
     title: '当前平台暂不支持',
     icon: 'none',
   });
+  return;
   // #endif
   if (id) {
     uni.navigateTo({

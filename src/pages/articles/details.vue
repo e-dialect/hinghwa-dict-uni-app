@@ -322,6 +322,7 @@ export default {
         icon: 'none',
         duration: 2000,
       });
+      return;
       // #endif
       const { comment } = this;
       const { parent } = this;
