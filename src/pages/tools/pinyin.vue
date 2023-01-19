@@ -224,6 +224,7 @@
 <script>
 import utils from '@/const/pinyin';
 import MarkdownViewer from '@/components/MarkdownViewer';
+import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
 export default {
@@ -280,20 +281,7 @@ export default {
     return {
       title: '拼音方案',
       path: '/pages/tools/pinyin',
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      ...defaultMessage(),
     };
   },
   methods: {
