@@ -51,6 +51,12 @@
                   </text>
                 </block>
               </view>
+              <text
+                v-if="!rankList.length"
+                class="td"
+              >
+                快快来做本周第一个贡献的人吧~
+              </text>
               <block
                 v-for="(itemD,indexD) in rankList"
                 :key="indexD"
