@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom title="语记·测试" />
+    <cu-custom title="聪明花开" />
     <!--搜索单个测试-->
     <view class="cu-bar search bg-white">
       <view class="action">
@@ -138,6 +138,7 @@
 
 <script>
 import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers/quiz';
+import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
 
@@ -155,22 +156,9 @@ export default {
    */
   onShareAppMessage() {
     return {
-      title: '语记·测试',
-      path: '/pages/component/quizzes/quizzes',
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      title: '聪明花开',
+      path: '/pages/quizzes/index',
+      ...defaultMessage(),
     };
   },
 };
