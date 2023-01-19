@@ -24,9 +24,8 @@ export async function toUploadPronunciationPage(id) {
     await mpLogin();
     return;
   }
-  const word = await getWordDetails(id);
   uni.navigateTo({
-    url: `/pages/words/pronunciations/upload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`,
+    url: `/pages/words/pronunciations/upload?id=${id}`,
   });
 }
 
