@@ -158,7 +158,7 @@ export default {
   onShareAppMessage() {
     const path = `/pages/search?index=${this.searchScopeIndex}&keywords=${this.keywords}`;
     return {
-      title: '语记·搜索',
+      title: `语记·搜索：${this.keywords}`,
       path,
       ...defaultMessage(),
     };
