@@ -102,6 +102,7 @@ import { getUserInfo } from '@/services/user';
 import { getArticles } from '@/services/article';
 import ArticleList from '@/components/ArticleList';
 import { toPronunciationsPage, toUserWordsPage } from '@/routers/user';
+import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
 export default {
@@ -141,6 +142,13 @@ export default {
     await this.getInfo(id);
     await this.getArticlesList();
     this.freshing = false;
+  },
+  onShareAppMessage() {
+    return {
+      title: '语记·用户',
+      path: `/pages/users/details?id=${this.id}`,
+      ...defaultMessage(),
+    };
   },
   methods: {
     toUserWordsPage,
