@@ -223,7 +223,7 @@
 
 <script>
 import utils from '@/const/pinyin';
-import MarkdownViewer from '@/components/MarkdownViewer.vue';
+import MarkdownViewer from '@/components/MarkdownViewer';
 
 const app = getApp();
 export default {
