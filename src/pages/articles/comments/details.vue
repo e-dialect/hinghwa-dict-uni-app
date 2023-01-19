@@ -105,7 +105,7 @@ export default {
   onLoad(options) {
     const comment = JSON.parse(options.comment);
     const { id } = options;
-    this.comment = comment;
+    this.comment = details;
     this.id = id;
 
     const map = [];
@@ -175,14 +175,14 @@ export default {
       const comment = this.text;
       const { parent } = this;
       const { id } = this;
-      if (comment.length === 0) {
+      if (details.length === 0) {
         uni.showToast({
           title: '不能发送空评论',
           icon: 'none',
         });
         return;
       }
-      createComment(id, comment, parent).then(async () => {
+      createComment(id, details, parent).then(async () => {
         await this.getComments(id);
         this.reply(0);
         this.inEditing = false;

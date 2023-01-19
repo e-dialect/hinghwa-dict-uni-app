@@ -29,8 +29,8 @@
 
 <script>
 import CuCustom from '@/colorui/components/cu-custom';
-import { toLoginPage } from '@/routers';
 import { changeUserInfo } from '@/services/user';
+import { toLoginPage } from '@/routers/login';
 
 const app = getApp();
 export default {

@@ -229,7 +229,7 @@
 <script>
 const app = getApp();
 
-const utils = require('../../../const/pinyin');
+const utils = require('../../const/pinyin');
 
 export default {
   data() {

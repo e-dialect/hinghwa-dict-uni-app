@@ -30,7 +30,7 @@
 
 <script>
 import { changeUserInfo, getUserInfo } from '@/services/user';
-import { toLoginPage } from '@/routers';
+import { toLoginPage } from '@/routers/login';
 
 const app = getApp();
 export default {

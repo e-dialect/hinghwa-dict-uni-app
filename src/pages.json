@@ -1,103 +1,87 @@
 {
   "pages": [
     {
-      "path": "pages/index/index",
+      "path": "pages/index",
       "style": {}
     },
     {
-      "path": "pages/basics/home/home",
+      "path": "pages/home",
       "style": {
         "component": true
       }
-    },
-    {
-      "path": "pages/basics/word/word",
-      "style": {}
     },
     {
       "path": "pages/search",
       "style": {}
     },
+    // words 区域
     {
-      "path": "pages/basics/characters/characters",
+      "path": "pages/words/details",
       "style": {}
     },
     {
-      "path": "pages/basics/words/words",
+      "path": "pages/words/characters/details",
       "style": {}
     },
     {
-      "path": "pages/basics/pronunciation/pronunciation",
+      "path": "pages/words/pronunciations/upload",
       "style": {}
     },
     {
-      "path": "pages/component/home/home",
+      "path": "pages/words/pronunciations/ranking",
+      "style": {}
+    },
+    // tools 区域
+    {
+      "path": "pages/tools/index",
       "style": {
         "component": true
       }
     },
     {
-      "path": "pages/component/music/music",
+      "path": "pages/tools/dictionary",
       "style": {}
     },
     {
-      "path": "pages/component/playmusic/playmusic",
+      "path": "pages/tools/condition",
       "style": {}
     },
     {
-      "path": "pages/component/VoiceRankList/VoiceRankList",
+      "path": "pages/tools/pinyin",
       "style": {}
     },
     {
-      "path": "pages/tools/dictionary/dictionary/dictionary",
+      "path": "pages/tools/daily-expression/index",
+      "style": {}
+    },
+    // quizzes 区域
+    {
+      "path": "pages/quizzes/index",
       "style": {}
     },
     {
-      "path": "pages/tools/quiz/poster/poster",
+      "path": "pages/quizzes/details",
       "style": {}
     },
     {
-      "path": "pages/tools/quiz/quiz/quiz",
+      "path": "pages/quizzes/random",
       "style": {}
     },
     {
-      "path": "pages/tools/quiz/quizzes/quizzes",
+      "path": "pages/quizzes/search",
       "style": {}
     },
     {
-      "path": "pages/tools/quiz/RandomQuiz/RandomQuiz",
+      "path": "pages/quizzes/tests/score",
       "style": {}
     },
     {
-      "path": "pages/tools/quiz/SearchQuiz/SearchQuiz",
+      "path": "pages/quizzes/tests/answer",
       "style": {}
     },
+    // articles 区
     {
-      "path": "pages/tools/quiz/test/test",
-      "style": {}
-    },
-    {
-      "path": "pages/component/uploadmusic/uploadmusic",
-      "style": {}
-    },
-    {
-      "path": "pages/component/condition/condition",
-      "style": {}
-    },
-    {
-      "path": "pages/component/pinyin/pinyin",
-      "style": {}
-    },
-    {
-      "path": "pages/component/daily/daily",
-      "style": {}
-    },
-    {
-      "path": "pages/Words/PronunciationUpload/PronunciationUpload",
-      "style": {}
-    },
-    {
-      "path": "pages/plugin/home/home",
+      "path": "pages/articles/index",
       "style": {
         "component": true
       }
@@ -107,9 +91,10 @@
       "style": {}
     },
     {
-      "path": "pages/plugin/comment/comment",
+      "path": "pages/articles/comments/details",
       "style": {}
     },
+    // users 区
     {
       "path": "pages/users/me",
       "style": {
@@ -165,6 +150,7 @@
       "path": "pages/users/settings/phone",
       "style": {}
     },
+    // login 区
     {
       "path": "pages/login/login",
       "style": {}

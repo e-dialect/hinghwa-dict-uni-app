@@ -69,20 +69,27 @@ export function toChangePhonePage() {
   });
 }
 
-export function toMePage(closeAll = false) {
-  if (closeAll) {
-    uni.reLaunch({
-      url: '/pages/index/index?status=me',
-    });
-  } else {
-    uni.navigateTo({
-      url: '/pages/index/index?status=me',
-    });
-  }
-}
-
+/**
+ * 前往更改密码页面
+ */
 export function toChangePasswordPage() {
   uni.navigateTo({
     url: '/pages/users/settings/password',
   });
+}
+
+/**
+ * 前往个人页面
+ * @param closeAll
+ */
+export function toMePage(closeAll = false) {
+  if (closeAll) {
+    uni.reLaunch({
+      url: '/pages/index?status=me',
+    });
+  } else {
+    uni.navigateTo({
+      url: '/pages/index?status=me',
+    });
+  }
 }

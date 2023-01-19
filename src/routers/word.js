@@ -7,7 +7,7 @@ import { getWordDetails } from '@/services/word';
  */
 export function toWordPage(id) {
   uni.navigateTo({
-    url: `/pages/basics/words/words?id=${id}`,
+    url: `/pages/words/details?id=${id}`,
   });
 }
 
@@ -26,6 +26,15 @@ export async function toUploadPronunciationPage(id) {
   }
   const word = await getWordDetails(id);
   uni.navigateTo({
-    url: `/pages/Words/PronunciationUpload/PronunciationUpload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`,
+    url: `/pages/words/pronunciations/upload?id=${word.id}&word=${word.word}&ipa=${word.standard_ipa}&pinyin=${word.standard_pinyin}`,
+  });
+}
+
+/**
+ * 前往贡献语音榜单页面
+ */
+export function toVoiceRankListPage() {
+  uni.navigateTo({
+    url: '/pages/words/pronunciations/ranking',
   });
 }

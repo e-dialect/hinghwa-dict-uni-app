@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import { toLoginPage } from '@/routers';
 import { defaultMessage } from '@/services/shareMessages';
-import { COS_URL } from '../../const/urls';
-import basics from '../basics/home/home';
-import tools from '../component/home/home';
-import InteractionPage from '../plugin/home/home';
-import me from '../users/me';
+import { toLoginPage } from '@/routers/login';
+import { COS_URL } from '../const/urls';
+import basics from './home';
+import tools from './tools/index';
+import InteractionPage from './articles/index';
+import me from './users/me';
 
 const app = getApp();
 export default {
