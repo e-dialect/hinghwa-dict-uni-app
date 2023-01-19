@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers';
+import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers/quiz';
 
 const app = getApp();
 

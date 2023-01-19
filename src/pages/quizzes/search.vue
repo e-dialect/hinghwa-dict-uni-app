@@ -85,7 +85,7 @@
 
 <script>
 import { searchQuiz } from '@/services/quiz';
-import { toOneQuizPage } from '@/routers';
+import { toOneQuizPage } from '@/routers/quiz';
 
 const app = getApp();
 

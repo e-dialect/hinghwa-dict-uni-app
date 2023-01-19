@@ -112,10 +112,10 @@
 
 <script>
 import { getAnnouncements, getWordOfTheDay } from '@/services/website';
-import { toLoginPage, toSearchPage } from '@/routers';
+import { toSearchPage } from '@/routers';
 import { toWordPage } from '@/routers/word';
 import { toArticlePage } from '@/routers/article';
-import { mpLogin } from '../../../services/login';
+import { toLoginPage } from '@/routers/login';
 
 const app = getApp();
 export default {

@@ -1,17 +1,7 @@
 <template>
   <view>
     <!--标题-->
-    <cu-custom
-      :is-back="true"
-      bg-color="bg-white"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        贡献语音
-      </view>
-    </cu-custom>
+    <cu-custom title="贡献语音" />
 
     <view style="height: 100%; position: absolute; width: 100%">
       <form @submit="submitRecord">
@@ -24,7 +14,7 @@
           >
           <input
             :value="word"
-            class="fileName"
+            class="fileName text-gray"
             disabled
           >
         </block>
@@ -142,6 +132,7 @@ import { uploadFile } from '@/services/file';
 import { counties, towns } from '@/const/location';
 import { createPronunciation } from '@/services/pronunciation';
 import { playAudio } from '@/utils/audio';
+import { getWordDetails } from '@/services/word';
 
 const app = getApp();
 export default {
@@ -165,14 +156,25 @@ export default {
 
   /**
    * 生命周期函数--监听页面加载
-   * @param options {id,word,ipa,pinyin}
+   * @param options {id}
    */
-  onLoad(options) {
-    // 读取页面参数 FIXME
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
-    for (const i in options) {
-      this[i] = options[i];
+  async onLoad(options) {
+    // 读取页面参数
+    this.id = options.id;
+    if (!this.id) {
+      uni.showModal({
+        title: '错误',
+        content: '缺少词语编号',
+        showCancel: false,
+        success: () => {
+          uni.navigateBack();
+        },
+      });
     }
+    const word = await getWordDetails(options.id);
+    this.word = word.word;
+    this.ipa = word.standard_ipa;
+    this.pinyin = word.standard_pinyin;
 
     // 如果用户设置过地理位置信息
     if (app.globalData.userInfo.county) {
@@ -187,6 +189,7 @@ export default {
       });
     }
 
+    // 准备录音器
     const that = this;
     // #ifdef H5
     // 查看是否支持本浏览器
@@ -307,8 +310,7 @@ export default {
         county: counties[this.pickerIndex[0]],
         town: towns[this.pickerIndex[0]][this.pickerIndex[1]],
       };
-      // FIXME
-      // eslint-disable-next-line no-restricted-syntax
+
       for (const i in pronunciation) {
         if (!pronunciation[i]) {
           uni.showToast({

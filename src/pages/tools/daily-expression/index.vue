@@ -120,7 +120,7 @@ export default {
   onShareAppMessage() {
     return {
       title: '日常用语',
-      path: '/pages/component/daily/daily',
+      path: '/pages/component/daily-expression/index',
       success: () => {
         uni.showToast({
           title: '分享成功',

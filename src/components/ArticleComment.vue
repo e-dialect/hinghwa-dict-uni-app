@@ -5,13 +5,13 @@
         class="cu-avatar round margin-right-sm"
         :src="comment.user.avatar"
         mode="aspectFill"
-        @tap="toUserPage(comment.user.id)"
+        @tap.stop="toUserPage(comment.user.id)"
       />
       <view class="flex flex-sub justify-between">
         <view class="flex flex-direction">
           <view
             class="text-name"
-            @tap="toUserPage(comment.user.id)"
+            @tap.stop="toUserPage(comment.user.id)"
           >
             {{ comment.user.nickname }}
           </view>
@@ -29,7 +29,9 @@
         <!--        </view>-->
       </view>
     </view>
-    <view class="text-content">
+    <view
+      class="text-content margin-top-sm"
+    >
       <text
         v-if="parentId !== comment.parent && comment.parent !== 0"
         class="text-blue"

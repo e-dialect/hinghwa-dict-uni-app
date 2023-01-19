@@ -231,9 +231,6 @@
 
 <script>
 import { getWordDetails } from '@/services/word';
-import {
-  toIndexPage,
-} from '@/routers';
 import { playAudio } from '@/utils/audio';
 import { getPronunciations } from '@/services/pronunciation';
 import WordPronunciationButton from '@/components/WordPronunciationButton';

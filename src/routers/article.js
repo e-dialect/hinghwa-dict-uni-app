@@ -23,3 +23,14 @@ export function toArticleEditPage(id = 0) {
     });
   }
 }
+
+/**
+ * 文章评论详情页
+ * @param articleId 文章编号
+ * @param commentId 评论编号
+ */
+export function toArticleCommentPage(articleId, commentId) {
+  uni.navigateTo({
+    url: `/pages/articles/comments/details?comment=${commentId}&article=${articleId}`,
+  });
+}

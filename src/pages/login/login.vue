@@ -75,8 +75,8 @@
 <script>
 import { COS_URL } from '@/const/urls';
 import { mpLogin, normalLogin } from '@/services/login';
-import { toForgetPage, toRegisterPage, toWechatRegisterPage } from '@/routers';
 import CuCustom from '@/colorui/components/cu-custom';
+import { toForgetPage, toRegisterPage, toWechatRegisterPage } from '@/routers/login';
 
 const app = getApp();
 export default {

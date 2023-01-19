@@ -1,11 +1,7 @@
 <template>
   <view>
     <!--导航栏-->
-    <cu-custom>
-      <view slot="content">
-        拼音方案
-      </view>
-    </cu-custom>
+    <cu-custom title="拼音方案" />
 
     <view class="padding-sm">
       <view class="flex flex-wrap justify-around">
@@ -57,10 +53,9 @@
         下面介绍的拼音方案为莆田城里口音。想要了解更多其他口音的介绍请关注微信公众号「莆仙乡音社」(微信号：PhouSengUa)搜索“拼音教程”，
         或者观看b站拼音教程视频(up主@莆仙乡音社)。\n
       </text>
-      <video
-        style="margin-top: 15rpx; width: 100%"
-        src="https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/files/video/6/2022/01/20/9PRuDXJRFiJNHhA.mp4"
-      />
+      <view class="margin-top-lg">
+        <MarkdownViewer :markdown="bilibili" />
+      </view>
     </view>
 
     <view
@@ -227,11 +222,12 @@
 </template>
 
 <script>
+import utils from '@/const/pinyin';
+import MarkdownViewer from '@/components/MarkdownViewer';
+
 const app = getApp();
-
-const utils = require('../../../const/pinyin');
-
 export default {
+  components: { MarkdownViewer },
   data() {
     return {
       StatusBar: app.globalData.StatusBar,
@@ -261,6 +257,9 @@ export default {
       shengmu: utils.shengmu,
       yunmu: [utils.kai, utils.bi, utils.se],
       tone: utils.tone,
+      bilibili: '<iframe src="//player.bilibili.com/player.html?aid=77966786&bvid=BV1RJ411q7yW&cid=133662582&page=1"'
+        + ' scrolling="no" border="0" frameborder="no" framespacing="0"'
+        + ' allowfullscreen="true" width=400 height=300> </iframe>',
     };
   },
   onLoad() {
@@ -280,7 +279,7 @@ export default {
   onShareAppMessage() {
     return {
       title: '拼音方案',
-      path: '/pages/component/pinyin/pinyin',
+      path: '/pages/tools/pinyin',
       success: () => {
         uni.showToast({
           title: '分享成功',
@@ -302,16 +301,14 @@ export default {
       const index = e.currentTarget.dataset.id;
       const display = [false, false, false, false];
       display[index] = true;
-      this.setData({
-        display,
-      });
+      this.display = [...display];
     },
 
     playShengmu(e) {
       const index = e.currentTarget.dataset.id;
-      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+      const src = `https://cos.edialect.top/pinyin/example/${
         this.shengmu[index].pinyin
-      }/static/pages/component/pinyin/.mp3`;
+      }.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
@@ -323,18 +320,18 @@ export default {
     playYunmu(e) {
       const index1 = this.TabCur;
       const index2 = e.currentTarget.dataset.id;
-      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+      const src = `https://cos.edialect.top/pinyin/example/${
         this.yunmu[index1][index2].pinyin
-      }/static/pages/component/pinyin/.mp3`;
+      }.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
 
     playTone(e) {
       const index = e.currentTarget.dataset.id;
-      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+      const src = `https://cos.edialect.top/pinyin/example/${
         this.tone[index].type
-      }/static/pages/component/pinyin/.mp3`;
+      }.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },

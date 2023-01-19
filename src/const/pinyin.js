@@ -25,7 +25,7 @@ const shengmu = [
     key: 3,
     pinyin: 'd',
     IPA: 't',
-    example: '刀 do1 东 dorng1',
+    example: '刀 do1 东 dang1',
   },
   {
     key: 4,
