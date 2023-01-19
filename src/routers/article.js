@@ -13,6 +13,12 @@ export function toArticlePage(id) {
  * @param id 文章id（为0时表示新建）
  */
 export function toArticleEditPage(id = 0) {
+  // #ifdef MP-WEIXIN
+  uni.showToast({
+    title: '当前平台暂不支持',
+    icon: 'none',
+  });
+  // #endif
   if (id) {
     uni.navigateTo({
       url: `/pages/articles/edit?id=${id}`,
