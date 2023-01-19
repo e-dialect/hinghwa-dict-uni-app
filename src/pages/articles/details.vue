@@ -324,6 +324,7 @@ export default {
       });
       return;
       // #endif
+      // eslint-disable-next-line no-unreachable
       const { comment } = this;
       const { parent } = this;
       const id = this.article.id.toString();

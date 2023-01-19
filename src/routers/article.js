@@ -20,6 +20,7 @@ export function toArticleEditPage(id = 0) {
   });
   return;
   // #endif
+  // eslint-disable-next-line no-unreachable
   if (id) {
     uni.navigateTo({
       url: `/pages/articles/edit?id=${id}`,
