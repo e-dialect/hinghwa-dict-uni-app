@@ -236,6 +236,7 @@ import { getPronunciations } from '@/services/pronunciation';
 import WordPronunciationButton from '@/components/WordPronunciationButton';
 import { toUploadPronunciationPage, toWordPage } from '@/routers/word';
 import { toUserPage } from '@/routers/user';
+import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
 export default {
@@ -270,7 +271,6 @@ export default {
       pronunciation: [],
       tabIndex: 0, // 当前选中的标签页
       tabs: ['释义', '发音', '其他'], // 标签页标题
-      isShare: false, // 是否是直接分享进入的
     };
   },
 
@@ -284,21 +284,8 @@ export default {
     });
     return {
       title,
-      path: `/pages/basics/words/words?id=${this.id}&share=1`,
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      path: `/pages/words/details?id=${this.id}`,
+      ...defaultMessage(),
     };
   },
 
@@ -307,7 +294,6 @@ export default {
    * @param options
    */
   async onLoad(options) {
-    this.isShare = !!options.share;
     this.id = options.id;
     this.word = await getWordDetails(options.id);
     this.definition = this.word.definitions;

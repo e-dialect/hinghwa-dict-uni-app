@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { defaultMessage } from '@/services/shareMessages';
+
 export default {
   data() {
     return {
@@ -51,22 +53,9 @@ export default {
    */
   onShareAppMessage() {
     return {
-      title: `分享分数海报: ${this.totalScore}分`,
-      path: '/pages/component/poster/poster',
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      title: `我的莆仙方言测试题获得 ${this.totalScore}分，你也来试试吧！`,
+      path: '/pages/quizzes/index',
+      ...defaultMessage(),
     };
   },
   methods: {

@@ -149,6 +149,7 @@
 <script>
 import { getQuiz } from '@/services/quiz';
 import { playAudio } from '@/utils/audio';
+import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
 export default {
@@ -169,6 +170,13 @@ export default {
       isShow1: false,
       isShow2: false,
       current: 99,
+    };
+  },
+  onShareAppMessage() {
+    return {
+      title: `聪明花开：${this.quiz.question}`,
+      path: `/pages/quizzes/details?id=${this.id}`,
+      ...defaultMessage(),
     };
   },
   onLoad(options) {

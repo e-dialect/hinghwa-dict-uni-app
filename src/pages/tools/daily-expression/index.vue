@@ -1,11 +1,7 @@
 <template>
   <view>
     <!--导航栏-->
-    <cu-custom>
-      <view slot="content">
-        日常用语
-      </view>
-    </cu-custom>
+    <cu-custom title="日常用语" />
 
     <view class="cu-bar search bg-white">
       <view class="search-form round">
@@ -94,6 +90,7 @@
 
 <script>
 import { getDailyExpressions } from '@/services/website';
+import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
 export default {
@@ -120,21 +117,8 @@ export default {
   onShareAppMessage() {
     return {
       title: '日常用语',
-      path: '/pages/component/daily-expression/index',
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      path: '/pages/tools/daily-expression/index',
+      ...defaultMessage(),
     };
   },
   methods: {

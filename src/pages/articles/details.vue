@@ -184,6 +184,7 @@ import {
 import ArticleComment from '@/components/ArticleComment';
 import { toArticleCommentPage, toArticleEditPage } from '@/routers/article';
 import { toUserPage } from '@/routers/user';
+import { defaultMessage } from '@/services/shareMessages';
 
 export default {
   components: {
@@ -229,20 +230,7 @@ export default {
     return {
       title: this.article.title,
       path: `/pages/articles/details?id=${this.id}`,
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      ...defaultMessage(),
     };
   },
   computed: {
