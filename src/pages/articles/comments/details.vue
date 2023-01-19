@@ -136,7 +136,9 @@ export default {
      * @returns {*|string} 昵称
      */
     getNickname(id) {
-      return this.map[id] ? this.comment.kids[this.map[id]].user.nickname : this.comment.user.nickname;
+      return this.map[id]
+        ? this.comment.kids[this.map[id]].user.nickname
+        : this.comment.user.nickname;
     },
     /**
      * 选中评论框，进入编辑状态
