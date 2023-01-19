@@ -1,11 +1,7 @@
 <template>
   <view>
     <!--导航栏-->
-    <cu-custom>
-      <view slot="content">
-        拼音方案
-      </view>
-    </cu-custom>
+    <cu-custom title="拼音方案" />
 
     <view class="padding-sm">
       <view class="flex flex-wrap justify-around">
@@ -59,7 +55,7 @@
       </text>
       <video
         style="margin-top: 15rpx; width: 100%"
-        src="https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/files/video/6/2022/01/20/9PRuDXJRFiJNHhA.mp4"
+        src="https://cos.edialect.top/files/video/6/2022/01/20/9PRuDXJRFiJNHhA.mp4"
       />
     </view>
 
@@ -227,9 +223,9 @@
 </template>
 
 <script>
-const app = getApp();
+import utils from '@/const/pinyin';
 
-const utils = require('../../const/pinyin');
+const app = getApp();
 
 export default {
   data() {
@@ -280,7 +276,7 @@ export default {
   onShareAppMessage() {
     return {
       title: '拼音方案',
-      path: '/pages/component/pinyin/pinyin',
+      path: '/pages/tools/pinyin',
       success: () => {
         uni.showToast({
           title: '分享成功',
@@ -302,16 +298,14 @@ export default {
       const index = e.currentTarget.dataset.id;
       const display = [false, false, false, false];
       display[index] = true;
-      this.setData({
-        display,
-      });
+      this.display = [...display];
     },
 
     playShengmu(e) {
       const index = e.currentTarget.dataset.id;
-      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+      const src = `https://cos.edialect.top/pinyin/example/${
         this.shengmu[index].pinyin
-      }/static/pages/component/pinyin/.mp3`;
+      }.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
@@ -323,18 +317,18 @@ export default {
     playYunmu(e) {
       const index1 = this.TabCur;
       const index2 = e.currentTarget.dataset.id;
-      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+      const src = `https://cos.edialect.top/pinyin/example/${
         this.yunmu[index1][index2].pinyin
-      }/static/pages/component/pinyin/.mp3`;
+      }.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
 
     playTone(e) {
       const index = e.currentTarget.dataset.id;
-      const src = `https://hinghwadict-1259415432.cos.ap-shanghai.myqcloud.com/pinyin/example/${
+      const src = `https://cos.edialect.top/pinyin/example/${
         this.tone[index].type
-      }/static/pages/component/pinyin/.mp3`;
+      }.mp3`;
       this.innerAudioContext.src = src;
       this.innerAudioContext.play();
     },
