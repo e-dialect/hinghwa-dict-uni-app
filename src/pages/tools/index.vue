@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { defaultMessage } from '@/services/shareMessages';
+
 export default {
   data() {
     return {
@@ -61,6 +63,13 @@ export default {
   },
   options: {
     addGlobalClass: true,
+  },
+  onShareAppMessage() {
+    return {
+      title: '语记·工具',
+      path: '/pages/tools/index',
+      ...defaultMessage(),
+    };
   },
   methods: {
     getTools(e) {
