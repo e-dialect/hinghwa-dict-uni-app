@@ -110,6 +110,7 @@
 <script>
 import { getPhoneticOrder, searchDictionary } from '@/services/word';
 import WordListShowing from '@/components/WordListShowing';
+import { defaultMessage } from '@/services/shareMessages';
 
 export default {
   components: {
@@ -123,6 +124,13 @@ export default {
       words: [],
       prefix: '',
       flag: [].fill(false),
+    };
+  },
+  onShareAppMessage() {
+    return {
+      title: '语记·词典',
+      path: '/pages/tools/dictionary',
+      ...defaultMessage(),
     };
   },
   computed: {
