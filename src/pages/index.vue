@@ -69,8 +69,8 @@ export default {
   },
   onShareAppMessage() {
     return {
-      title: '兴化语记',
-      path: '/pages/index/index',
+      title: '兴化语记：莆仙方言在线工具',
+      path: '/pages/index',
       ...defaultMessage(),
     };
   },
