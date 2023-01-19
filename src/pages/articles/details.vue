@@ -316,6 +316,15 @@ export default {
      * 发送评论
      */
     createComment() {
+      // #ifdef MP-WEIXIN
+      uni.showToast({
+        title: '当前平台不支持',
+        icon: 'none',
+        duration: 2000,
+      });
+      return;
+      // #endif
+      // eslint-disable-next-line no-unreachable
       const { comment } = this;
       const { parent } = this;
       const id = this.article.id.toString();
