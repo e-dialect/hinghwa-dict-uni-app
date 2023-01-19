@@ -1,8 +1,7 @@
 <template>
   <view>
     <cu-custom
-      bg-color="bg-white"
-      :is-back="true"
+      title="评论详情"
     />
 
     <scroll-view
@@ -28,7 +27,7 @@
             <ArticleComment
               :comment="item"
               :parent-id="comment.id"
-              :mention="comment.kids[map[item.parent]].user.nickname"
+              :mention="getNickname(item.parent)"
             />
           </view>
         </view>
@@ -94,7 +93,7 @@ export default {
         time: '',
         content: '',
         kids: [],
-        id: '',
+        id: 0,
       },
 
       map: [],
@@ -103,11 +102,18 @@ export default {
     };
   },
   onLoad(options) {
-    const comment = JSON.parse(options.comment);
-    const { id } = options;
-    this.comment = details;
-    this.id = id;
-
+    if (!app.globalData.comment) {
+      uni.showModal({
+        title: '错误',
+        content: '评论加载错误',
+        showCancel: false,
+        success: () => {
+          uni.navigateBack();
+        },
+      });
+    }
+    this.comment = app.globalData.comment;
+    this.id = options.article;
     const map = [];
     for (let i = 0; i < this.comment.kids.length; i += 1) {
       map[this.comment.kids[i].id] = i;
@@ -124,6 +130,14 @@ export default {
     },
   },
   methods: {
+    /**
+     * 获取评论昵称
+     * @param id 评论id
+     * @returns {*|string} 昵称
+     */
+    getNickname(id) {
+      return this.map[id] ? this.comment.kids[this.map[id]].user.nickname : this.comment.user.nickname;
+    },
     /**
      * 选中评论框，进入编辑状态
      */

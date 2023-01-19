@@ -98,21 +98,22 @@
                 v-for="(kid, index1) in item.kids"
                 :key="index1"
                 class="text-reply margin-left-xs padding-left-xs"
+                @tap="toCommentDetailsPage(item.id)"
               >
                 <text
                   class="text-blue"
-                  @tap="toUserPage(kid.user.id)"
+                  @tap.stop="toUserPage(kid.user.id)"
                 >
                   {{ kid.user.nickname }}
                 </text>
                 <text
                   v-if="kid.parent !== item.id"
                   class="text-blue"
-                  @tap="toUserPage(comments[map[kid.parent]].user.id)"
+                  @tap.stop="toUserPage(comments[map[kid.parent]].user.id)"
                 >
                   @ {{ comments[map[kid.parent]].user.nickname }}
                 </text>
-                <text @tap="toCommentDetailsPage(item.id)">
+                <text>
                   ：{{ kid.content }}
                 </text>
               </view>
@@ -172,7 +173,7 @@ import {
   createComment, deleteArticle, getArticle, getComments, likeArticle, unlikeArticle,
 } from '@/services/article';
 import ArticleComment from '@/components/ArticleComment';
-import { toArticleEditPage } from '@/routers/article';
+import { toArticleCommentPage, toArticleEditPage } from '@/routers/article';
 import { toUserPage } from '@/routers/user';
 
 export default {
@@ -299,11 +300,10 @@ export default {
      * @param id 评论id
      */
     toCommentDetailsPage(id) {
-      const comment = JSON.stringify(this.comments[this.map[id]]);
       const articleId = this.id;
-      uni.navigateTo({
-        url: `/pages/plugin/comment/comment?comment=${comment}&id=${articleId}`,
-      });
+      const app = getApp();
+      app.globalData.comment = this.comments[this.map[id]];
+      toArticleCommentPage(articleId, id);
     },
 
     /**
