@@ -1,28 +1,17 @@
 <template>
   <view>
-    <cu-custom
-      :is-back="true"
-      bg-color="bg-white"
-    >
-      <view
-        slot="content"
-        class="text-black"
-      >
-        条件查字
-      </view>
-    </cu-custom>
+    <cu-custom title="条件查字" />
 
     <view class="cu-form-group">
       <view class="title">
         声母
       </view>
       <picker
+        v-model="shengmuIndex"
         :range="shengmu"
-        :value="index"
-        @change="PickerChange"
       >
         <view class="picker">
-          {{ shengmu[index] }}
+          {{ shengmu[shengmuIndex] }}
         </view>
       </picker>
     </view>
@@ -47,12 +36,11 @@
         声调
       </view>
       <picker
+        v-model="shengdiaoIndex"
         :range="shengdiao"
-        :value="index1"
-        @change="PickerChange1"
       >
         <view class="picker">
-          {{ shengdiao[index1] }}
+          {{ shengdiao[shengdiaoIndex] }}
         </view>
       </picker>
     </view>
@@ -111,6 +99,8 @@
 
 <script>
 import { searchCharactersByFilters } from '@/services/character';
+import { defaultMessage } from '@/services/shareMessages';
+import { toWordPage } from '@/routers/word';
 
 const app = getApp();
 
@@ -119,26 +109,27 @@ const utils = require('@/const/sheng-yun-diao');
 export default {
   data() {
     return {
-      index: 0,
+      shengmuIndex: 0,
       shengmu: [],
       yunmu: [
         [],
         [],
       ],
       multiIndex: [0, 0],
-      index1: 0,
+      shengdiaoIndex: 0,
       shengdiao: [],
       result: [],
       space: ' ',
     };
   },
-  onLoad() {
+  onLoad(options) {
     // 获取声母
     const shengmu = [];
 
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const k in utils.shengmu) {
-      shengmu.push(utils.shengmu[k]);
+      if ({}.hasOwnProperty.call(utils.shengmu, k)) {
+        shengmu.push(utils.shengmu[k]);
+      }
     }
     this.shengmu = [...shengmu];
 
@@ -147,7 +138,6 @@ export default {
       [],
       [],
     ];
-
     for (let i = 0; i < utils.yunmu.length; i += 1) {
       if (i === 0) {
         for (let j = 0; j < utils.yunmu[0].children.length; j += 1) {
@@ -161,15 +151,40 @@ export default {
 
     // 获取声调
     const shengdiao = [];
-
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const k in utils.shengdiao) {
-      shengdiao.push(utils.shengdiao[k]);
+      if ({}.hasOwnProperty.call(utils.shengdiao, k)) {
+        shengdiao.push(utils.shengdiao[k]);
+      }
     }
 
     shengdiao.unshift(shengdiao[shengdiao.length - 1]);
     shengdiao.pop();
     this.shengdiao = [...shengdiao];
+
+    for (let i = 0; i < this.shengmu.length; i += 1) {
+      if (this.shengmu[i] === utils.shengmu[options.shengmu]) {
+        this.shengmuIndex = i;
+      }
+    }
+    for (let i = 0; i < utils.yunmu.length; i += 1) {
+      for (let j = 0; j < utils.yunmu[i].children.length; j += 1) {
+        if (utils.yunmu[i].children[j].value === options.yunmu) {
+          this.multiIndex = [i, j];
+          this.yunmu[0] = utils.yunmu[i].label;
+          this.yunmu[1] = [];
+          for (let k = 0; k < utils.yunmu[i].children.length; k += 1) {
+            this.yunmu[1].push(utils.yunmu[i].children[k].label);
+          }
+          this.yunmu = [...this.yunmu];
+        }
+      }
+    }
+
+    for (let i = 0; i < this.shengdiao.length; i += 1) {
+      if (this.shengdiao[i] === utils.shengdiao[options.shengdiao]) {
+        this.shengdiaoIndex = i;
+      }
+    }
   },
   /**
    * 右上角分享事件
@@ -177,27 +192,11 @@ export default {
   onShareAppMessage() {
     return {
       title: '条件查字',
-      path: '/pages/component/condition/condition',
-      success: () => {
-        uni.showToast({
-          title: '分享成功',
-          icon: 'success',
-          duration: 2000,
-        });
-      },
-      fail: () => {
-        uni.showToast({
-          title: '分享失败',
-          icon: 'none',
-          duration: 2000,
-        });
-      },
+      path: `/pages/tools/condition?shengmu=${this.getShengmu()}&yunmu=${this.getYunmu()}&shengdiao=${this.getShengdiao()}`,
+      ...defaultMessage(),
     };
   },
   methods: {
-    PickerChange(e) {
-      this.index = e.detail.value;
-    },
 
     MultiChange(e) {
       this.multiIndex = e.detail.value;
@@ -250,16 +249,13 @@ export default {
       this.setData(data);
     },
 
-    PickerChange1(e) {
-      this.index1 = e.detail.value;
-    },
-
     getShengmu() {
-      const shengmu = this.shengmu[this.index];
-      // eslint-disable-next-line no-restricted-syntax
+      const shengmu = this.shengmu[this.shengmuIndex];
       for (const k in utils.shengmu) {
-        if (utils.shengmu[k] === shengmu) {
-          return k;
+        if ({}.hasOwnProperty.call(utils.shengmu, k)) {
+          if (utils.shengmu[k] === shengmu) {
+            return k;
+          }
         }
       }
       return null;
@@ -279,11 +275,12 @@ export default {
     },
 
     getShengdiao() {
-      const shengdiao = this.shengdiao[this.index1];
-      // eslint-disable-next-line no-restricted-syntax
+      const shengdiao = this.shengdiao[this.shengdiaoIndex];
       for (const k in utils.shengdiao) {
-        if (utils.shengdiao[k] === shengdiao) {
-          return k;
+        if ({}.hasOwnProperty.call(utils.shengdiao, k)) {
+          if (utils.shengdiao[k] === shengdiao) {
+            return k;
+          }
         }
       }
       return null;
@@ -318,19 +315,10 @@ export default {
       });
     },
 
-    getCharacter(e) {
-      const { id } = e.currentTarget.dataset;
-      uni.navigateTo({
-        url: `/pages/basics/characters/characters?id=${id}`,
-      });
-    },
-
     getWord(e) {
       const { id } = e.currentTarget.dataset;
       if (!id) return;
-      uni.navigateTo({
-        url: `/pages/basics/words/words?id=${id}`,
-      });
+      toWordPage(id);
     },
   },
 };
