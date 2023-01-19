@@ -53,10 +53,9 @@
         下面介绍的拼音方案为莆田城里口音。想要了解更多其他口音的介绍请关注微信公众号「莆仙乡音社」(微信号：PhouSengUa)搜索“拼音教程”，
         或者观看b站拼音教程视频(up主@莆仙乡音社)。\n
       </text>
-      <video
-        style="margin-top: 15rpx; width: 100%"
-        src="https://cos.edialect.top/files/video/6/2022/01/20/9PRuDXJRFiJNHhA.mp4"
-      />
+      <view class="margin-top-lg">
+        <MarkdownViewer :markdown="bilibili" />
+      </view>
     </view>
 
     <view
@@ -224,10 +223,11 @@
 
 <script>
 import utils from '@/const/pinyin';
+import MarkdownViewer from '@/components/MarkdownViewer.vue';
 
 const app = getApp();
-
 export default {
+  components: { MarkdownViewer },
   data() {
     return {
       StatusBar: app.globalData.StatusBar,
@@ -257,6 +257,9 @@ export default {
       shengmu: utils.shengmu,
       yunmu: [utils.kai, utils.bi, utils.se],
       tone: utils.tone,
+      bilibili: '<iframe src="//player.bilibili.com/player.html?aid=77966786&bvid=BV1RJ411q7yW&cid=133662582&page=1"'
+        + ' scrolling="no" border="0" frameborder="no" framespacing="0"'
+        + ' allowfullscreen="true" width=400 height=300> </iframe>',
     };
   },
   onLoad() {
