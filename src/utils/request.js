@@ -1,5 +1,5 @@
 import { BASE_URL } from '@/const/urls';
-import { mpLogin } from '@/services/login';
+import { toLoginPage } from '@/routers/login';
 
 // TODO remove noPrompt
 const request = (method = 'GET', url = '', data = {}, noPrompt = false) => {
@@ -44,16 +44,8 @@ const request = (method = 'GET', url = '', data = {}, noPrompt = false) => {
                 icon: 'error',
               });
               setTimeout(() => {
-                uni.showModal({
-                  title: '立即登录？',
-                  content: '立刻一键登录或跳转到登录页面',
-                  async success(res2) {
-                    if (res2.confirm) {
-                      await mpLogin();
-                    }
-                  },
-                });
-              }, 2000);
+                toLoginPage();
+              }, 1000);
               break;
             case 403:
               uni.showToast({

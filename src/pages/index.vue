@@ -87,13 +87,13 @@ export default {
     async changePage(page) {
       if (page === 'me') {
         if (!uni.getStorageSync('token')) {
-          uni.showModal({
-            content: '请先登录',
-            showCancel: false,
-            success: () => {
-              toLoginPage();
-            },
+          uni.showToast({
+            title: '请先登录!',
+            icon: 'none',
           });
+          setTimeout(() => {
+            toLoginPage();
+          }, 1000);
           return;
         }
       }
