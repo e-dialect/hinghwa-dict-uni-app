@@ -95,13 +95,17 @@
           class="margin-top-sm solid-bottom"
           style="width: 92vw"
         >
-          <view class="text-bold text-xl">
+          <text
+            class="text-xl"
+            @longpress="setClipboard(item.content)"
+          >
             {{ item.content }}
-          </view>
+          </text>
           <view
             v-for="(jtem, index1) in item.example"
             :key="index1"
             class="padding-sm"
+            @longpress="copyExample(jtem)"
           >
             <button
               class="cu-btn bg-red"
@@ -109,7 +113,9 @@
             >
               {{ jtem.type }}
             </button>
-            <text>{{ jtem.content }}</text>
+            <text selectable>
+              {{ jtem.content }}
+            </text>
             <text class="text-grey">
               {{ jtem.explain }}
             </text>
@@ -279,6 +285,7 @@ import { defaultMessage } from '@/services/shareMessages';
 import { toTuxiaochaoPage } from '@/routers';
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { toArticlePage } from '@/routers/article';
+import { setClipboard } from '@/utils/clipboard';
 
 const app = getApp();
 export default {
@@ -342,6 +349,7 @@ export default {
     this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
+    setClipboard,
     toArticlePage,
     toTuxiaochaoPage,
     /**
@@ -352,6 +360,13 @@ export default {
     },
     toWebPage() {
       window.location.href = `https://hinghwa.cn/words/${this.id}`;
+    },
+    copyExample(example) {
+      let str = `${example.type}：${example.content}`;
+      if (example.explain) {
+        str += `（${example.explain}）`;
+      }
+      setClipboard(str);
     },
   },
 };
