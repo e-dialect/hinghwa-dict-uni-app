@@ -4,6 +4,18 @@
     <cu-custom title="贡献语音" />
 
     <view style="height: 100%; position: absolute; width: 100%">
+      <block>
+        <input
+          class="extend"
+          disabled
+          value="提示"
+        >
+        <input
+          value="管理员在审核时将继续确认拼音和 IPA"
+          class="fileName text-gray"
+          disabled
+        >
+      </block>
       <form @submit="submitRecord">
         <!--表单列表-->
         <block>
@@ -212,7 +224,7 @@ export default {
           };
           // 录音停止
           this.recorderManager.onstop = () => {
-            const blob = new Blob(chunks, { type: this.recorderManager.mimeType });
+            const blob = new Blob(chunks, { type: that.recorderManager.mimeType });
             that.setSource(window.URL.createObjectURL(blob));
           };
 
@@ -330,7 +342,9 @@ export default {
             title: '语音贡献成功',
             icon: 'success',
           });
-          uni.navigateBack();
+          setTimeout(() => {
+            uni.navigateBack();
+          }, 1000);
         }).catch(() => {
           uni.showToast({
             title: '语音贡献失败',

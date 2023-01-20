@@ -5,7 +5,6 @@ import { BASE_URL } from '@/const/urls';
  * @param file 文件对象（路径）
  * @returns {Promise<unknown>}
  */
-// eslint-disable-next-line import/prefer-default-export
 export function uploadFile(file) {
   return new Promise((resolve, reject) => {
     uni.showLoading({
