@@ -7,8 +7,9 @@
         声母
       </view>
       <picker
-        v-model="shengmuIndex"
+        :value="shengmuIndex"
         :range="shengmu"
+        @change="changeShengmu"
       >
         <view class="picker">
           {{ shengmu[shengmuIndex] }}
@@ -36,8 +37,9 @@
         声调
       </view>
       <picker
-        v-model="shengdiaoIndex"
+        :value="shengdiaoIndex"
         :range="shengdiao"
+        @change="changeShengdiao"
       >
         <view class="picker">
           {{ shengdiao[shengdiaoIndex] }}
@@ -319,6 +321,13 @@ export default {
       const { id } = e.currentTarget.dataset;
       if (!id) return;
       toWordPage(id);
+    },
+
+    changeShengmu(e) {
+      this.shengmuIndex = e.detail.value;
+    },
+    changeShengdiao(e) {
+      this.shengdiaoIndex = e.detail.value;
     },
   },
 };
