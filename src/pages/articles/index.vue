@@ -4,12 +4,14 @@
       title="语记·互动"
       :is-back="false"
     />
+    <!--  #ifndef MP-WEIXIN -->
     <button
       class="cu-btn icon lg bg-blue shadow write"
       @tap="writeArticle"
     >
       <text class="cuIcon-write" />
     </button>
+    <!--  #endif -->
     <view
       class="flex padding text-center"
       style="background-color: white"
