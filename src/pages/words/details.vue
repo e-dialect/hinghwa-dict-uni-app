@@ -189,9 +189,28 @@
       <!--其他-->
       <swiper-item class="margin">
         <!--空白占位-->
-        <text class="text-gray text-sm">
-          内容有误？想要更新？请反馈给管理员或在网页端发起修改~
-        </text>
+        <view class="text-gray text-sm margin-bottom-lg">
+          <text>内容有误？想要更新？请</text>
+          <text
+            class="text-blue cuIcon-link"
+            @tap="toTuxiaochaoPage()"
+          >
+            反馈
+          </text>
+          <text>给管理员或在</text>
+          <!-- #ifdef H5 -->
+          <text
+            class="text-blue cuIcon-link"
+            @tap="toWebPage()"
+          >
+            网页端
+          </text>
+          <!-- #endif -->
+          <!-- #ifndef H5 -->
+          <text>网页端</text>
+          <!-- #endif -->
+          <text>发起修改~</text>
+        </view>
 
         <!--附注-->
         <view
@@ -201,9 +220,11 @@
           <view class="text-bold text-xl">
             附注
           </view>
-          <text class="margin-top-sm text-grey">
-            {{ word.annotation }}
-          </text>
+          <MarkdownViewer
+            class="margin-top-sm"
+            style="max-width: 95%"
+            :markdown="word.annotation"
+          />
         </view>
 
         <!--普通话词汇-->
@@ -223,7 +244,25 @@
             </text>
           </view>
         </view>
-        <!--TODO: 相关文章-->
+        <!--相关文章-->
+        <view
+          v-if="word.related_articles !== 0"
+          class="margin-top"
+        >
+          <view class="text-bold text-xl">
+            相关文章
+          </view>
+          <view class="margin-top-sm cu-list">
+            <view
+              v-for="(item, index) in word.related_articles"
+              :key="index"
+              class="cu-item text-blue margin"
+              @tap="toArticlePage(item.id)"
+            >
+              {{ item.title }}
+            </view>
+          </view>
+        </view>
       </swiper-item>
     </swiper>
   </view>
@@ -237,10 +276,13 @@ import WordPronunciationButton from '@/components/WordPronunciationButton';
 import { toUploadPronunciationPage, toWordPage } from '@/routers/word';
 import { toUserPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
+import { toTuxiaochaoPage } from '@/routers';
+import MarkdownViewer from '@/components/MarkdownViewer';
+import { toArticlePage } from '@/routers/article';
 
 const app = getApp();
 export default {
-  components: { WordPronunciationButton },
+  components: { MarkdownViewer, WordPronunciationButton },
   data() {
     return {
       playAudio,
@@ -300,11 +342,16 @@ export default {
     this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
+    toArticlePage,
+    toTuxiaochaoPage,
     /**
      * 切换标签页
      */
     tabSlide(e) {
       this.tabIndex = e.detail.current;
+    },
+    toWebPage() {
+      window.location.href = `https://hinghwa.cn/words/${this.id}`;
     },
   },
 };
