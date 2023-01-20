@@ -134,7 +134,7 @@
         </view>
         <view
           class="cu-item arrow"
-          @tap="tuxiaochao()"
+          @tap="toTuxiaochaoPage()"
         >
           <view class="content">
             <text class="cuIcon-question text-grey" />
@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import { toIndexPage } from '@/routers';
+import { toIndexPage, toTuxiaochaoPage } from '@/routers';
 import {
   bindingWechat, cancelBindingWechat, clearUserInfo, getUserInfo,
 } from '@/services/user';
@@ -189,6 +189,7 @@ export default {
     toChangePasswordPage,
     toUserInfoPage,
     toPronunciationsPage,
+    toTuxiaochaoPage,
     /**
      * 获取用户信息
      * @returns {Promise<void>}
@@ -271,48 +272,6 @@ export default {
           }
         },
       });
-    },
-
-    /**
-     * 接入兔小巢
-     * @returns {Promise<void>}
-     */
-    async tuxiaochao() {
-      switch (uni.getSystemInfoSync().uniPlatform) {
-        case 'mp-weixin':
-          uni.openEmbeddedMiniProgram(
-            {
-              appId: 'wx8abaf00ee8c3202e',
-              extraData: {
-                id: '420021',
-              },
-              fail() {
-                uni.navigateToMiniProgram({
-                  appId: 'wx8abaf00ee8c3202e',
-                  extraData: {
-                    id: '420021',
-                  },
-                  fail() {
-                    uni.showToast({
-                      title: '跳转失败！',
-                      icon: 'none',
-                    });
-                  },
-                });
-              },
-            },
-          );
-          break;
-        case 'web':
-          // 跳转到兴化语记兔小巢页面
-          window.location = 'https://support.qq.com/product/420021';
-          break;
-        default:
-          uni.showToast({
-            title: '暂不支持此平台！',
-            icon: 'none',
-          });
-      }
     },
   },
 };
