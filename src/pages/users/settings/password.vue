@@ -102,15 +102,11 @@ export default {
       } // 修改密码
 
       changeUserPassword(app.globalData.id, old, new1).then(async (res) => {
-        uni.setStorageSync('token', res.token);
         setTimeout(() => {
-          uni.showToast({
-            title: '修改成功',
-          });
           uni.navigateBack({
             delta: 1,
           }); // 返回上一个页面
-        }, 100);
+        }, 1000);
       });
     },
   },

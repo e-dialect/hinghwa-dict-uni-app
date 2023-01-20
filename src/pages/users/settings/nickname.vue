@@ -65,7 +65,6 @@ export default {
         const userInfo = { ...app.globalData.userInfo };
         userInfo.nickname = this.nickname;
         await changeUserInfo(app.globalData.id, userInfo);
-        app.globalData.userInfo = userInfo;
         setTimeout(() => {
           uni.navigateBack();
         }, 1500);

@@ -59,10 +59,14 @@ export async function getUserInfo(id) {
  * @returns {Promise<unknown>}
  */
 export async function changeUserInfo(id, userInfo) {
-  await request.put(`/users/${id}`, { user: userInfo }).then((res) => {
-    uni.setStorageSync('token', res.token);
-    uni.showToast({
-      title: '修改成功',
+  return new Promise((resolve) => {
+    request.put(`/users/${id}`, { user: userInfo }).then((res) => {
+      uni.setStorageSync('token', res.token);
+      getApp().globalData.userInfo = userInfo;
+      uni.showToast({
+        title: '修改成功',
+      });
+      resolve(res);
     });
   });
 }

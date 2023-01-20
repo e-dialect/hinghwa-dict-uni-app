@@ -65,7 +65,7 @@ export function toChangeEmailPage() {
  */
 export function toChangePhonePage() {
   uni.navigateTo({
-    url: '/pages/users/settings/phone',
+    url: '/pages/users/settings/telephone',
   });
 }
 

@@ -6,14 +6,15 @@
         手机
       </view>
       <input
+        v-model="telephone"
         placeholder="请输入11位手机号嗷~"
         maxlength="11"
-        @input="setPhone"
       >
     </view>
     <button
       class="cu-btn round bg-gradual-blue shadow text-df margin-top-sm"
       style="width: 16vw; margin-left: 80vw"
+      :disabled="currentTelephone===telephone"
       @tap="savePhone"
     >
       保存
@@ -28,21 +29,22 @@ const app = getApp();
 export default {
   data() {
     return {
-      phone: '',
+      telephone: app.globalData.userInfo.telephone,
     };
   },
-  methods: {
-    setPhone(e) {
-      this.phone = e.detail.value;
+  computed: {
+    currentTelephone() {
+      return app.globalData.userInfo.telephone;
     },
-
+  },
+  methods: {
     /**
      * 更改手机号
      */
     async savePhone() {
       const userInfo = await getUserInfo(app.globalData.id);
-      userInfo.user.telephone = this.phone;
-      if (this.phone.length !== 11) {
+      userInfo.user.telephone = this.telephone;
+      if (this.telephone.length !== 11) {
         uni.showModal({
           title: '提示',
           content: '请输入正确格式的手机号码',
@@ -50,16 +52,10 @@ export default {
         });
       } else {
         changeUserInfo(app.globalData.id, userInfo.user).then(async (res) => {
-          uni.setStorageSync('token', res.token);
           setTimeout(() => {
-            uni.showToast({
-              title: '修改成功',
-            });
             // 返回上一个页面
-            uni.navigateBack({
-              delta: 1,
-            });
-          }, 100);
+            uni.navigateBack();
+          }, 1000);
         });
       }
     },

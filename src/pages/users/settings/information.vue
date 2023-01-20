@@ -138,9 +138,6 @@ const towns = [
 export default {
   data() {
     return {
-      toChangeNicknamePage,
-      toChangeEmailPage,
-      toChangePhonePage,
       user: [],
       date: '未知',
       multiIndex: [0, 0],
@@ -151,6 +148,9 @@ export default {
     this.getInfo();
   },
   methods: {
+    toChangeNicknamePage,
+    toChangeEmailPage,
+    toChangePhonePage,
     toChangeUsernamePage,
     /**
      * 获取用户信息
@@ -158,7 +158,7 @@ export default {
      */
     async getInfo() {
       const userInfo = await getUserInfo(app.globalData.id);
-      this.user = userInfo.user;
+      this.user = { ...userInfo.user };
       if (userInfo.user.birthday) {
         this.date = userInfo.user.birthday;
       }
