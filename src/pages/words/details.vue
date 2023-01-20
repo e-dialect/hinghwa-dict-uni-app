@@ -252,7 +252,7 @@
         </view>
         <!--相关文章-->
         <view
-          v-if="word.related_articles !== 0"
+          v-if="word.related_articles.length"
           class="margin-top"
         >
           <view class="text-bold text-xl">
