@@ -4,7 +4,7 @@
     @touchend="end"
   >
     <!--导航栏-->
-    <cu-custom />
+    <cu-custom :back-home="true" />
 
     <!--标题栏：词语-->
     <view class="flex padding solid-bottom">
