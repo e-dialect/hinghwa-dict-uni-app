@@ -18,7 +18,7 @@
         <text
           v-if="backHome"
           class="cuIcon-home"
-          @tap="toIndexPage"
+          @tap="toIndexPage(true)"
         />
         <slot name="backText" />
       </view>
