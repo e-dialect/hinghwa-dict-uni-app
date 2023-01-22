@@ -15,7 +15,10 @@
     <!--标题栏：词语-->
     <view class="flex padding solid-bottom">
       <view class="flex-sub">
-        <view class="text-bold text-sl">
+        <view
+          class="text-bold text-sl"
+          @tap="setClipboard(word.word)"
+        >
           {{ word.word }}
         </view>
       </view>
