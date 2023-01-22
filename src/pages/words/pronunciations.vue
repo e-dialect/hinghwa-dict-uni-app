@@ -1,6 +1,13 @@
 <template>
   <view>
     <cu-custom title="词条发音" />
+    <!--贡献语音的按钮-->
+    <button
+      class="cu-btn icon lg bg-blue shadow contributing-button"
+      @tap="toUploadPronunciationPage(id)"
+    >
+      <text class="cuIcon-voice" />
+    </button>
     <scroll-view
       :scroll-y="true"
       style="height: 100vh"
@@ -102,6 +109,7 @@ import WordPronunciationButton from '@/components/WordPronunciationButton';
 import { setClipboard } from '@/utils/clipboard';
 import { playAudio } from '@/utils/audio';
 import { toUserPage } from '@/routers/user';
+import { toUploadPronunciationPage } from '@/routers/word';
 
 export default {
   name: 'WordPronunciations',
@@ -140,6 +148,7 @@ export default {
     },
   },
   methods: {
+    toUploadPronunciationPage,
     toUserPage,
     playAudio,
     setClipboard,
@@ -169,5 +178,10 @@ export default {
 </script>
 
 <style scoped>
-
+.contributing-button {
+  position: fixed;
+  bottom: 10vh;
+  right: 6vw;
+  z-index: 1024;
+}
 </style>

@@ -3,15 +3,6 @@
     <!--导航栏-->
     <cu-custom />
 
-    <!--贡献语音的按钮-->
-    <button
-      v-show="tabIndex===tabs.indexOf('发音')"
-      class="cu-btn icon lg bg-blue shadow contributing-button"
-      @tap="toUploadPronunciationPage(id)"
-    >
-      <text class="cuIcon-voice" />
-    </button>
-
     <!--标题栏：词语-->
     <view class="flex padding solid-bottom">
       <view class="flex-sub">
@@ -70,6 +61,12 @@
         </view>
       </view>
       <view class="flex-sub">
+        <button
+          class="cu-btn round bg-gradual-blue shadow"
+          @tap="toUploadPronunciationPage(id)"
+        >
+          贡献语音
+        </button>
         <button
           v-if="pronunciation.length !== 0"
           class="cu-btn round bg-gradual-blue shadow"
@@ -248,10 +245,7 @@ export default {
   components: { MarkdownViewer, WordPronunciationButton },
   data() {
     return {
-      playAudio,
-      toUserPage,
-      toWordPage,
-      toUploadPronunciationPage,
+
       id: 0,
       word: {
         id: 0,
@@ -305,6 +299,10 @@ export default {
     this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
+    toUploadPronunciationPage,
+    playAudio,
+    toUserPage,
+    toWordPage,
     toWordPronunciations,
     setClipboard,
     toArticlePage,
@@ -331,12 +329,5 @@ export default {
 <style>
 page {
   background-color: #ffffff;
-}
-
-.contributing-button {
-  position: fixed;
-  bottom: 10vh;
-  right: 6vw;
-  z-index: 1024;
 }
 </style>
