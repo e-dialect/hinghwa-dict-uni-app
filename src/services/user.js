@@ -1,12 +1,39 @@
 import request from '@/utils/request';
+import rawRequest from '@/utils/rawRequest';
+import { toLoginPage } from '@/routers/login';
 
 /**
  * US0101 新建用户（普通）
  * @returns {Promise<unknown>}
  */
 export async function registerUser(username, password, email, code) {
-  return request.post('/users', {
-    username, password, email, code,
+  return new Promise((resolve, reject) => {
+    rawRequest.post('/users', {
+      username, password, email, code,
+    }).then((res) => {
+      resolve(res);
+    }).catch((err) => {
+      switch (err.statusCode) {
+        case 401:
+          uni.showToast({
+            title: err.data.msg || '验证码错误',
+            icon: 'error',
+          });
+          break;
+        case 409:
+          uni.showToast({
+            title: err.data.msg || '用户名已存在',
+            icon: 'error',
+          });
+          break;
+        default:
+          uni.showToast({
+            title: err.data.msg || '注册失败',
+            icon: 'error',
+          });
+      }
+      reject(err);
+    });
   });
 }
 
@@ -21,7 +48,7 @@ export function registerWechatUser(username, password, nickname, avatar) {
   uni.login({
     async success(res) {
       if (res.code) {
-        await request.post('/users/wechat/register', {
+        await rawRequest.post('/users/wechat/register', {
           username,
           password,
           jscode: res.code,
@@ -34,6 +61,20 @@ export function registerWechatUser(username, password, nickname, avatar) {
           uni.navigateBack({
             delta: 1,
           });
+        }).catch((err) => {
+          switch (err.statusCode) {
+            case 409:
+              uni.showToast({
+                title: err.data.msg || '用户名已存在',
+                icon: 'error',
+              });
+              break;
+            default:
+              uni.showToast({
+                title: err.data.msg || '注册失败',
+                icon: 'error',
+              });
+          }
         });
       } else {
         uni.showToast({

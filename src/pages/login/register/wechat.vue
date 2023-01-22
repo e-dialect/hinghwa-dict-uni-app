@@ -27,6 +27,8 @@
         </view>
         <input
           name="username"
+          type="nickname"
+          class="weui-input"
           placeholder="请输入用户名"
         >
       </view>
