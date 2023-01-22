@@ -326,7 +326,7 @@ export default {
         uni.navigateBack();
       } else if (subX < -50) {
         const randomId = Math.floor(Math.random() * 6099) + 1;
-        toWordPage(randomId, this.id);
+        toWordPage(randomId);
       }
     },
   },
