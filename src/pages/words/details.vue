@@ -1,5 +1,8 @@
 <template>
-  <view>
+  <view
+    @touchstart="start"
+    @touchend="end"
+  >
     <!--导航栏-->
     <cu-custom />
 
@@ -80,6 +83,7 @@
     <!--词语内容-->
     <scroll-view
       :scroll-y="true"
+      style="min-height: 95vh"
       class="margin"
     >
       <!--释义-->
@@ -88,7 +92,7 @@
           释义
         </view>
         <view
-          v-for="(item, index) in definition"
+          v-for="(item, index) in word.definitions"
           :key="index"
           class="margin-top-sm margin-left-sm"
           style="width: 92vw"
@@ -240,7 +244,6 @@ export default {
   components: { MarkdownViewer, WordPronunciationButton },
   data() {
     return {
-
       id: 0,
       word: {
         id: 0,
@@ -261,10 +264,8 @@ export default {
         standard_pinyin: '',
         source: '',
       },
-      definition: [],
+      startData: { clientX: 0, clientY: 0 },
       pronunciation: [],
-      tabIndex: 0, // 当前选中的标签页
-      tabs: ['释义', '发音', '其他'], // 标签页标题
     };
   },
 
@@ -290,7 +291,6 @@ export default {
   async onLoad(options) {
     this.id = options.id;
     this.word = await getWordDetails(options.id);
-    this.definition = this.word.definitions;
     this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
@@ -317,6 +317,20 @@ export default {
         str += `（${example.explain}）`;
       }
       setClipboard(str);
+    },
+    start(e) {
+      this.startData.clientX = e.changedTouches[0].clientX;
+      this.startData.clientY = e.changedTouches[0].clientY;
+    },
+    end(e) {
+      const subX = e.changedTouches[0].clientX - this.startData.clientX;
+      // const subY = e.changedTouches[0].clientY - this.startData.clientY;
+      if (subX > 50) {
+        uni.navigateBack();
+      } else if (subX < -50) {
+        const randomId = Math.floor(Math.random() * 6099) + 1;
+        toWordPage(randomId, this.id);
+      }
     },
   },
 };
