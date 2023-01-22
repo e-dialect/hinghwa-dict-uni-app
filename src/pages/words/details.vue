@@ -210,17 +210,12 @@
           反馈
         </text>
         <text>给管理员或在</text>
-        <!-- #ifdef H5 -->
         <text
           class="text-blue cuIcon-link"
           @tap="toWebPage()"
         >
           网页端
         </text>
-        <!-- #endif -->
-        <!-- #ifndef H5 -->
-        <text>网页端</text>
-        <!-- #endif -->
         <text>发起修改~</text>
       </view>
     </scroll-view>
@@ -307,14 +302,14 @@ export default {
     setClipboard,
     toArticlePage,
     toTuxiaochaoPage,
-    /**
-     * 切换标签页
-     */
-    tabSlide(e) {
-      this.tabIndex = e.detail.current;
-    },
     toWebPage() {
-      window.location.href = `https://hinghwa.cn/words/${this.id}`;
+      switch (uni.getSystemInfoSync().uniPlatform) {
+        case 'web':
+          window.location.href = `https://hinghwa.cn/words/${this.id}`;
+          break;
+        default:
+          setClipboard(`https://hinghwa.cn/words/${this.id}`);
+      }
     },
     copyExample(example) {
       let str = `${example.type}：${example.content}`;
