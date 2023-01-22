@@ -11,7 +11,7 @@
       <view class="flex-sub">
         <view
           class="text-bold text-sl"
-          @tap="setClipboard(word.word)"
+          @longpress="setClipboard(word.word)"
         >
           {{ word.word }}
         </view>
@@ -40,7 +40,7 @@
           <text
             class="text-bold text-xl"
             space="ensp"
-            @tap="setClipboard(word.standard_pinyin)"
+            @longpress="setClipboard(word.standard_pinyin)"
           >
             {{ word.standard_pinyin }}
           </text>
@@ -53,7 +53,7 @@
           <text
             class="text-grey text-xl"
             space="ensp"
-            @tap="setClipboard(word.standard_ipa)"
+            @longpress="setClipboard(word.standard_ipa)"
           >
             /{{ word.standard_ipa }}/
           </text>
