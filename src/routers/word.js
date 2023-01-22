@@ -10,7 +10,6 @@ export function toWordPage(id) {
   if (pages.length > 10) {
     const wordPages = pages.slice(-10).filter((page) => page.route.includes('pages/words/details'));
     const app = getApp();
-    console.log(wordPages);
     if (wordPages.length === 10) {
       if (!app.globalData.showRedirectTips) {
         setTimeout(() => {
