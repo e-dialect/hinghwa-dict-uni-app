@@ -117,10 +117,7 @@
               size="small"
               @click="copyExample(jtem)"
             />
-            <text
-              class="margin-left-sm"
-              selectable
-            >
+            <text class="margin-left-sm">
               {{ jtem.content }}
             </text>
             <text class="text-grey">
