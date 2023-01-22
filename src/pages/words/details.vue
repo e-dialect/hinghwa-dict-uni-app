@@ -68,14 +68,14 @@
           class="cu-btn round bg-gradual-blue shadow"
           @tap="toUploadPronunciationPage(id)"
         >
-          贡献语音
+          我来发音
         </button>
         <button
           v-if="pronunciation.length !== 0"
-          class="cu-btn round bg-gradual-blue shadow"
+          class="cu-btn round bg-gradual-blue shadow margin-top-xs"
           @tap="toWordPronunciations(word.id)"
         >
-          更多语音
+          查看语音
         </button>
       </view>
     </view>
