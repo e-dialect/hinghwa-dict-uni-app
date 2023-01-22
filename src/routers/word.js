@@ -37,3 +37,13 @@ export function toVoiceRankListPage() {
     url: '/pages/words/pronunciations/ranking',
   });
 }
+
+/**
+ * 前往词语发音页面
+ * @param word 词语id
+ */
+export function toWordPronunciations(word) {
+  uni.navigateTo({
+    url: `/pages/words/pronunciations?word=${word}`,
+  });
+}

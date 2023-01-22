@@ -40,62 +40,60 @@
     </view>
 
     <!--标题栏：发音-->
-    <view class="padding solid-bottom">
-      <view>
-        <text
-          class="text-bold text-xl"
-          space="ensp"
-        >
-          {{ word.standard_pinyin }}
-        </text>
-        <WordPronunciationButton
-          v-if="!word.source"
-          :pinyin="word.standard_pinyin"
-        />
+    <view class="padding solid-bottom flex align-center">
+      <view class="flex-twice">
+        <view>
+          <text
+            class="text-bold text-xl"
+            space="ensp"
+            @tap="setClipboard(word.standard_pinyin)"
+          >
+            {{ word.standard_pinyin }}
+          </text>
+          <WordPronunciationButton
+            v-if="!word.source"
+            :pinyin="word.standard_pinyin"
+          />
+        </view>
+        <view>
+          <text
+            class="text-grey text-xl"
+            space="ensp"
+            @tap="setClipboard(word.standard_ipa)"
+          >
+            /{{ word.standard_ipa }}/
+          </text>
+          <WordPronunciationButton
+            :ipa="word.standard_ipa"
+            :source="word.source"
+          />
+        </view>
       </view>
-      <view>
-        <text
-          class="text-grey text-xl"
-          space="ensp"
+      <view class="flex-sub">
+        <button
+          v-if="pronunciation.length !== 0"
+          class="cu-btn round bg-gradual-blue shadow"
+          @tap="toWordPronunciations(word.id)"
         >
-          /{{ word.standard_ipa }}/
-        </text>
-        <WordPronunciationButton
-          :ipa="word.standard_ipa"
-          :source="word.source"
-        />
+          更多语音
+        </button>
       </view>
     </view>
 
-    <!--标签选择-->
+    <!--词语内容-->
     <scroll-view
-      class="bg-white nav text-center"
-      scroll-x
-    >
-      <view
-        v-for="(item, index) in tabs"
-        :key="index"
-        :class="'cu-item ' + (index === tabIndex ? 'text-blue cur' : '')"
-        @tap="tabIndex=index"
-      >
-        {{ item }}
-      </view>
-    </scroll-view>
-
-    <!--标签内容-->
-    <swiper
-      :current="tabIndex"
-      class="screen-swiper"
-      duration="500"
-      style="height: 150vh"
-      @change="tabSlide"
+      :scroll-y="true"
+      class="margin"
     >
       <!--释义-->
-      <swiper-item class="margin">
+      <view>
+        <view class="text-bold text-xl">
+          释义
+        </view>
         <view
           v-for="(item, index) in definition"
           :key="index"
-          class="margin-top-sm solid-bottom"
+          class="margin-top-sm margin-left-sm"
           style="width: 92vw"
         >
           <text
@@ -110,13 +108,18 @@
             class="padding-sm"
             @longpress="copyExample(jtem)"
           >
-            <button
-              class="cu-btn bg-red"
+            <uni-tag
               style="width: 8vw"
+              :text="jtem.type"
+              :type="jtem.type==='例'?'error':'warning'"
+              :inverted="true"
+              size="small"
+              @click="copyExample(jtem)"
+            />
+            <text
+              class="margin-left-sm"
+              selectable
             >
-              {{ jtem.type }}
-            </button>
-            <text selectable>
               {{ jtem.content }}
             </text>
             <text class="text-grey">
@@ -133,7 +136,7 @@
           <view class="text-bold text-xl">
             相关词汇
           </view>
-          <view class="margin-top-sm">
+          <view class="margin-top-sm margin-left-sm ">
             <text
               v-for="(item, index) in word.related_words"
               :key="index"
@@ -144,136 +147,86 @@
             </text>
           </view>
         </view>
-      </swiper-item>
+      </view>
 
-      <!--发音-->
-      <swiper-item>
-        <view
-          v-if="pronunciation.length === 0"
-          class="margin"
-        >
-          <text class="text-grey">
-            该词语暂无语音哦～点击右下方贡献语音～
-          </text>
+      <!--普通话词汇-->
+      <view
+        v-if="word.mandarin.length !== 0"
+        class="margin-top-xl"
+      >
+        <view class="text-bold text-xl">
+          普通话词汇
         </view>
-        <view
-          v-for="(item, index) in pronunciation"
-          :key="index"
-          class="padding solid-bottom"
-        >
-          <view class="flex justify-between align-center">
-            <view>
-              <view>
-                <text class="text-bold">
-                  {{ item.pronunciation.pinyin }}
-                </text>
-                <text class="text-grey">
-                  {{ ` /${item.pronunciation.ipa}/ ` }}
-                </text>
-                <text
-                  class="cuIcon-notificationfill text-blue"
-                  @tap="playAudio(item.pronunciation.source)"
-                />
-              </view>
-              <view class="margin-top">
-                <text>来源：</text>
-                <text
-                  class="text-blue"
-                  @tap="toUserPage(item.contributor.id)"
-                >
-                  {{ item.contributor.nickname }}
-                </text>
-                <text>
-                  {{ ` （${item.pronunciation.county} ${item.pronunciation.town}）` }}
-                </text>
-              </view>
-            </view>
-            <view class="text-xl">
-              <text class="cuIcon-like" />
-            </view>
-          </view>
-        </view>
-      </swiper-item>
-
-      <!--其他-->
-      <swiper-item class="margin">
-        <!--空白占位-->
-        <view class="text-gray text-sm margin-bottom-lg">
-          <text>内容有误？想要更新？请</text>
+        <view class="margin-top-sm margin-left-sm ">
           <text
-            class="text-blue cuIcon-link"
-            @tap="toTuxiaochaoPage()"
+            v-for="(item, index) in word.mandarin"
+            :key="index"
           >
-            反馈
+            {{ item + " " }}
           </text>
-          <text>给管理员或在</text>
-          <!-- #ifdef H5 -->
-          <text
-            class="text-blue cuIcon-link"
-            @tap="toWebPage()"
-          >
-            网页端
-          </text>
-          <!-- #endif -->
-          <!-- #ifndef H5 -->
-          <text>网页端</text>
-          <!-- #endif -->
-          <text>发起修改~</text>
         </view>
+      </view>
 
-        <!--附注-->
-        <view
-          v-if="word.annotation.length !== 0"
-          class="margin-right"
-        >
-          <view class="text-bold text-xl">
-            附注
-          </view>
+      <!--附注-->
+      <view
+        v-if="word.annotation.length !== 0"
+        class="margin-top-xl"
+      >
+        <view class="text-bold text-xl">
+          附注
+        </view>
+        <view class="margin-top-sm margin-left-sm">
           <MarkdownViewer
-            class="margin-top-sm"
-            style="max-width: 95%"
+            style="max-width: 90%"
             :markdown="word.annotation"
           />
         </view>
+      </view>
 
-        <!--普通话词汇-->
-        <view
-          v-if="word.mandarin.length !== 0"
-          class="margin-top"
-        >
-          <view class="text-bold text-xl">
-            普通话词汇
-          </view>
-          <view class="margin-top-sm">
-            <text
-              v-for="(item, index) in word.mandarin"
-              :key="index"
-            >
-              {{ item + " " }}
-            </text>
+      <!--相关文章-->
+      <view
+        v-if="word.related_articles.length"
+        class="margin-top-xl"
+      >
+        <view class="text-bold text-xl">
+          相关文章
+        </view>
+        <view class="margin-top-sm margin-left-sm  cu-list">
+          <view
+            v-for="(item, index) in word.related_articles"
+            :key="index"
+            class="cu-item text-blue margin"
+            @tap="toArticlePage(item.id)"
+          >
+            {{ item.title }}
           </view>
         </view>
-        <!--相关文章-->
-        <view
-          v-if="word.related_articles.length"
-          class="margin-top"
+      </view>
+
+      <!--空白占位-->
+      <view class="text-gray text-sm margin-top-xl margin-bottom-lg">
+        <text>内容有误？想要更新？请</text>
+        <text
+          class="text-blue cuIcon-link"
+          @tap="toTuxiaochaoPage()"
         >
-          <view class="text-bold text-xl">
-            相关文章
-          </view>
-          <view class="margin-top-sm cu-list">
-            <view
-              v-for="(item, index) in word.related_articles"
-              :key="index"
-              class="cu-item text-blue margin"
-              @tap="toArticlePage(item.id)"
-            >
-              {{ item.title }}
-            </view>
-          </view>
-        </view>
-      </swiper-item>
-    </swiper>
+          反馈
+        </text>
+        <text>给管理员或在</text>
+        <!-- #ifdef H5 -->
+        <text
+          class="text-blue cuIcon-link"
+          @tap="toWebPage()"
+        >
+          网页端
+        </text>
+        <!-- #endif -->
+        <!-- #ifndef H5 -->
+        <text>网页端</text>
+        <!-- #endif -->
+        <text>发起修改~</text>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
@@ -282,7 +235,7 @@ import { getWordDetails } from '@/services/word';
 import { playAudio } from '@/utils/audio';
 import { getPronunciations } from '@/services/pronunciation';
 import WordPronunciationButton from '@/components/WordPronunciationButton';
-import { toUploadPronunciationPage, toWordPage } from '@/routers/word';
+import { toUploadPronunciationPage, toWordPage, toWordPronunciations } from '@/routers/word';
 import { toUserPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
 import { toTuxiaochaoPage } from '@/routers';
@@ -352,6 +305,7 @@ export default {
     this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
+    toWordPronunciations,
     setClipboard,
     toArticlePage,
     toTuxiaochaoPage,
