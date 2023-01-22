@@ -247,8 +247,8 @@ export default {
 
         data.multiIndex[1] = 0;
       }
-      // TODO refactor
-      this.setData(data);
+      this.yunmu = [...data.yunmu];
+      this.multiIndex = [...data.multiIndex];
     },
 
     getShengmu() {
