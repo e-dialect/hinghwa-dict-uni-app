@@ -66,7 +66,10 @@
           </view>
         </view>
         <view class="flex">
-          <text class="text-content padding-left">
+          <text
+            class="text-content padding-left"
+            style="max-width: 60vw"
+          >
             方言俚语、莆仙文化小知识等等有趣的莆仙话小测试都在这里~
           </text>
           <!--开始答题按钮-->
@@ -96,7 +99,10 @@
           </view>
         </view>
         <view class="flex">
-          <text class="text-content padding-left">
+          <text
+            class="text-content padding-left"
+            style="max-width: 60vw"
+          >
             一个小小的能力测验~快看看你能拿多少分数吧！
           </text>
           <!--开始答题按钮-->
