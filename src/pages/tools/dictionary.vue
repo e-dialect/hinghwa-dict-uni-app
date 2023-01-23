@@ -62,7 +62,7 @@
           >
             <view
               class="margin-sm bg-blue round text-bold"
-              style="padding-left: 30upx;padding-top: 18upx;font-size: 28upx; height: 64upx"
+              style="padding-left: 15px;padding-top: 8px;padding-bottom: 8px"
               @click="prefix=list[0]"
             >
               {{ String(list[0]).toUpperCase() }}
