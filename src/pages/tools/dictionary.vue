@@ -177,6 +177,7 @@ export default {
           this.words = res;
         });
       },
+      deep: true,
     },
     prefix: {
       handler(newPrefix) {
@@ -184,6 +185,7 @@ export default {
           this.words = res;
         });
       },
+      deep: true,
     },
   },
   async created() {
