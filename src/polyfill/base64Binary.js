@@ -89,7 +89,7 @@ function arrayBufferToBase64 (buffer) {
     return btoaPolyfill(binaryStr)
 }
 
-module.exports = {
+export default {
     base64ToArrayBuffer,
     arrayBufferToBase64,
 }

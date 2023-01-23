@@ -14,7 +14,7 @@
  *
  * Author: 375890534@qq.com
  */
-const base64Binary = require("./base64Binary")
+import base64Binary from './base64Binary'
 
 /**
  * 获取guid
@@ -1066,8 +1066,7 @@ function init () {
     routerPolyfill()
 }
 
-
-module.exports = {
+export default {
     init,
     guid
 }

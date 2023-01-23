@@ -247,7 +247,7 @@ const shengdiao = {
   7: '7：阳入4（及实）',
 };
 
-module.exports = {
+export default {
   shengmu,
   yunmu,
   shengdiao,
