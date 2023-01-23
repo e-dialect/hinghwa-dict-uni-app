@@ -33,7 +33,7 @@
                 class="cu-form-group"
               >
                 <radio
-                  :value="index"
+                  :value="index.toString()"
                   :checked="index === current"
                 />
                 <view class="title text-black">

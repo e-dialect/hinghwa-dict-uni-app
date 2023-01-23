@@ -10,10 +10,11 @@
     <view style="height: 100%; position: absolute; width: 100%">
       <form @submit="submitRecord">
         <!--表单列表-->
-        <block>
+        <view class="flex align-center">
           <input
             class="extend text-bold"
             disabled
+            style="padding: 14rpx 25rpx"
             value="词语"
           >
           <input
@@ -21,11 +22,12 @@
             class="fileName text-gray"
             disabled
           >
-        </block>
-        <block>
+        </view>
+        <view class="flex align-center">
           <input
             class="extend text-bold"
             disabled
+            style="padding: 14rpx 25rpx"
             value="IPA"
           >
           <input
@@ -34,10 +36,11 @@
             name="ipa"
             placeholder="请输入该词语的国际音标"
           >
-        </block>
-        <block>
+        </view>
+        <view class="flex align-center">
           <input
             class="extend text-bold"
+            style="padding: 14rpx 25rpx"
             disabled
             value="拼音"
           >
@@ -47,8 +50,8 @@
             name="pinyin"
             placeholder="请输入该词语的拼音"
           >
-        </block>
-        <view class="flex">
+        </view>
+        <view class="flex align-center">
           <input
             class="extend text-bold"
             style="padding: 14rpx 25rpx"
@@ -355,7 +358,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 page {
   font-size: 32rpx;
 }

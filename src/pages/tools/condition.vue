@@ -103,10 +103,10 @@
 import { searchCharactersByFilters } from '@/services/character';
 import { defaultMessage } from '@/services/shareMessages';
 import { toWordPage } from '@/routers/word';
+import utils from '@/const/sheng-yun-diao';
 
 const app = getApp();
 
-const utils = require('@/const/sheng-yun-diao');
 // TODO refactor
 export default {
   data() {

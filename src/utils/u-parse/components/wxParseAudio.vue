@@ -1,6 +1,6 @@
 <template>
   <!--增加audio标签支持-->
-  <audio
+  <luch-audio
       :id="node.attr.id"
       :author="node.attr.author"
       :class="node.classStr"
@@ -9,12 +9,16 @@
       :poster="node.attr.poster"
       :src="node.attr.src"
       :style="node.styleStr"
-      controls></audio>
+      controls></luch-audio>
 </template>
 
 <script>
+import LuchAudio from "@/uni_modules/luch-audio/components/luch-audio/luch-audio.vue";
 export default {
   name: 'wxParseAudio',
+  components:{
+    LuchAudio
+  },
   props: {
     node: {
       type: Object,

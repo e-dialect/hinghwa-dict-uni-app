@@ -429,7 +429,7 @@ const tone = [
   },
 ];
 
-module.exports = {
+export default {
   shengmu,
   kai,
   bi,
