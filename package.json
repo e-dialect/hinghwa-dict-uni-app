@@ -58,10 +58,11 @@
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
     "marked": "^4.0.18",
+    "postcss": "^8.4.21",
     "regenerator-runtime": "^0.12.1",
     "vue": "^3.2.45",
-    "vuex": "^4.1.0",
-    "vue-i18n": "^9.1.9"
+    "vue-i18n": "^9.1.9",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/runtime": "~7.17.9",
@@ -70,7 +71,6 @@
     "@dcloudio/uni-cli-shared": "3.0.0-3061820230117001",
     "@dcloudio/uni-stacktracey": "3.0.0-3061820230117001",
     "@dcloudio/vite-plugin-uni": "3.0.0-3061820230117001",
-    "vite": "3.2.4",
     "@vue/cli-plugin-babel": "~4.5.19",
     "@vue/cli-service": "~4.5.19",
     "babel-eslint": "^10.1.0",
@@ -87,6 +87,7 @@
     "postcss-comment": "^2.0.0",
     "sass": "^1.57.1",
     "sass-loader": "10.1.1",
+    "vite": "3.2.4",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
