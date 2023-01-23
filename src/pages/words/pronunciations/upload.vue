@@ -3,19 +3,11 @@
     <!--标题-->
     <cu-custom title="贡献语音" />
 
+    <uni-notice-bar
+      show-icon
+      text="管理员在审核时将继续确认拼音和 IPA 的准确性"
+    />
     <view style="height: 100%; position: absolute; width: 100%">
-      <block>
-        <input
-          class="extend"
-          disabled
-          value="提示"
-        >
-        <input
-          value="管理员在审核时将继续确认拼音和 IPA"
-          class="fileName text-gray"
-          disabled
-        >
-      </block>
       <form @submit="submitRecord">
         <!--表单列表-->
         <block>

@@ -8,12 +8,17 @@
       :style="`height: ${CustomBar}px;padding-top: ${StatusBar}px;` + (bgImage ? `background-image: url(${bgImage})` : '')"
     >
       <view
-        v-if="isBack"
         class="action"
       >
         <text
           class="cuIcon-back"
           @tap="BackPage"
+          v-if="isBack"
+        />
+        <text
+          v-if="backHome"
+          class="cuIcon-home"
+          @tap="toIndexPage(true)"
         />
         <slot name="backText" />
       </view>
@@ -55,6 +60,10 @@ export default {
       type: [Boolean, String],
       default: true,
     },
+    backHome: {
+      type: Boolean,
+      default: false,
+    },
     bgImage: {
       type: String,
       default: '',
@@ -82,6 +91,7 @@ export default {
    * 组件的方法列表
    */
   methods: {
+    toIndexPage,
     BackPage() {
       const pages = getCurrentPages();
       if (pages.length > 1) {

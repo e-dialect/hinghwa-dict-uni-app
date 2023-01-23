@@ -20,6 +20,10 @@
       "style": {}
     },
     {
+      "path": "pages/words/pronunciations",
+      "style": {}
+    },
+    {
       "path": "pages/words/characters/details",
       "style": {}
     },
@@ -133,7 +137,6 @@
       "path": "pages/users/settings/password",
       "style": {}
     },
-
     {
       "path": "pages/users/me/likedarticles",
       "style": {}
@@ -181,7 +184,9 @@
   "easycom": {
     "autoscan": true,
     "custom": {
-      "cu-custom": "@/colorui/components/cu-custom"
+      "cu-custom": "@/colorui/components/cu-custom",
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
     }
   },
   "globalStyle": {

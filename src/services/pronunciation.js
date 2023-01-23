@@ -22,6 +22,15 @@ export async function getPronunciations(filter) {
 }
 
 /**
+ * PN0201 获取所有的语音
+ * @param filter 过滤条件
+ * @returns {Promise<unknown>}
+ */
+export async function getPronunciationsWithTotal(filter) {
+  return request.get('/pronunciation', filter);
+}
+
+/**
  * PN0203 获取指定的语音发音
  * @param body {{pinyins?:string,ipas?:string,words?:string}}
  * @returns {Promise<unknown>}
