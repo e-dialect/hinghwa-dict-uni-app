@@ -49,7 +49,9 @@ export default {
       if (this.accept) this.playUrl();
       else {
         uni.showModal({
-          title: '暂无有效人声录音，是否尝试合成语音？',
+          title: '暂无有效人声录音',
+          content: '是否尝试播放合成语音？合成语音仅供参考，不保证其正确性！',
+          confirmText: '继续',
           success: async (res) => {
             if (res.confirm) {
               this.accept = true;
@@ -66,10 +68,6 @@ export default {
       if (!this.url && this.ipa) this.url = await combinePronunciationByIpa(this.ipa);
       if (!this.url && this.pinyin) this.url = await combinePronunciationByPinyin(this.pinyin);
       if (this.url) {
-        uni.showToast({
-          title: '语音合成结果仅供参考',
-          icon: 'error',
-        });
         playAudio(this.url);
       } else {
         uni.showToast({
