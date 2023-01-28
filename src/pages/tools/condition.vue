@@ -9,11 +9,11 @@
       <picker
         :value="shengmuIndex"
         :range="shengmu"
-        range-key="value"
+        range-key="text"
         @change="changeShengmu"
       >
         <view class="picker">
-          {{ shengmu[shengmuIndex].value }}
+          {{ shengmu[shengmuIndex].text }}
         </view>
       </picker>
     </view>
@@ -35,11 +35,11 @@
       <picker
         :value="shengdiaoIndex"
         :range="shengdiao"
-        range-key="value"
+        range-key="text"
         @change="changeShengdiao"
       >
         <view class="picker">
-          {{ shengdiao[shengdiaoIndex].value }}
+          {{ shengdiao[shengdiaoIndex].text }}
         </view>
       </picker>
     </view>
@@ -129,14 +129,14 @@ export default {
     for (const k in utils.shengmu) {
       if ({}.hasOwnProperty.call(utils.shengmu, k)) {
         shengmu.push({
-          key: k,
-          value: utils.shengmu[k],
+          value: k,
+          text: utils.shengmu[k],
         });
       }
     }
     this.shengmu = [...shengmu];
     for (let i = 0; i < this.shengmu.length; i += 1) {
-      if (this.shengmu[i].key === options.shengmu) {
+      if (this.shengmu[i].value === options.shengmu) {
         this.shengmuIndex = i;
         break;
       }
@@ -147,14 +147,14 @@ export default {
     for (const k in utils.shengdiao) {
       if ({}.hasOwnProperty.call(utils.shengdiao, k)) {
         shengdiao.push({
-          key: k,
-          value: utils.shengdiao[k],
+          value: k,
+          text: utils.shengdiao[k],
         });
       }
     }
     this.shengdiao = [...shengdiao];
     for (let i = 0; i < this.shengdiao.length; i += 1) {
-      if (this.shengdiao[i].key === options.shengdiao) {
+      if (this.shengdiao[i].value === options.shengdiao) {
         this.shengdiaoIndex = i;
         break;
       }
@@ -178,12 +178,6 @@ export default {
           }
         }
       }
-      if (this.yunmuValue === 'all') {
-        uni.showToast({
-          title: `${options.yunmu}不是有效韵母`,
-          icon: 'none',
-        });
-      }
     }
 
     if (this.shengmuValue !== 'all' || this.yunmuValue !== 'all' || this.shengdiaoValue !== 'all') {
@@ -202,10 +196,10 @@ export default {
   },
   computed: {
     shengmuValue() {
-      return this.shengmu[this.shengmuIndex].key;
+      return this.shengmu[this.shengmuIndex].value;
     },
     shengdiaoValue() {
-      return this.shengdiao[this.shengdiaoIndex].key;
+      return this.shengdiao[this.shengdiaoIndex].value;
     },
   },
   methods: {
