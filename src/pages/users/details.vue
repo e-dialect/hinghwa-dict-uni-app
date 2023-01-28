@@ -100,9 +100,9 @@
 <script>
 import { getUserInfo } from '@/services/user';
 import { getArticles } from '@/services/article';
-import ArticleList from '@/components/ArticleList';
 import { toPronunciationsPage, toUserWordsPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
+import ArticleList from '@/components/ArticleList.vue';
 
 const app = getApp();
 export default {

@@ -114,10 +114,10 @@
 import { searchCharacters } from '@/services/character';
 import { getWords, searchWords } from '@/services/word';
 import { searchArticles } from '@/services/article';
-import ArticleList from '@/components/ArticleList';
-import WordFullList from '@/components/WordFullList';
-import CharacterPinyinList from '@/components/CharacterPinyinList';
 import { defaultMessage } from '@/services/shareMessages';
+import ArticleList from '@/components/ArticleList.vue';
+import WordFullList from '@/components/WordFullList.vue';
+import CharacterPinyinList from '@/components/CharacterPinyinList.vue';
 
 export default {
   components: {

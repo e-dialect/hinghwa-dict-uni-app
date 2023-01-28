@@ -177,14 +177,14 @@
 </template>
 
 <script>
-import MarkdownViewer from '@/components/MarkdownViewer';
 import {
   createComment, deleteArticle, getArticle, getComments, likeArticle, unlikeArticle,
 } from '@/services/article';
-import ArticleComment from '@/components/ArticleComment';
 import { toArticleCommentPage, toArticleEditPage } from '@/routers/article';
 import { toUserPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
+import ArticleComment from '@/components/ArticleComment.vue';
+import MarkdownViewer from '@/components/MarkdownViewer.vue';
 
 export default {
   components: {

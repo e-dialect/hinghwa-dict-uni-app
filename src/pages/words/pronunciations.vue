@@ -103,13 +103,13 @@
 
 <script>
 import { getPronunciations, getPronunciationsWithTotal } from '@/services/pronunciation';
-import CuCustom from '@/colorui/components/cu-custom';
 import { getWordDetails } from '@/services/word';
-import WordPronunciationButton from '@/components/WordPronunciationButton';
 import { setClipboard } from '@/utils/clipboard';
 import { playAudio } from '@/utils/audio';
 import { toUserPage } from '@/routers/user';
 import { toUploadPronunciationPage } from '@/routers/word';
+import WordPronunciationButton from '@/components/WordPronunciationButton.vue';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
 export default {
   name: 'WordPronunciations',

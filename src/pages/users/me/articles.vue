@@ -8,7 +8,7 @@
 <script>
 import { getUserInfo } from '@/services/user';
 import { getArticles } from '@/services/article';
-import ArticleList from '@/components/ArticleList';
+import ArticleList from '@/components/ArticleList.vue';
 
 const app = getApp();
 export default {

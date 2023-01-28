@@ -51,8 +51,8 @@
 <script>
 import { getHotArticles } from '@/services/website';
 import { searchArticles } from '@/services/article';
-import ArticleList from '@/components/ArticleList';
 import { toArticleEditPage } from '@/routers/article';
+import ArticleList from '@/components/ArticleList.vue';
 
 const app = getApp();
 export default {
