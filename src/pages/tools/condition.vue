@@ -219,11 +219,11 @@ export default {
     search(shengmu, yunmu, shengdiao) {
       searchCharactersByFilters({ shengmu, yunmu, shengdiao }).then((res) => {
         this.result = res.result;
-        // TODO 直接显示结果而不是弹窗
         if (!this.result.length) {
-          uni.showToast({
+          uni.showModal({
             title: '检索结果为空',
-            icon: none,
+            content: '没有找到符合条件的字，请尝试更换条件',
+            showCancel: false,
           });
         }
       });
