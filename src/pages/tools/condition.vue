@@ -95,15 +95,6 @@
         </uni-col>
       </uni-row>
     </view>
-    <view v-if="!result.length">
-      <view class="cu-bar bg-white solid-bottom">
-        <view class="action">
-          <text class="text-grey">
-            没有搜到符合条件的字~
-          </text>
-        </view>
-      </view>
-    </view>
   </view>
 </template>
 
