@@ -201,9 +201,9 @@
 
 <script>
 import { getTestPaper } from '@/services/quiz';
-import CuCustom from '@/colorui/components/cu-custom';
 import { playAudio } from '@/utils/audio';
 import { toPosterPage } from '@/routers/quiz';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 

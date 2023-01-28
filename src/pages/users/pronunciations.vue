@@ -70,8 +70,8 @@
 <script>
 import { getPronunciations } from '@/services/pronunciation';
 import { playAudio } from '@/utils/audio';
-import CuCustom from '@/colorui/components/cu-custom';
 import { toVoiceRankListPage, toWordPage } from '@/routers/word';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 export default {

@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import CuCustom from '@/colorui/components/cu-custom';
 import { changeUserInfo } from '@/services/user';
 import { toLoginPage } from '@/routers/login';
+import CuCustom from '@/colorui/components/cu-custom';
 
 const app = getApp();
 export default {

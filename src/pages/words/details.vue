@@ -227,14 +227,14 @@
 import { getWordDetails } from '@/services/word';
 import { playAudio } from '@/utils/audio';
 import { getPronunciations } from '@/services/pronunciation';
-import WordPronunciationButton from '@/components/WordPronunciationButton';
 import { toUploadPronunciationPage, toWordPage, toWordPronunciations } from '@/routers/word';
 import { toUserPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
 import { toTuxiaochaoPage } from '@/routers';
-import MarkdownViewer from '@/components/MarkdownViewer';
 import { toArticlePage } from '@/routers/article';
 import { setClipboard } from '@/utils/clipboard';
+import MarkdownViewer from '@/components/MarkdownViewer';
+import WordPronunciationButton from '@/components/WordPronunciationButton';
 
 const app = getApp();
 export default {

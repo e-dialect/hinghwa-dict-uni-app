@@ -21,9 +21,9 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      webpack: {
-        config: 'node_modules/@vue/cli-service/webpack.config.js',
-      },
+      alias: [
+        ['@', './src'],
+      ],
     },
   },
 };

@@ -114,10 +114,10 @@
 import { searchCharacters } from '@/services/character';
 import { getWords, searchWords } from '@/services/word';
 import { searchArticles } from '@/services/article';
+import { defaultMessage } from '@/services/shareMessages';
 import ArticleList from '@/components/ArticleList';
 import WordFullList from '@/components/WordFullList';
 import CharacterPinyinList from '@/components/CharacterPinyinList';
-import { defaultMessage } from '@/services/shareMessages';
 
 export default {
   components: {

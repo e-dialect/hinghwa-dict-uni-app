@@ -223,8 +223,8 @@
 
 <script>
 import utils from '@/const/pinyin';
-import MarkdownViewer from '@/components/MarkdownViewer';
 import { defaultMessage } from '@/services/shareMessages';
+import MarkdownViewer from '@/components/MarkdownViewer';
 
 const app = getApp();
 export default {
