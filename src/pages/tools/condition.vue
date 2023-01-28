@@ -122,7 +122,7 @@ export default {
       shengmu: [],
       yunmu: utils.yunmu,
       yunmuValue: 'all',
-      shengdiaoIndex: 0,
+      shengdiaoIndex: 7,
       shengdiao: [],
       result: [],
       space: ' ',
