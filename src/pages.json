@@ -179,7 +179,6 @@
   "style": "v2",
   "requiredBackgroundModes": [
     "audio",
-    "location"
   ],
   "easycom": {
     "autoscan": true,
