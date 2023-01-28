@@ -186,7 +186,7 @@ export default {
   onShareAppMessage() {
     return {
       title: '条件查字',
-      path: `/pages/tools/condition?shengmu=${this.getShengmu()}&yunmu=${this.getYunmu()}&shengdiao=${this.getShengdiao()}`,
+      path: `/pages/tools/condition?shengmu=${this.shengmuValue}&yunmu=${this.yunmuValue}&shengdiao=${this.shengdiaoValue}`,
       ...defaultMessage(),
     };
   },
