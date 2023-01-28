@@ -61,8 +61,11 @@
       class="padding bg-white solid-bottom"
     >
       <!-- 拼音 -->
-      <view class="text-bold text-xxl text-black">
-        {{ item.pinyin }}
+      <view class="flex align-center">
+        <text class="text-bold text-xxl text-black">
+          {{ item.pinyin }}
+        </text>
+        <WordPronunciationButton :pinyin="item.pinyin" />
       </view>
 
       <!-- 内容 -->
@@ -109,8 +112,10 @@ import { searchCharactersByFilters } from '@/services/character';
 import { defaultMessage } from '@/services/shareMessages';
 import { toWordPage } from '@/routers/word';
 import utils from '@/const/sheng-yun-diao';
+import WordPronunciationButton from '@/components/WordPronunciationButton.vue';
 
 export default {
+  components: { WordPronunciationButton },
   data() {
     return {
       shengmuIndex: 0,
