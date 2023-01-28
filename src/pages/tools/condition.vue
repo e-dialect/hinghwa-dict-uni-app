@@ -55,49 +55,58 @@
     </view>
 
     <!--搜索结果-->
-    <view
-      v-for="(item, resultIndex) in result"
-      :key="resultIndex"
-      class="padding bg-white solid-bottom"
-    >
-      <!-- 拼音 -->
-      <view class="flex align-center">
-        <text class="text-bold text-xxl text-black">
-          {{ item.pinyin }}
-        </text>
-        <WordPronunciationButton
-          :pinyin="item.pinyin"
-          :source="item.source"
-        />
-      </view>
-
-      <!-- 内容 -->
-      <uni-row>
-        <uni-col
-          v-for="(char, charIndex) in item.characters"
-          :key="charIndex"
-          :span="char.character.length>2?12:6"
-          @tap="toWord(char.word)"
-        >
-          <view>
-            <text
-              :class="'text-xxl ' + (char.word ? 'text-blue' : 'text-black')"
-              space="emsp"
-            >
-              {{ char.character }}
+    <uni-list>
+      <uni-list-item
+        v-for="(item, resultIndex) in result"
+        :key="resultIndex"
+        class="padding bg-white solid-bottom"
+        direction="column"
+      >
+        <!-- 拼音 -->
+        <template #header>
+          <view
+            class="flex align-center"
+          >
+            <text class="text-bold text-xxl text-black">
+              {{ item.pinyin }}
             </text>
-
-            <text
-              v-if="char.traditional !== char.character"
-              class="text-xl"
-              space="emsp"
-            >
-              {{ char.traditional }}
-            </text>
+            <WordPronunciationButton
+              :pinyin="item.pinyin"
+              :source="item.source"
+            />
           </view>
-        </uni-col>
-      </uni-row>
-    </view>
+        </template>
+
+        <!-- 内容 -->
+        <template #body>
+          <uni-row>
+            <uni-col
+              v-for="(char, charIndex) in item.characters"
+              :key="charIndex"
+              :span="char.character.length>2?12:6"
+              @tap="toWord(char.word)"
+            >
+              <view>
+                <text
+                  :class="'text-xxl ' + (char.word ? 'text-blue' : 'text-black')"
+                  space="emsp"
+                >
+                  {{ char.character }}
+                </text>
+
+                <text
+                  v-if="char.traditional !== char.character"
+                  class="text-xl"
+                  space="emsp"
+                >
+                  {{ char.traditional }}
+                </text>
+              </view>
+            </uni-col>
+          </uni-row>
+        </template>
+      </uni-list-item>
+    </uni-list>
   </view>
 </template>
 
