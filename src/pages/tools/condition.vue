@@ -125,7 +125,7 @@ export default {
       shengmu: [],
       yunmu: utils.yunmu,
       yunmuValue: 'all',
-      shengdiaoIndex: 7,
+      shengdiaoIndex: 0,
       shengdiao: [],
       result: [],
       space: ' ',
@@ -160,6 +160,7 @@ export default {
         });
       }
     }
+    shengdiao.unshift(shengdiao.pop()); // make 'all' at the first
     this.shengdiao = [...shengdiao];
     for (let i = 0; i < this.shengdiao.length; i += 1) {
       if (this.shengdiao[i].value === options.shengdiao) {
