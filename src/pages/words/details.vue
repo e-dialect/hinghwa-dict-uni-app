@@ -286,6 +286,10 @@ export default {
    * @param options
    */
   async onLoad(options) {
+    uni.pageScrollTo({
+      scrollTop: 0,
+      duration: 0,
+    });
     this.id = options.id;
     this.word = await getWordDetails(options.id);
     this.pronunciation = await getPronunciations({ word: options.id });
