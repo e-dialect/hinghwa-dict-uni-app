@@ -16,7 +16,6 @@ module.exports = {
     // ignore for vue-cli-service
     'import/extensions': ['error', 'always', {
       js: 'never',
-      vue: 'never',
     }],
   },
   settings: {
@@ -25,5 +24,8 @@ module.exports = {
         ['@', './src'],
       ],
     },
+  },
+  parserOptions: {
+    ecmaVersion: 'latest',
   },
 };
