@@ -29,12 +29,6 @@ const yunmu = [
   {
     value: 'all',
     label: 'all：全部韵母',
-    children: [
-      {
-        value: 'all',
-        label: 'all：全部韵母',
-      },
-    ],
   },
   {
     value: 'kaiwei',
