@@ -71,7 +71,7 @@
 <script>
 import { createComment, getComments } from '@/services/article';
 import { toUserPage } from '@/routers/user';
-import ArticleComment from '@/components/ArticleComment';
+import ArticleComment from '@/components/ArticleComment.vue';
 
 const app = getApp();
 export default {

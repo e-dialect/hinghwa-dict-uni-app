@@ -76,7 +76,7 @@
 import { COS_URL } from '@/const/urls';
 import { mpLogin, normalLogin } from '@/services/login';
 import { toForgetPage, toRegisterPage, toWechatRegisterPage } from '@/routers/login';
-import CuCustom from '@/colorui/components/cu-custom';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
 const app = getApp();
 export default {

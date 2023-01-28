@@ -8,8 +8,8 @@
 
 <script>
 import { filterUserWords } from '@/services/word';
-import CuCustom from '@/colorui/components/cu-custom';
-import WordListShowing from '@/components/WordListShowing';
+import CuCustom from '@/colorui/components/cu-custom.vue';
+import WordListShowing from '@/components/WordListShowing.vue';
 
 export default {
   name: 'UserWords',

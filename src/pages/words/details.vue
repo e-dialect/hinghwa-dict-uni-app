@@ -233,8 +233,8 @@ import { defaultMessage } from '@/services/shareMessages';
 import { toTuxiaochaoPage } from '@/routers';
 import { toArticlePage } from '@/routers/article';
 import { setClipboard } from '@/utils/clipboard';
-import MarkdownViewer from '@/components/MarkdownViewer';
-import WordPronunciationButton from '@/components/WordPronunciationButton';
+import MarkdownViewer from '@/components/MarkdownViewer.vue';
+import WordPronunciationButton from '@/components/WordPronunciationButton.vue';
 
 const app = getApp();
 export default {

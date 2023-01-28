@@ -30,7 +30,7 @@
 <script>
 import { changeUserInfo } from '@/services/user';
 import { toLoginPage } from '@/routers/login';
-import CuCustom from '@/colorui/components/cu-custom';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
 const app = getApp();
 export default {

@@ -30,10 +30,10 @@
 import { defaultMessage } from '@/services/shareMessages';
 import { toLoginPage } from '@/routers/login';
 import { COS_URL } from '../const/urls';
-import basics from './home';
-import tools from './tools/index';
-import InteractionPage from './articles/index';
-import me from './users/me';
+import basics from './home.vue';
+import tools from './tools/index.vue';
+import InteractionPage from './articles/index.vue';
+import me from './users/me.vue';
 
 const app = getApp();
 export default {

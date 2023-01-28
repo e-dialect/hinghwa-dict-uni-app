@@ -151,8 +151,8 @@
 import { createArticle, getArticle, updateArticle } from '@/services/article';
 import { chooseAndUploadAnImage } from '@/services/file';
 import { DefaultArticleCover } from '@/const/urls';
-import CuCustom from '@/colorui/components/cu-custom';
-import MarkdownViewer from '@/components/MarkdownViewer';
+import CuCustom from '@/colorui/components/cu-custom.vue';
+import MarkdownViewer from '@/components/MarkdownViewer.vue';
 
 export default {
   components: { MarkdownViewer, CuCustom },

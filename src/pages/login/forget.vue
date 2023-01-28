@@ -92,7 +92,7 @@
 <script>
 import { sendEmailCode } from '@/services/website';
 import { getEmailByUsername, resetPassword } from '@/services/user';
-import CuCustom from '@/colorui/components/cu-custom';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
 const app = getApp();
 export default {

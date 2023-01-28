@@ -203,7 +203,7 @@
 import { getTestPaper } from '@/services/quiz';
 import { playAudio } from '@/utils/audio';
 import { toPosterPage } from '@/routers/quiz';
-import CuCustom from '@/colorui/components/cu-custom';
+import CuCustom from '@/colorui/components/cu-custom.vue';
 
 const app = getApp();
 

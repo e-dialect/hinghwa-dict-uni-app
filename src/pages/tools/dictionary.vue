@@ -110,7 +110,7 @@
 <script>
 import { getPhoneticOrder, searchDictionary } from '@/services/word';
 import { defaultMessage } from '@/services/shareMessages';
-import WordListShowing from '@/components/WordListShowing';
+import WordListShowing from '@/components/WordListShowing.vue';
 
 export default {
   components: {
