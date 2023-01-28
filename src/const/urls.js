@@ -1,6 +1,6 @@
 export const COS_URL = 'https://cos.edialect.top/miniprogram';
 
-export const BASE_URL = import.meta.env.PROD
+export const BASE_URL = import.meta.env.MODE === 'production'
   ? 'https://api.pxm.edialect.top'
   : 'https://api.pxm.test.edialect.top';
 
