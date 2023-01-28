@@ -65,7 +65,10 @@
         <text class="text-bold text-xxl text-black">
           {{ item.pinyin }}
         </text>
-        <WordPronunciationButton :pinyin="item.pinyin" />
+        <WordPronunciationButton
+          :pinyin="item.pinyin"
+          :source="item.source"
+        />
       </view>
 
       <!-- 内容 -->
