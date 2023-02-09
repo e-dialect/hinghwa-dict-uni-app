@@ -95,7 +95,7 @@
           v-for="(item, index) in word.definitions"
           :key="index"
           class="margin-top-sm margin-left-sm"
-          style="width: 92vw"
+          style="width: 90vw"
         >
           <text
             class="text-xl"
@@ -134,7 +134,7 @@
           <view class="text-bold text-xl">
             相关词汇
           </view>
-          <view class="margin-top-sm margin-left-sm ">
+          <view class="margin-top-sm margin-lr-sm">
             <text
               v-for="(item, index) in word.related_words"
               :key="index"
@@ -173,7 +173,7 @@
         <view class="text-bold text-xl">
           附注
         </view>
-        <view class="margin-top-sm margin-left-sm">
+        <view class="margin-top-sm margin-lr-sm">
           <MarkdownViewer
             style="max-width: 90%"
             :markdown="word.annotation"
@@ -292,6 +292,7 @@ export default {
     });
     this.id = options.id;
     this.word = await getWordDetails(options.id);
+    this.word = { ...this.word };
     this.pronunciation = await getPronunciations({ word: options.id });
   },
   methods: {
