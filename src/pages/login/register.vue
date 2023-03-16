@@ -61,9 +61,10 @@
         <button
           class="cu-btn bg-gradual-blue shadow"
           style="width: 32vw; border-radius: 5000rpx"
+          :disabled="isSending"
           @tap="getCode"
         >
-          获取验证码
+          {{ !isSending?'获取验证码':`重新获取(${count})` }}
         </button>
       </view>
       <button
@@ -81,15 +82,16 @@
 import { sendEmailCode } from '@/services/website';
 import { registerUser } from '@/services/user';
 import CuCustom from '@/colorui/components/cu-custom.vue';
+import getCodeMixin from './mixin/getCodeMixin';
 
 const app = getApp();
 export default {
   components: { CuCustom },
+  mixins: [getCodeMixin],
   data() {
     return {
       is_pwd1: true,
       is_pwd2: true,
-      email: '',
     };
   },
   methods: {
@@ -112,6 +114,7 @@ export default {
           uni.showToast({
             title: '发送成功',
           });
+          this.changeSendCodeStatus();
         }, 100);
       });
     },
