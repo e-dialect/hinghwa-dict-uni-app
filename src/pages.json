@@ -178,7 +178,7 @@
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "requiredBackgroundModes": [
-    "audio",
+    "audio"
   ],
   "easycom": {
     "autoscan": true,
