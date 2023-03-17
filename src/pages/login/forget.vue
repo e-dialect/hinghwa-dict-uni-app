@@ -93,10 +93,12 @@
 import { sendEmailCode } from '@/services/website';
 import { getEmailByUsername, resetPassword } from '@/services/user';
 import CuCustom from '@/colorui/components/cu-custom.vue';
+import getCodeMixin from './mixin/getCodeMixin';
 
 const app = getApp();
 export default {
   components: { CuCustom },
+  mixins: [getCodeMixin],
   data() {
     return {
       username: '',
@@ -121,6 +123,7 @@ export default {
     // 获取验证码
     getCode() {
       sendEmailCode(this.email);
+      this.changeSendCodeStatus();
     },
 
     reset(e) {

@@ -61,9 +61,10 @@
         <button
           class="cu-btn bg-gradual-blue shadow"
           style="width: 32vw; border-radius: 5000rpx"
+          :disabled="isSending"
           @tap="getCode"
         >
-          获取验证码
+          {{ !isSending?'获取验证码':`重新获取(${count})` }}
         </button>
       </view>
       <button
@@ -81,15 +82,16 @@
 import { sendEmailCode } from '@/services/website';
 import { registerUser } from '@/services/user';
 import CuCustom from '@/colorui/components/cu-custom.vue';
+import getCodeMixin from './mixin/getCodeMixin';
 
 const app = getApp();
 export default {
   components: { CuCustom },
+  mixins: [getCodeMixin],
   data() {
     return {
       is_pwd1: true,
       is_pwd2: true,
-      email: '',
     };
   },
   methods: {
@@ -107,13 +109,22 @@ export default {
 
     // 获取验证码
     getCode() {
-      sendEmailCode(this.email).then(async () => {
-        setTimeout(() => {
-          uni.showToast({
-            title: '发送成功',
-          });
-        }, 100);
-      });
+      const pattern = /^([0-9a-zA-Z_\.\-\u4e00-\u9fa5])+\@([0-9a-zA-Z_\.\-\])+\.([a-zA-Z]{2,8})$/;
+      if (pattern.test(this.email)) {
+        sendEmailCode(this.email).then(async () => {
+          setTimeout(() => {
+            uni.showToast({
+              title: '发送成功',
+            });
+            this.changeSendCodeStatus();
+          }, 100);
+        });
+      } else {
+        uni.showToast({
+          title: '请填写正确的邮箱！',
+          icon: 'error',
+        });
+      }
     },
 
     register(e) {
