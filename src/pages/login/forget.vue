@@ -76,7 +76,7 @@
           :disabled="isSending"
           @tap="getCode"
         >
-          {{ !isSending?'获取验证码':`重新获取(${count})` }}
+          {{ message }}
         </button>
       </view>
       <button
@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import { sendEmailCode } from '@/services/website';
 import { getEmailByUsername, resetPassword } from '@/services/user';
 import CuCustom from '@/colorui/components/cu-custom.vue';
 import getCodeMixin from './mixin/getCodeMixin';
@@ -103,6 +102,7 @@ export default {
   data() {
     return {
       username: '',
+      email: '',
       steps: 0,
       hidePassword: true,
       hideRepeatedPassword: true,
@@ -122,8 +122,7 @@ export default {
 
     // 获取验证码
     getCode() {
-      sendEmailCode(this.email);
-      this.changeSendCodeStatus();
+      this.sendEmCode(this.email);
     },
 
     reset(e) {
