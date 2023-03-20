@@ -64,7 +64,7 @@
           :disabled="isSending"
           @tap="getCode"
         >
-          {{ !isSending?'获取验证码':`重新获取(${count})` }}
+          {{ message }}
         </button>
       </view>
       <button
@@ -109,14 +109,13 @@ export default {
 
     // 获取验证码
     getCode() {
-      const pattern = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
-      if (pattern.test(this.email)) {
+      if (this.pattern.test(this.email)) {
         sendEmailCode(this.email).then(async () => {
           setTimeout(() => {
             uni.showToast({
               title: '发送成功',
             });
-            this.changeSendCodeStatus();
+            this.isSending = true;
           }, 100);
         });
       } else {

@@ -73,9 +73,10 @@
         <button
           class="cu-btn bg-gradual-blue shadow"
           style="width: 32vw; border-radius: 5000rpx"
+          :disabled="isSending"
           @tap="getCode"
         >
-          获取验证码
+          {{ message }}
         </button>
       </view>
       <button
@@ -122,8 +123,13 @@ export default {
 
     // 获取验证码
     getCode() {
-      sendEmailCode(this.email);
-      this.changeSendCodeStatus();
+      sendEmailCode(this.email).then(() => {
+        // 防止还在发送但未完成状态就已经开始计时
+        uni.showToast({
+          title: '验证码已发送',
+        });
+        this.isSending = true;
+      });
     },
 
     reset(e) {
