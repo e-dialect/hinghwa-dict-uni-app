@@ -11,13 +11,13 @@
         class="user text-bold"
       >
         <img
-          class="avatar"
           :src="userInfo.avatar"
           alt=""
+          class="avatar"
         >
         <view
-          class="nickname"
           :style="fontStyle"
+          class="nickname"
         >
           {{ userInfo.nickname }}
         </view>
@@ -33,8 +33,8 @@
         保存海报
       </button>
       <button
-        open-type="share"
         class="cu-btn bg-white shadow solid text-xxl"
+        open-type="share"
         style="width: 30%; height: 100upx"
       >
         分享海报
@@ -136,26 +136,29 @@ export default {
 
 <style lang="scss" scoped>
 
-.score-container{
-image{
-width: 100%;
-}
-.user{
-position: absolute;
-top: 116upx;
-left: 580upx;
-width: 180upx;
-text-align: center;
-font-size: 36upx;
-.avatar{
-width: 80%;
-border-radius: 50%;
-}
-.nickname{
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-}
+.score-container {
+  image {
+    width: 100%;
+  }
+
+  .user {
+    position: absolute;
+    top: 116upx;
+    left: 580upx;
+    width: 180upx;
+    text-align: center;
+    font-size: 36upx;
+
+    .avatar {
+      width: 80%;
+      border-radius: 50%;
+    }
+
+    .nickname {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 </style>

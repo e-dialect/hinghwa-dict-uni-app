@@ -6,15 +6,15 @@
       class="cu-bar bg-white solid-bottom card shadow -gray margin-top margin-xs"
     >
       <progress
-        class="margin-left"
-        style="width: 50%"
-        font-size="24rpx"
         :percent="percent"
-        show-info
         active
-        activeColor="#ace0f9"
         active-mode="forwards"
+        activeColor="#ace0f9"
         border-radius="25rpx"
+        class="margin-left"
+        font-size="24rpx"
+        show-info
+        style="width: 50%"
       />
       <view class="action margin-left">
         <button
@@ -37,8 +37,8 @@
     </view>
     <!--答题卡-->
     <view
-      class="cu-modal"
       :class="showModalCard?'show':''"
+      class="cu-modal"
       @tap="hideCardModal"
     >
       <view
@@ -60,8 +60,8 @@
             class="margin-tb-sm text-center"
           >
             <button
-              class="cu-btn round"
               :class="current[index]===99?'line-grey':'bg-blue'"
+              class="cu-btn round"
               @click="appointedSubject(index)"
             >
               {{ index + 1 }}
@@ -109,8 +109,8 @@
                   class="cu-form-group"
                 >
                   <radio
-                    :value="index2.toString()"
                     :checked="index2 === current[index1]"
+                    :value="index2.toString()"
                   />
                   <view class="title text-black">
                     {{ String.fromCharCode(index2 + 65) }}.{{ option }}
@@ -304,8 +304,8 @@ export default {
       this.subjectIndex = 0;
     },
     /**
-* 显示登录弹窗
-*/
+     * 显示登录弹窗
+     */
     showModal() {
       uni.showModal({
         title: '提示',
