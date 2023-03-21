@@ -17,11 +17,12 @@ export default {
   watch: {
     isSending(value) {
       if (value) {
-        setInterval(() => {
+        const timer = setInterval(() => {
           this.count -= 1;
           if (this.count === 0) {
             this.isSending = false;
             this.count = 30;
+            clearInterval(timer);
           }
         }, 1000);
       }
