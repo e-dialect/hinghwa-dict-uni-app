@@ -64,7 +64,7 @@
           :disabled="isSending"
           @tap="getCode"
         >
-          {{ message }}
+          {{ sendCodeMsg }}
         </button>
       </view>
       <button
@@ -108,7 +108,7 @@ export default {
 
     // 获取验证码
     getCode() {
-      if (this.pattern.test(this.email)) {
+      if (this.emailPattern.test(this.email)) {
         this.sendEmCode(this.email);
       } else {
         uni.showToast({

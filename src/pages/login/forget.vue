@@ -76,7 +76,7 @@
           :disabled="isSending"
           @tap="getCode"
         >
-          {{ message }}
+          {{ sendCodeMsg }}
         </button>
       </view>
       <button

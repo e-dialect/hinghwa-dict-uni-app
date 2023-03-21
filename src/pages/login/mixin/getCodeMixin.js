@@ -6,11 +6,11 @@ export default {
       email: '',
       isSending: false,
       count: 30,
-      pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
+      emailPattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
     };
   },
   computed: {
-    message() {
+    sendCodeMsg() {
       return !this.isSending ? '获取验证码' : `重新获取(${this.count})`;
     },
   },
