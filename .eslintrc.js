@@ -12,7 +12,8 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-continue': 'off',
     'no-restricted-syntax': 'off',
-
+	// 禁止不必要的转义字符
+	'no-useless-escape': 0,
     // ignore for vue-cli-service
     'import/extensions': ['error', 'always', {
       js: 'never',
