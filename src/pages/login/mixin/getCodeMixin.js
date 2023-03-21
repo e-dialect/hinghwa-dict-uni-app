@@ -1,4 +1,5 @@
 import { sendEmailCode } from '@/services/website';
+
 export default {
   data() {
     return {
@@ -26,15 +27,15 @@ export default {
       }
     },
   },
-  methods:{
-	  sendEmCode(email){
-		  sendEmailCode(email).then(() => {
-		    // 防止还在发送但未完成状态就已经开始计时
-		    uni.showToast({
-		      title: '验证码已发送',
-		    });
-		    this.isSending = true;
-		  });
-	  }
-  }
+  methods: {
+    sendEmCode(email) {
+      sendEmailCode(email).then(() => {
+        // 防止还在发送但未完成状态就已经开始计时
+        uni.showToast({
+          title: '验证码已发送',
+        });
+        this.isSending = true;
+      });
+    },
+  },
 };
