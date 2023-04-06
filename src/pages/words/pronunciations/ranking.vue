@@ -34,6 +34,26 @@
             </view>
           </view>
           <view style="height: 100%;margin-bottom: 30upx">
+            <view class="padding-xs flex text-center text-lg text-bold shadow-warp margin-bottom">
+              <view class="flex flex-sub flex-direction solid-right">
+                <view class="margin-sm text-black">
+                  <text class="cuIcon-rankfill" />
+                  我的排名：
+                </view>
+                <view class="text-xlp text-cyan margin-bottom-xs">
+                  {{ me.rank }}
+                </view>
+              </view>
+              <view class="flex flex-sub flex-direction">
+                <view class="margin-sm text-black">
+                  <text class="cuIcon-voicefill" />
+                  我的语音量
+                </view>
+                <view class="text-xlp text-cyan margin-bottom-xs">
+                  {{ me.amount }}
+                </view>
+              </view>
+            </view>
             <view
               class="bg-cyan solid card -gray margin-xs"
               style="border-radius: 35upx"
@@ -121,6 +141,7 @@ export default {
       toUserPage,
       menu: ['排名', '用户', '语音数'],
       rankList: [],
+      me: [],
       rankingStatus: 0, // 标记榜单选中
       rankingCurrent: 0, // 标记榜单切换
     };
@@ -132,6 +153,7 @@ export default {
     changeRank(day) {
       getPronunciationRanking(day).then(async (res) => {
         this.rankList = res.ranking;
+        this.me = res.me;
       });
     },
 
