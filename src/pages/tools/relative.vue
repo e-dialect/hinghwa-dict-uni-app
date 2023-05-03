@@ -119,6 +119,7 @@ export default {
     },
   },
   watch: {
+    /* eslint-disable no-await-in-loop */
     async top(value) {
       const ans = [];
       for (const item of value.words) {
@@ -157,13 +158,14 @@ export default {
       const ans = [];
       if (typeof this.top.relations[field] !== 'string') {
         for (const i in this.top.relations[field]) {
-          ans.push(find(this.top.relations[field][i]));
+          if (this.top.relations[field]) { ans.push(find(this.top.relations[field][i])); }
         }
       } else {
         ans.push(find(this.top.relations[field]));
       }
       this.select.push(fieldName[field]);
       this.stack.push(ans);
+      return true;
     },
 
     choose(name) {
