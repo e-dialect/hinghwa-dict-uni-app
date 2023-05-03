@@ -58,6 +58,10 @@ export default {
           img: 'https://cos.edialect.top/website/排行榜单.png',
           url: '/words/pronunciations/ranking',
         },
+        {
+          img: 'https://cos.edialect.top/website/亲戚计算.png',
+          url: '/tools/relative',
+        },
       ],
     };
   },

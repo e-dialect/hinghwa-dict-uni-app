@@ -9,9 +9,7 @@
         class="flex align-center "
         style="width: 100%;"
       >
-        <view
-          style="width: 75%;"
-        >
+        <view style="width: 75%;">
           <view class="text-xl text-bold">
             {{ item.word }}
           </view>
@@ -26,15 +24,30 @@
           <view class="definition">
             {{ item.definition }}
           </view>
+          <view
+            v-if="item.id === null"
+            class="text-lg text-bold text-gray"
+          >
+            暂无词条，期待补充~
+          </view>
         </view>
+
         <view class="margin-right margin-bottom">
           <button
             type="link"
             class="cu-btn bg-blue shadow"
           >
-            <view @tap="toWordPage(item.id)">
+            <view
+              v-if="item.id !== null"
+              @tap="toWordPage(item.id)"
+            >
               更多
-              <view type="double-right" />
+            </view>
+            <view
+              v-else
+              @tap="toTuxiaochaoPage()"
+            >
+              反馈
             </view>
           </button>
         </view>
@@ -53,6 +66,7 @@
 
 <script>
 import { toWordPage } from '@/routers/word';
+import { toTuxiaochaoPage } from '@/routers';
 
 export default {
   name: 'WordListShowing',
@@ -65,6 +79,7 @@ export default {
   data() {
     return {
       toWordPage,
+      toTuxiaochaoPage,
     };
   },
 };
