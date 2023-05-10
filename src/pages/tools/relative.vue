@@ -40,7 +40,7 @@
           <view
             :disabled="stack.length === 1"
             class="fl"
-            @click="pop()"
+            @click="popRelative()"
           >
             <text class="cu-btn bg-gray round margin-sm cuIcon-back_android" />
           </view>
@@ -84,6 +84,7 @@ import {
   buttons, fieldName, find, relative,
 } from '@/services/relative';
 import WordListShowing from '@/components/WordListShowing.vue';
+import { defaultMessage } from '@/services/shareMessages';
 import { getWordDetails } from '../../services/word';
 
 export default {
@@ -95,6 +96,13 @@ export default {
       stack: [[relative[0]]],
       select: [],
       words: [],
+    };
+  },
+  onShareAppMessage() {
+    return {
+      title: '语记·亲戚计算',
+      path: '/pages/tools/relative',
+      ...defaultMessage(),
     };
   },
   computed: {
@@ -141,9 +149,10 @@ export default {
       this.words = ans;
     },
   },
-  created() {
-    this.push('fa');
-    this.pop();
+  async onLoad() {
+    await getWordDetails(1966).then((res) => {
+      this.words[0] = res;
+    });
   },
   methods: {
     pushRelative(field) {
@@ -173,7 +182,7 @@ export default {
       this.select.push(null);
     },
 
-    pop() {
+    popRelative() {
       this.select.pop();
       this.stack.pop();
     },

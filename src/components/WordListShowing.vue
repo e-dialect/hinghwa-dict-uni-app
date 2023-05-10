@@ -6,7 +6,7 @@
       class="padding cu-item"
     >
       <view
-        class="flex align-center "
+        class="flex align-center"
         style="width: 100%;"
       >
         <view style="width: 75%;">
@@ -24,33 +24,43 @@
           <view class="definition">
             {{ item.definition }}
           </view>
-          <view
-            v-if="item.id === null"
-            class="text-lg text-bold text-gray"
-          >
-            暂无词条，期待补充~
-          </view>
         </view>
 
-        <view class="margin-right margin-bottom">
+        <view
+          v-if="item.id !== null"
+          class="margin-right"
+        >
           <button
             type="link"
             class="cu-btn bg-blue shadow"
           >
             <view
-              v-if="item.id !== null"
               @tap="toWordPage(item.id)"
             >
               更多
             </view>
-            <view
-              v-else
-              @tap="toTuxiaochaoPage()"
-            >
-              反馈
-            </view>
           </button>
         </view>
+      </view>
+      <view
+        v-if="item.id === null"
+        class="text-gray text-sm margin-top-sm"
+      >
+        <text>词条欠缺，请</text>
+        <text
+          class="text-blue cuIcon-link"
+          @tap="toTuxiaochaoPage()"
+        >
+          反馈
+        </text>
+        <text>给管理员或在</text>
+        <text
+          class="text-blue cuIcon-link"
+          @tap="toWebPage()"
+        >
+          网页端
+        </text>
+        <text>补充词条~</text>
       </view>
     </view>
     <view
@@ -81,6 +91,17 @@ export default {
       toWordPage,
       toTuxiaochaoPage,
     };
+  },
+  methods: {
+    toWebPage() {
+      switch (uni.getSystemInfoSync().uniPlatform) {
+        case 'web':
+          window.location.href = 'https://hinghwa.cn/words/Create';
+          break;
+        default:
+          setClipboard('https://hinghwa.cn/words/Create');
+      }
+    },
   },
 };
 </script>
