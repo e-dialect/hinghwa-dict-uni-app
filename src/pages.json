@@ -55,6 +55,10 @@
       "style": {}
     },
     {
+      "path": "pages/tools/relative",
+      "style": {}
+    },
+    {
       "path": "pages/tools/daily-expression/index",
       "style": {}
     },
