@@ -1,12 +1,29 @@
 <template>
   <view>
     <cu-custom title="语记·分数海报" />
-    <view>
+    <view class="score-container">
       <image
         :src="imagesUrl"
         mode="widthFix"
       />
+      <view
+        v-if="userInfo.nickname"
+        class="user text-bold"
+      >
+        <img
+          :src="userInfo.avatar"
+          alt=""
+          class="avatar"
+        >
+        <view
+          :style="fontStyle"
+          class="nickname"
+        >
+          {{ userInfo.nickname }}
+        </view>
+      </view>
     </view>
+    <!-- #ifdef MP-WEIXIN -->
     <view class="cu-bar btn-group margin-top padding-bottom">
       <button
         class="cu-btn bg-white shadow solid text-xxl"
@@ -16,27 +33,42 @@
         保存海报
       </button>
       <button
-        open-type="share"
         class="cu-btn bg-white shadow solid text-xxl"
+        open-type="share"
         style="width: 30%; height: 100upx"
       >
         分享海报
       </button>
     </view>
+    <!-- #endif -->
   </view>
 </template>
 
 <script>
 import { defaultMessage } from '@/services/shareMessages';
+import { toTestPage } from '@/routers/quiz';
 
 export default {
   data() {
     return {
       totalScore: 0,
       imagesUrl: '',
+      userInfo: {
+        nickname: '',
+        avatar: '',
+      },
+      fontStyle: {
+        fontSize: '30upx',
+      },
     };
   },
   onLoad(options) {
+    const pages = getCurrentPages();
+    const beforePage = pages[pages.length - 2];
+    if (!beforePage || beforePage.route !== 'pages/quizzes/tests/answer') {
+      toTestPage();
+      return;
+    }
     this.totalScore = options.totalScore;
     if (this.totalScore >= 60 && this.totalScore < 75) {
       this.imagesUrl = 'https://cos.edialect.top/website/quiz/pass.png';
@@ -46,6 +78,12 @@ export default {
       this.imagesUrl = 'https://cos.edialect.top/website/quiz/excellent.png';
     } else {
       this.imagesUrl = 'https://cos.edialect.top/website/quiz/fail.png';
+    }
+    const app = getApp();
+    if (app.globalData.userInfo) {
+      this.userInfo.avatar = app.globalData.userInfo.avatar;
+      this.userInfo.nickname = app.globalData.userInfo.nickname;
+      // this.fontStyle.fontSize = `${Math.ceil((36 - this.userInfo.nickname.length) * 1.4)}upx`;
     }
   },
   /**
@@ -96,6 +134,31 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
+.score-container {
+  image {
+    width: 100%;
+  }
+
+  .user {
+    position: absolute;
+    top: 116upx;
+    left: 580upx;
+    width: 180upx;
+    text-align: center;
+    font-size: 36upx;
+
+    .avatar {
+      width: 80%;
+      border-radius: 50%;
+    }
+
+    .nickname {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
 </style>

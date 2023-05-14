@@ -6,15 +6,15 @@
       class="cu-bar bg-white solid-bottom card shadow -gray margin-top margin-xs"
     >
       <progress
-        class="margin-left"
-        style="width: 50%"
-        font-size="24rpx"
         :percent="percent"
-        show-info
         active
-        activeColor="#ace0f9"
         active-mode="forwards"
+        activeColor="#ace0f9"
         border-radius="25rpx"
+        class="margin-left"
+        font-size="24rpx"
+        show-info
+        style="width: 50%"
       />
       <view class="action margin-left">
         <button
@@ -37,8 +37,8 @@
     </view>
     <!--答题卡-->
     <view
-      class="cu-modal"
       :class="showModalCard?'show':''"
+      class="cu-modal"
       @tap="hideCardModal"
     >
       <view
@@ -60,8 +60,8 @@
             class="margin-tb-sm text-center"
           >
             <button
-              class="cu-btn round"
               :class="current[index]===99?'line-grey':'bg-blue'"
+              class="cu-btn round"
               @click="appointedSubject(index)"
             >
               {{ index + 1 }}
@@ -109,8 +109,8 @@
                   class="cu-form-group"
                 >
                   <radio
-                    :value="index2.toString()"
                     :checked="index2 === current[index1]"
+                    :value="index2.toString()"
                   />
                   <view class="title text-black">
                     {{ String.fromCharCode(index2 + 65) }}.{{ option }}
@@ -203,15 +203,15 @@
 import { getTestPaper } from '@/services/quiz';
 import { playAudio } from '@/utils/audio';
 import { toPosterPage } from '@/routers/quiz';
+import { toLoginPage } from '@/routers/login';
 import CuCustom from '@/colorui/components/cu-custom.vue';
-
-const app = getApp();
 
 export default {
   components: { CuCustom },
   data() {
     return {
       toPosterPage,
+      toLoginPage,
       percent: 0,
       current: [], // 选中的选项
       showAnswer: [],
@@ -245,6 +245,31 @@ export default {
       }); // swiper高度自适应
     }, */
   onLoad() {
+    // 标志，从海报页面强制跳转到测试页面应展示“首先进行测试”弹窗，
+    // 否则showModal覆盖showToast，并且设置不同的延迟时间
+    let isFromScorePage = false;
+    const pages = getCurrentPages();
+    const beforePage = pages[pages.length - 2];
+    if (beforePage && beforePage.route === 'pages/quizzes/tests/score') {
+      this.$nextTick(() => {
+        uni.showToast({
+          title: '请先进行测试！',
+          icon: 'error',
+          duration: 1000,
+        });
+      });
+      isFromScorePage = true;
+    }
+    setTimeout(() => {
+      const app = getApp();
+      if (!app.globalData.userInfo) {
+        if (isFromScorePage) {
+          setTimeout(this.showModal, 1000);
+        } else {
+          this.showModal();
+        }
+      }
+    }, 100);
     this.getTest();
     uni.getSystemInfo({
       success: (res) => {
@@ -278,7 +303,22 @@ export default {
       this.subjectList = [...this.subjectList];
       this.subjectIndex = 0;
     },
+    /**
+     * 显示登录弹窗
+     */
+    showModal() {
+      uni.showModal({
+        title: '提示',
+        content: `登录可在分数海报中显示个人信息
 
+是否登录？`,
+        success: (res) => {
+          if (res.confirm) {
+            this.toLoginPage();
+          }
+        },
+      });
+    },
     /**
      * 显示答题卡
      */
