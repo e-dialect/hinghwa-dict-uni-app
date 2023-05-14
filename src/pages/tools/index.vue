@@ -23,6 +23,7 @@
           <view class="cardTitle" />
         </view>
       </view>
+      <view class="stand-view" />
     </scroll-view>
   </view>
 </template>
