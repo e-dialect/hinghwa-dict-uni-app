@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import { BASE_URL } from '@/const/urls';
 
 /**
  * PN0102 创建新的语音
@@ -85,6 +86,25 @@ export async function getPronunciationDetails(id) {
   } catch (e) {
     return null;
   }
+}
+
+/**
+ * PN0204 以音查字
+ * @returns {Promise<*>}
+ */
+export async function pronunciationTranslation(file) {
+  return new Promise((resolve, reject) => {
+    uni.uploadFile({
+      url: `${BASE_URL}/pronunciation/translate`,
+      filePath: file,
+      name: 'file',
+      header: {
+        token: uni.getStorageSync('token'),
+      },
+    }).then((res) => {
+      if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
+    });
+  });
 }
 
 /**
