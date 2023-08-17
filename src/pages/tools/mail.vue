@@ -1,7 +1,7 @@
 <template>
   <view>
     <cu-custom title="邮箱列表" />
-    <uni-scroll-view
+    <scroll-view
       :refresher="true"
       @refresh="loadEmails"
     >
@@ -32,7 +32,7 @@
           </view>
         </view>
       </view>
-    </uni-scroll-view>
+    </scroll-view>
     <view class="send-button">
       <button @click="sendNotification">
         发送通知
