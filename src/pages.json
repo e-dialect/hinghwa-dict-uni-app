@@ -59,6 +59,18 @@
       "style": {}
     },
     {
+      "path": "pages/tools/mail",
+      "style": {}
+    },
+	{
+		"path": "pages/tools/mailtest",
+		"style": {}
+	},
+	{
+		"path": "pages/tools/sendmail",
+		"style": {}
+	},
+    {
       "path": "pages/tools/daily-expression/index",
       "style": {}
     },
