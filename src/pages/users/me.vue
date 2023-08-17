@@ -84,6 +84,18 @@
             </text>
           </navigator>
         </view>
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            hover-class="none"
+            url="/pages/users/me/points"
+          >
+            <text class="cuIcon-shop text-grey" />
+            <text class="text-grey">
+              我的积分
+            </text>
+          </navigator>
+        </view>
         <!--        <view class="cu-item arrow">-->
         <!--          <navigator-->
         <!--            class="content"-->

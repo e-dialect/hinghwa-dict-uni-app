@@ -209,3 +209,20 @@ export function resetPassword(username, password, email, code) {
     username, password, email, code,
   });
 }
+
+/**
+ * 获取所有产品信息
+ * @returns {Promise<unknown>}
+ */
+export async function getProductInfo(config) {
+  return request.get('/products', config);
+}
+
+/**
+ * 获取指定产品信息
+ * @param id 产品id
+ * @returns {Promise<unknown>}
+ */
+export async function getProductInfoWithId(id) {
+  return request.get(`/products/${id}`);
+}

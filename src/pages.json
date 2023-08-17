@@ -154,6 +154,18 @@
       "style": {}
     },
     {
+      "path": "pages/users/me/points",
+      "style": {}
+    },
+	{
+	  "path": "pages/users/me/pointmall",
+	  "style": {}
+	},
+	{
+	  "path": "pages/users/me/uploadgoods",
+	  "style": {}
+	},
+    {
       "path": "pages/users/settings/telephone",
       "style": {}
     },
