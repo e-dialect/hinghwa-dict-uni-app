@@ -68,3 +68,13 @@ export function toWordPronunciations(word) {
     url: `/pages/words/pronunciations?word=${word}`,
   });
 }
+
+/**
+ * 前往词单页面
+ * @param id 词单id
+ */
+export function toWordsPage(id) {
+  uni.navigateTo({
+    url: `/pages/tools/wordDetails?id=${id}`,
+  });
+}

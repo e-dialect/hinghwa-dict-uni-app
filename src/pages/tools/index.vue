@@ -63,6 +63,10 @@ export default {
           img: 'https://cos.edialect.top/website/亲戚计算.png',
           url: '/tools/relative',
         },
+        {
+	        img: 'https://pic.imgdb.cn/item/64d45b0e1ddac507ccef0460.png',
+          url: '/tools/wordList',
+		    },
       ],
     };
   },

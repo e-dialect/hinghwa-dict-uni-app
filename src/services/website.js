@@ -48,3 +48,32 @@ export async function getWordOfTheDay() {
 export async function getDailyExpressions(keyword = '', page = 1, pageSize = 10) {
   return request.get('/website/daily-expression', { keyword, page, pageSize });
 }
+
+/**
+* 获取单个题目
+* @param question 题目
+* @param options 选项
+* @param answer 回答
+* @param explanation 解释
+* @param id 题目序号
+* @param visibility 是否可见
+*
+*/
+export async function getOneQuiz() {
+  return request.get('/quizzes/{id}', {
+    question, options, answer, explanation, id, visibility,
+  });
+}
+
+/* 获取词单 */
+export async function getWordLists() {
+  return request.get('/lists');
+}
+
+/**
+ * @param id 词单id
+ * @returns {Promise<unknown>}
+ */
+export async function getWordListDetails(id) {
+  return request.get(`/lists/${id}`);
+}
