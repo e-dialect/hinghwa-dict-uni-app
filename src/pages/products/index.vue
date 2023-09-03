@@ -69,7 +69,7 @@ export default {
       }
     },
   },
-  onMounted() {
+  onShow() {
     this.loadProducts();
   },
 };
