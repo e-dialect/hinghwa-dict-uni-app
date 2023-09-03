@@ -1,6 +1,5 @@
 import request from '@/utils/request';
 import rawRequest from '@/utils/rawRequest';
-import { toLoginPage } from '@/routers/login';
 
 /**
  * US0101 新建用户（普通）
@@ -42,9 +41,8 @@ export async function registerUser(username, password, email, code) {
  * @param username 用户名
  * @param password 密码
  * @param nickname 昵称
- * @param avatar 头像
  */
-export function registerWechatUser(username, password, nickname, avatar) {
+export function registerWechatUser(username, password, nickname) {
   uni.login({
     async success(res) {
       if (res.code) {
@@ -53,7 +51,6 @@ export function registerWechatUser(username, password, nickname, avatar) {
           password,
           jscode: res.code,
           nickname,
-          avatar,
         }).then(async () => {
           uni.showToast({
             title: '注册成功',

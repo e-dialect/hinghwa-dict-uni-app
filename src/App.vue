@@ -22,7 +22,6 @@ export default {
             },
           });
         }
-        await getLoginStatus();
         this.globalData.platform = e.platform;
         this.globalData.StatusBar = e.statusBarHeight;
         const capsule = uni.getMenuButtonBoundingClientRect();
@@ -33,6 +32,7 @@ export default {
         } else {
           this.globalData.CustomBar = e.statusBarHeight + 50;
         }
+        await getLoginStatus();
       },
     });
   },

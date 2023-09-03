@@ -21,7 +21,7 @@ export function uploadFile(file) {
     }).then((res) => {
       uni.hideLoading();
       // 如果正常返回，则根据状态码进行处理
-      if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
+      if (res.statusCode >= 200 && res.statusCode < 400) resolve(JSON.parse(res.data));
       else {
         switch (res.statusCode) {
           case 500:
@@ -80,7 +80,7 @@ export async function chooseAndUploadImages(maxNumber = 1) {
       },
     });
   });
-  return images.map((item) => JSON.parse(item).url);
+  return images.map((item) => item.url);
 }
 
 /**
