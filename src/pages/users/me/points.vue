@@ -1,3 +1,29 @@
+<script setup>
+import { ref } from 'vue';
+import { toProductsPage } from '@/routers/product';
+
+// 页面标题
+const pageTitle = '我的积分';
+
+// 当前积分
+const currentPoints = ref(2000);
+
+// 积分变更历史
+const history = ref([
+  // 积分变更历史
+  {
+    timestamp: '2023-07-10', reason: '购买了一只55', action: 'deduct', points: -500,
+  },
+  {
+    timestamp: '2023-07-05', reason: '贡献了一篇文章！', action: 'earn', points: 100,
+  },
+  {
+    timestamp: '2023-07-01', reason: '贡献了一条语音！', action: 'earn', points: 50,
+  },
+]);
+
+</script>
+
 <template>
   <view>
     <cu-custom title="我的积分" />
@@ -47,41 +73,8 @@
     >
       <text>积分商城</text>
     </view>
-
-    <view
-      class="circle-button"
-      @click="toUploadProductsPage()"
-    >
-      <i class="iconfont icon-plus" />
-    </view>
   </view>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import { toProductsPage, toUploadProductsPage } from '@/routers/product';
-
-// 页面标题
-const pageTitle = '我的积分';
-
-// 当前积分
-const currentPoints = ref(2000);
-
-// 积分变更历史
-const history = ref([
-  // 积分变更历史
-  {
-    timestamp: '2023-07-10', reason: '购买了一只55', action: 'deduct', points: -500,
-  },
-  {
-    timestamp: '2023-07-05', reason: '贡献了一篇文章！', action: 'earn', points: 100,
-  },
-  {
-    timestamp: '2023-07-01', reason: '贡献了一条语音！', action: 'earn', points: 50,
-  },
-]);
-
-</script>
 
 <style>
 /* Add your custom styles for the component here */
@@ -140,25 +133,6 @@ const history = ref([
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.circle-button {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
-  text-align: center;
-  background-color: #007bff;
-  border-radius: 50%;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.circle-button i {
-  font-size: 24px;
 }
 
 /* 样式 */
@@ -229,56 +203,5 @@ const history = ref([
 .details-button text {
   font-size: 18px;
 }
-.circle-button {
-  width: 60px;
-  height: 60px;
-  background-color: #007bff;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s;
-}
 
-.circle-button:hover {
-  background-color: #0056b3;
-}
-
-.iconfont {
-  font-size: 24px;
-}
-.circle-button {
-  width: 60px;
-  height: 60px;
-  background-color: #39C5BB;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  transition: background-color 0.2s;
-}
-
-.circle-button:hover {
-  background-color: #39c5bb;
-}
-
-.iconfont {
-  font-size: 50px;
-}
-
-/* Custom styles for the white plus sign */
-.circle-button i::before {
-  content: '+';
-  color: #fff;
-}
 </style>

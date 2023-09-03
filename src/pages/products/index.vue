@@ -30,12 +30,18 @@
       每页数量: {{ pageInfo.pageSize }}
       总数量: {{ pageInfo.amount }}
     </view>
+    <view
+      class="circle-button"
+      @click="toUploadProductsPage()"
+    >
+      <i class="iconfont icon-plus" />
+    </view>
   </view>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
 import { getProductInfo } from '@/services/user';
+import { toUploadProductsPage } from '@/routers/product';
 
 export default {
   data() {
@@ -45,6 +51,7 @@ export default {
     };
   },
   methods: {
+    toUploadProductsPage,
     async loadProducts() {
       try {
         const response = await getProductInfo();
@@ -69,5 +76,57 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styling here */
+.circle-button {
+  width: 60px;
+  height: 60px;
+  background-color: #007bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+.circle-button:hover {
+  background-color: #0056b3;
+}
+
+.iconfont {
+  font-size: 24px;
+}
+
+.circle-button {
+  width: 60px;
+  height: 60px;
+  background-color: #39C5BB;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  transition: background-color 0.2s;
+}
+
+.circle-button:hover {
+  background-color: #39c5bb;
+}
+
+.iconfont {
+  font-size: 50px;
+}
+
+/* Custom styles for the white plus sign */
+.circle-button i::before {
+  content: '+';
+  color: #fff;
+}
 </style>
