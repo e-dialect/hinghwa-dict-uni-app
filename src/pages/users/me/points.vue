@@ -43,14 +43,14 @@
 
     <view
       class="details-button"
-      @click="showMall()"
+      @click="toProductsPage()"
     >
       <text>积分商城</text>
     </view>
 
     <view
       class="circle-button"
-      @click="navigateToUploadGoods()"
+      @click="toUploadProductsPage()"
     >
       <i class="iconfont icon-plus" />
     </view>
@@ -59,6 +59,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { toProductsPage, toUploadProductsPage } from '@/routers/product';
 
 // 页面标题
 const pageTitle = '我的积分';
@@ -80,19 +81,6 @@ const history = ref([
   },
 ]);
 
-// 跳转到积分商城页面
-const showMall = () => {
-  uni.navigateTo({
-    url: '/pages/users/me/pointmall',
-  });
-};
-
-// 跳转到上传商品页面
-const navigateToUploadGoods = () => {
-  uni.navigateTo({
-    url: '/pages/users/me/uploadgoods',
-  });
-};
 </script>
 
 <style>
