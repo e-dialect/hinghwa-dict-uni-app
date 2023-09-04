@@ -77,6 +77,7 @@
         个人信息（将会默认公开）
       </view>
     </view>
+    <!--  #ifndef  MP-WEIXIN -->
     <view
       class="cu-form-group"
       @tap="toChangePhonePage"
@@ -89,6 +90,9 @@
         <text class="cuIcon-right text-gray" />
       </view>
     </view>
+    <!--  #endif -->
+
+    <!--  #ifndef  MP-WEIXIN -->
     <view class="cu-form-group">
       <view class="title">
         生日
@@ -105,10 +109,11 @@
         </view>
       </picker>
     </view>
+    <!--  #endif -->
 
     <view class="cu-form-group">
       <view class="title">
-        居住地
+        发音默认地点
       </view>
       <picker
         mode="multiSelector"
