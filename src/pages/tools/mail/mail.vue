@@ -6,16 +6,16 @@
       @refresh="loadEmails"
     >
       <view class="email-list">
-        <view
-          v-if="emails.length === 0"
+        <!--view
+          v-if="emails.length||emails.length === 0"
           class="empty-message"
         >
           当前没有新的消息哦
-        </view>
+        </view-->
         <view
           v-for="email in emails"
-          :key="email.from.id"
-          @click="viewEmail(email.from.id)"
+          :key="email.id"
+          @click="viewEmail(email.id)"
         >
           <view class="email-item">
             <view class="email-title">
@@ -23,7 +23,7 @@
             </view>
             <view class="email-info">
               <view class="email-nickname">
-                {{ email.fromNickname }}
+                {{ email.from.nickname }}
               </view>
               <view class="email-time">
                 {{ email.time }}
@@ -43,7 +43,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import api from '@/utils/request';
+import { getAllMails } from '@/services/mail';
 
 export default {
   data() {
@@ -51,16 +51,13 @@ export default {
       emails: [],
     };
   },
+  beforeMount() {
+	  this.loadEmails();
+  },
   methods: {
     async loadEmails() {
-      try {
-        const emailData = await api.get('/website/notifications', config);
-        this.emails = emailData.notifications;
-      } catch (error) {
-        uni.showToast({
-          title: '加载邮件失败',
-        });
-      }
+      const res = await getAllMails();
+	  this.emails = res.notifications;
     },
     viewEmail(id) {
       uni.navigateTo({
@@ -93,6 +90,7 @@ export default {
 }
 
 .email-item {
+  border-radius: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   margin-bottom: 10px;

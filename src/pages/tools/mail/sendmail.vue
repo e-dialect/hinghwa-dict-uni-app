@@ -5,21 +5,21 @@
       <view class="email-form">
         <label class="input-label">接收者ID</label>
         <input
-          v-model="receiverId"
+          v-model="Notification.recipients[0]"
           placeholder="请输入接收者ID"
           class="input-field input-field-tall"
         >
 
         <label class="input-label">邮件标题</label>
         <input
-          v-model="emailTitle"
+          v-model="Notification.title"
           placeholder="请输入邮件标题"
           class="input-field input-field-tall"
         >
 
         <label class="input-label">邮件内容</label>
         <textarea
-          v-model="emailContent"
+          v-model="Notification.content"
           placeholder="请输入邮件内容"
           class="input-field"
         />
@@ -36,47 +36,33 @@
 </template>
 
 <script>
+import { postMail } from '@/services/mail';
+
 export default {
   data() {
     return {
-      receiverId: '',
-      emailTitle: '',
-      emailContent: '',
+      Notification: {
+        recipients: [185],
+        title: '',
+        content: '',
+      },
     };
   },
   methods: {
     async sendEmail() {
-      const emailData = {
-        recipients: this.receiverId,
-        title: this.emailTitle,
-        content: this.emailContent,
-      };
-
-      try {
-        const response = await uni.request({
-          url: '/website/notifications',
-          method: 'POST',
-          data: emailData,
-        });
-
-        if (response.statusCode === 200) {
-          uni.showToast({
-            title: '邮件发送成功！',
-            icon: 'success',
-          });
-          // 清空表单
-          this.receiverId = '';
-          this.emailTitle = '';
-          this.emailContent = '';
-        } else {
-          uni.showToast({
-            title: '邮件发送失败1',
-            icon: 'none',
-          });
-        }
-      } catch (error) {
+      postMail(this.Notification);
+      if (response.statusCode === 200) {
         uni.showToast({
-          title: '邮件发送失败2',
+          title: '邮件发送成功！',
+          icon: 'success',
+        });
+        // 清空表单
+        this.receiverId = '';
+        this.emailTitle = '';
+        this.emailContent = '';
+      } else {
+        uni.showToast({
+          title: '邮件发送失败!',
           icon: 'none',
         });
       }
@@ -92,8 +78,9 @@ export default {
   color: #333;
   font-weight: bold;
   text-transform: uppercase;
-  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
 }
+
 .send-email {
   padding: 20px;
   display: flex;
@@ -151,6 +138,7 @@ textarea {
     padding: 20px;
   }
 }
+
 /* 调整输入框高度 */
 .input-field-tall {
   height: 40px;
