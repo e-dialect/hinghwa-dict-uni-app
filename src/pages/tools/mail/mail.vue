@@ -52,16 +52,16 @@ export default {
     };
   },
   beforeMount() {
-	  this.loadEmails();
+    this.loadEmails();
   },
   methods: {
     async loadEmails() {
       const res = await getAllMails();
-	  this.emails = res.notifications;
+      this.emails = res.notifications;
     },
     viewEmail(id) {
       uni.navigateTo({
-        url: `@/pages/tools/mailDetails/?id=${id}`,
+        url: `./maildetails?id=${id}`,
       });
     },
     async sendNotification() {
@@ -130,11 +130,11 @@ export default {
 }
 
 .send-button {
-   text-align: center;
-    position: fixed;
-    bottom: 20px;
-    left: 15%;
-    width: 70%;
+  text-align: center;
+  position: fixed;
+  bottom: 20px;
+  left: 15%;
+  width: 70%;
 }
 
 .send-button button {

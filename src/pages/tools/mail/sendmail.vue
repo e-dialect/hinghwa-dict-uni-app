@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       Notification: {
-        recipients: [185],
+        recipients: [],
         title: '',
         content: '',
       },
