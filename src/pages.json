@@ -157,14 +157,14 @@
       "path": "pages/users/me/points",
       "style": {}
     },
-	{
-	  "path": "pages/users/me/pointmall",
-	  "style": {}
-	},
-	{
-	  "path": "pages/users/me/uploadgoods",
-	  "style": {}
-	},
+    {
+      "path": "pages/products/index",
+      "style": {}
+    },
+    {
+      "path": "pages/products/upload",
+      "style": {}
+    },
     {
       "path": "pages/users/settings/telephone",
       "style": {}
