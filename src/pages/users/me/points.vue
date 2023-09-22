@@ -2,295 +2,195 @@
   <view>
     <cu-custom title="我的积分" />
 
-    <!-- 当前积分显示 -->
-    <view class="current-points">
-      <text class="points-label">
-        当前积分：
-      </text>
-      <text class="points-value">
-        {{ currentPoints }}
-      </text>
+    <view class="total-points">
+      总积分: {{ amount }}
     </view>
 
-    <!-- 积分变更历史 -->
-    <view class="points-history">
-      <view class="history-header">
-        积分变更历史
-      </view>
+    <!-- 积分列表 -->
+    <view class="point-list">
       <view
-        v-if="history.length > 0"
-        class="history-list"
+        v-for="point in points.results"
+        :key="point.id"
+        class="point-item"
       >
-        <view
-          v-for="(entry, index) in history"
-          :key="index"
-          class="history-item"
-        >
-          <text>{{ entry.timestamp }}</text>
-          <text>{{ entry.reason }}</text>
-          <text :class="entry.action === 'earn' ? 'increase' : 'decrease'">
-            {{ entry.points }}
+        <image
+          class="user-avatar"
+          :src="point.user.avatar"
+        />
+        <view class="user-info">
+          <text class="user-nickname">
+            {{ point.user.nickname }}
+          </text>
+          <text class="point-reason">
+            {{ point.reason }}
+          </text>
+          <text class="point-amount">
+            {{ point.points }}积分
+          </text>
+          <text
+            v-if="point.action ==='earn'"
+            class="earnAction"
+          >
+            {{ point.action }}
+          </text>
+
+          <text
+            v-else
+            class="deAction"
+          >
+            {{ point.action }}
           </text>
         </view>
       </view>
-      <view
-        v-else
-        class="no-history"
-      >
-        暂无积分变更记录
-      </view>
     </view>
-
     <view
-      class="details-button"
-      @click="showMall()"
+      class="fixed-button"
+      @tap="toUploadGoods"
     >
-      <text>积分商城</text>
+      <text class="add-icon">
+        +
+      </text>
     </view>
-
-    <view
-      class="circle-button"
-      @click="navigateToUploadGoods()"
+    <button
+      class="PointMall"
+      @tap="toPointMall"
     >
-      <i class="iconfont icon-plus" />
-    </view>
+      积分商城
+    </button>
   </view>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
 
-// 页面标题
-const pageTitle = '我的积分';
+import { getMyPoints } from '@/services/point';
+import { toPointMall, toUploadGoods } from '@/routers/points';
 
-// 当前积分
-const currentPoints = ref(2000);
-
-// 积分变更历史
-const history = ref([
-  // 积分变更历史
-  {
-    timestamp: '2023-07-10', reason: '购买了一只55', action: 'deduct', points: -500,
+export default {
+  data() {
+    return {
+      points: {},
+      toPointMall,
+      toUploadGoods,
+    };
   },
-  {
-    timestamp: '2023-07-05', reason: '贡献了一篇文章！', action: 'earn', points: 100,
+  beforeMount() {
+    getMyPoints();
   },
-  {
-    timestamp: '2023-07-01', reason: '贡献了一条语音！', action: 'earn', points: 50,
+  methods: {
+    getMyPoints() {
+      const res = getMyPoints(185);
+      this.points = res.data;
+      console.log(this.points);
+    },
+    goToUploadGoods() {
+      uni.navigateTo({
+        url: './uploadgoods.vue',
+      });
+    },
+    goToPointMall() {
+      uni.navigateTo({
+        url: './pointmall.vue',
+      });
+    },
   },
-]);
-
-// 跳转到积分商城页面
-const showMall = () => {
-  uni.navigateTo({
-    url: '/pages/users/me/pointmall',
-  });
-};
-
-// 跳转到上传商品页面
-const navigateToUploadGoods = () => {
-  uni.navigateTo({
-    url: '/pages/users/me/uploadgoods',
-  });
 };
 </script>
 
-<style>
-/* Add your custom styles for the component here */
-
-.current-points {
-  margin-top: 20px;
-  text-align: center;
+<style scoped>
+/* 样式可以根据需求进行自定义 */
+.my-points {
+  padding: 20px;
 }
 
-.points-label {
-  font-weight: bold;
-}
-
-.points-value {
+.page-title {
   font-size: 24px;
-}
-
-.points-history {
-  margin-top: 20px;
   text-align: center;
-}
-
-.history-header {
-  font-weight: bold;
-}
-
-.history-list {
-  margin-top: 10px;
-}
-
-.history-item {
-  display: flex;
-  justify-content: space-between;
-}
-
-.increase {
-  color: green;
-}
-
-.decrease {
-  color: red;
-}
-
-.no-history {
-  margin-top: 10px;
-  color: #999;
-  font-style: italic;
-  text-align: center;
-}
-
-.details-button {
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-  border: 1px solid #007bff;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.circle-button {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
-  text-align: center;
-  background-color: #007bff;
-  border-radius: 50%;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.circle-button i {
-  font-size: 24px;
-}
-
-/* 样式 */
-.current-points {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.points-label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.points-value {
-  font-size: 24px;
-  color: #007aff;
-}
-
-.history-header {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.history-list {
   margin-bottom: 20px;
 }
 
-.history-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.total-points {
+  font-size: 45 rpx;
+  margin-bottom: 20 rpx;
+  margin-top: 20 rpx;
+  margin-left: 20 rpx;
+  color: #39c5BB;
+}
+
+.point-list {
+  background-color: #f5f5f5;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
 }
 
-.history-item text {
-  flex: 1;
-}
-
-.increase {
-  color: #2ecc71;
-}
-
-.decrease {
-  color: #e74c3c;
-}
-
-.no-history {
-  color: #888;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.details-button {
+.point-item {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: #39c5bb;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
-.details-button text {
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-nickname {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.point-reason {
+  margin-left: 30 rpx;
+  font-size: 14px;
+  color: #666;
+}
+
+.point-amount {
+  margin-left: 30 rpx;
   font-size: 18px;
-}
-.circle-button {
-  width: 60px;
-  height: 60px;
-  background-color: #007bff;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s;
+  color: #ff9900;
+  font-weight: bold;
+  margin-top: 5px;
 }
 
-.circle-button:hover {
-  background-color: #0056b3;
+.earnAction {
+  margin-left: 50 rpx;
+  font-size: 15px;
+  color: #ff9900;
 }
 
-.iconfont {
-  font-size: 24px;
+.deAction {
+  margin-left: 50 rpx;
+  font-size: 15px;
+  color: #39C5BB;
 }
-.circle-button {
-  width: 60px;
-  height: 60px;
-  background-color: #39C5BB;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+.fixed-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  transition: background-color 0.2s;
-}
-
-.circle-button:hover {
-  background-color: #39c5bb;
-}
-
-.iconfont {
-  font-size: 50px;
-}
-
-/* Custom styles for the white plus sign */
-.circle-button i::before {
-  content: '+';
+  right: 50 rpx;
+  bottom: 255 rpx;
+  width: 50px;
+  height: 50px;
+  background-color: #39C5BB;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
   color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.PointMall {
+  background-color: #39C5BB;
+  color: #ffffff;
+  width: 80%;
+  height: 5%;
+  position: fixed;
+  bottom: 50 rpx;
+  margin-left: 10%;
+  border-radius: 10 rpx;
 }
 </style>
