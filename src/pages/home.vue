@@ -207,7 +207,7 @@ export default {
      * */
     navigateToNotificationList() {
       uni.navigateTo({
-        url: '/pages/tools/mail',
+        url: '/pages/tools/mail/mail',
       });
     },
   },
@@ -216,13 +216,13 @@ export default {
 <style>
 .welcome-card {
   background-color: #ffffff;
-  border-radius: 20rpx;
+  border-radius: 20 rpx;
   margin: 5vw;
 }
 
 .word-card {
   background-color: #ffffff;
-  border-radius: 20rpx;
+  border-radius: 20 rpx;
   margin-right: 1vw;
 }
 
@@ -234,15 +234,16 @@ export default {
   height: 60px;
   border-radius: 50%;
   background-color: #43e7da;
-   background-image: linear-gradient(180deg, #1ae770, #41a0df); /* 添加渐变色 */
+  background-image: linear-gradient(180deg, #1ae770, #41a0df); /* 添加渐变色 */
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
+
 .email-floating-button:active {
-    background-image: linear-gradient(180deg, #24adcb, #432fb4);
+  background-image: linear-gradient(180deg, #24adcb, #432fb4);
 }
 
 .email-icon {
