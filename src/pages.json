@@ -59,13 +59,17 @@
       "style": {}
     },
     {
-      "path": "pages/tools/mail",
+      "path": "pages/tools/mail/mail",
       "style": {}
     },
-	{
-		"path": "pages/tools/sendmail",
-		"style": {}
-	},
+    {
+      "path": "pages/tools/mail/sendmail",
+      "style": {}
+    },
+    {
+      "path": "pages/tools/mail/maildetails",
+      "style": {}
+    },
     {
       "path": "pages/tools/daily-expression/index",
       "style": {}
@@ -147,18 +151,6 @@
     },
     {
       "path": "pages/users/settings/password",
-      "style": {}
-    },
-    {
-      "path": "pages/users/me/likedarticles",
-      "style": {}
-    },
-    {
-      "path": "pages/users/me/articles",
-      "style": {}
-    },
-    {
-      "path": "pages/users/me/comments",
       "style": {}
     },
     {
