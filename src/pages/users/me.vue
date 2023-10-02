@@ -64,10 +64,12 @@
           class="cu-item arrow"
           @tap="toMailsPage"
         >
-          <text class="cuIcon-mail text-grey" />
-          <text class="text-grey">
-            我的邮箱
-          </text>
+          <view class="content">
+            <text class="cuIcon-mail text-grey" />
+            <text class="text-grey">
+              我的邮箱
+            </text>
+          </view>
         </view>
         <view class="cu-item arrow">
           <navigator

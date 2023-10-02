@@ -6,16 +6,16 @@
       @refresh="loadEmails"
     >
       <view class="email-list">
-        <!--view
-          v-if="emails.length||emails.length === 0"
+        <view
+          v-if="emails.length === 0"
           class="empty-message"
         >
           当前没有新的消息哦
-        </view-->
+        </view>
         <view
           v-for="email in emails"
           :key="email.id"
-          @click="viewEmail(email.id)"
+          @click="toMailDetailsPage(email.id)"
         >
           <view class="email-item">
             <view class="email-title">
@@ -34,8 +34,8 @@
       </view>
     </scroll-view>
     <view class="send-button">
-      <button @click="sendNotification">
-        发送通知
+      <button @click="toMailsSendingPage()">
+        发送邮件
       </button>
     </view>
   </view>
@@ -44,6 +44,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { getAllMails } from '@/services/mail';
+import { toMailDetailsPage, toMailsSendingPage } from '@/routers/mail';
 
 export default {
   data() {
@@ -55,19 +56,11 @@ export default {
     this.loadEmails();
   },
   methods: {
+    toMailsSendingPage,
+    toMailDetailsPage,
     async loadEmails() {
       const res = await getAllMails();
       this.emails = res.notifications;
-    },
-    viewEmail(id) {
-      uni.navigateTo({
-        url: `./maildetails?id=${id}`,
-      });
-    },
-    async sendNotification() {
-      uni.navigateTo({
-        url: './sendmail',
-      });
     },
     async onPullRefresh() {
       await this.loadEmails();

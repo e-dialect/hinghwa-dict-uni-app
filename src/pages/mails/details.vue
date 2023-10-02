@@ -54,17 +54,18 @@ export default {
       },
     };
   },
-  beforeMount() {
-    const { id } = this.$route.query;
-    this.getDetails(id);
+  async onLoad(options) {
+    uni.pageScrollTo({
+      scrollTop: 0,
+      duration: 0,
+    });
+    const { id } = options;
+    await this.getDetails(id);
   },
   methods: {
     async getDetails(id) {
       const res = await getMailDetails(id);
-      /* console.log(id);
-        console.log(res); */
       this.email = res;
-      // console.log(this.email.data);
     },
   },
 };
