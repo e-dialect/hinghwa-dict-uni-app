@@ -59,11 +59,15 @@
       "style": {}
     },
     {
-      "path": "pages/tools/mail",
+      "path": "pages/mails/index",
+      "style": {}
+    },
+    {
+      "path": "pages/mails/details",
       "style": {}
     },
 	{
-		"path": "pages/tools/sendmail",
+		"path": "pages/mails/send",
 		"style": {}
 	},
     {

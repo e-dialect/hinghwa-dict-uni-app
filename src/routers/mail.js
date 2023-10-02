@@ -1,9 +1,26 @@
 /**
  * 前往邮件详情界面
  */
-// eslint-disable-next-line import/prefer-default-export
-export function toMailPage(id) {
+export function toMailDetailsPage(id) {
   uni.navigateTo({
-    url: `/pages/tools/mail/mailDetail?id=${id}`,
+    url: `/pages/mails/details?id=${id}`,
+  });
+}
+
+/**
+ * 前往发送邮件界面
+ */
+export function toMailsSendingPage(id) {
+  uni.navigateTo({
+    url: '/pages/mails/send',
+  });
+}
+
+/**
+ * 前往邮件主界面
+ */
+export function toMailsPage(id) {
+  uni.navigateTo({
+    url: '/pages/mails/index',
   });
 }
