@@ -88,7 +88,7 @@
           <navigator
             class="content"
             hover-class="none"
-            url="/pages/users/me/points"
+            url="/pages/products/history"
           >
             <text class="cuIcon-shop text-grey" />
             <text class="text-grey">
