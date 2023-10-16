@@ -28,7 +28,6 @@
           {{ product.details }}
         </p>
       </view>
-
       <!-- 购买按钮 -->
       <!--view class="buy-button-container">
         <button

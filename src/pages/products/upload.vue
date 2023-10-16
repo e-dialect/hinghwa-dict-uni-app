@@ -117,7 +117,6 @@
     </view>
   </view>
 </template>
-
 <script>
 import { uploadGoods } from '@/services/point';
 
