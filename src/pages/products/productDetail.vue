@@ -7,7 +7,6 @@
         :src="product.picture"
         class="product-image"
       />
-
       <!-- 商品信息 -->
       <view class="product-info">
         <view class="product-name">
@@ -28,7 +27,6 @@
           {{ product.details }}
         </p>
       </view>
-
       <!-- 购买按钮 -->
       <!--view class="buy-button-container">
         <button

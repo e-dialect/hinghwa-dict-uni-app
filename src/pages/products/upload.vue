@@ -85,7 +85,6 @@
           <i class="iconfont icon-upload" />
           <p>点击上传图片</p>
         </view>
-        <!-- 显示图片预览 -->
         <img
           v-if="imagePreviewUrl"
           class="uploaded-image"
@@ -117,7 +116,6 @@
     </view>
   </view>
 </template>
-
 <script>
 import { uploadGoods } from '@/services/point';
 

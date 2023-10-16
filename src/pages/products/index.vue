@@ -142,8 +142,8 @@ export default {
 
 /* 产品图片样式 */
 .product-image {
-  max-width: 300 rpx;
-  height: 170 rpx;
+  max-width: 150px;
+  height: 80px;
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -212,7 +212,7 @@ export default {
   height: 60px;
   background-color: #39c5bb;
   display: flex;
-  border-radius: 200 rpx;
+  border-radius: 20px;
   align-items: center;
   justify-content: center;
   color: #fff;

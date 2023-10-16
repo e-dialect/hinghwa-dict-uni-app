@@ -39,7 +39,6 @@
           >
             {{ point.action }}
           </text>
-
           <text
             v-else
             class="deAction"
@@ -57,7 +56,6 @@
     </button>
   </view>
 </template>
-
 <script>
 
 import { getMyPoints } from '@/services/point';
@@ -65,7 +63,6 @@ import { toPointMall, toUploadGoods } from '@/routers/points';
 
 const app = getApp();
 export default {
-
   data() {
     return {
       points: {},
