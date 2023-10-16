@@ -25,5 +25,9 @@ export async function uploadGoods(good) {
  * 获取个人积分增减信息
  */
 export async function getMyPoints(id) {
-  return request.get('/transactions', id);
+  return request.get(`/transactions?user=${id}&page=1&pageSize=10&action=earn,redeem&start_date=&end_date=`);
 }
+
+/**
+ * 上传订单信息
+ */

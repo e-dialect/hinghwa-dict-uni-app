@@ -119,8 +119,6 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { chooseAndUploadAnImage } from '@/services/file';
 import { uploadGoods } from '@/services/point';
 
 export default {
@@ -139,9 +137,7 @@ export default {
   methods: {
     async uploadGood() {
       try {
-        const res = await uploadGoods(this.productData);
-        console.log(res);
-        console.log(res.statusCode);
+        await uploadGoods(this.productData);
         uni.showToast({
           title: '上传商品成功！',
           icon: 'success',
@@ -158,7 +154,6 @@ export default {
           icon: 'none',
           duration: 2000,
         });
-        console.error(error);
       }
     },
   },
@@ -286,6 +281,6 @@ button.submit-button:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   display: block;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5 rgba(0, 0, 0, 0.2);
 }
 </style>
