@@ -80,7 +80,6 @@ export default {
     getMyPoints() {
       const res = getMyPoints(185);
       this.points = res.data;
-      console.log(this.points);
     },
     goToUploadGoods() {
       uni.navigateTo({
