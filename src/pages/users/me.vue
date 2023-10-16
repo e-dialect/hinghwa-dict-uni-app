@@ -193,6 +193,7 @@ export default {
       visitTotal: 0,
     };
   },
+
   beforeMount() {
     this.getInfo();
   },

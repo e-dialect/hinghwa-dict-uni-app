@@ -79,7 +79,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 /* 商品详情页面样式 */
 

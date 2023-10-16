@@ -5,7 +5,6 @@
     <view class="myPoints">
       总积分: {{ points.amount }}
     </view>
-
     <!-- 积分列表 -->
     <view
       v-if="points.results&&points.results.length===0"

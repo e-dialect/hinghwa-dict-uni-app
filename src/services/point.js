@@ -27,3 +27,5 @@ export async function uploadGoods(good) {
 export async function getMyPoints(id) {
   return request.get(`/transactions?user=${id}&page=1&pageSize=10&action=earn,redeem&start_date=&end_date=`);
 }
+
+/* 订单相关 */

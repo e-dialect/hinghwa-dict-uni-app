@@ -111,7 +111,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .mall-page {
   padding: 20px;
