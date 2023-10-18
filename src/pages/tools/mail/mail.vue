@@ -2,8 +2,15 @@
   <view>
     <cu-custom title="邮箱列表" />
     <scroll-view
-      :refresher="true"
-      @refresh="loadEmails"
+      :scroll-y="true"
+      style="height: 85vh"
+      :refresher-enabled="true"
+      refresher-default-style="none"
+      refresher-background="white"
+      :refresher-triggered="triggered"
+      @refresherpulling="onPulling"
+      @refresherrefresh="onRefresh"
+      @scrolltolower="loadMoreEmails"
     >
       <view class="email-list">
         <!--view
@@ -13,7 +20,7 @@
           当前没有新的消息哦
         </view-->
         <view
-          v-for="email in emails"
+          v-for="email in showEmails"
           :key="email.id"
           @click="viewEmail(email.id)"
         >
@@ -21,6 +28,11 @@
             <view class="email-title">
               {{ email.title }}
             </view>
+            <img
+              :src="email.from.avatar"
+              class="email-avatar"
+              alt="Avatar"
+            >
             <view class="email-info">
               <view class="email-nickname">
                 {{ email.from.nickname }}
@@ -45,19 +57,30 @@
 import { ref, onMounted } from 'vue';
 import { getAllMails } from '@/services/mail';
 
+const app = getApp();
+
 export default {
   data() {
     return {
       emails: [],
+      showEmails: [],
+      triggered: false,
+      page: 1,
     };
   },
-  beforeMount() {
-    this.loadEmails();
+  async onLoad() {
+    uni.pageScrollTo({
+      scrollTop: 0,
+      duration: 0,
+    });
+    await this.loadEmails();
   },
   methods: {
     async loadEmails() {
+      // console.log(app.globalData.id);
       const res = await getAllMails();
       this.emails = res.notifications;
+      this.showEmails = res.notifications.slice(0, 6);
     },
     viewEmail(id) {
       uni.navigateTo({
@@ -69,17 +92,35 @@ export default {
         url: './sendmail',
       });
     },
-    async onPullRefresh() {
-      await this.loadEmails();
-      uni.stopPullDownRefresh();
-      uni.showToast({
-        title: '刷新成功！',
-        icon: 'success',
-      });
+    onPulling() {
+      this.triggered = true;
     },
-  },
-  onMounted() {
-    this.loadEmails();
+
+    // 下拉刷新
+    onRefresh() {
+      if (this.freshing) {
+        return;
+      }
+      this.freshing = true;
+      this.loadEmails();
+      setTimeout(() => {
+        this.triggered = false;
+        this.freshing = false;
+      }, 500);
+    },
+
+    // 加载更多文章
+    loadMoreEmails() {
+      uni.showLoading();
+      const { page } = this;
+      const originEmails = this.showEmails;
+      const concatEmails = this.emails.slice(page * 4, page * 4 + 4);
+      this.page += 1;
+      this.showEmails = originEmails.concat(concatEmails);
+      setTimeout(() => {
+        uni.hideLoading();
+      }, 500);
+    },
   },
 };
 </script>
@@ -104,6 +145,7 @@ export default {
 
 .email-title {
   font-weight: bold;
+  font-size: 24px;
 }
 
 .email-info {
@@ -120,6 +162,12 @@ export default {
 
 .email-time {
   font-size: 12px;
+}
+
+.email-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .empty-message {
