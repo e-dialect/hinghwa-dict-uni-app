@@ -103,16 +103,6 @@
             style="width: 100%"
           />
         </view>
-
-        <view
-          class="email-floating-button"
-          @tap="navigateToNotificationList"
-        >
-          <image
-            class="email-icon"
-            src="../../images/mailbox.png"
-          />
-        </view>
         <view class="stand-view" />
       </view>
     </scroll-view>
@@ -125,6 +115,7 @@ import { toSearchPage } from '@/routers';
 import { toWordPage } from '@/routers/word';
 import { toArticlePage } from '@/routers/article';
 import { toLoginPage } from '@/routers/login';
+import { toMailsPage } from '@/routers/mail';
 
 const app = getApp();
 export default {
@@ -149,6 +140,7 @@ export default {
     this.announcements = await getAnnouncements();
   },
   methods: {
+    toMailsPage,
     toLoginPage,
     /**
      * 下拉刷新
@@ -202,14 +194,6 @@ export default {
       toSearchPage();
     },
 
-    /**
-     * 跳转到邮箱页面
-     * */
-    navigateToNotificationList() {
-      uni.navigateTo({
-        url: '/pages/tools/mail/mail',
-      });
-    },
   },
 };
 </script>
@@ -224,30 +208,5 @@ export default {
   background-color: #ffffff;
   border-radius: 20 rpx;
   margin-right: 1vw;
-}
-
-.email-floating-button {
-  position: fixed;
-  left: 20px;
-  bottom: 155px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #43e7da;
-  background-image: linear-gradient(180deg, #1ae770, #41a0df); /* 添加渐变色 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-.email-floating-button:active {
-  background-image: linear-gradient(180deg, #24adcb, #432fb4);
-}
-
-.email-icon {
-  width: 30px;
-  height: 30px;
 }
 </style>

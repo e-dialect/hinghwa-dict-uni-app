@@ -50,8 +50,7 @@ export default {
   },
   methods: {
     async sendEmail() {
-      postMail(this.Notification);
-      if (response.statusCode === 200) {
+      postMail(this.Notification).then((response) => {
         uni.showToast({
           title: '邮件发送成功！',
           icon: 'success',
@@ -60,12 +59,12 @@ export default {
         this.receiverId = '';
         this.emailTitle = '';
         this.emailContent = '';
-      } else {
+      }).catch((err) => {
         uni.showToast({
           title: '邮件发送失败!',
           icon: 'none',
         });
-      }
+      });
     },
   },
 };

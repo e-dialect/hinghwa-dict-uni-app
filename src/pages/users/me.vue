@@ -60,6 +60,17 @@
         </view>
       </view>
       <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+        <view
+          class="cu-item arrow"
+          @tap="toMailsPage"
+        >
+          <view class="content">
+            <text class="cuIcon-mail text-grey" />
+            <text class="text-grey">
+              我的邮箱
+            </text>
+          </view>
+        </view>
         <view class="cu-item arrow">
           <navigator
             class="content"
@@ -168,6 +179,7 @@ import {
 import {
   toChangePasswordPage, toPronunciationsPage, toUserInfoPage, toUserWordsPage,
 } from '@/routers/user';
+import { toMailsPage } from '@/routers/mail';
 
 const app = getApp();
 export default {
@@ -185,6 +197,7 @@ export default {
     this.getInfo();
   },
   methods: {
+    toMailsPage,
     toUserWordsPage,
     toChangePasswordPage,
     toUserInfoPage,
