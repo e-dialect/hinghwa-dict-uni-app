@@ -9,7 +9,6 @@
           placeholder="请输入接收者ID"
           class="input-field input-field-tall"
         >
-
         <label class="input-label">邮件标题</label>
         <input
           v-model="Notification.title"
@@ -34,7 +33,6 @@
     </view>
   </view>
 </template>
-
 <script>
 import { postMail } from '@/services/mail';
 

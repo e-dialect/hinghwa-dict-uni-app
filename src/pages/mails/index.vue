@@ -52,7 +52,6 @@
     </view>
   </view>
 </template>
-
 <script>
 import { ref, onMounted } from 'vue';
 import { getAllMails } from '@/services/mail';
@@ -84,12 +83,12 @@ export default {
     },
     viewEmail(id) {
       uni.navigateTo({
-        url: `./maildetails?id=${id}`,
+        url: `./details?id=${id}`,
       });
     },
     async sendNotification() {
       uni.navigateTo({
-        url: './sendmail',
+        url: './send',
       });
     },
     onPulling() {

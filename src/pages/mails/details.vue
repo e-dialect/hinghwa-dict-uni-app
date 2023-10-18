@@ -28,7 +28,6 @@
     </view>
   </view>
 </template>
-
 <script>
 import { getMailDetails } from '@/services/mail';
 
