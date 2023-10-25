@@ -5,7 +5,7 @@
       <block v-if="node.tag === 'button'">
         <button size="mini" type="default">
           <block v-for="(node, index) of node.nodes" :key="index">
-            <wx-parse-template :node="node"/>
+            <wxParseMarkdown :node="node"/>
           </block>
         </button>
       </block>
@@ -14,7 +14,7 @@
       <block v-else-if="node.tag === 'li'">
         <view :class="node.classStr" :style="node.styleStr">
           <block v-for="(node, index) of node.nodes" :key="index">
-            <wx-parse-template :node="node"/>
+            <wxParseMarkdown :node="node"/>
           </block>
         </view>
       </block>
@@ -38,7 +38,7 @@
       <block v-else-if="node.tag === 'a'">
         <view :class="node.classStr" :data-href="node.attr.href" :style="node.styleStr" @tap="openURL(node.attr.href)">
           <block v-for="(node, index) of node.nodes" :key="index">
-            <wx-parse-template :node="node"/>
+            <wxParseMarkdown :node="node"/>
           </block>
         </view>
       </block>
@@ -47,7 +47,7 @@
       <block v-else-if="node.tag === 'table'">
         <view :class="node.classStr" :style="node.styleStr" class="table">
           <block v-for="(node, index) of node.nodes" :key="index">
-            <wx-parse-template :node="node"/>
+            <wxParseMarkdown :node="node"/>
           </block>
         </view>
       </block>
@@ -68,7 +68,7 @@
       <block v-else>
         <view :class="node.classStr" :style="node.styleStr">
           <block v-for="(node, index) of node.nodes" :key="index">
-            <wx-parse-template :node="node"/>
+            <wxParseMarkdown :node="node"/>
           </block>
         </view>
       </block>
@@ -81,20 +81,18 @@
 </template>
 
 <script>
-import wxParseTemplate from './wxParseTemplate1';
 import wxParseImg      from './wxParseImg';
 import wxParseVideo    from './wxParseVideo';
 import wxParseAudio    from './wxParseAudio';
 import IFramePlayer    from "./IFramePlayer";
 
 export default {
-  name: 'wxParseTemplate0',
+  name: 'wxParseMarkdown',
   props: {
     node: {},
   },
   components: {
     IFramePlayer,
-    wxParseTemplate,
     wxParseImg,
     wxParseVideo,
     wxParseAudio,
