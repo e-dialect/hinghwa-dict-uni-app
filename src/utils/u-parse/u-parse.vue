@@ -17,7 +17,7 @@
 
 <script>
 import HtmlToJson      from './libs/html2json';
-import wxParseTemplate from './components/wxParseTemplate0';
+import wxParseTemplate from './components/wxParseMarkdown.vue';
 
 export default {
   name: 'wxParse',
