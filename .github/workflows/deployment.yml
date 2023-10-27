@@ -50,6 +50,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "dist/build/h5" # App source code path
           output_location: "dist/build/h5" # Built app content directory - optional
+          skip_app_build: true
           deployment_environment: ${{ env.number }}
           ###### End of Repository/Build Configurations ######
 
