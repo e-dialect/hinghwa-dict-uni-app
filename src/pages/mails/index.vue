@@ -77,7 +77,7 @@ export default {
   methods: {
     async loadEmails() {
       // console.log(app.globalData.id);
-      console.log(this.page);
+      // console.log(this.page);
       const res = await getAllMails(this.page);
       this.showEmails = res.notifications;
       this.freshing = false;

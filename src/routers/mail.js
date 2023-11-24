@@ -1,6 +1,7 @@
 /**
  * 前往邮件详情界面
  */
+
 export function toMailDetailsPage(id) {
   uni.navigateTo({
     url: `/pages/mails/details?id=${id}`,
@@ -10,7 +11,7 @@ export function toMailDetailsPage(id) {
 /**
  * 前往发送邮件界面
  */
-export function toMailsSendingPage(id) {
+export function toMailsSendingPage() {
   uni.navigateTo({
     url: '/pages/mails/send',
   });
@@ -19,7 +20,7 @@ export function toMailsSendingPage(id) {
 /**
  * 前往邮件主界面
  */
-export function toMailsPage(id) {
+export function toMailsPage() {
   uni.navigateTo({
     url: '/pages/mails/index',
   });
