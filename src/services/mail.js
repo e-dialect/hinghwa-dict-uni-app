@@ -23,8 +23,8 @@ export async function postMail(notification) {
 
 /* 获取用户所有的通知
 */
-export async function getAllMails() {
-  return request.get('/website/notifications');
+export async function getAllMails(page) {
+  return request.get(`/website/notifications?page=${page}`);
 }
 
 /* 获取某个通知的详情

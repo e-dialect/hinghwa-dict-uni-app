@@ -61,10 +61,10 @@ const app = getApp();
 export default {
   data() {
     return {
-      emails: [],
       showEmails: [],
       triggered: false,
       page: 1,
+      freshing: false,
     };
   },
   async onLoad() {
@@ -77,9 +77,10 @@ export default {
   methods: {
     async loadEmails() {
       // console.log(app.globalData.id);
-      const res = await getAllMails();
-      this.emails = res.notifications;
-      this.showEmails = res.notifications.slice(0, 6);
+      console.log(this.page);
+      const res = await getAllMails(this.page);
+      this.showEmails = res.notifications;
+      this.freshing = false;
     },
     viewEmail(id) {
       uni.navigateTo({
@@ -108,17 +109,21 @@ export default {
       }, 500);
     },
 
-    // 加载更多文章
+    // 加载更多邮件
     loadMoreEmails() {
       uni.showLoading();
       const { page } = this;
       const originEmails = this.showEmails;
-      const concatEmails = this.emails.slice(page * 4, page * 4 + 4);
-      this.page += 1;
-      this.showEmails = originEmails.concat(concatEmails);
-      setTimeout(() => {
-        uni.hideLoading();
-      }, 500);
+      getAllMails(this.page + 1).then((res) => {
+        this.showEmails = originEmails.concat(res.notifications);
+        this.page += 1;
+        /* console.log('showEmails:', this.showEmails);
+        console.log('page:', this.page); */
+        setTimeout(() => {
+          uni.hideLoading();
+        }, 500);
+      });
+      // 打印一下当前page和showEmails
     },
   },
 };
