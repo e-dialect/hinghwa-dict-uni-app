@@ -1,6 +1,7 @@
 <script>
 // app.js
 import { getLoginStatus } from '@/services/login';
+import mob2pc from '@/routers/mob2pc';
 
 export default {
   data() {
@@ -17,7 +18,7 @@ export default {
             success: (res) => {
               if (res.confirm) {
                 // redirect to https://hinghwa.cn
-                window.location.href = 'https://hinghwa.cn';
+                mob2pc();
               }
             },
           });
