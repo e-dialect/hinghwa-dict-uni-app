@@ -103,7 +103,6 @@
             style="width: 100%"
           />
         </view>
-
         <view class="stand-view" />
       </view>
     </scroll-view>
@@ -116,6 +115,7 @@ import { toSearchPage } from '@/routers';
 import { toWordPage } from '@/routers/word';
 import { toArticlePage } from '@/routers/article';
 import { toLoginPage } from '@/routers/login';
+import { toMailsPage } from '@/routers/mail';
 
 const app = getApp();
 export default {
@@ -140,6 +140,7 @@ export default {
     this.announcements = await getAnnouncements();
   },
   methods: {
+    toMailsPage,
     toLoginPage,
     /**
      * 下拉刷新
@@ -192,19 +193,20 @@ export default {
     search() {
       toSearchPage();
     },
+
   },
 };
 </script>
 <style>
 .welcome-card {
   background-color: #ffffff;
-  border-radius: 20rpx;
+  border-radius: 20 rpx;
   margin: 5vw;
 }
 
 .word-card {
   background-color: #ffffff;
-  border-radius: 20rpx;
+  border-radius: 20 rpx;
   margin-right: 1vw;
 }
 </style>
