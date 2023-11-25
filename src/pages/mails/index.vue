@@ -45,11 +45,12 @@
         </view>
       </view>
     </scroll-view>
-    <view class="send-button">
+    <!-- 暂时关闭发送通知功能 -->
+    <!-- <view class="send-button">
       <button @click="sendNotification">
         发送通知
       </button>
-    </view>
+    </view> -->
   </view>
 </template>
 <script>
