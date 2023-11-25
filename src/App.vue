@@ -1,7 +1,7 @@
 <script>
 // app.js
 import { getLoginStatus } from '@/services/login';
-import mob2pc from "@/routers/mob2pc";
+import mob2pc from '@/routers/mob2pc';
 
 export default {
   data() {
