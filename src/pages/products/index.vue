@@ -1,14 +1,14 @@
 <template>
   <view>
     <cu-custom title="积分商城" />
-    <view
+    <!-- <view
       class="floating-view"
       @tap="gotoBill"
     >
       <view class="view-content">
         上传商品
       </view>
-    </view>
+    </view> -->
     <view class="myPoints">
       可用积分：{{ amount }}
     </view>
