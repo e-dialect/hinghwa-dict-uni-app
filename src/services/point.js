@@ -3,8 +3,8 @@ import request from '@/utils/request';
 /**
  * 获取所有的商品
  */
-export function getGoods() {
-  return request.get('/products');
+export function getGoods(page) {
+  return request.get(`/products?min=&max=&pageSize=8&page=${page}&stock=`);
 }
 
 /**

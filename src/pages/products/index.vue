@@ -15,7 +15,7 @@
     <view class="mall-page">
       <view class="product-list">
         <view
-          v-for="product in displayedProducts"
+          v-for="product in products"
           :key="product.id"
           class="product-item"
           @tap="goToSubPage(product.id)"
@@ -64,8 +64,8 @@ export default {
     return {
       products: [],
       currentPage: 1,
-      itemsPerPage: 8,
       amount: '100', // 显示为0，说明这边已经是当前用户的积分了
+      totalPages: 0,
     };
   },
   async onLoad() {
@@ -75,7 +75,7 @@ export default {
     });
     await this.loadProducts();
   },
-  computed: {
+  /*  computed: {
     displayedProducts() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
@@ -84,15 +84,19 @@ export default {
     totalPages() {
       return Math.ceil(this.products.length / this.itemsPerPage);
     },
-  },
+  }, */
   methods: {
     async loadProducts() {
-      const res = await getGoods();
+      const res = await getGoods(this.currentPage);
       this.products = res.result;
+      this.totalPages = parseInt(res.total_pages, 10);
       const points = await getMyPoints(app.globalData.id);
       // console.log(app.globalData.id);
       this.amount = points.amount;
       // console.log(points.amount); //测试过，可用的，只是刚好我的积分也是0。。。
+    },
+    loadNewGoods() {
+
     },
     goToSubPage(id) {
       uni.navigateTo({
@@ -101,6 +105,9 @@ export default {
     },
     changePage(page) {
       this.currentPage = page;
+      getGoods(this.currentPage).then((res) => {
+        this.products = res.result;
+      });
     },
     gotoBill() {
       // 按钮点击后改变颜色
