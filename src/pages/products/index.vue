@@ -100,7 +100,7 @@ export default {
     },
     goToSubPage(id) {
       uni.navigateTo({
-        url: `/pages/products/productDetail?id=${id}`,
+        url: `/pages/products/details?id=${id}`,
       });
     },
     changePage(page) {
