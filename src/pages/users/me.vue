@@ -95,6 +95,18 @@
             </text>
           </navigator>
         </view>
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            hover-class="none"
+            url="/pages/products/history"
+          >
+            <text class="cuIcon-shop text-grey" />
+            <text class="text-grey">
+              我的积分
+            </text>
+          </navigator>
+        </view>
         <!--        <view class="cu-item arrow">-->
         <!--          <navigator-->
         <!--            class="content"-->
@@ -193,6 +205,7 @@ export default {
       visitTotal: 0,
     };
   },
+
   beforeMount() {
     this.getInfo();
   },
@@ -307,21 +320,21 @@ export default {
 }
 
 .bg-info .avatar {
-  width: 190rpx;
-  height: 190rpx;
+  width: 190 rpx;
+  height: 190 rpx;
 }
 
 .bg-info .text {
   position: absolute;
   top: 22vh;
-  font-size: 36rpx;
+  font-size: 36 rpx;
   font-weight: 700;
   color: white;
 }
 
 .bg-info image {
-  width: 180rpx;
-  height: 180rpx;
-  margin-left: 6rpx;
+  width: 180 rpx;
+  height: 180 rpx;
+  margin-left: 6 rpx;
 }
 </style>

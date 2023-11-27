@@ -165,6 +165,23 @@
       "path": "pages/users/me/comments",
       "style": {}
     },
+    /*product区*/
+    {
+      "path": "pages/products/index",
+      "style": {}
+    },
+    {
+      "path": "pages/products/upload",
+      "style": {}
+    },
+    {
+      "path": "pages/products/details",
+      "style": {}
+    },
+    {
+      "path": "pages/products/history",
+      "style": {}
+    },
     {
       "path": "pages/users/settings/telephone",
       "style": {}
