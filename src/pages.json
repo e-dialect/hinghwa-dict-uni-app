@@ -153,10 +153,6 @@
       "path": "pages/users/me/comments",
       "style": {}
     },
-    {
-      "path": "pages/users/me/points",
-      "style": {}
-    },
     /*product区*/
     {
       "path": "pages/products/index",
