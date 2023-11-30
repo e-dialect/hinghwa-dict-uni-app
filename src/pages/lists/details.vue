@@ -37,7 +37,6 @@
       >
         <view class="word-list-info1">
           <view
-
             slot="title"
             class="wordText"
           >

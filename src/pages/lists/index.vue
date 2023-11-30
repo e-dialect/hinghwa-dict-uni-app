@@ -226,7 +226,6 @@ export default {
   font-family: "幼圆";
   letter-spacing: 5 rpx;
 }
-
 .animated-title {
   margin-top: 30 rpx;
   font-size: 50 rpx;
