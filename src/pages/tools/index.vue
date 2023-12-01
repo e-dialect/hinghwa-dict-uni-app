@@ -44,6 +44,10 @@ export default {
           url: '/tools/dictionary',
         },
         {
+          img: 'https://pic.imgdb.cn/item/64d45b0e1ddac507ccef0460.png',
+          url: '/lists/index',
+        },
+        {
           img: 'https://cos.edialect.top/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
           url: '/quizzes/index',
         },
@@ -63,10 +67,7 @@ export default {
           img: 'https://cos.edialect.top/website/亲戚计算.png',
           url: '/tools/relative',
         },
-        {
-          img: 'https://pic.imgdb.cn/item/64d45b0e1ddac507ccef0460.png',
-          url: '/lists/index',
-        },
+
       ],
     };
   },

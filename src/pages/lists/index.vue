@@ -2,6 +2,7 @@
   <view>
     <cu-custom title="语记·词单" />
     <div class="title-text">
+      <br>
       <h1 class="animated-title">
         当前总词单数：{{ listNum }}
       </h1>
@@ -49,11 +50,11 @@
         </view>
       </view>
     </scroll-view>
-    <view class="send-button">
+    <!-- <view class="send-button">
       <button @click="uploadList">
         上传词单
       </button>
-    </view>
+    </view> -->
   </view>
 </template>
 <script>
@@ -63,6 +64,15 @@ import { getWordLists } from '@/services/lists';
 const app = getApp();
 
 export default {
+  filters: { // 好像没成功？写出bug来了qwq
+    formatDateTime(time) {
+      const date = new Date(time);
+      const formattedDate = `${date.getFullYear()}-${this.padZero(date.getMonth() + 1)}-${this.padZero(date.getDate())}`;
+      const formattedTime = `${this.padZero(date.getHours())}:${this.padZero(date.getMinutes())}:${this.padZero(date.getSeconds())}`;
+      return `${formattedDate} ${formattedTime}`;
+    },
+  },
+
   data() {
     return {
       showlists: [],
@@ -112,6 +122,10 @@ export default {
         this.freshing = false;
       }, 500);
     },
+    /* 时间加0 */
+    /* padZero(value) {
+         return value < 10 ? `0${value}` : value;
+       }, */
 
     // 加载更多词单
     loadMoreLists() {
@@ -131,22 +145,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+
 .word-list {
   padding: 20px;
+
 }
 
 .list-item {
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 30 rpx;
+  padding: 20 rpx;
   border: 1px solid #ccc;
   margin-bottom: 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.list-item:hover {
-  background-color: #f4f4f4;
+  background-color: white;
+  margin-bottom: 40 rpx;
 }
 
 .list-title {
@@ -164,6 +177,7 @@ export default {
 
 .list-nickname {
   font-size: 14px;
+  color: #2b948b;
 }
 
 .list-time {
@@ -174,7 +188,8 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-top: 20 rpx;
+  margin-top: 10 rpx;
+  margin-bottom: 10 rpx;
 }
 
 .empty-message {
@@ -193,20 +208,16 @@ export default {
 }
 
 .send-button button {
-  background-color: #39C5BB;
+  background: linear-gradient(270deg, #3a70c5 0%, #39aad2 50%, #39C5BB 100%);
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s;
 }
 
-.send-button button:hover {
-  background-color: #2fa299;
-}
-
+ss
 .list-description {
   margin-top: 10 rpx;
   font-size: 20 rpx;
@@ -226,10 +237,11 @@ export default {
   font-family: "幼圆";
   letter-spacing: 5 rpx;
 }
+
 .animated-title {
   margin-top: 30 rpx;
   font-size: 50 rpx;
-  animation: colorChange 3s infinite; /* 颜色渐变动画，5秒一次，无限循环 */
+  animation: colorChange 3s infinite;
 }
 
 @keyframes colorChange {

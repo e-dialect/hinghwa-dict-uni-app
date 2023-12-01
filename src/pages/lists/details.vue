@@ -21,15 +21,20 @@
                 {{ wordList.author.nickname }}
               </view>
               <view class="create-time">
-                {{ wordList.createTime }}
+                {{ formattedDateTime }}
               </view>
             </view>
           </view>
         </view>
+        <br>
         <view class="word-list-description">
           {{ wordList.description }}
         </view>
       </view>
+      <view>
+        <hr class="divider">
+      </view>
+      <br>
       <view
         v-for="word in wordList.words"
         :key="word.id"
@@ -41,6 +46,9 @@
             class="wordText"
           >
             {{ word.word }}
+          </view>
+          <view>
+            <p>释义：</p>
           </view>
           <view
             slot="content"
@@ -99,13 +107,26 @@ export default {
     const { id } = options;
     await this.loadDetails(id);
   },
+  computed: {
+    formattedDateTime() {
+      const date = new Date(this.wordList.createTime);
+      const formattedDate = `${date.getFullYear()}-${this.padZero(date.getMonth() + 1)}-${this.padZero(date.getDate())}`;
+      const formattedTime = `${this.padZero(date.getHours())}:${this.padZero(date.getMinutes())}:${this.padZero(date.getSeconds())}`;
+      return `${formattedDate} ${formattedTime}`;
+    },
+  },
   methods: {
     async loadDetails(id) {
       const res = await getWordListDetails(id);
       this.wordList = res;
     },
+    /* 转时间 */
+    padZero(value) {
+      return value < 10 ? `0${value}` : value;
+    },
     toWordPage,
   },
+
 };
 </script>
 r
@@ -170,6 +191,7 @@ r
   font-size: 30 rpx;
   color: #666;
   margin-bottom: 15 rpx;
+  letter-spacing: 2 rpx;
 }
 
 .decriptionText {
@@ -185,5 +207,14 @@ r
   font-size: 45 rpx;
   margin-bottom: 15 rpx;
   letter-spacing: 5 rpx;
+  color: #39C5BB;
+}
+
+/*分割线*/
+.divider {
+  align-self: center;
+  width: 100%;
+  color: #666;
+  size: 10;
 }
 </style>
