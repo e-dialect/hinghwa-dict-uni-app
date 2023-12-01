@@ -129,33 +129,32 @@ export default {
 
 };
 </script>
-r
 <style>
 .word-list-detail {
   padding: 20px;
 }
 
 .word-list-info {
-  padding: 20 rpx;
+  padding: 20rpx;
 }
 
 .word-list-info1 {
   background-color: #fff;
-  padding: 20 rpx;
-  margin-bottom: 40 rpx;
-  border-radius: 15 rpx;
-  box-shadow: 0 4 rpx 8 rpx rgba(0, 0, 0, 0.1);
+  padding: 20rpx;
+  margin-bottom: 40rpx;
+  border-radius: 15rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .word-list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20 rpx;
+  margin-bottom: 20rpx;
 }
 
 .word-list-name {
-  font-size: 60 rpx;
+  font-size: 60rpx;
   font-weight: bold;
   color: #333;
 }
@@ -166,10 +165,10 @@ r
 }
 
 .avatar {
-  width: 65 rpx;
-  height: 65 rpx;
+  width: 65rpx;
+  height: 65rpx;
   border-radius: 50%;
-  margin-right: 10 rpx;
+  margin-right: 10rpx;
 }
 
 .author-details {
@@ -178,24 +177,24 @@ r
 }
 
 .author-name {
-  font-size: 35 rpx;
+  font-size: 35rpx;
   color: #666;
 }
 
 .create-time {
-  font-size: 15 rpx;
+  font-size: 15rpx;
   color: #999;
 }
 
 .word-list-description {
-  font-size: 30 rpx;
+  font-size: 30rpx;
   color: #666;
-  margin-bottom: 15 rpx;
-  letter-spacing: 2 rpx;
+  margin-bottom: 15rpx;
+  letter-spacing: 2rpx;
 }
 
 .decriptionText {
-  font-size: 30 rpx;
+  font-size: 30rpx;
   color: #666;
   max-width: 16em;
   text-overflow: ellipsis;
@@ -204,9 +203,9 @@ r
 }
 
 .wordText {
-  font-size: 45 rpx;
-  margin-bottom: 15 rpx;
-  letter-spacing: 5 rpx;
+  font-size: 45rpx;
+  margin-bottom: 15rpx;
+  letter-spacing: 5rpx;
   color: #39C5BB;
 }
 

@@ -145,21 +145,20 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
 .word-list {
   padding: 20px;
 
 }
 
 .list-item {
-  border-radius: 30 rpx;
-  padding: 20 rpx;
+  border-radius: 30rpx;
+  padding: 20rpx;
   border: 1px solid #ccc;
   margin-bottom: 10px;
   cursor: pointer;
   background-color: white;
-  margin-bottom: 40 rpx;
+  margin-bottom: 40rpx;
 }
 
 .list-title {
@@ -188,8 +187,8 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-top: 10 rpx;
-  margin-bottom: 10 rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
 }
 
 .empty-message {
@@ -217,30 +216,29 @@ export default {
   font-size: 16px;
 }
 
-ss
 .list-description {
-  margin-top: 10 rpx;
-  font-size: 20 rpx;
+  margin-top: 10rpx;
+  font-size: 20rpx;
   color: #3b3838;
   overflow: hidden;
   width: 16em;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 10 rpx;
+  margin-bottom: 10rpx;
 }
 
 /*玩一下渐变色*/
 .title-text {
   text-align: center;
-  margin-top: 10 rpx;
-  margin-bottom: 10 rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
   font-family: "幼圆";
-  letter-spacing: 5 rpx;
+  letter-spacing: 5rpx;
 }
 
 .animated-title {
-  margin-top: 30 rpx;
-  font-size: 50 rpx;
+  margin-top: 30rpx;
+  font-size: 50rpx;
   animation: colorChange 3s infinite;
 }
 
