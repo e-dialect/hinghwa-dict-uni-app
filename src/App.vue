@@ -16,10 +16,10 @@ export default {
           if (navigator.userAgent.indexOf('Mobile') === -1) {
             // redirect to https://hinghwa.cn
             mob2pc();
-          } else if (e.screenWidth / e.screenHeight > 1.5) {
+          } else if (e.screenWidth > e.screenHeight) {
             uni.showModal({
               title: '提示',
-              content: '本页面为横屏页面，是否跳转到 web 版本（https://hinghwa.cn）？',
+              content: '是否跳转到 web 版本（https://hinghwa.cn）？',
               success: (res) => {
                 if (res.confirm) {
                   // redirect to https://hinghwa.cn
