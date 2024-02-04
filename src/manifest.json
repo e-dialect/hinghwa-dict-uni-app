@@ -2,8 +2,8 @@
     "name" : "兴化语记",
     "appid" : "__UNI__51851C4",
     "description" : "莆仙方言在线工具",
-    "versionName" : "2.1.2",
-    "versionCode" : 20210121,
+    "versionName" : "2.1.5",
+    "versionCode" : 20231002,
     "transformPx" : false,
     "app-plus" : {
         "usingComponents" : true,
@@ -16,7 +16,8 @@
             "delay" : 0
         },
         "modules" : {
-            "Record" : {}
+            "Record" : {},
+            "OAuth" : {}
         },
         "distribute" : {
             "android" : {
@@ -44,37 +45,15 @@
                 "dSYMs" : false
             },
             "sdkConfigs" : {
-                "ad" : {}
-            },
-            "icons" : {
-                "android" : {
-                    "hdpi" : "unpackage/res/icons/72x72.png",
-                    "xhdpi" : "unpackage/res/icons/96x96.png",
-                    "xxhdpi" : "unpackage/res/icons/144x144.png",
-                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
-                },
-                "ios" : {
-                    "appstore" : "unpackage/res/icons/1024x1024.png",
-                    "ipad" : {
-                        "app" : "unpackage/res/icons/76x76.png",
-                        "app@2x" : "unpackage/res/icons/152x152.png",
-                        "notification" : "unpackage/res/icons/20x20.png",
-                        "notification@2x" : "unpackage/res/icons/40x40.png",
-                        "proapp@2x" : "unpackage/res/icons/167x167.png",
-                        "settings" : "unpackage/res/icons/29x29.png",
-                        "settings@2x" : "unpackage/res/icons/58x58.png",
-                        "spotlight" : "unpackage/res/icons/40x40.png",
-                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                "ad" : {},
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wxcfb772ecd3bd408e",
+                        "UniversalLinks" : ""
                     },
-                    "iphone" : {
-                        "app@2x" : "unpackage/res/icons/120x120.png",
-                        "app@3x" : "unpackage/res/icons/180x180.png",
-                        "notification@2x" : "unpackage/res/icons/40x40.png",
-                        "notification@3x" : "unpackage/res/icons/60x60.png",
-                        "settings@2x" : "unpackage/res/icons/58x58.png",
-                        "settings@3x" : "unpackage/res/icons/87x87.png",
-                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
-                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                    "qq" : {
+                        "appid" : "1112150805",
+                        "UniversalLinks" : ""
                     }
                 }
             },
@@ -143,5 +122,8 @@
         }
     },
     "locale" : "auto",
-    "fallbackLocale" : "zh-Hans"
+    "fallbackLocale" : "zh-Hans",
+    "mp-qq" : {
+        "appid" : "1112150805"
+    }
 }
