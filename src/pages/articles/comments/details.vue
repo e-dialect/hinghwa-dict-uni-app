@@ -43,6 +43,7 @@
 
     <!--评论框-->
     <view
+      v-if="hasLogin"
       class="cu-bar foot input padding-bottom"
       style="min-height: 120rpx"
     >
