@@ -143,6 +143,7 @@
     <view
       class="cu-bar foot input padding bg-white"
       style="min-height: 120rpx; z-index: 200"
+      v-if="hasLogin"
     >
       <!--点赞按钮-->
       <view
