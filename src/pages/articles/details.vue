@@ -321,12 +321,35 @@ export default {
      * 发送评论
      */
     createComment() {
-      // #ifdef MP-WEIXIN
-      uni.showToast({
-        title: '当前平台不支持',
-        icon: 'none',
-        duration: 2000,
-      });
+      const { comment, parent } = this;
+      const id = this.article.id.toString();
+      switch (uni.getSystemInfoSync().uniPlatform) {
+        case 'mp-weixin':
+          uni.showToast({
+            title: '当前平台不支持',
+            icon: 'none',
+            duration: 2000,
+          });
+          break;
+        default:
+          if (comment.length === 0) {
+            uni.showToast({
+              title: '不能发送空评论',
+              icon: 'none',
+            });
+            return;
+          }
+          createComment(id, comment, parent).then(async () => {
+            await this.getComments(id);
+            this.reply(0);
+            this.inEditing = false;
+            setTimeout(() => {
+              uni.showToast({
+                title: '发表成功',
+              });
+            }, 100);
+          });
+      }
     },
 
     /**
