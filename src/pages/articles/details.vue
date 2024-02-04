@@ -168,6 +168,7 @@
       <button
         class="cu-btn bg-blue shadow"
         style="width: 16vw"
+        :disabled="!hasLogin"
         @tap="createComment"
       >
         发送
@@ -185,6 +186,7 @@ import { toUserPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
 import ArticleComment from '@/components/ArticleComment.vue';
 import MarkdownViewer from '@/components/MarkdownViewer.vue';
+import { getLoginStatusSync } from '@/services/login';
 
 export default {
   components: {
@@ -213,12 +215,14 @@ export default {
       parent: 0,
       comment: '',
       inEditing: false,
+      hasLogin: false,
     };
   },
   onLoad(options) {
     const { id } = options;
     this.id = id;
     this.getArticle(this.id);
+    this.hasLogin = getLoginStatusSync();
   },
   async onShow() {
     await this.getArticle(this.id);
@@ -321,29 +325,6 @@ export default {
         title: '当前平台不支持',
         icon: 'none',
         duration: 2000,
-      });
-      return;
-      // #endif
-      // eslint-disable-next-line no-unreachable
-      const { comment } = this;
-      const { parent } = this;
-      const id = this.article.id.toString();
-      if (comment.length === 0) {
-        uni.showToast({
-          title: '不能发送空评论',
-          icon: 'none',
-        });
-        return;
-      }
-      createComment(id, comment, parent).then(async () => {
-        await this.getComments(id);
-        this.reply(0);
-        this.inEditing = false;
-        setTimeout(() => {
-          uni.showToast({
-            title: '发表成功',
-          });
-        }, 100);
       });
     },
 

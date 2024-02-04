@@ -60,6 +60,7 @@
       <button
         class="cu-btn bg-blue shadow"
         style="width: 16vw"
+        :disabled="!hasLogin"
         @tap="createComment"
       >
         发送
@@ -72,6 +73,7 @@
 import { createComment, getComments } from '@/services/article';
 import { toUserPage } from '@/routers/user';
 import ArticleComment from '@/components/ArticleComment.vue';
+import { getLoginStatusSync } from '../../../services/login';
 
 const app = getApp();
 export default {
@@ -99,6 +101,7 @@ export default {
       map: [],
       inEditing: false,
       text: '',
+      hasLogin: false,
     };
   },
   onLoad(options) {
@@ -119,6 +122,7 @@ export default {
       map[this.comment.kids[i].id] = i;
     }
     this.map = map;
+    this.hasLogin = getLoginStatusSync();
   },
   computed: {
     ph_text() {
