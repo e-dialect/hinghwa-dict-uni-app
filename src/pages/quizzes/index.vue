@@ -119,6 +119,39 @@
           </view>
         </view>
       </view>
+      <view
+        class="cu-item padding"
+        style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
+      >
+        <view class="cu-bar">
+          <view class="action">
+            <text class="text-xl text-bold text-blue">
+              方言能力小测验！
+            </text>
+          </view>
+        </view>
+        <!--组卷测试，3.0增加-->
+        <view class="flex">
+          <text
+            class="text-content padding-left"
+            style="max-width: 60vw"
+          >
+            组卷测试~快来看看你能答对多少题吧！
+          </text>
+          <!--开始答题按钮-->
+          <view class="quiz-btn">
+            <button
+              style="height: 80upx;width: 160upx"
+              class="cu-btn bg-blue shadow"
+              @tap="toPaperPage()"
+            >
+              <text class="text-sm">
+                组卷测试
+              </text>
+            </button>
+          </view>
+        </view>
+      </view>
     </view>
     <!--添题和纠错
     <view class="cu-bar tabbar bg-white shadow foot">
@@ -143,7 +176,9 @@
 </template>
 
 <script>
-import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers/quiz';
+import {
+  toRandomQuizPage, toSearchQuizPage, toTestPage, toPaperPage,
+} from '@/routers/quiz';
 import { defaultMessage } from '@/services/shareMessages';
 
 const app = getApp();
@@ -154,6 +189,7 @@ export default {
       toRandomQuizPage,
       toTestPage,
       toSearchQuizPage,
+      toPaperPage,
     };
   },
 
@@ -171,12 +207,13 @@ export default {
 </script>
 
 <style>
-.indent{
+.indent {
   text-indent: 2em;
   display: block;
 }
+
 .quiz-btn {
-  margin: 30rpx 0;
+  margin: 30 rpx 0;
   display: flex;
   flex-direction: column;
   align-items: center;

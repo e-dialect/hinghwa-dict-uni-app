@@ -31,6 +31,6 @@ export async function getRandomQuiz() {
  * @param number 试卷总题数
  * @returns {Promise<unknown>}
  */
-export async function getTestPaper(number) {
-  return request.get('/quizzes/paper', { number });
+export async function getTestPaper() {
+  return request.get('/papers');
 }
