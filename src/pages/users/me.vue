@@ -59,7 +59,9 @@
           </view>
         </view>
       </view>
-      <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+      <view
+        class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius"
+      >
         <view
           class="cu-item arrow"
           @tap="toMailsPage"
@@ -69,6 +71,14 @@
             <text class="text-grey">
               我的邮箱
             </text>
+            <view
+              v-if="unreadMailsCount > 0"
+              class="notification-circle"
+            >
+              {{
+                unreadMailsCount
+              }}
+            </view>
           </view>
         </view>
         <view class="cu-item arrow">
@@ -132,7 +142,9 @@
         <!--          </navigator>-->
         <!--        </view>-->
       </view>
-      <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+      <view
+        class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius"
+      >
         <view
           class="cu-item arrow"
           @tap="toChangePasswordPage()"
@@ -186,10 +198,16 @@
 <script>
 import { toIndexPage, toTuxiaochaoPage } from '@/routers';
 import {
-  bindingWechat, cancelBindingWechat, clearUserInfo, getUserInfo,
+  bindingWechat,
+  cancelBindingWechat,
+  clearUserInfo,
+  getUserInfo,
 } from '@/services/user';
 import {
-  toChangePasswordPage, toPronunciationsPage, toUserInfoPage, toUserWordsPage,
+  toChangePasswordPage,
+  toPronunciationsPage,
+  toUserInfoPage,
+  toUserWordsPage,
 } from '@/routers/user';
 import { toMailsPage } from '@/routers/mail';
 
@@ -228,6 +246,7 @@ export default {
       this.recordsCount = userInfo.contribution.pronunciation;
       this.wordsCount = userInfo.contribution.word;
       this.visitTotal = userInfo.contribution.article_views || 0;
+      this.unreadMailsCount = userInfo.notification.statistics.unread;
     },
 
     /**
@@ -336,5 +355,24 @@ export default {
   width: 180 rpx;
   height: 180 rpx;
   margin-left: 6 rpx;
+}
+
+/* .content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+} */
+
+.notification-circle {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(30, 182, 213);
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  margin-left: 10px;
 }
 </style>
