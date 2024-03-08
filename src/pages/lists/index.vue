@@ -2,10 +2,12 @@
   <view>
     <cu-custom title="语记·词单" />
     <div class="title-text">
-      <br>
       <h1 class="animated-title">
         当前总词单数：{{ listNum }}
       </h1>
+      <div class="list-description1">
+        常学常新、温故知新。让我们通过精心挑选的词汇组成的词单，来巩固莆仙方言的学习~
+      </div>
     </div>
     <scroll-view
       :scroll-y="true"
@@ -50,11 +52,11 @@
         </view>
       </view>
     </scroll-view>
-    <!-- <view class="send-button">
-      <button @click="uploadList">
+    <view class="send-button">
+      <button @tap="uploadList">
         上传词单
       </button>
-    </view> -->
+    </view>
   </view>
 </template>
 <script>
@@ -75,7 +77,36 @@ export default {
 
   data() {
     return {
-      showlists: [],
+      showlists: [ // 现在里面没有词单
+        {
+          name: 'string',
+          author: {
+            nickname: 'string',
+            avatar: 'string',
+            id: 0,
+          },
+          createTime: '2019-08-24T14:15:22Z',
+          updateTime: '2019-08-24T14:15:22Z',
+          description: 'string',
+          words: [
+            {
+              id: 0,
+              word: 'string',
+              definition: 'string',
+              contributor: 0,
+              annotation: 'string',
+              mandarin: [
+                'string',
+              ],
+              views: 0,
+              standard_ipa: 'string',
+              standard_pinyin: 'string',
+            },
+          ],
+          length: 0,
+          id: 'string',
+        },
+      ],
       triggered: false,
       listNum: 0,
       freshing: false,
@@ -152,13 +183,13 @@ export default {
 }
 
 .list-item {
-  border-radius: 30rpx;
-  padding: 20rpx;
+  border-radius: 30 rpx;
+  padding: 20 rpx;
   border: 1px solid #ccc;
   margin-bottom: 10px;
   cursor: pointer;
   background-color: white;
-  margin-bottom: 40rpx;
+  margin-bottom: 40 rpx;
 }
 
 .list-title {
@@ -187,8 +218,8 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-top: 10rpx;
-  margin-bottom: 10rpx;
+  margin-top: 10 rpx;
+  margin-bottom: 10 rpx;
 }
 
 .empty-message {
@@ -217,29 +248,45 @@ export default {
 }
 
 .list-description {
-  margin-top: 10rpx;
-  font-size: 20rpx;
+  margin-top: 10 rpx;
+  font-size: 20 rpx;
   color: #3b3838;
   overflow: hidden;
   width: 16em;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 10rpx;
+  margin-bottom: 10 rpx;
 }
 
 /*玩一下渐变色*/
 .title-text {
-  text-align: center;
-  margin-top: 10rpx;
-  margin-bottom: 10rpx;
-  font-family: "幼圆";
-  letter-spacing: 5rpx;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30 rpx;
+  height: 300 rpx;
+  width: 650 rpx;
+  margin-top: 50 rpx;
+  letter-spacing: 5 rpx;
+  background-color: #ffffff;
+}
+
+.list-description1 {
+  width: 90%;
+  font-size: 30 rpx;
+  text-overflow: initial; /* 文本不显示省略号 */
+  white-space: normal; /* 文本换行显示 */
+  font-family: "微软雅黑";
+  margin-left: 7%;
+  margin-top: 10%;
+  letter-spacing: 5 rpx;
 }
 
 .animated-title {
-  margin-top: 30rpx;
-  font-size: 50rpx;
+  font-size: 50 rpx;
   animation: colorChange 3s infinite;
+  padding-top: 30 rpx;
+  font-family: "幼圆";
+  text-align: center; /* 文字水平居中 */
 }
 
 @keyframes colorChange {
@@ -259,4 +306,5 @@ export default {
     color: #BC95C6;
   }
 }
+
 </style>

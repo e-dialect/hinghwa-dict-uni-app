@@ -62,11 +62,6 @@
       "path": "pages/tools/daily-expression/index",
       "style": {}
     },
-	{
-	  "path": "pages/tools/wordList",
-	  "style": {}
-	},
-
     // quizzes 区域
     {
       "path": "pages/quizzes/index",
@@ -92,6 +87,19 @@
       "path": "pages/quizzes/tests/answer",
       "style": {}
     },
+	// lists区
+	{
+	  "path": "pages/lists/index",
+	  "style": {}
+	},
+	{
+	  "path": "pages/lists/upload",
+	  "style": {}
+	},
+	{
+	  "path": "pages/lists/details",
+	  "style": {}
+	},
     // articles 区
     {
       "path": "pages/articles/index",

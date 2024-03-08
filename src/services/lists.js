@@ -13,3 +13,8 @@ export async function getWordLists() {
 export async function getWordListDetails(id) {
   return request.get(`/lists/${id}`);
 }
+
+// 创建词单
+export async function postWordList(wordlist) {
+  return request.post('/lists', wordlist);
+}
