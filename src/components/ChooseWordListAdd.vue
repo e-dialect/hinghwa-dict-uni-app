@@ -68,7 +68,6 @@ export default {
     playAudio,
     addWord(id) {
       this.chooseID = id;
-      console.log(this.chooseID);
       this.$emit('addCheck', this.chooseID);
     },
   },
