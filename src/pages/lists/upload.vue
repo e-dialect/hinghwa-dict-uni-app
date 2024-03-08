@@ -144,14 +144,10 @@ export default {
           icon: 'success',
           duration: 2000,
         });
-        console.log('当前id数组：', this.wordlist);
-        console.log('当前id：', data);
         getWordDetailss(data).then((res) => {
           this.wordName = res.word.word;
           this.wordNameList.push(this.wordName);
         });
-        console.log('现在展示的单词数组：', this.wordNameList);
-        console.log('现在的单词：', this.wordName);
       } else {
         uni.showToast({
           title: '添加失败！已经添加过该词！',
@@ -171,7 +167,6 @@ export default {
         description: this.description,
         words: Array.from(this.wordlist),
       };
-      console.log(wordList);
       postWordList(wordList).then((response) => {
         if (response.id != null) {
           uni.showToast({
@@ -188,7 +183,6 @@ export default {
         }
       })
         .catch((error) => {
-          console.error('请求出错', error);
           uni.showToast({
             title: '请求出错',
             icon: 'none',
