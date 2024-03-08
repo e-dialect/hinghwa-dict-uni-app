@@ -156,6 +156,7 @@ export default {
         });
       }
     },
+
     removeWord(index) {
       this.wordNameList.splice(index, 1);
       this.wordlist.splice(index, 1);

@@ -181,7 +181,6 @@ export default {
   padding: 20px;
 
 }
-
 .list-item {
   border-radius: 30 rpx;
   padding: 20 rpx;
