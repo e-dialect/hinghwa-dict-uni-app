@@ -50,7 +50,6 @@ export function toPaperPage() {
   uni.navigateTo({
     url: '/pages/quizzes/quizzset/index',
   });
-  console.log(111);
 }
 
 /**
