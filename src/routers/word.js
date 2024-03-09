@@ -1,5 +1,4 @@
 import { mpLogin } from '@/services/login';
-import { getWordDetails } from '@/services/word';
 
 /**
  * 跳转至词语页面

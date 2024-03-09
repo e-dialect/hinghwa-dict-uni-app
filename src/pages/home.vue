@@ -117,7 +117,6 @@ import { toArticlePage } from '@/routers/article';
 import { toLoginPage } from '@/routers/login';
 import { toMailsPage } from '@/routers/mail';
 
-const app = getApp();
 export default {
   data() {
     return {

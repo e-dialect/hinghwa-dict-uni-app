@@ -67,7 +67,6 @@
 import { registerWechatUser } from '@/services/user';
 import CuCustom from '@/colorui/components/cu-custom.vue';
 
-const app = getApp();
 export default {
   components: { CuCustom },
   data() {

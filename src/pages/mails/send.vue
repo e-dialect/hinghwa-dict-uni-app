@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     async sendEmail() {
-      postMail(this.Notification).then((response) => {
+      postMail(this.Notification).then(() => {
         uni.showToast({
           title: '邮件发送成功！',
           icon: 'success',
@@ -57,7 +57,7 @@ export default {
         this.receiverId = '';
         this.emailTitle = '';
         this.emailContent = '';
-      }).catch((err) => {
+      }).catch(() => {
         uni.showToast({
           title: '邮件发送失败!',
           icon: 'none',

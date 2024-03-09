@@ -146,8 +146,6 @@
 import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers/quiz';
 import { defaultMessage } from '@/services/shareMessages';
 
-const app = getApp();
-
 export default {
   data() {
     return {

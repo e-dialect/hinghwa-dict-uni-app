@@ -56,7 +56,6 @@ import { toArticleEditPage } from '@/routers/article';
 import ArticleList from '@/components/ArticleList.vue';
 import { getLoginStatusSync } from '@/services/login';
 
-const app = getApp();
 export default {
   components: {
     ArticleList,

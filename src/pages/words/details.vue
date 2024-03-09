@@ -236,7 +236,6 @@ import { setClipboard } from '@/utils/clipboard';
 import MarkdownViewer from '@/components/MarkdownViewer.vue';
 import WordPronunciationButton from '@/components/WordPronunciationButton.vue';
 
-const app = getApp();
 export default {
   components: { MarkdownViewer, WordPronunciationButton },
   data() {

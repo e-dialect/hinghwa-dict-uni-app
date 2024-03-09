@@ -101,7 +101,7 @@ export default {
         return;
       } // 修改密码
 
-      changeUserPassword(app.globalData.id, old, new1).then(async (res) => {
+      changeUserPassword(app.globalData.id, old, new1).then(async () => {
         setTimeout(() => {
           uni.navigateBack({
             delta: 1,
