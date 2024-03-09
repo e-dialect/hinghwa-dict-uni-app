@@ -87,6 +87,26 @@
       "path": "pages/quizzes/tests/answer",
       "style": {}
     },
+	{
+		"path":"pages/quizzes/quizzset/index",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizzset/detail",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizzset/myRecord",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizzset/records/index",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizzset/records/detail",
+		"style":{}
+	},
     // articles 区
     {
       "path": "pages/articles/index",

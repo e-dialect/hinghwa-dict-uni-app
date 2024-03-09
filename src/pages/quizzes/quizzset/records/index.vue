@@ -1,0 +1,138 @@
+<template>
+  <view>
+    <cu-custom title="我的记录" />
+    <view style="display:flex;">
+      <image
+        class="user-avater"
+        :src="avatar"
+      />
+      <text class="total-record">
+        {{ username }} 完成了 {{ total }} 份卷子！
+      </text>
+    </view>
+    <view class="paper-list">
+      <view
+        v-for="record in records"
+        :key="record.id"
+        class="paper-item"
+      >
+        <text class="paper-title">
+          {{ record.paper.title }}
+        </text>
+        <br>
+
+        <text class="paper-time">
+          {{ record.timestamp }}
+        </text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import { getAllRecords, getRecord } from '@/services/quizset';
+import { getUserInfo } from '@/services/user';
+
+const app = getApp();
+export default {
+  data() {
+    return {
+      avatar: '',
+      username: '',
+      records: [{
+        id: '1',
+        user: {
+          nickname: 'John Doe',
+          avatar: 'https://example.com/avatar1.jpg',
+          id: 1,
+        },
+        timestamp: '2024-01-25',
+        paper: {
+          title: '哈哈哈',
+        },
+      },
+      {
+        id: '2',
+        user: {
+          nickname: 'John Doe',
+          avatar: 'https://example.com/avatar1.jpg',
+          id: 1,
+        },
+        timestamp: '2024-01-25',
+        paper: {
+          title: '你好',
+        },
+      }],
+      total: 0,
+      getAllRecords,
+      getRecord,
+      getUserInfo,
+    };
+  },
+  onLoad() {
+    uni.pageScrollTo({
+      duration: 0,
+      scrollTop: 0,
+    });
+    getAllRecords().then((res) => {
+      this.records = res.records;
+      this.total = res.total;
+    });
+    getUserInfo(app.globalData.id).then((res) => {
+      this.avatar = res.user.avatar;
+      this.username = res.user.username;
+    });
+  },
+
+};
+</script>
+<style>
+.user-avater {
+  width: 120 upx;
+  height: 120 upx;
+  border-radius: 50%;
+  margin-top: 20 upx;
+  margin-left: 55 upx;
+
+}
+
+.total-record {
+  position: absolute;
+  margin-top: 55 upx;
+  margin-left: 205 upx;
+  font-size: 35 upx;
+  font-weight: bold;
+  color: #39c5bb
+
+}
+
+.paper-list {
+  justify-content: space-around;
+}
+
+.paper-item {
+  margin: 50 rpx;
+  padding: 30 rpx;
+  border: 1px solid #ddd; /* 边框样式 */
+  border-radius: 20 rpx; /* 圆角 */
+  box-shadow: 0 10 rpx 10 rpx rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  background: linear-gradient(to left, #39c5bb, #ffffff);
+  background-size: 200% 50%;
+
+}
+
+.paper-title {
+  font-size: 40 rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.paper-time {
+  margin-left: 450 upx;
+  font-size: 20 rpx;
+  font-weight: bold;
+  color: #333;
+  opacity: 70%;
+}
+
+</style>
