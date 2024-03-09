@@ -298,8 +298,8 @@ export default {
 }
 
 .question {
-  margin-top: 20 rpx;
-  font-size: 40 rpx;
+  margin-top: 20rpx;
+  font-size: 40rpx;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -315,7 +315,7 @@ export default {
 }
 
 .info-section {
-  margin-bottom: 100 rpx;
+  margin-bottom: 100rpx;
 }
 
 .info {
@@ -344,16 +344,16 @@ button:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  margin-bottom: 50 rpx;
+  margin-bottom: 50rpx;
 }
 
 /*分割线用代码*/
 .divider {
-  margin-bottom: 30 rpx;
-  margin-top: 30 rpx;
+  margin-bottom: 30rpx;
+  margin-top: 30rpx;
   background: #E0E3DA;
   width: 100%;
-  height: 3 rpx;
+  height: 3rpx;
 }
 
 .answer-section {
@@ -364,7 +364,7 @@ button:hover {
 
 .answer-section text {
   color: #333;
-  font-size: 30 rpx;
+  font-size: 30rpx;
 }
 
 .submit-btn {
@@ -374,9 +374,9 @@ button:hover {
 }
 
 .authorName {
-  margin-left: 70 rpx;
+  margin-left: 70rpx;
   color: #39C5BB;
-  font-size: 40 rpx;
+  font-size: 40rpx;
   font-family: "幼圆";
 }
 </style>

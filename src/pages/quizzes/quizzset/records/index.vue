@@ -111,25 +111,25 @@ export default {
 }
 
 .paper-item {
-  margin: 50 rpx;
-  padding: 30 rpx;
+  margin: 50rpx;
+  padding: 30rpx;
   border: 1px solid #ddd; /* 边框样式 */
-  border-radius: 20 rpx; /* 圆角 */
-  box-shadow: 0 10 rpx 10 rpx rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  border-radius: 20rpx; /* 圆角 */
+  box-shadow: 0 10rpx 10rpx rgba(0, 0, 0, 0.1); /* 阴影效果 */
   background: linear-gradient(to left, #39c5bb, #ffffff);
   background-size: 200% 50%;
 
 }
 
 .paper-title {
-  font-size: 40 rpx;
+  font-size: 40rpx;
   font-weight: bold;
   color: #333;
 }
 
 .paper-time {
   margin-left: 450 upx;
-  font-size: 20 rpx;
+  font-size: 20rpx;
   font-weight: bold;
   color: #333;
   opacity: 70%;

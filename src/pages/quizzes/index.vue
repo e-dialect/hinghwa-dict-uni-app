@@ -213,7 +213,7 @@ export default {
 }
 
 .quiz-btn {
-  margin: 30 rpx 0;
+  margin: 30rpx 0;
   display: flex;
   flex-direction: column;
   align-items: center;
