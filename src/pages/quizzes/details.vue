@@ -151,7 +151,6 @@ import { getQuiz } from '@/services/quiz';
 import { playAudio } from '@/utils/audio';
 import { defaultMessage } from '@/services/shareMessages';
 
-const app = getApp();
 export default {
   data() {
     return {
@@ -200,7 +199,7 @@ export default {
     /**
      * 提交
      */
-    submitResult(e) {
+    submitResult() {
       if (this.current === 99) {
         uni.showToast({
           title: '还没有做出选择哦',

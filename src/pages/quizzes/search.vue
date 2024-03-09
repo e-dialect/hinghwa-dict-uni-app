@@ -87,8 +87,6 @@
 import { searchQuiz } from '@/services/quiz';
 import { toOneQuizPage } from '@/routers/quiz';
 
-const app = getApp();
-
 export default {
   data() {
     return {

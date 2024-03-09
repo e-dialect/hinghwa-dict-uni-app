@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { changeUserInfo, getUserInfo } from '@/services/user';
+import { changeUserInfo } from '@/services/user';
 import { toLoginPage } from '@/routers/login';
 
 const app = getApp();

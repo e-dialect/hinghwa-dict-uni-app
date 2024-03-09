@@ -80,7 +80,6 @@ import { mpLogin, normalLogin } from '@/services/login';
 import { toForgetPage, toRegisterPage, toWechatRegisterPage } from '@/routers/login';
 import CuCustom from '@/colorui/components/cu-custom.vue';
 
-const app = getApp();
 export default {
   components: { CuCustom },
   data() {

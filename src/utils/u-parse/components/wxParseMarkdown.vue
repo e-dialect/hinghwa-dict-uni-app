@@ -2,8 +2,14 @@
   <!--判断是否是标签节点-->
   <block v-if="node.node === 'element'">
     <block v-if="node.tag === 'button'">
-      <button size="mini" type="default">
-        <block v-for="(node, index) of node.nodes" :key="index">
+      <button
+        size="mini"
+        type="default"
+      >
+        <block
+          v-for="(node, index) of node.nodes"
+          :key="index"
+        >
           <wxParseMarkdown :node="node" />
         </block>
       </button>
@@ -11,8 +17,14 @@
 
     <!--li类型-->
     <block v-else-if="node.tag === 'li'">
-      <view :class="node.classStr" :style="node.styleStr">
-        <block v-for="(node, index) of node.nodes" :key="index">
+      <view
+        :class="node.classStr"
+        :style="node.styleStr"
+      >
+        <block
+          v-for="(node, index) of node.nodes"
+          :key="index"
+        >
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -35,8 +47,16 @@
 
     <!--a类型-->
     <block v-else-if="node.tag === 'a'">
-      <view :class="node.classStr" :data-href="node.attr.href" :style="node.styleStr" @tap="openURL(node.attr.href)">
-        <block v-for="(node, index) of node.nodes" :key="index">
+      <view
+        :class="node.classStr"
+        :data-href="node.attr.href"
+        :style="node.styleStr"
+        @tap="openURL(node.attr.href)"
+      >
+        <block
+          v-for="(node, index) of node.nodes"
+          :key="index"
+        >
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -44,8 +64,15 @@
 
     <!--table类型-->
     <block v-else-if="node.tag === 'table'">
-      <view :class="node.classStr" :style="node.styleStr" class="table">
-        <block v-for="(node, index) of node.nodes" :key="index">
+      <view
+        :class="node.classStr"
+        :style="node.styleStr"
+        class="table"
+      >
+        <block
+          v-for="(node, index) of node.nodes"
+          :key="index"
+        >
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -58,8 +85,14 @@
 
     <!--code类型-->
     <block v-else-if="node.tag === 'code'">
-      <view :class="node.classStr" :style="node.styleStr">
-        <block v-for="(node, index) of node.nodes" :key="index">
+      <view
+        :class="node.classStr"
+        :style="node.styleStr"
+      >
+        <block
+          v-for="(node, index) of node.nodes"
+          :key="index"
+        >
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -74,8 +107,14 @@
 
     <!--其他标签-->
     <block v-else>
-      <view :class="node.classStr" :style="node.styleStr">
-        <block v-for="(node, index) of node.nodes" :key="index">
+      <view
+        :class="node.classStr"
+        :style="node.styleStr"
+      >
+        <block
+          v-for="(node, index) of node.nodes"
+          :key="index"
+        >
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -83,27 +122,30 @@
   </block>
 
   <!--判断是否是文本节点-->
-  <block v-else-if="node.node === 'text'" style="display: inline-block">
+  <block
+    v-else-if="node.node === 'text'"
+    style="display: inline-block"
+  >
     {{ node.text }}
   </block>
 </template>
 
 <script>
-import wxParseImg from './wxParseImg';
-import wxParseVideo from './wxParseVideo';
-import wxParseAudio from './wxParseAudio';
-import IFramePlayer from './IFramePlayer';
+import wxParseImg from './wxParseImg.vue';
+import wxParseVideo from './wxParseVideo.vue';
+import wxParseAudio from './wxParseAudio.vue';
+import IFramePlayer from './IFramePlayer.vue';
 
 export default {
   name: 'WxParseMarkdown',
-  props: {
-    node: {},
-  },
   components: {
     IFramePlayer,
     wxParseImg,
     wxParseVideo,
     wxParseAudio,
+  },
+  props: {
+    node: {},
   },
   methods: {
     /**
@@ -111,22 +153,22 @@ export default {
      * @param href {String} 要打开的URL
      */
     openURL(href) {
-      //#ifdef H5
+      // #ifdef H5
       window.open(href);
-      //#endif
+      // #endif
 
-      //#ifndef H5
+      // #ifndef H5
       uni.setClipboardData({
         data: href,
-        success: function () {
+        success() {
           uni.showToast({
             title: '链接已复制！请在浏览器中打开',
             icon: 'success',
-            duration: 2000
+            duration: 2000,
           });
-        }
+        },
       });
-      //#endif
+      // #endif
     },
   },
 };

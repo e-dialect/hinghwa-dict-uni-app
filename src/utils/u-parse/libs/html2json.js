@@ -12,11 +12,11 @@
  * detail : http://weappdev.com/t/wxparse-alpha0-1-html-markdown/184
  */
 
-import wxDiscode  from './wxDiscode';
+import wxDiscode from './wxDiscode';
 import HTMLParser from './htmlparser';
 
 function makeMap(str) {
-  const obj   = {};
+  const obj = {};
   const items = str.split(',');
   for (let i = 0; i < items.length; i += 1) obj[items[i]] = true;
   return obj;
@@ -50,7 +50,7 @@ function getScreenInfo() {
   const screen = {};
   wx.getSystemInfo({
     success: (res) => {
-      screen.width  = res.windowWidth;
+      screen.width = res.windowWidth;
       screen.height = res.windowHeight;
     },
   });
@@ -59,12 +59,12 @@ function getScreenInfo() {
 
 function html2json(html, customHandler, imageProp, host) {
   // 处理字符串
-  html           = removeDOCTYPE(html);
-  html           = trimHtml(html);
-  html           = wxDiscode.strDiscode(html);
+  html = removeDOCTYPE(html);
+  html = trimHtml(html);
+  html = wxDiscode.strDiscode(html);
   // 生成node节点
   const bufArray = [];
-  const results  = {
+  const results = {
     nodes: [],
     imageUrls: [],
   };
@@ -73,7 +73,7 @@ function html2json(html, customHandler, imageProp, host) {
 
   function Node(tag) {
     this.node = 'element';
-    this.tag  = tag;
+    this.tag = tag;
 
     this.$screen = screen;
   }
@@ -99,8 +99,8 @@ function html2json(html, customHandler, imageProp, host) {
       }
 
       node.attr = attrs.reduce((pre, attr) => {
-        const {name} = attr;
-        let {value}  = attr;
+        const { name } = attr;
+        let { value } = attr;
         if (name === 'class') {
           node.classStr = value;
         }
@@ -144,7 +144,7 @@ function html2json(html, customHandler, imageProp, host) {
       // 对img添加额外数据
       if (node.tag === 'img') {
         let imgUrl = node.attr.src;
-        imgUrl     = wxDiscode.urlToHttpUrl(imgUrl, imageProp.domain);
+        imgUrl = wxDiscode.urlToHttpUrl(imgUrl, imageProp.domain);
         Object.assign(node.attr, imageProp, {
           src: imgUrl || '',
         });
@@ -160,7 +160,7 @@ function html2json(html, customHandler, imageProp, host) {
 
       // 处理font标签样式属性
       if (node.tag === 'font') {
-        const fontSize   = [
+        const fontSize = [
           'x-small',
           'small',
           'medium',

@@ -132,11 +132,10 @@
 
 <script>
 import { changeUserInfo, getUserInfo } from '@/services/user';
-import { chooseAndUploadAnImage, uploadFile } from '@/services/file';
+import { uploadFile } from '@/services/file';
 import {
   toChangeEmailPage, toChangeNicknamePage, toChangePhonePage, toChangeUsernamePage,
 } from '@/routers/user';
-import { loadUserInfo } from '@/services/login';
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];

@@ -127,10 +127,9 @@ export default {
     },
   },
   watch: {
-    /* eslint-disable no-await-in-loop */
     async top(value) {
       const ans = [];
-      for (const item of value.words) {
+      await Promise.all(value.words.map(async (item) => {
         let tmp = {
           word: item.word,
           id: null,
@@ -145,9 +144,10 @@ export default {
           tmp = { ...item };
         }
         ans.push(tmp);
-      }
+      }));
       this.words = ans;
     },
+
   },
   async onLoad() {
     await getWordDetails(1966).then((res) => {
@@ -166,9 +166,9 @@ export default {
       if (!this.top.relations[field]) { return false; }
       const ans = [];
       if (typeof this.top.relations[field] !== 'string') {
-        for (const i in this.top.relations[field]) {
+        Object.keys(this.top.relations[field]).forEach((i) => {
           if (this.top.relations[field]) { ans.push(find(this.top.relations[field][i])); }
-        }
+        });
       } else {
         ans.push(find(this.top.relations[field]));
       }

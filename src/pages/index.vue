@@ -35,7 +35,6 @@ import tools from './tools/index.vue';
 import InteractionPage from './articles/index.vue';
 import me from './users/me.vue';
 
-const app = getApp();
 export default {
   components: {
     basics,

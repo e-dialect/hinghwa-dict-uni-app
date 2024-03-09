@@ -36,7 +36,7 @@ export async function getPronunciationsWithTotal(filter) {
  * @returns {Promise<unknown>}
  */
 export async function combinePronunciation(body) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     request.get('/pronunciation/combine', body).then((res) => {
       resolve(res.url);
     }).catch(() => {
