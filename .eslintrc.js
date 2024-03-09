@@ -9,8 +9,6 @@ module.exports = {
     // override/add rules settings here, such as:
     'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
-    'no-continue': 'off',
-    'no-restricted-syntax': 'off',
   },
   settings: {
     'import/resolver': {
