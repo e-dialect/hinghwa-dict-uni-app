@@ -97,7 +97,7 @@
           <navigator
             class="content"
             hover-class="none"
-            url="/pages/quizzes/quizzset/index"
+            url="/pages/users/me/articles"
           >
             <text class="cuIcon-edit text-grey" />
             <text class="text-grey">
