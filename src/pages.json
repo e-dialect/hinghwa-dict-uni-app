@@ -100,23 +100,19 @@
       "style": {}
     },
 	{
-		"path":"pages/quizzes/quizzset/index",
+		"path":"pages/quizzes/quizset/index",
 		"style":{}
 	},
 	{
-		"path":"pages/quizzes/quizzset/detail",
+		"path":"pages/quizzes/quizset/detail",
 		"style":{}
 	},
 	{
-		"path":"pages/quizzes/quizzset/myRecord",
+		"path":"pages/quizzes/quizset/myRecord",
 		"style":{}
 	},
 	{
-		"path":"pages/quizzes/quizzset/records/index",
-		"style":{}
-	},
-	{
-		"path":"pages/quizzes/quizzset/records/detail",
+		"path":"pages/quizzes/quizset/records/index",
 		"style":{}
 	},
     // articles 区

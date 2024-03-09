@@ -48,7 +48,7 @@ export function toSearchQuizPage() {
  */
 export function toPaperPage() {
   uni.navigateTo({
-    url: '/pages/quizzes/quizzset/index',
+    url: '/pages/quizzes/quizset/index',
   });
 }
 
@@ -57,7 +57,7 @@ export function toPaperPage() {
  */
 export function navigatorToDetail(paperId) {
   uni.navigateTo({
-    url: `/pages/quizzes/quizzset/detail?id=${paperId}`,
+    url: `/pages/quizzes/quizset/detail?id=${paperId}`,
   });
 }
 
@@ -66,7 +66,7 @@ export function navigatorToDetail(paperId) {
  */
 export function gotoAllRecords() {
   uni.navigateTo({
-    url: '/pages/quizzes/quizzset/records/index',
+    url: '/pages/quizzes/quizset/records/index',
   });
 }
 
@@ -75,6 +75,6 @@ export function gotoAllRecords() {
  */
 export function gotoDetailRecord(rid) {
   uni.navigateTo({
-    url: `/pages/quizzes/quizzset/records/detail?id=${rid}`,
+    url: `/pages/quizzes/quizset/records/detail?id=${rid}`,
   });
 }
