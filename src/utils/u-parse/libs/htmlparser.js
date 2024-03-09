@@ -14,11 +14,11 @@
 // Regular Expressions for parsing tags and attributes
 
 const startTag = /^<([-A-Za-z0-9_]+)((?:\s+[a-zA-Z0-9_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/;
-const endTag   = /^<\/([-A-Za-z0-9_]+)[^>]*>/;
-const attr     = /([a-zA-Z0-9_:][-a-zA-Z0-9_:.]*)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g;
+const endTag = /^<\/([-A-Za-z0-9_]+)[^>]*>/;
+const attr = /([a-zA-Z0-9_:][-a-zA-Z0-9_:.]*)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g;
 
 function makeMap(str) {
-  const obj   = {};
+  const obj = {};
   const items = str.split(',');
   for (let i = 0; i < items.length; i += 1) obj[items[i]] = true;
   return obj;
@@ -44,7 +44,7 @@ function HTMLParser(html, handler) {
   let index;
   let chars;
   let match;
-  let last    = html;
+  let last = html;
   const stack = [];
 
   stack.last = () => stack[stack.length - 1];
@@ -132,11 +132,11 @@ function HTMLParser(html, handler) {
     }
 
     if (chars) {
-      index    = html.indexOf('<');
+      index = html.indexOf('<');
       let text = '';
       while (index === 0) {
         text += '<';
-        html  = html.substring(1);
+        html = html.substring(1);
         index = html.indexOf('<');
       }
       text += index < 0 ? html : html.substring(0, index);
