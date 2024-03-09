@@ -153,22 +153,22 @@ export default {
      * @param href {String} 要打开的URL
      */
     openURL(href) {
-      // #ifdef H5
+      //#ifdef H5
       window.open(href);
-      // #endif
+      //#endif
 
-      // #ifndef H5
+      //#ifndef H5
       uni.setClipboardData({
         data: href,
-        success() {
+        success: function () {
           uni.showToast({
             title: '链接已复制！请在浏览器中打开',
             icon: 'success',
-            duration: 2000,
+            duration: 2000
           });
-        },
+        }
       });
-      // #endif
+      //#endif
     },
   },
 };
