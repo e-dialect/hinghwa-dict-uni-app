@@ -8,7 +8,6 @@ module.exports = {
   rules: {
     // override/add rules settings here, such as:
     'vue/multi-word-component-names': 'off',
-    'no-undef': 'off',
   },
   settings: {
     'import/resolver': {
@@ -19,5 +18,10 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 'latest',
+  },
+  globals: {
+    uni: true,
+    getApp: true,
+    getCurrentPages: true,
   },
 };
