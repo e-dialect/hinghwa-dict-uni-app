@@ -37,7 +37,8 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
-    "lint": "eslint --ext .js,.vue src --max-warnings 0 --fix",
+    "lint": "eslint --ext .js,.vue src --max-warnings 0",
+    "lint-fix": "eslint --ext .js,.vue src --max-warnings 0 --fix",
     "build-dev:h5": "uni build -m development"
   },
   "dependencies": {

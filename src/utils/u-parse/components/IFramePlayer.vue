@@ -34,7 +34,7 @@ export default {
   },
   methods:{
     onTap(){
-      // #ifdef MP-WEIXIN
+      // #ifdef MP
       uni.setClipboardData({
         data: this.src,
         success: function () {
@@ -51,7 +51,7 @@ export default {
         }
       });
       // #endif
-      // #ifndef MP-WEIXIN
+      // #ifndef MP
       this.visible = true;
       // #endif
 

@@ -54,12 +54,14 @@
       >
         忘记密码
       </view>
+      <!-- #ifndef MP-WEIXIN -->
       <view
         class="flex-sub solid-right"
         @tap="toRegisterPage()"
       >
         用户注册
       </view>
+      <!-- #endif -->
       <!-- #ifdef MP-WEIXIN -->
       <view
         class="flex-sub"

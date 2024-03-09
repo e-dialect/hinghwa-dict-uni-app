@@ -59,6 +59,18 @@
       "style": {}
     },
     {
+      "path": "pages/mails/index",
+      "style": {}
+    },
+    {
+      "path": "pages/mails/details",
+      "style": {}
+    },
+    {
+      "path": "pages/mails/send",
+      "style": {}
+    },
+    {
       "path": "pages/tools/daily-expression/index",
       "style": {}
     },
@@ -171,6 +183,23 @@
     },
     {
       "path": "pages/users/me/comments",
+      "style": {}
+    },
+    /*product区*/
+    {
+      "path": "pages/products/index",
+      "style": {}
+    },
+    {
+      "path": "pages/products/upload",
+      "style": {}
+    },
+    {
+      "path": "pages/products/details",
+      "style": {}
+    },
+    {
+      "path": "pages/products/history",
       "style": {}
     },
     {

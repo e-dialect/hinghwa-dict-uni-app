@@ -59,7 +59,28 @@
           </view>
         </view>
       </view>
-      <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+      <view
+        class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius"
+      >
+        <view
+          class="cu-item arrow"
+          @tap="toMailsPage"
+        >
+          <view class="content">
+            <text class="cuIcon-mail text-grey" />
+            <text class="text-grey">
+              我的邮箱
+            </text>
+            <view
+              v-if="unreadMailsCount > 0"
+              class="notification-circle"
+            >
+              {{
+                unreadMailsCount
+              }}
+            </view>
+          </view>
+        </view>
         <view class="cu-item arrow">
           <navigator
             class="content"
@@ -81,6 +102,18 @@
             <text class="cuIcon-edit text-grey" />
             <text class="text-grey">
               我的文章
+            </text>
+          </navigator>
+        </view>
+        <view class="cu-item arrow">
+          <navigator
+            class="content"
+            hover-class="none"
+            url="/pages/products/history"
+          >
+            <text class="cuIcon-shop text-grey" />
+            <text class="text-grey">
+              我的积分
             </text>
           </navigator>
         </view>
@@ -109,7 +142,9 @@
         <!--          </navigator>-->
         <!--        </view>-->
       </view>
-      <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+      <view
+        class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius"
+      >
         <view
           class="cu-item arrow"
           @tap="toChangePasswordPage()"
@@ -163,11 +198,18 @@
 <script>
 import { toIndexPage, toTuxiaochaoPage } from '@/routers';
 import {
-  bindingWechat, cancelBindingWechat, clearUserInfo, getUserInfo,
+  bindingWechat,
+  cancelBindingWechat,
+  clearUserInfo,
+  getUserInfo,
 } from '@/services/user';
 import {
-  toChangePasswordPage, toPronunciationsPage, toUserInfoPage, toUserWordsPage,
+  toChangePasswordPage,
+  toPronunciationsPage,
+  toUserInfoPage,
+  toUserWordsPage,
 } from '@/routers/user';
+import { toMailsPage } from '@/routers/mail';
 
 const app = getApp();
 export default {
@@ -181,10 +223,12 @@ export default {
       visitTotal: 0,
     };
   },
+
   beforeMount() {
     this.getInfo();
   },
   methods: {
+    toMailsPage,
     toUserWordsPage,
     toChangePasswordPage,
     toUserInfoPage,
@@ -202,6 +246,7 @@ export default {
       this.recordsCount = userInfo.contribution.pronunciation;
       this.wordsCount = userInfo.contribution.word;
       this.visitTotal = userInfo.contribution.article_views || 0;
+      this.unreadMailsCount = userInfo.notification.statistics.unread;
     },
 
     /**
@@ -294,21 +339,40 @@ export default {
 }
 
 .bg-info .avatar {
-  width: 190rpx;
-  height: 190rpx;
+  width: 190 rpx;
+  height: 190 rpx;
 }
 
 .bg-info .text {
   position: absolute;
   top: 22vh;
-  font-size: 36rpx;
+  font-size: 36 rpx;
   font-weight: 700;
   color: white;
 }
 
 .bg-info image {
-  width: 180rpx;
-  height: 180rpx;
-  margin-left: 6rpx;
+  width: 180 rpx;
+  height: 180 rpx;
+  margin-left: 6 rpx;
+}
+
+/* .content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+} */
+
+.notification-circle {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(30, 182, 213);
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  margin-left: 10px;
 }
 </style>
