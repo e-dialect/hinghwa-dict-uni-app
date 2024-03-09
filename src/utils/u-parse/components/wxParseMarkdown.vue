@@ -2,14 +2,8 @@
   <!--判断是否是标签节点-->
   <block v-if="node.node === 'element'">
     <block v-if="node.tag === 'button'">
-      <button
-        size="mini"
-        type="default"
-      >
-        <block
-          v-for="(node, index) of node.nodes"
-          :key="index"
-        >
+      <button size="mini" type="default">
+        <block v-for="(node, index) of node.nodes" :key="index">
           <wxParseMarkdown :node="node" />
         </block>
       </button>
@@ -17,14 +11,8 @@
 
     <!--li类型-->
     <block v-else-if="node.tag === 'li'">
-      <view
-        :class="node.classStr"
-        :style="node.styleStr"
-      >
-        <block
-          v-for="(node, index) of node.nodes"
-          :key="index"
-        >
+      <view :class="node.classStr" :style="node.styleStr">
+        <block v-for="(node, index) of node.nodes" :key="index">
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -47,16 +35,8 @@
 
     <!--a类型-->
     <block v-else-if="node.tag === 'a'">
-      <view
-        :class="node.classStr"
-        :data-href="node.attr.href"
-        :style="node.styleStr"
-        @tap="openURL(node.attr.href)"
-      >
-        <block
-          v-for="(node, index) of node.nodes"
-          :key="index"
-        >
+      <view :class="node.classStr" :data-href="node.attr.href" :style="node.styleStr" @tap="openURL(node.attr.href)">
+        <block v-for="(node, index) of node.nodes" :key="index">
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -64,15 +44,8 @@
 
     <!--table类型-->
     <block v-else-if="node.tag === 'table'">
-      <view
-        :class="node.classStr"
-        :style="node.styleStr"
-        class="table"
-      >
-        <block
-          v-for="(node, index) of node.nodes"
-          :key="index"
-        >
+      <view :class="node.classStr" :style="node.styleStr" class="table">
+        <block v-for="(node, index) of node.nodes" :key="index">
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -85,14 +58,8 @@
 
     <!--code类型-->
     <block v-else-if="node.tag === 'code'">
-      <view
-        :class="node.classStr"
-        :style="node.styleStr"
-      >
-        <block
-          v-for="(node, index) of node.nodes"
-          :key="index"
-        >
+      <view :class="node.classStr" :style="node.styleStr">
+        <block v-for="(node, index) of node.nodes" :key="index">
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -107,14 +74,8 @@
 
     <!--其他标签-->
     <block v-else>
-      <view
-        :class="node.classStr"
-        :style="node.styleStr"
-      >
-        <block
-          v-for="(node, index) of node.nodes"
-          :key="index"
-        >
+      <view :class="node.classStr" :style="node.styleStr">
+        <block v-for="(node, index) of node.nodes" :key="index">
           <wxParseMarkdown :node="node" />
         </block>
       </view>
@@ -122,10 +83,7 @@
   </block>
 
   <!--判断是否是文本节点-->
-  <block
-    v-else-if="node.node === 'text'"
-    style="display: inline-block"
-  >
+  <block v-else-if="node.node === 'text'" style="display: inline-block">
     {{ node.text }}
   </block>
 </template>
@@ -138,14 +96,14 @@ import IFramePlayer from './IFramePlayer';
 
 export default {
   name: 'WxParseMarkdown',
+  props: {
+    node: {},
+  },
   components: {
     IFramePlayer,
     wxParseImg,
     wxParseVideo,
     wxParseAudio,
-  },
-  props: {
-    node: {},
   },
   methods: {
     /**
