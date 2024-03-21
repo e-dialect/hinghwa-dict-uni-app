@@ -107,7 +107,6 @@ export default {
       wordlist: [],
     };
   },
-
   methods: {
     hideMore() {
       this.isShow = !this.isShow;

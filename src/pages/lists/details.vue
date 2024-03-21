@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { getWordListDetails } from '@/services/lists';
 import { toWordPage } from '@/routers/word';
 
 export default {

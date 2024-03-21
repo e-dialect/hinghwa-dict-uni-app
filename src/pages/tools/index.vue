@@ -68,7 +68,6 @@ export default {
           img: 'https://cos.edialect.top/website/亲戚计算.png',
           url: '/tools/relative',
         },
-
       ],
     };
   },

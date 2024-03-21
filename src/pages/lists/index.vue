@@ -60,6 +60,7 @@
   </view>
 </template>
 <script>
+
 import { getWordLists } from '@/services/lists';
 
 export default {
