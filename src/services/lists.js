@@ -5,6 +5,7 @@ import request from '../utils/request';
 export async function getWordLists() {
   return request.get('/lists');
 }
+
 /**
  * @param id 词单id
  * @returns {Promise<unknown>}

@@ -86,7 +86,6 @@
 </template>
 
 <script>
-import { searchCharacters } from '@/services/character';
 import { getWords, searchWords, getWordDetailss } from '@/services/word';
 import ChooseWordListAdd from '@/components/ChooseWordListAdd.vue';
 import { postWordList } from '@/services/lists';
@@ -183,7 +182,7 @@ export default {
           });
         }
       })
-        .catch((error) => {
+        .catch(() => {
           uni.showToast({
             title: '请求出错',
             icon: 'none',

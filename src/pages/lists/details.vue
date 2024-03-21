@@ -127,6 +127,7 @@ export default {
     toWordPage,
   },
 };
+
 </script>
 <style>
 .word-list-detail {

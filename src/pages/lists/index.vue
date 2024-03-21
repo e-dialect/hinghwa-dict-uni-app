@@ -60,7 +60,7 @@
   </view>
 </template>
 <script>
-import { ref, onMounted } from 'vue';
+
 import { getWordLists } from '@/services/lists';
 
 const app = getApp();

@@ -47,6 +47,7 @@ export default {
           img: 'https://pic.imgdb.cn/item/65fc2d909f345e8d03fb4be6.png',
           url: '/lists/index',
         },
+
         {
           img: 'https://cos.edialect.top/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
           url: '/quizzes/index',
