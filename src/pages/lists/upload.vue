@@ -207,9 +207,9 @@ textarea {
 }
 
 .divider {
-  height: 1 rpx;
+  height: 1rpx;
   background-color: #ccc;
-  margin: 20 rpx 0; /* 调整分割线的间距 */
+  margin: 20rpx 0; /* 调整分割线的间距 */
 }
 
 button {
@@ -217,28 +217,28 @@ button {
 }
 
 .chooseWords {
-  border: 1 rpx solid #7a7a7a;
-  border-radius: 100 rpx;
-  padding-left: 15 rpx;
-  padding-right: 15 rpx;
-  padding-top: 3 rpx;
-  padding-bottom: 3 rpx;
-  font-size: 35 rpx;
-  margin-bottom: 10 rpx;
-  margin-left: 20 rpx;
+  border: 1rpx solid #7a7a7a;
+  border-radius: 100rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  padding-top: 3rpx;
+  padding-bottom: 3rpx;
+  font-size: 35rpx;
+  margin-bottom: 10rpx;
+  margin-left: 20rpx;
 }
 
 .titleWord {
   text-align: center;
-  padding: 20 rpx;
-  border-radius: 10 rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
   background-image: linear-gradient(to right, #e3e0ff, #c1ddc3);
-  font-size: 30 rpx;
+  font-size: 30rpx;
   font-family: "幼圆";
-  margin-bottom: 15 rpx;
+  margin-bottom: 15rpx;
   font-weight: bold;
   color: #39C5BB;
-  letter-spacing: 5 rpx;
+  letter-spacing: 5rpx;
 }
 
 .buttonStyle {

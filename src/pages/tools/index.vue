@@ -44,7 +44,7 @@ export default {
           url: '/tools/dictionary',
         },
         {
-          img: 'https://pic.imgdb.cn/item/64d45b0e1ddac507ccef0460.png',
+          img: 'https://pic.imgdb.cn/item/65fc2d909f345e8d03fb4be6.png',
           url: '/lists/index',
         },
         {
@@ -93,12 +93,12 @@ export default {
 <style>
 .cardTitle {
   color: #fff;
-  padding: 90 rpx 60 rpx;
-  font-size: 40 rpx;
+  padding: 90rpx 60rpx;
+  font-size: 40rpx;
   font-weight: 300;
   transform: skew(-10deg, 0deg);
   position: relative;
-  text-shadow: 0px 0px 6 rpx rgba(0, 0, 0, 0.3);
+  text-shadow: 0px 0px 6rpx rgba(0, 0, 0, 0.3);
 }
 
 </style>

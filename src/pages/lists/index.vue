@@ -181,14 +181,15 @@ export default {
   padding: 20px;
 
 }
+
 .list-item {
-  border-radius: 30 rpx;
-  padding: 20 rpx;
+  border-radius: 30rpx;
+  padding: 20rpx;
   border: 1px solid #ccc;
   margin-bottom: 10px;
   cursor: pointer;
   background-color: white;
-  margin-bottom: 40 rpx;
+  margin-bottom: 40rpx;
 }
 
 .list-title {
@@ -217,8 +218,8 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-top: 10 rpx;
-  margin-bottom: 10 rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
 }
 
 .empty-message {
@@ -247,43 +248,43 @@ export default {
 }
 
 .list-description {
-  margin-top: 10 rpx;
-  font-size: 20 rpx;
+  margin-top: 10rpx;
+  font-size: 20rpx;
   color: #3b3838;
   overflow: hidden;
   width: 16em;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 10 rpx;
+  margin-bottom: 10rpx;
 }
 
 /*玩一下渐变色*/
 .title-text {
   margin-left: auto;
   margin-right: auto;
-  border-radius: 30 rpx;
-  height: 300 rpx;
-  width: 650 rpx;
-  margin-top: 50 rpx;
-  letter-spacing: 5 rpx;
+  border-radius: 30rpx;
+  height: 300rpx;
+  width: 650rpx;
+  margin-top: 50rpx;
+  letter-spacing: 5rpx;
   background-color: #ffffff;
 }
 
 .list-description1 {
   width: 90%;
-  font-size: 30 rpx;
+  font-size: 30rpx;
   text-overflow: initial; /* 文本不显示省略号 */
   white-space: normal; /* 文本换行显示 */
   font-family: "微软雅黑";
   margin-left: 7%;
   margin-top: 10%;
-  letter-spacing: 5 rpx;
+  letter-spacing: 5rpx;
 }
 
 .animated-title {
-  font-size: 50 rpx;
+  font-size: 50rpx;
   animation: colorChange 3s infinite;
-  padding-top: 30 rpx;
+  padding-top: 30rpx;
   font-family: "幼圆";
   text-align: center; /* 文字水平居中 */
 }
