@@ -60,10 +60,7 @@
   </view>
 </template>
 <script>
-
 import { getWordLists } from '@/services/lists';
-
-const app = getApp();
 
 export default {
   filters: { // 好像没成功？写出bug来了qwq
@@ -153,25 +150,7 @@ export default {
         this.freshing = false;
       }, 500);
     },
-    /* 时间加0 */
-    /* padZero(value) {
-         return value < 10 ? `0${value}` : value;
-       }, */
 
-    // 加载更多词单
-    loadMoreLists() {
-      /* uni.showLoading();
-      const { page } = this;
-      const originLists = this.showLists;
-      getAllMails(this.page + 1).then((res) => {
-        this.showlists = originlists.concat(res.notifications);
-        this.page += 1;
-        setTimeout(() => {
-          uni.hideLoading();
-        }, 500);
-      }); */
-      // 打印一下当前page和showlists
-    },
   },
 };
 </script>
