@@ -44,7 +44,7 @@ export default {
           url: '/tools/dictionary',
         },
         {
-          img: 'https://pic.imgdb.cn/item/65fc2d909f345e8d03fb4be6.png',
+          img: 'https://cos.edialect.top/website/词单学习.png',
           url: '/lists/index',
         },
 
