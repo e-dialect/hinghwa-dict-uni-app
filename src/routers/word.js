@@ -24,7 +24,8 @@ export function toWordPage(id) {
         url: `/pages/words/details?id=${id}`,
       });
       return;
-    } app.globalData.showRedirectTips = false;
+    }
+    app.globalData.showRedirectTips = false;
   }
   uni.navigateTo({
     url: `/pages/words/details?id=${id}`,

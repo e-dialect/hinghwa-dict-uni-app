@@ -44,6 +44,11 @@ export default {
           url: '/tools/dictionary',
         },
         {
+          img: 'https://cos.edialect.top/website/词单学习.png',
+          url: '/lists/index',
+        },
+
+        {
           img: 'https://cos.edialect.top/website/%E8%81%AA%E6%98%8E%E8%8A%B1%E5%BC%80.png',
           url: '/quizzes/index',
         },
@@ -95,4 +100,5 @@ export default {
   position: relative;
   text-shadow: 0px 0px 6rpx rgba(0, 0, 0, 0.3);
 }
+
 </style>
