@@ -99,6 +99,22 @@
       "path": "pages/quizzes/tests/answer",
       "style": {}
     },
+	{
+		"path":"pages/quizzes/quizset/index",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/detail",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/myRecord",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/records/index",
+		"style":{}
+	},
     // articles 区
     {
       "path": "pages/articles/index",
