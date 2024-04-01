@@ -74,8 +74,14 @@ export function gotoAllRecords() {
 /**
  * 前往卷子特定答题记录页面 3.0增加
  */
-export function gotoDetailRecord(rid) {
+export function gotoRecordDetail(rid) {
   uni.navigateTo({
     url: `/pages/quizzes/quizzset/records/detail?id=${rid}`,
+  });
+}
+
+export function gotoQuestionCard(paperId) {
+  uni.navigateTo({
+    url: `/pages/quizzes/quizzset/questionCard?id=${paperId}`,
   });
 }

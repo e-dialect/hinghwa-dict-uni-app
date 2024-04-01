@@ -4,6 +4,9 @@
     <view class="container">
       <!-- 上部分：题目和选项 -->
       <view class="question-section">
+        <p class="totalQuestion">
+          第 {{ currentQuizIndex + 1 }} 题 / 总{{ quizData.quizzes.length }}题：
+        </p>
         <text class="question">
           {{ currentQuiz.question }}
         </text>
@@ -31,7 +34,7 @@
         <view class="padding submit-btn">
           <button
             class="cu-btn bg-gradual-blue"
-            @click="submitResult"
+            @click="submitResult(currentQuiz.answer,index)"
           >
             提 交
           </button>
@@ -48,6 +51,13 @@
             from: {{ currentQuiz.author.nickname }}
           </text>
         </view>
+
+        <!--已经提交的题目就传递给答题卡-->
+        <QuestionCard
+          v-show="false"
+          :quizzes="quizzes"
+          :submitted="submitted"
+        />
 
         <view class="divider" />
 
@@ -90,9 +100,13 @@
 
 <script>
 // eslint-disable-next-line import/extensions
-import { getPaperDetail } from '@/services/quizset.js';
+import { getPaperDetail } from '@/services/quizset';
+import QuestionCard from '@/pages/quizzes/quizzset/questionCard.vue';
 
 export default {
+  components: {
+    QuestionCard,
+  },
   data() {
     return {
       quizData: {
@@ -169,6 +183,7 @@ export default {
       showAnswerFlag: false,
       showExplanationFlag: false,
       current: 99,
+      submitted: [],
     };
   },
   computed: {
@@ -176,11 +191,15 @@ export default {
       return this.quizData.quizzes[this.currentQuizIndex];
     },
   },
-  onLoad() {
+  onLoad(query) {
     uni.pageScrollTo({
       scrollTop: 0,
       duration: 0,
     });
+    if (query.index) {
+      this.currentQuizIndex = parseInt(query.index, 10);
+      console.log(query.index);
+    }
     const paperid = this.$route.query.id;
     getPaperDetail(paperid).then((res) => {
       this.quizData = res.quizzes;
@@ -230,7 +249,7 @@ export default {
     },
 
     /* 提交答案 */
-    submitResult(e) {
+    submitResult(answer, index) {
       if (this.current === 99) {
         uni.showToast({
           title: '还没有做出选择哦',
@@ -240,10 +259,10 @@ export default {
         uni.showModal({
           title: '提交',
           content: '确定要提交吗？',
-
           success: (res) => {
             if (res.confirm) {
-              if (this.current === currentQuiz.answer) {
+              if (this.current === answer) {
+                this.$set(this.submitted, index, true);
                 uni.showToast({
                   title: '答对啦！',
                 });
@@ -275,8 +294,8 @@ export default {
 }
 
 .cu-form-group .title {
-  padding-left: 30 upx;
-  padding-right: 0 upx;
+  padding-left: 30rpx;
+  padding-right: 0rpx;
 }
 
 .cu-form-group + .cu-form-group {
@@ -284,7 +303,7 @@ export default {
 }
 
 .cu-bar-title {
-  min-height: 50 upx;
+  min-height: 50rpx;
 }
 
 .container {
@@ -298,8 +317,8 @@ export default {
 }
 
 .question {
-  margin-top: 20 rpx;
-  font-size: 40 rpx;
+  margin-top: 20rpx;
+  font-size: 40rpx;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -315,7 +334,7 @@ export default {
 }
 
 .info-section {
-  margin-bottom: 100 rpx;
+  margin-bottom: 100rpx;
 }
 
 .info {
@@ -344,16 +363,16 @@ button:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  margin-bottom: 50 rpx;
+  margin-bottom: 50rpx;
 }
 
 /*分割线用代码*/
 .divider {
-  margin-bottom: 30 rpx;
-  margin-top: 30 rpx;
+  margin-bottom: 30rpx;
+  margin-top: 30rpx;
   background: #E0E3DA;
   width: 100%;
-  height: 3 rpx;
+  height: 3rpx;
 }
 
 .answer-section {
@@ -364,7 +383,7 @@ button:hover {
 
 .answer-section text {
   color: #333;
-  font-size: 30 rpx;
+  font-size: 30rpx;
 }
 
 .submit-btn {
@@ -374,9 +393,14 @@ button:hover {
 }
 
 .authorName {
-  margin-left: 70 rpx;
+  margin-left: 70rpx;
   color: #39C5BB;
-  font-size: 40 rpx;
+  font-size: 40rpx;
   font-family: "幼圆";
+}
+
+.totalQuestion {
+  font-size: 30rpx;
+  margin-bottom: 10rpx;
 }
 </style>

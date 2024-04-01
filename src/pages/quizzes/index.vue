@@ -87,7 +87,7 @@
         </view>
       </view>
       <!--试卷-->
-      <view
+      <!-- <view
         class="cu-item padding"
         style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
       >
@@ -104,9 +104,9 @@
             style="max-width: 60vw"
           >
             一个小小的能力测验~快看看你能拿多少分数吧！
-          </text>
-          <!--开始答题按钮-->
-          <view class="quiz-btn">
+          </text> -->
+      <!--开始答题按钮-->
+      <!-- <view class="quiz-btn">
             <button
               style="height: 80upx;width: 160upx"
               class="cu-btn bg-blue shadow"
@@ -118,7 +118,7 @@
             </button>
           </view>
         </view>
-      </view>
+      </view> -->
       <view
         class="cu-item padding"
         style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
@@ -213,7 +213,7 @@ export default {
 }
 
 .quiz-btn {
-  margin: 30 rpx 0;
+  margin: 30rpx 0;
   display: flex;
   flex-direction: column;
   align-items: center;

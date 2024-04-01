@@ -1,7 +1,7 @@
 <template>
   <view>
     <cu-custom title="我的记录" />
-    <view style="display:flex;">
+    <view class="title">
       <image
         class="user-avater"
         :src="avatar"
@@ -15,6 +15,7 @@
         v-for="record in records"
         :key="record.id"
         class="paper-item"
+        @tap="gotoRecordDetail(record.id)"
       >
         <text class="paper-title">
           {{ record.paper.title }}
@@ -32,6 +33,7 @@
 <script>
 import { getAllRecords, getRecord } from '@/services/quizset';
 import { getUserInfo } from '@/services/user';
+import { gotoRecordDetail } from '@/routers/quiz';
 
 const app = getApp();
 export default {
@@ -67,6 +69,7 @@ export default {
       getAllRecords,
       getRecord,
       getUserInfo,
+      gotoRecordDetail,
     };
   },
   onLoad() {
@@ -88,19 +91,19 @@ export default {
 </script>
 <style>
 .user-avater {
-  width: 120 upx;
-  height: 120 upx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
-  margin-top: 20 upx;
-  margin-left: 55 upx;
+  margin-top: 20rpx;
+  margin-left: 55rpx;
 
 }
 
 .total-record {
   position: absolute;
-  margin-top: 55 upx;
-  margin-left: 205 upx;
-  font-size: 35 upx;
+  margin-top: 55rpx;
+  margin-left: 205rpx;
+  font-size: 35rpx;
   font-weight: bold;
   color: #39c5bb
 
@@ -111,28 +114,32 @@ export default {
 }
 
 .paper-item {
-  margin: 50 rpx;
-  padding: 30 rpx;
+  margin: 50rpx;
+  padding: 30rpx;
   border: 1px solid #ddd; /* 边框样式 */
-  border-radius: 20 rpx; /* 圆角 */
-  box-shadow: 0 10 rpx 10 rpx rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  border-radius: 20rpx; /* 圆角 */
+  box-shadow: 0 10rpx 10rpx rgba(0, 0, 0, 0.1); /* 阴影效果 */
   background: linear-gradient(to left, #39c5bb, #ffffff);
   background-size: 200% 50%;
 
 }
 
 .paper-title {
-  font-size: 40 rpx;
+  font-size: 40rpx;
   font-weight: bold;
   color: #333;
 }
 
 .paper-time {
   margin-left: 450 upx;
-  font-size: 20 rpx;
+  font-size: 20rpx;
   font-weight: bold;
   color: #333;
   opacity: 70%;
+}
+
+.title {
+  display: flex;
 }
 
 </style>
