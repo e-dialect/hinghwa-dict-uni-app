@@ -115,6 +115,14 @@
 		"path":"pages/quizzes/quizset/records/index",
 		"style":{}
 	},
+	{
+		"path":"pages/quizzes/quizset/records/detail",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/questionCard",
+		"style":{}
+	},
     // articles 区
     {
       "path": "pages/articles/index",

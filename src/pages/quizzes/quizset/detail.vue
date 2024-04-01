@@ -7,10 +7,10 @@
         <p class="totalQuestion">
           第 {{ currentQuizIndex + 1 }} 题 / 总{{ quizData.quizzes.length }}题：
         </p>
+
         <text class="question">
           {{ currentQuiz.question }}
         </text>
-
         <view>
           <radio-group
             class="block padding"

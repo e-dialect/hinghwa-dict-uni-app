@@ -81,6 +81,6 @@ export function gotoRecordDetail(rid) {
 
 export function gotoQuestionCard(paperId) {
   uni.navigateTo({
-    url: `/pages/quizzes/quizzset/questionCard?id=${paperId}`,
+    url: `/pages/quizzes/quizset/questionCard?id=${paperId}`,
   });
 }
