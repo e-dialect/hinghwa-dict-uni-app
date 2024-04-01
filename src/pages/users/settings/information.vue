@@ -7,17 +7,23 @@
     <view>
       <view
         class="cu-form-group padding"
-        @tap="chooseAvatar"
       >
         <view class="title">
           头像
         </view>
         <view>
-          <image
-            :src="user.avatar"
-            class="margin-right-xs cu-avatar xl round"
-            mode="aspectFill"
-          />
+          <button
+            class="margin-right-xs cu-avatar lg round"
+            open-type="chooseAvatar"
+            @chooseavatar="onChooseAvatar"
+          >
+            <image
+              :class="user.avatar === ''?'avatar-img':'' "
+              :src="user.avatar"
+              class="cu-avatar lg round"
+              mode="aspectFill"
+            />
+          </button>
           <text class="cuIcon-right text-gray" />
         </view>
       </view>
@@ -71,6 +77,7 @@
         个人信息（将会默认公开）
       </view>
     </view>
+    <!--  #ifndef  MP-WEIXIN -->
     <view
       class="cu-form-group"
       @tap="toChangePhonePage"
@@ -83,6 +90,9 @@
         <text class="cuIcon-right text-gray" />
       </view>
     </view>
+    <!--  #endif -->
+
+    <!--  #ifndef  MP-WEIXIN -->
     <view class="cu-form-group">
       <view class="title">
         生日
@@ -99,10 +109,11 @@
         </view>
       </picker>
     </view>
+    <!--  #endif -->
 
     <view class="cu-form-group">
       <view class="title">
-        居住地
+        发音默认地点
       </view>
       <picker
         mode="multiSelector"
@@ -125,6 +136,7 @@ import { chooseAndUploadAnImage, uploadFile } from '@/services/file';
 import {
   toChangeEmailPage, toChangeNicknamePage, toChangePhonePage, toChangeUsernamePage,
 } from '@/routers/user';
+import { loadUserInfo } from '@/services/login';
 
 const app = getApp();
 const counties = ['城厢区', '涵江区', '荔城区', '秀屿区', '仙游县'];
@@ -176,21 +188,12 @@ export default {
      * 上传头像
      * @returns {Promise<void>}
      */
-    chooseAvatar() {
-      chooseAndUploadAnImage().then((res) => {
-        this.changeAvatar(res);
-      });
-    },
-
-    /**
-     * 更改头像
-     * @returns {Promise<void>}
-     */
-    async changeAvatar(url) {
+    async onChooseAvatar(e) {
+      const { url } = await uploadFile(e.detail.avatarUrl);
       const userInfo = await getUserInfo(app.globalData.id);
+      this.user.avatar = url;
       userInfo.user.avatar = url;
       await changeUserInfo(app.globalData.id, userInfo.user);
-      this.user.avatar = url;
     },
 
     /**

@@ -6,6 +6,7 @@
     />
     <!--  #ifndef MP-WEIXIN -->
     <button
+      v-if="hasLogin"
       class="cu-btn icon lg bg-blue shadow write"
       @tap="writeArticle"
     >
@@ -53,6 +54,7 @@ import { getHotArticles } from '@/services/website';
 import { searchArticles } from '@/services/article';
 import { toArticleEditPage } from '@/routers/article';
 import ArticleList from '@/components/ArticleList.vue';
+import { getLoginStatusSync } from '@/services/login';
 
 const app = getApp();
 export default {
@@ -67,6 +69,7 @@ export default {
       page: 1,
       status: 0,
       triggered: false,
+      hasLogin: false,
     };
   },
   onLoad() {
@@ -77,6 +80,7 @@ export default {
   },
   beforeMount() {
     this.getHotArticlesList();
+    this.hasLogin = getLoginStatusSync();
   },
   methods: {
     /**

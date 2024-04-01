@@ -163,3 +163,7 @@ export async function getLoginStatus() {
   });
   return flag;
 }
+
+export function getLoginStatusSync() {
+  return !!(uni.getStorageSync('token'));
+}

@@ -4,32 +4,13 @@
     <form @submit="wechatRegister">
       <view class="cu-form-group">
         <view class="text-df text-bold-less margin-right-sm">
-          头像
-        </view>
-        <view class="padding-bottom-xs">
-          <button
-            class="margin-right-xs cu-avatar lg round"
-            open-type="chooseAvatar"
-            @chooseavatar="onChooseAvatar"
-          >
-            <image
-              :class="avatarUrl === ''?'avatar-img':'' "
-              :src="avatarUrl"
-              class="cu-avatar lg round"
-              mode="aspectFill"
-            />
-          </button>
-        </view>
-      </view>
-      <view class="cu-form-group">
-        <view class="text-df text-bold-less margin-right-sm">
           用户名
         </view>
         <input
           name="username"
           type="nickname"
           class="weui-input"
-          placeholder="请输入用户名"
+          placeholder="请输入用户名（账号唯一标识）"
         >
       </view>
       <view class="cu-form-group">
@@ -40,7 +21,7 @@
           name="nickname"
           type="nickname"
           class="weui-input"
-          placeholder="请输入昵称"
+          placeholder="请输入昵称（空白则默认为用户名）"
         >
       </view>
       <view class="cu-form-group">
@@ -87,7 +68,6 @@ import { registerWechatUser } from '@/services/user';
 import CuCustom from '@/colorui/components/cu-custom.vue';
 
 const app = getApp();
-const defaultAvatarUrl = 'https://cos.edialect.top/website/默认头像.jpg';
 export default {
   components: { CuCustom },
   data() {
@@ -95,13 +75,9 @@ export default {
       is_pwd1: true,
       is_pwd2: true,
       email: '',
-      avatarUrl: defaultAvatarUrl,
     };
   },
   methods: {
-    onChooseAvatar(e) {
-      this.avatarUrl = e.detail.avatarUrl;
-    },
 
     ear1() {
       this.is_pwd1 = !this.is_pwd1;
@@ -116,8 +92,6 @@ export default {
       const { password } = e.detail.value;
       const { password_confirmed: passwordConfirmed } = e.detail.value;
       const { nickname } = e.detail.value;
-      const avatar = this.avatarUrl;
-
       if (!username || !password || !passwordConfirmed) {
         uni.showToast({
           title: '信息不完整',
@@ -139,7 +113,6 @@ export default {
           title: '两次密码不相同',
           icon: 'error',
         });
-        return;
       }
 
       if (!nickname) {
@@ -147,12 +120,12 @@ export default {
           content: '未填写昵称将会用用户名暂代哦~',
           success: async (res) => {
             if (res.confirm) {
-              registerWechatUser(username, password, username, avatar);
+              registerWechatUser(username, password, username);
             }
           },
         });
       } else {
-        registerWechatUser(username, password, nickname, avatar);
+        registerWechatUser(username, password, nickname);
       }
     },
   },

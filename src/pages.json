@@ -59,6 +59,18 @@
       "style": {}
     },
     {
+      "path": "pages/mails/index",
+      "style": {}
+    },
+    {
+      "path": "pages/mails/details",
+      "style": {}
+    },
+    {
+      "path": "pages/mails/send",
+      "style": {}
+    },
+    {
       "path": "pages/tools/daily-expression/index",
       "style": {}
     },
@@ -87,30 +99,22 @@
       "path": "pages/quizzes/tests/answer",
       "style": {}
     },
-    {
-      "path": "pages/quizzes/quizzset/index",
-      "style": {}
-    },
-    {
-      "path": "pages/quizzes/quizzset/detail",
-      "style": {}
-    },
-    {
-      "path": "pages/quizzes/quizzset/myRecord",
-      "style": {}
-    },
-    {
-      "path": "pages/quizzes/quizzset/records/index",
-      "style": {}
-    },
-    {
-      "path": "pages/quizzes/quizzset/records/detail",
-      "style": {}
-    },
-    {
-      "path": "pages/quizzes/quizzset/questionCard",
-      "style": {}
-    },
+	{
+		"path":"pages/quizzes/quizset/index",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/detail",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/myRecord",
+		"style":{}
+	},
+	{
+		"path":"pages/quizzes/quizset/records/index",
+		"style":{}
+	},
     // articles 区
     {
       "path": "pages/articles/index",
@@ -175,6 +179,23 @@
     },
     {
       "path": "pages/users/me/comments",
+      "style": {}
+    },
+    /*product区*/
+    {
+      "path": "pages/products/index",
+      "style": {}
+    },
+    {
+      "path": "pages/products/upload",
+      "style": {}
+    },
+    {
+      "path": "pages/products/details",
+      "style": {}
+    },
+    {
+      "path": "pages/products/history",
       "style": {}
     },
     {
