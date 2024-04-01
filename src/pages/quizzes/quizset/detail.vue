@@ -11,6 +11,7 @@
         <text class="question">
           {{ currentQuiz.question }}
         </text>
+
         <view>
           <radio-group
             class="block padding"

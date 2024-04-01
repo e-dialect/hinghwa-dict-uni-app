@@ -10,6 +10,7 @@
         {{ username }} 完成了 {{ total }} 份卷子！
       </text>
     </view>
+
     <view class="paper-list">
       <view
         v-for="record in records"

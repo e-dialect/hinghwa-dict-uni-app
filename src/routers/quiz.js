@@ -79,6 +79,7 @@ export function gotoRecordDetail(rid) {
   });
 }
 
+// 新增加答题卡
 export function gotoQuestionCard(paperId) {
   uni.navigateTo({
     url: `/pages/quizzes/quizset/questionCard?id=${paperId}`,

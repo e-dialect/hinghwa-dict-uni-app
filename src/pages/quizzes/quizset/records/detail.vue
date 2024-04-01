@@ -10,6 +10,7 @@
           {{ formattedTimestamp }}
         </text>
       </view>
+
       <view class="quizzes">
         <view
           v-for="(quiz, index) in paper.quizzes"

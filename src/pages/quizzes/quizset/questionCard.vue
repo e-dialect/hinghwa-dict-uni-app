@@ -41,7 +41,6 @@ export default {
       const qid = this.$route.query.id;
       uni.navigateTo({ url: `/pages/quizzes/quizset/detail?id=${qid}&index=${index}` });
     },
-
   },
 };
 </script>

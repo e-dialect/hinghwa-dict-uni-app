@@ -99,30 +99,30 @@
       "path": "pages/quizzes/tests/answer",
       "style": {}
     },
-	{
-		"path":"pages/quizzes/quizset/index",
-		"style":{}
-	},
-	{
-		"path":"pages/quizzes/quizset/detail",
-		"style":{}
-	},
-	{
-		"path":"pages/quizzes/quizset/myRecord",
-		"style":{}
-	},
-	{
-		"path":"pages/quizzes/quizset/records/index",
-		"style":{}
-	},
-	{
-		"path":"pages/quizzes/quizset/records/detail",
-		"style":{}
-	},
-	{
-		"path":"pages/quizzes/quizset/questionCard",
-		"style":{}
-	},
+    {
+      "path": "pages/quizzes/quizset/index",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/myRecord",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/records/index",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/records/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/questionCard",
+      "style": {}
+    },
     // articles 区
     {
       "path": "pages/articles/index",
