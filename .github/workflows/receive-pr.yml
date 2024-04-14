@@ -17,6 +17,7 @@ jobs:
           cache: "yarn"
       - name: Install Dependencies
         run: |
+          npm install
           yarn install --frozen-lockfile --production=false
       - name: Lint
         run: |
@@ -27,6 +28,9 @@ jobs:
       - name: Build Weixin Miniprogram
         run: |
           yarn run build:mp-weixin
+      - name: Build QQ Miniprogram
+        run: |
+          timeout 60 npm run dev:mp-qq
 
       - name: Save PR number
         run: |
