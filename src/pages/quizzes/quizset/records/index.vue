@@ -6,6 +6,7 @@
         class="user-avater"
         :src="avatar"
       />
+
       <text class="total-record">
         {{ username }} 完成了 {{ total }} 份卷子！
       </text>

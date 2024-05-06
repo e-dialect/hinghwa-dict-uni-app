@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       // 试卷数组
-      total: 3,
+      total: 4,
       papers: [
         { id: 1, title: '迷星叫' },
         { id: 2, title: '壱雫空' },
@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /*标题高亮：*/
 .counter {
   color: deepskyblue;
@@ -124,7 +124,7 @@ export default {
 
 /*圆形按钮*/
 .circle-btn {
-  width: 150rpx;
+  width: 200rpx;
   height: 100rpx;
   line-height: 90rpx;
   text-align: center;
@@ -133,8 +133,8 @@ export default {
   border-radius: 30rpx;
   padding: 10rpx;
   position: fixed;
-  margin-top: 70%;
-  margin-left: 5%;
+  margin-top: 30%;
+  margin-left: 65%;
   font-size: 30rpx;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 

@@ -31,14 +31,14 @@
               </view>
             </label>
           </radio-group>
-        </view>
-        <view class="padding submit-btn">
-          <button
-            class="cu-btn bg-gradual-blue"
-            @click="submitResult(currentQuiz.answer,index)"
-          >
-            提 交
-          </button>
+          <view class="padding submit-btn">
+            <button
+              class="cu-btn bg-gradual-blue"
+              @click="submitResult(currentQuiz.answer,currentQuizIndex)"
+            >
+              提 交
+            </button>
+          </view>
         </view>
         <view class="divider" />
         <view
@@ -52,7 +52,6 @@
             from: {{ currentQuiz.author.nickname }}
           </text>
         </view>
-
         <!--已经提交的题目就传递给答题卡-->
         <QuestionCard
           v-show="false"
@@ -100,14 +99,12 @@
 </template>
 
 <script>
-// eslint-disable-next-line import/extensions
-import { getPaperDetail } from '@/services/quizset';
+import { getPaperDetail, uploadMyAnswer } from '@/services/quizset';
 import QuestionCard from '@/pages/quizzes/quizzset/questionCard.vue';
 
+const app = getApp();
 export default {
-  components: {
-    QuestionCard,
-  },
+  props: ['submit'],
   data() {
     return {
       quizData: {
@@ -185,6 +182,7 @@ export default {
       showExplanationFlag: false,
       current: 99,
       submitted: [],
+      uploadMyAnswer,
     };
   },
   computed: {
@@ -199,12 +197,12 @@ export default {
     });
     if (query.index) {
       this.currentQuizIndex = parseInt(query.index, 10);
-      console.log(query.index);
     }
     const paperid = this.$route.query.id;
     getPaperDetail(paperid).then((res) => {
       this.quizData = res.quizzes;
     });
+    this.submitted = new Array(this.quizData.quizzes.length).fill(99);
   },
   methods: {
     radioChange(e) {
@@ -237,12 +235,26 @@ export default {
       }
     },
     showAnswer() {
-      this.showAnswerFlag = !this.showAnswerFlag;
-      this.showExplanationFlag = false;
+      if (this.current === 99) {
+        uni.showToast({
+          title: '请先作答再查看答案！',
+          icon: 'none',
+        });
+      } else {
+        this.showAnswerFlag = !this.showAnswerFlag;
+        this.showExplanationFlag = false;
+      }
     },
     showExplanation() {
-      this.showExplanationFlag = !this.showExplanationFlag;
-      this.showAnswerFlag = false;
+      if (this.current === 99) {
+        uni.showToast({
+          title: '请先作答再查看解析！',
+          icon: 'none',
+        });
+      } else {
+        this.showExplanationFlag = !this.showExplanationFlag;
+        this.showAnswerFlag = false;
+      }
     },
     resetFlags() {
       this.showAnswerFlag = false;
@@ -251,7 +263,12 @@ export default {
 
     /* 提交答案 */
     submitResult(answer, index) {
-      if (this.current === 99) {
+      if (this.submitted[index] !== 99) {
+        uni.showToast({
+          title: '该题已经提交过了！',
+          icon: 'none',
+        });
+      } else if (this.current === 99) {
         uni.showToast({
           title: '还没有做出选择哦',
           icon: 'none',
@@ -263,15 +280,20 @@ export default {
           success: (res) => {
             if (res.confirm) {
               if (this.current === answer) {
-                this.$set(this.submitted, index, true);
+                this.$set(this.submitted, index, 1);
                 uni.showToast({
                   title: '答对啦！',
                 });
+                this.$emit('updateSub', index, 1);
+                uploadMyAnswer(this.quizData.id, app.globalData.id, answer, true);
               } else {
+                this.$set(this.submitted, index, 1);
                 uni.showToast({
                   title: '太可惜了！',
                   icon: 'none',
                 });
+                this.$emit('updateSub', index, 2);
+                uploadMyAnswer(this.quizData.id, app.globalData.id, answer, false);
               }
               this.showAnswerFlag = true;
               this.showExplanationFlag = true;
@@ -284,7 +306,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 .page {
   background-color: #FFFFFF;

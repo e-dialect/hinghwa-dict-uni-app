@@ -35,10 +35,10 @@
             <text class="explanation">
               解析：{{ quiz.explanation }}
             </text>
-            <br>
-            <text class="options-title">
+            <view class="divider" />
+            <view class="options-title">
               选项:
-            </text>
+            </view>
             <view
               v-for="(option, optionIndex) in quiz.options"
               :key="optionIndex"
@@ -57,6 +57,16 @@
               >
                 [您选择的]
               </text>
+            </view>
+            <view class="divider2" />
+            <view class="author">
+              <img
+                class="avatar"
+                :src="quiz.author.avatar"
+              >
+              <p class="authorName">
+                本题作者: {{ quiz.author.username }}
+              </p>
             </view>
           </view>
         </view>
@@ -83,12 +93,12 @@ export default {
             id: 1,
             author: {
               id: 2,
-              username: 'MathGenius',
-              nickname: 'MathTeacher',
+              username: '丰川祥子',
+              nickname: 'sakiko',
               email: 'math@example.com',
               telephone: '1234567890',
               birthday: '1990-01-01',
-              avatar: 'https://example.com/math_teacher_avatar.jpg',
+              avatar: 'https://pic.imgdb.cn/item/6617d31a68eb935713c7c5d2.gif',
               is_admin: true,
               county: 'Example County',
               town: 'Example Town',
@@ -115,12 +125,12 @@ export default {
             id: 2,
             author: {
               id: 2,
-              username: 'MathGenius',
+              username: '千早爱音',
               nickname: 'MathTeacher',
               email: 'math@example.com',
               telephone: '1234567890',
               birthday: '1990-01-01',
-              avatar: 'https://example.com/math_teacher_avatar.jpg',
+              avatar: 'https://pic.imgdb.cn/item/6617d4e368eb935713c9a7ed.gif',
               is_admin: true,
               county: 'Example County',
               town: 'Example Town',
@@ -142,7 +152,7 @@ export default {
         ],
       },
       collapsed: [],
-      selectedOptions: [],
+      selectedOptions: [1, 1],
       getRecord,
     };
   },
@@ -181,6 +191,8 @@ export default {
   font-size: 45rpx;
   font-weight: bold;
   color: #39C5BB;
+  margin-bottom: 15rpx;
+  margin-left: 10rpx;
 }
 
 .timestamp {
@@ -248,7 +260,7 @@ export default {
 }
 
 .selected {
-  color: blue;
+  color: deepskyblue;
   margin-left: 10rpx;
 }
 
@@ -260,4 +272,27 @@ export default {
   height: 3rpx;
 }
 
+.divider2 {
+  margin-bottom: 10rpx;
+  margin-top: 30rpx;
+  background: #E0E3DA;
+  width: 100%;
+  height: 3rpx;
+}
+
+.author {
+  height: 70rpx;
+  display: flex;
+}
+
+.avatar {
+  width: 70rpx;
+  margin-left: 10rpx;
+  border-radius: 50%;
+}
+
+.authorName {
+  line-height: 80rpx;
+  margin-left: 50rpx;
+}
 </style>
