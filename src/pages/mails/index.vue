@@ -54,10 +54,7 @@
   </view>
 </template>
 <script>
-import { ref, onMounted } from 'vue';
 import { getAllMails } from '@/services/mail';
-
-const app = getApp();
 
 export default {
   data() {
@@ -113,7 +110,6 @@ export default {
     // 加载更多邮件
     loadMoreEmails() {
       uni.showLoading();
-      const { page } = this;
       const originEmails = this.showEmails;
       getAllMails(this.page + 1).then((res) => {
         this.showEmails = originEmails.concat(res.notifications);

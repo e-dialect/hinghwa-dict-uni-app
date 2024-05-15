@@ -183,7 +183,7 @@ function strDiscode(str) {
 function urlToHttpUrl(url, domain) {
   if (/^\/\//.test(url)) {
     return `https:${url}`;
-  } else if (/^\//.test(url)) {
+  } if (/^\//.test(url)) {
     return `https://${domain}${url}`;
   }
   return url;

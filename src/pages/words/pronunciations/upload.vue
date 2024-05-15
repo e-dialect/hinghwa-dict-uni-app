@@ -318,15 +318,14 @@ export default {
         town: towns[this.pickerIndex[0]][this.pickerIndex[1]],
       };
 
-      for (const i in pronunciation) {
+      Object.keys(pronunciation).forEach((i) => {
         if (!pronunciation[i]) {
           uni.showToast({
             title: '请填写完整信息',
             icon: 'none',
           });
-          return;
         }
-      }
+      });
 
       // 上传录音文件
       uploadFile(pronunciation.source).then((res) => {

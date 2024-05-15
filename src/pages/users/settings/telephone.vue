@@ -51,7 +51,7 @@ export default {
           showCancel: false,
         });
       } else {
-        changeUserInfo(app.globalData.id, userInfo.user).then(async (res) => {
+        changeUserInfo(app.globalData.id, userInfo.user).then(async () => {
           setTimeout(() => {
             // 返回上一个页面
             uni.navigateBack();

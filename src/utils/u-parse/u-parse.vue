@@ -8,19 +8,29 @@
 
 <template>
   <!--基础元素-->
-  <div v-if="!loading" :class="className" class="wxParse">
-    <block v-for="(node,index) of nodes" :key="index">
-      <wxParseTemplate :node="node"/>
+  <div
+    v-if="!loading"
+    :class="className"
+    class="wxParse"
+  >
+    <block
+      v-for="(node,index) of nodes"
+      :key="index"
+    >
+      <wxParseTemplate :node="node" />
     </block>
   </div>
 </template>
 
 <script>
-import HtmlToJson      from './libs/html2json';
+import HtmlToJson from './libs/html2json';
 import wxParseTemplate from './components/wxParseMarkdown.vue';
 
 export default {
-  name: 'wxParse',
+  name: 'WxParse',
+  components: {
+    wxParseTemplate,
+  },
   props: {
     loading: {
       type: Boolean,
@@ -67,20 +77,17 @@ export default {
       },
     },
   },
-  components: {
-    wxParseTemplate,
-  },
   computed: {
     results() {
       const {
-              content,
-              noData,
-              imageProp,
-              startHandler,
-              endHandler,
-              charsHandler,
-            }             = this;
-      const parseData     = content || noData;
+        content,
+        noData,
+        imageProp,
+        startHandler,
+        endHandler,
+        charsHandler,
+      } = this;
+      const parseData = content || noData;
       const customHandler = {
         start: startHandler,
         end: endHandler,
@@ -102,14 +109,14 @@ export default {
     },
     preview(src, $event) {
       if (!this.imageUrls.length) return;
-      wx.previewImage({
+      uni.previewImage({
         current: src,
         urls: this.imageUrls,
       });
       this.$emit('preview', src, $event);
     },
     removeImageUrl(src) {
-      const {imageUrls} = this;
+      const { imageUrls } = this;
       imageUrls.splice(imageUrls.indexOf(src), 1);
     },
   },

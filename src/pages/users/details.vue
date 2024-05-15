@@ -104,7 +104,6 @@ import { toPronunciationsPage, toUserWordsPage } from '@/routers/user';
 import { defaultMessage } from '@/services/shareMessages';
 import ArticleList from '@/components/ArticleList.vue';
 
-const app = getApp();
 export default {
   components: {
     ArticleList,

@@ -132,16 +132,14 @@ export default {
     };
   },
   onLoad(options) {
-    // 声母
+  // 声母
     const shengmu = [];
-    for (const k in utils.shengmu) {
-      if ({}.hasOwnProperty.call(utils.shengmu, k)) {
-        shengmu.push({
-          value: k,
-          text: utils.shengmu[k],
-        });
-      }
-    }
+    Object.keys(utils.shengmu).forEach((k) => {
+      shengmu.push({
+        value: k,
+        text: utils.shengmu[k],
+      });
+    });
     this.shengmu = [...shengmu];
     for (let i = 0; i < this.shengmu.length; i += 1) {
       if (this.shengmu[i].value === options.shengmu) {
@@ -152,14 +150,12 @@ export default {
 
     // 声调
     const shengdiao = [];
-    for (const k in utils.shengdiao) {
-      if ({}.hasOwnProperty.call(utils.shengdiao, k)) {
-        shengdiao.push({
-          value: k,
-          text: utils.shengdiao[k],
-        });
-      }
-    }
+    Object.keys(utils.shengdiao).forEach((k) => {
+      shengdiao.push({
+        value: k,
+        text: utils.shengdiao[k],
+      });
+    });
     shengdiao.unshift(shengdiao.pop()); // make 'all' at the first
     this.shengdiao = [...shengdiao];
     for (let i = 0; i < this.shengdiao.length; i += 1) {
@@ -171,7 +167,7 @@ export default {
 
     // 韵母
     if (options.yunmu) {
-      // check if options.yunmu is valid
+    // check if options.yunmu is valid
       for (let i = 0; i < this.yunmu.length; i += 1) {
         if (this.yunmuValue !== 'all') break;
         if (this.yunmu[i].value === options.yunmu) {
