@@ -108,10 +108,6 @@
       "style": {}
     },
     {
-      "path": "pages/quizzes/quizset/myRecord",
-      "style": {}
-    },
-    {
       "path": "pages/quizzes/quizset/records/index",
       "style": {}
     },
@@ -121,7 +117,9 @@
     },
     {
       "path": "pages/quizzes/quizset/questionCard",
-      "style": {}
+      "style": {
+        "enablePullDownRefresh": true
+      }
     },
     // articles 区
     {

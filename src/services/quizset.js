@@ -17,5 +17,24 @@ export async function getAllRecords(id) {
 
 // 获取用户特定的答题记录
 export async function getRecord(recordId) {
-  return request.get(`/paper/records/${recordId}`);
+  return request.get(`/papers/records/${recordId}`);
 }
+
+// 上传某题答题记录
+export async function uploadMyAnswer(quizid, record, contributor1, answer1, correctness1) {
+  return request.post(`/quizzes/records?quiz_id=${quizid}`, {
+    paper_record: record, contributor: contributor1, answer: answer1, correctness: correctness1,
+  });
+}
+
+// 上传某试卷答卷记录
+export async function uploadPaper(contributor, paper) {
+  return request.post(`/papers/records?contributor=${contributor}&paper=${paper}`);
+}
+
+// 做一个数据持久化
+export default {
+  // eslint-disable-next-line max-len
+  questions: [99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99],
+
+};

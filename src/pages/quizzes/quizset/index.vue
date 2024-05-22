@@ -14,7 +14,7 @@
         v-for="(paper, id) in papers"
         :key="id"
         class="paper-item"
-        @tap="gotoQuestionCard(id)"
+        @tap="gotoQuestionCard(paper.id)"
       >
         <text class="paper-title">
           - {{ paper.title }}
@@ -30,37 +30,40 @@
   </view>
 </template>
 <script>
-import { getAllPapers, getPaperDetail } from '@/services/quizset';
+import data, { getAllPapers, getPaperDetail } from '@/services/quizset';
 import { navigatorToDetail, gotoAllRecords, gotoQuestionCard } from '@/routers/quiz';
 
 export default {
   data() {
     return {
       // 试卷数组
-      total: 4,
-      papers: [
-        { id: 1, title: '迷星叫' },
-        { id: 2, title: '壱雫空' },
-        { id: 3, title: '影色舞' },
-        { id: 4, title: '詩超絆' },
-      ],
+      total: 0,
+      papers: [],
+      Answered: data.questions,
+      getAllPapers,
+      getPaperDetail,
       navigatorToDetail,
       gotoAllRecords,
       gotoQuestionCard,
     };
   },
-
+  onLoad() {
+    uni.pageScrollTo({
+      scrollTop: 0,
+      duration: 0,
+    });
+    getAllPapers().then((res) => {
+      this.papers = res.paper;
+      this.total = res.total;
+    });
+    this.saveQuestions();
+  },
   methods: {
-    // 获取所有试卷
-    async getAllPaperInfo() {
-      try {
-        await getAllPapers().then((res) => {
-          this.papers = res.paper;
-        });
-      } catch (e) { /* empty */
-      }
+    saveQuestions() {
+      uni.setStorageSync('rq', JSON.stringify(this.Answered));
     },
   },
+
 };
 </script>
 
@@ -133,7 +136,7 @@ export default {
   border-radius: 30rpx;
   padding: 10rpx;
   position: fixed;
-  margin-top: 30%;
+  margin-top: 10%;
   margin-left: 65%;
   font-size: 30rpx;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);

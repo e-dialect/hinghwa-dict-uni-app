@@ -5,7 +5,7 @@
       <!-- 上部分：题目和选项 -->
       <view class="question-section">
         <p class="totalQuestion">
-          第 {{ currentQuizIndex + 1 }} 题 / 总{{ quizData.quizzes.length }}题：
+          第 {{ currentQuizIndex + 1 }} 题 / 总{{ length }}题：
         </p>
 
         <text class="question">
@@ -34,7 +34,7 @@
           <view class="padding submit-btn">
             <button
               class="cu-btn bg-gradual-blue"
-              @click="submitResult(currentQuiz.answer,currentQuizIndex)"
+              @click="submitResult(currentQuiz.answer,currentQuizIndex,currentQuiz.id)"
             >
               提 交
             </button>
@@ -53,12 +53,6 @@
           </text>
         </view>
         <!--已经提交的题目就传递给答题卡-->
-        <QuestionCard
-          v-show="false"
-          :quizzes="quizzes"
-          :submitted="submitted"
-        />
-
         <view class="divider" />
 
         <view class="answer-section">
@@ -99,14 +93,14 @@
 </template>
 
 <script>
-import { getPaperDetail, uploadMyAnswer } from '@/services/quizset';
-import QuestionCard from '@/pages/quizzes/quizzset/questionCard.vue';
+import data, { getPaperDetail, uploadMyAnswer } from '@/services/quizset';
 
 const app = getApp();
 export default {
-  props: ['submit'],
   data() {
     return {
+      questionList: [],
+      length: 0,
       quizData: {
         id: 'string',
         title: 'string',
@@ -187,6 +181,40 @@ export default {
   },
   computed: {
     currentQuiz() {
+      if (this.quizData.quizzes[this.currentQuizIndex] === undefined) {
+        return {
+          question: '穿过彩云之间 闪闪发光 心中满足 似要溢出 不知何时 脸颊莹莹闪光 炽热地 炽热地将其濡湿',
+          options: ['string1', 'string2', 'string3'],
+          answer: 1,
+          explanation: 'string',
+          id: 0,
+          author: {
+            id: 0,
+            username: 'string',
+            nickname: '大树快车',
+            email: 'string',
+            telephone: 'string',
+            birthday: 'string',
+            avatar: 'https://pic.imgdb.cn/item/655b0560c458853aef2246b9.jpg',
+            is_admin: true,
+            county: 'string',
+            town: 'string',
+            points_sum: 0,
+            points_now: 0,
+            title: {
+              title: 'string',
+              color: 'string',
+            },
+            registration_time: 'string',
+            login_time: 'string',
+            wechat: true,
+            level: 0,
+          },
+          visibility: true,
+          voice_source: 'string',
+          type: 'string',
+        };
+      }
       return this.quizData.quizzes[this.currentQuizIndex];
     },
   },
@@ -195,14 +223,20 @@ export default {
       scrollTop: 0,
       duration: 0,
     });
+    this.questionList = JSON.parse(uni.getStorageSync('rq') || '[]');
     if (query.index) {
       this.currentQuizIndex = parseInt(query.index, 10);
     }
     const paperid = this.$route.query.id;
     getPaperDetail(paperid).then((res) => {
-      this.quizData = res.quizzes;
+      this.quizData = res;
+      this.submitted = Array(this.quizData.quizzes.length).fill(99);
+      this.length = this.quizData.quizzes.length;
     });
-    this.submitted = new Array(this.quizData.quizzes.length).fill(99);
+    if (this.submitted[this.currentQuizIndex] === true) {
+      this.showAnswerFlag = true;
+      this.showExplanationFlag = true;
+    }
   },
   methods: {
     radioChange(e) {
@@ -213,6 +247,7 @@ export default {
       if (this.currentQuizIndex > 0) {
         this.currentQuizIndex -= 1;
         this.resetFlags();
+        this.current = 99;
       } else if (this.currentQuizIndex === 0) {
         uni.showToast({
           title: '已经是第一题！',
@@ -226,6 +261,7 @@ export default {
       if (this.currentQuizIndex < this.quizData.quizzes.length - 1) {
         this.currentQuizIndex += 1;
         this.resetFlags();
+        this.current = 99;
       } else if (this.currentQuizIndex === this.quizData.quizzes.length - 1) {
         uni.showToast({
           title: '已经是最后一题！',
@@ -262,8 +298,8 @@ export default {
     },
 
     /* 提交答案 */
-    submitResult(answer, index) {
-      if (this.submitted[index] !== 99) {
+    submitResult(answer, index, id) {
+      if (this.questionList[index] !== 99) {
         uni.showToast({
           title: '该题已经提交过了！',
           icon: 'none',
@@ -280,20 +316,20 @@ export default {
           success: (res) => {
             if (res.confirm) {
               if (this.current === answer) {
-                this.$set(this.submitted, index, 1);
+                this.questionList[index] = 1;
+                uni.setStorageSync('rq', JSON.stringify(this.questionList));
                 uni.showToast({
                   title: '答对啦！',
                 });
-                this.$emit('updateSub', index, 1);
-                uploadMyAnswer(this.quizData.id, app.globalData.id, answer, true);
+                // uploadMyAnswer(id, id, app.globalData.id, this.current, true);
               } else {
-                this.$set(this.submitted, index, 1);
+                this.questionList[index] = 2;
+                uni.setStorageSync('rq', JSON.stringify(this.questionList));
                 uni.showToast({
                   title: '太可惜了！',
                   icon: 'none',
                 });
-                this.$emit('updateSub', index, 2);
-                uploadMyAnswer(this.quizData.id, app.globalData.id, answer, false);
+                // uploadMyAnswer(id, id, app.globalData.id, this.current, false);
               }
               this.showAnswerFlag = true;
               this.showExplanationFlag = true;
@@ -370,15 +406,10 @@ export default {
 }
 
 button {
-  padding: 10px;
   background-color: #39C5BB;
   color: #fff;
   border: none;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: #2c9990;
 }
 
 .pageBottom {
@@ -399,9 +430,9 @@ button:hover {
 }
 
 .answer-section {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 5px;
+  margin-top: 10rpx;
+  padding: 10rpx;
+  border-radius: 5rpx;
 }
 
 .answer-section text {

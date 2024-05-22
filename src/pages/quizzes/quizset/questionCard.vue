@@ -3,33 +3,33 @@
     <cu-custom title="答题卡" />
     <Detail
       v-show="false"
-      :submit="submit"
-      @updateSub="updateSub"
     />
     <view
-      v-if="quizss.length===0"
+      v-if="length===0"
       class="noContent"
     >
       暂时没有题目哦~
     </view>
     <view class="quesNum">
-      共有{{ quizss.length }}题，已完成
+      共有{{ length }}题，已完成{{ answeredQ }}题
     </view>
     <view class="divider" />
     <view class="question-card">
       <view
-        v-for="(quiz, index) in quizss"
+        v-for="(quiz, index) in quizss.quizzes"
         :key="index"
-        :class="{ 'submitted-correct': submit[index] === 1,
-                  'submitted-incorrect': submit[index] === 2,
-                  'submitted-none': submit[index] === 99 }"
-        @click="goToQuestion(index)"
+        :class="{'submitted-correct': questionFill[index] === 1,
+                 'submitted-incorrect': questionFill[index] === 2,
+                 'submitted-none': questionFill[index] === 99}"
+        @tap="goToQuestion(index)"
       >
-        <!--这边的问题在于，数据没做持久化。。-->
         {{ index + 1 }}
       </view>
     </view>
-    <view class="fixbutton">
+    <view
+      class="fixbutton"
+      @tap="submitPaper"
+    >
       <p class="buttonFont">
         提交
       </p>
@@ -37,28 +37,26 @@
   </view>
 </template>
 <script>
-import { getPaperDetail } from '@/services/quizset';
-import Detail from '@/pages/quizzes/quizset/detail.vue';
+import data, { getPaperDetail, uploadPaper } from '@/services/quizset';
+import { onPullDownRefresh } from '@dcloudio/uni-app';
 
+const app = getApp();
 /* const app = App(); */
 export default {
-  components: {
-    Detail,
-  },
+
   // :class="{ 'question-square': true, 'submitted-correct': submitted[index] === true }"，没做成功..
+  /* ' */
   data() {
     return {
-      quizss: [{ id: 1 }, { id: 2 }], // 先放着
-      submit: Array(2).fill(99),
+      paperID: '',
+      length: 0,
+      questionFill: data.questions,
+      answeredQ: 0,
+      quizss: {}, // 先放着
+      /* submit: Array(quizss.length).fill(99), */
       getPaperDetail,
-
+      uploadPaper,
     };
-  },
-  watch: {
-    submitted(newSubmitted) {
-      this.submit = [...newSubmitted];
-    },
-
   },
   onLoad() {
     uni.pageScrollTo({
@@ -67,17 +65,66 @@ export default {
 
     });
     const paperid = this.$route.query.id;
+    this.paperID = paperid;
     getPaperDetail(paperid).then((res) => {
-      this.quizss = res.quizzes;
+      this.quizss = res;
+      this.length = this.quizss.quizzes.length;
     });
+    this.questionFill = JSON.parse(uni.getStorageSync('rq') || '[]');
+    this.countNo99();
+    uni.reLaunch(`/pages/quizzes/quizset/questionCard?id=${paperid}`);
     // 现在卷子没内容，我先注释掉，可以看
     /* this.submit = new Array(this.quizss.length).fill(99); */
+    this.onPullDownRefresh();
   },
   methods: {
     goToQuestion(index) {
       // 点击题号后跳转到对应的详细问题页面
       const qid = this.$route.query.id;
       uni.navigateTo({ url: `/pages/quizzes/quizset/detail?id=${qid}&index=${index}` });
+    },
+    countNo99() {
+      let count = 0;
+      for (let i = 0; i < this.questionFill.length; i += 1) {
+        if (this.questionFill[i] !== 99) {
+          count += 1;
+        }
+      }
+      this.answeredQ = count;
+    },
+    onPullDownRefresh() {
+      setTimeout(() => {
+        uni.stopPullDownRefresh();
+      }, 1000);
+    },
+    submitPaper() {
+      if (this.length > this.answeredQ) {
+        uni.showToast({
+          title: '做完所有题目再提交哦',
+          icon: 'none',
+        });
+      } else {
+        uni.showModal({
+          title: '提交整张试卷',
+          content: '确定要提交吗？',
+          success: (res) => {
+            if (res.confirm) {
+              uploadPaper(app.globalData.id, this.paperID);
+              uni.showToast({
+                title: '提交成功！',
+              });
+              setTimeout(
+                () => {
+                  uni.reLaunch({ url: '/pages/quizzes/quizset/index' });
+                },
+                1500,
+              );
+
+              // 在这里可以处理用户点击确定后的逻辑
+            }
+          },
+        });
+      }
     },
   },
 };
