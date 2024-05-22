@@ -24,11 +24,12 @@
             disabled
             value="封面"
           >
-          <input
-            class="extend text-grey"
-            value="上传"
+          <button
+            class="uni-button extend text-grey"
             @tap="uploadCover"
           >
+            上传
+          </button>
         </view>
         <image
           v-if="article.cover"
@@ -61,12 +62,12 @@
           disabled
           value="正文"
         >
-        <input
-          class="extend text-grey"
-          disabled
-          :value="inPreviewStatus?'编辑':'预览'"
+        <button
+          class="uni-button extend text-grey"
           @tap="inPreviewStatus=!inPreviewStatus"
         >
+          {{ inPreviewStatus ? '编辑' : '预览' }}
+        </button>
       </view>
       <!--内容-工具-->
       <view class="tips flow">
@@ -399,5 +400,15 @@ page {
   overflow: auto;
   line-height: 80rpx;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+uni-button {
+  display: block;
+  font-size: 16px;
+  line-height: 1.4em;
+  height: 1.4em;
+  min-height: 1.4em;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>

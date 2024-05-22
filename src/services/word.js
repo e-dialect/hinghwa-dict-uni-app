@@ -50,6 +50,10 @@ export async function getWordDetails(id) {
   return word;
 }
 
+export async function getWordDetailss(id) {
+  return request.get(`/words/${id}`);
+}
+
 /**
  * WD0201 获取符合条件的字词的列表-关键词
  * @returns {Promise<unknown>}

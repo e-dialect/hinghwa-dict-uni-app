@@ -117,7 +117,6 @@ import { toArticlePage } from '@/routers/article';
 import { toLoginPage } from '@/routers/login';
 import { toMailsPage } from '@/routers/mail';
 
-const app = getApp();
 export default {
   data() {
     return {
@@ -200,13 +199,13 @@ export default {
 <style>
 .welcome-card {
   background-color: #ffffff;
-  border-radius: 20 rpx;
+  border-radius: 20rpx;
   margin: 5vw;
 }
 
 .word-card {
   background-color: #ffffff;
-  border-radius: 20 rpx;
+  border-radius: 20rpx;
   margin-right: 1vw;
 }
 </style>

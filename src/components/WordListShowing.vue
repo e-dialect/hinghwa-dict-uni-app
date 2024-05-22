@@ -99,7 +99,10 @@ export default {
           window.location.href = 'https://hinghwa.cn/words/Create';
           break;
         default:
-          setClipboard('https://hinghwa.cn/words/Create');
+          uni.setClipboardData({
+            data: 'https://hinghwa.cn/words/Create',
+            success: () => uni.showToast({ title: '网址已复制' }),
+          });
       }
     },
   },

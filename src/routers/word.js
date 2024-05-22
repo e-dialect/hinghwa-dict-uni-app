@@ -1,5 +1,4 @@
 import { mpLogin } from '@/services/login';
-import { getWordDetails } from '@/services/word';
 
 /**
  * 跳转至词语页面
@@ -25,7 +24,8 @@ export function toWordPage(id) {
         url: `/pages/words/details?id=${id}`,
       });
       return;
-    } app.globalData.showRedirectTips = false;
+    }
+    app.globalData.showRedirectTips = false;
   }
   uni.navigateTo({
     url: `/pages/words/details?id=${id}`,

@@ -135,13 +135,13 @@ export default {
 }
 
 .point-reason {
-  margin-left: 30 rpx;
+  margin-left: 30rpx;
   font-size: 14px;
   color: #666;
 }
 
 .point-amount {
-  margin-left: 30 rpx;
+  margin-left: 30rpx;
   font-size: 18px;
   color: #ff9900;
   font-weight: bold;
@@ -149,13 +149,13 @@ export default {
 }
 
 .earnAction {
-  margin-left: 50 rpx;
+  margin-left: 50rpx;
   font-size: 15px;
   color: #ff9900;
 }
 
 .deAction {
-  margin-left: 50 rpx;
+  margin-left: 50rpx;
   font-size: 15px;
   color: #39C5BB;
 }
@@ -168,7 +168,7 @@ export default {
   position: fixed;
   bottom: 50px;
   margin-left: 10%;
-  border-radius: 50 rpx;
+  border-radius: 50rpx;
 }
 
 /*积分历史的时候*/

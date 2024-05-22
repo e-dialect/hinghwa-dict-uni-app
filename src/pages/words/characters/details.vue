@@ -77,7 +77,6 @@
 <script>
 import { getCharacterDetails } from '@/services/character';
 
-const app = getApp();
 export default {
   data() {
     return {

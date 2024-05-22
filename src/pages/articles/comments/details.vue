@@ -193,7 +193,7 @@ export default {
      * 发送评论
      */
     createComment() {
-      const comment = this.text;
+      const details = this.text;
       const { parent } = this;
       const { id } = this;
       if (details.length === 0) {

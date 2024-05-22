@@ -141,29 +141,20 @@ export default {
     nextNodeList() {
       const { record } = this;
       const ans = {};
-      for (const i in record) {
-        if (i === 'word_count') continue;
+      Object.keys(record).forEach((i) => {
+        if (i === 'word_count') return;
         if (i[0] in ans) {
           ans[i[0]] = [...ans[i[0]], i];
         } else {
           ans[i[0]] = [i];
         }
-      }
-      // sort ans
-      for (const i in ans) {
-        if ({}.hasOwnProperty.call(ans, i)) {
-          ans[i].sort();
-        }
-      }
-      // convert to array
-      const ansArray = [];
-      for (const i in ans) {
-        if ({}.hasOwnProperty.call(ans, i)) {
-          ansArray.push([i, ans[i]]);
-        }
-      }
-      ansArray.sort();
-      return ansArray;
+      });
+
+      Object.keys(ans).forEach((i) => {
+        ans[i].sort();
+      });
+
+      return Object.entries(ans).sort();
     },
   },
   watch: {
@@ -213,9 +204,9 @@ export default {
     popPinyin(index) {
       this.order.splice(index);
       let record = this.fullRecord;
-      for (const i of this.order) {
+      this.order.forEach((i) => {
         record = record[i];
-      }
+      });
       this.record = record;
       this.prefix = '';
     },
