@@ -99,7 +99,28 @@
       "path": "pages/quizzes/tests/answer",
       "style": {}
     },
-	// lists区
+    {
+      "path": "pages/quizzes/quizset/index",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/records/index",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/records/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/quizzes/quizset/questionCard",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    },
 	{
 	  "path": "pages/lists/index",
 	  "style": {}
