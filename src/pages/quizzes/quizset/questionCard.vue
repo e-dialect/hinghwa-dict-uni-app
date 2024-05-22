@@ -1,9 +1,6 @@
 <template>
   <view>
     <cu-custom title="答题卡" />
-    <Detail
-      v-show="false"
-    />
     <view
       v-if="length===0"
       class="noContent"
@@ -43,17 +40,13 @@ import { onPullDownRefresh } from '@dcloudio/uni-app';
 const app = getApp();
 /* const app = App(); */
 export default {
-
-  // :class="{ 'question-square': true, 'submitted-correct': submitted[index] === true }"，没做成功..
-  /* ' */
   data() {
     return {
       paperID: '',
       length: 0,
       questionFill: data.questions,
       answeredQ: 0,
-      quizss: {}, // 先放着
-      /* submit: Array(quizss.length).fill(99), */
+      quizss: {},
       getPaperDetail,
       uploadPaper,
     };
@@ -117,7 +110,7 @@ export default {
                 () => {
                   uni.reLaunch({ url: '/pages/quizzes/quizset/index' });
                 },
-                1500,
+                2000,
               );
 
               // 在这里可以处理用户点击确定后的逻辑

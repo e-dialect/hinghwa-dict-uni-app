@@ -59,7 +59,7 @@ export default {
         id: '2',
         user: {
           nickname: 'John Doe',
-          avatar: 'https://example.com/avatar1.jpg',
+          avatar: 'https://daonan/haha.jpg',
           id: 1,
         },
         timestamp: '2024-01-25',

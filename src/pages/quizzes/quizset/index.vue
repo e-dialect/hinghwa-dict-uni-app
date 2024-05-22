@@ -36,7 +36,6 @@ import { navigatorToDetail, gotoAllRecords, gotoQuestionCard } from '@/routers/q
 export default {
   data() {
     return {
-      // 试卷数组
       total: 0,
       papers: [],
       Answered: data.questions,
@@ -77,7 +76,7 @@ export default {
   text-align: center;
   letter-spacing: 5 upx;
   font-family: "微软雅黑";
-  transition: color 0.5s ease-out; /* 使用过渡效果 */
+  transition: color 0.5s ease-out;
 }
 
 .total {

@@ -321,7 +321,7 @@ export default {
                 uni.showToast({
                   title: '答对啦！',
                 });
-                // uploadMyAnswer(id, id, app.globalData.id, this.current, true);
+                uploadMyAnswer(id, id, app.globalData.id, this.current, true);
               } else {
                 this.questionList[index] = 2;
                 uni.setStorageSync('rq', JSON.stringify(this.questionList));
@@ -329,7 +329,7 @@ export default {
                   title: '太可惜了！',
                   icon: 'none',
                 });
-                // uploadMyAnswer(id, id, app.globalData.id, this.current, false);
+                uploadMyAnswer(id, id, app.globalData.id, this.current, false);
               }
               this.showAnswerFlag = true;
               this.showExplanationFlag = true;

@@ -49,13 +49,13 @@
                 v-if="quiz.answer === optionIndex"
                 class="correct"
               >
-                [正确]
+                ←正确
               </text>
               <text
                 v-if="selectedOptions[index] === optionIndex"
                 class="selected"
               >
-                [您选择的]
+                ←您选择的
               </text>
             </view>
             <view class="divider2" />
