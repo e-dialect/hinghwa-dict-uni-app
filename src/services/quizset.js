@@ -33,6 +33,7 @@ export async function uploadPaper(contributor, paper) {
 }
 
 // 做一个数据持久化
+// 后年用storageSync了
 export default {
   questions: [99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99,
     99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99,

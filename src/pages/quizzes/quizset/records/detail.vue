@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom title="详细记录" />
+    <cu-custom title="答卷详细记录" />
     <view class="container">
       <view class="header">
         <text class="title">

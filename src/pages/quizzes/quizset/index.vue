@@ -84,7 +84,7 @@ export default {
 }
 
 .highlight {
-  color: #ff4500; /* 设置高亮颜色 */
+  color: #ff4500;
 }
 
 .paper-list {

@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import data, { getPaperDetail, uploadMyAnswer } from '@/services/quizset';
+import { getPaperDetail, uploadMyAnswer } from '@/services/quizset';
 
 const app = getApp();
 export default {

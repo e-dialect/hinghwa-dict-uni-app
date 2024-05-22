@@ -35,7 +35,6 @@
 </template>
 <script>
 import data, { getPaperDetail, uploadPaper } from '@/services/quizset';
-import { onPullDownRefresh } from '@dcloudio/uni-app';
 
 const app = getApp();
 /* const app = App(); */

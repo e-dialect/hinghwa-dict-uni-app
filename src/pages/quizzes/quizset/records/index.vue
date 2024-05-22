@@ -1,6 +1,6 @@
 <template>
   <view>
-    <cu-custom title="我的记录" />
+    <cu-custom title="我的答卷记录" />
     <view class="title">
       <image
         class="user-avater"
