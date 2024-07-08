@@ -330,7 +330,7 @@ export default {
 
       // 上传录音文件
       uploadFile(pronunciation.source).then((res) => {
-        pronunciation.source = JSON.parse(res).url;
+        pronunciation.source = res.url;
         // TODO refactor
         createPronunciation(pronunciation).then(() => {
           uni.showToast({
