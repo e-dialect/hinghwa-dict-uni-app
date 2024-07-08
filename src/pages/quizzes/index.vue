@@ -136,7 +136,7 @@
             class="text-content padding-left"
             style="max-width: 60vw"
           >
-            组卷测试~快来看看你能答对多少题吧！
+            组卷答题测试~快来看看你能答对多少题吧！
           </text>
           <!--开始答题按钮-->
           <view class="quiz-btn">
@@ -146,7 +146,7 @@
               @tap="toPaperPage()"
             >
               <text class="text-sm">
-                组卷测试
+                组卷答题
               </text>
             </button>
           </view>
