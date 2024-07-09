@@ -12,16 +12,19 @@
       </text>
     </view>
     <view class="paper-list">
-      <view v-if="records.length === 0">
+      <view
+        v-if="records.length === 0"
+        class="noRecords"
+      >
         <text>当前用户没有答题记录！</text>
       </view>
       <!-- 如果records数组长度不为0 -->
       <view v-else>
         <view
-            v-for="record in records"
-            :key="record.id"
-            class="paper-item"
-            @tap="gotoRecordDetail(record.id)"
+          v-for="record in records"
+          :key="record.id"
+          class="paper-item"
+          @tap="gotoRecordDetail(record.id)"
         >
           <text class="paper-title">
             {{ record.paper.title }}
@@ -146,6 +149,11 @@ export default {
 
 .title {
   display: flex;
+}
+
+.noRecords {
+  text-align: center;
+  margin-top: 10rpx;
 }
 
 </style>
