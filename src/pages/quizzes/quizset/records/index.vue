@@ -86,7 +86,7 @@ export default {
       duration: 0,
       scrollTop: 0,
     });
-    getAllRecords().then((res) => {
+    getAllRecords(app.globalData.id).then((res) => {
       this.records = res.records;
       this.total = res.total;
     });
@@ -153,7 +153,17 @@ export default {
 
 .noRecords {
   text-align: center;
-  margin-top: 10rpx;
+  font-size: 16px;
+  color: #666;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: 80%;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 </style>
