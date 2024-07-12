@@ -143,7 +143,7 @@
             <button
               style="height: 80upx;width: 160upx"
               class="cu-btn bg-blue shadow"
-              @tap="toPaperPage()"
+              @tap="toPaperPage(id)"
             >
               <text class="text-sm">
                 组卷答题
@@ -181,9 +181,11 @@ import {
 } from '@/routers/quiz';
 import { defaultMessage } from '@/services/shareMessages';
 
+const app = getApp();
 export default {
   data() {
     return {
+      id: app.globalData.id,
       toRandomQuizPage,
       toTestPage,
       toSearchQuizPage,

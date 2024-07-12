@@ -1,3 +1,5 @@
+import { toLoginPage } from '@/routers/login';
+
 /**
  * 前往随机跳题
  */
@@ -46,10 +48,21 @@ export function toSearchQuizPage() {
 /**
  * 前往组卷测试界面 3.0增加
  */
-export function toPaperPage() {
-  uni.navigateTo({
-    url: '/pages/quizzes/quizset/index',
-  });
+export function toPaperPage(id) {
+  if (id === undefined) {
+    uni.showToast({
+      icon: 'none',
+      title: '请先登录！',
+      duration: 2000,
+    });
+    setTimeout(() => {
+      toLoginPage();
+    }, 2000);
+  } else {
+    uni.navigateTo({
+      url: '/pages/quizzes/quizset/index',
+    });
+  }
 }
 
 /**
