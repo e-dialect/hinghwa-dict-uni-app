@@ -87,7 +87,7 @@
         </view>
       </view>
       <!--试卷-->
-      <view
+      <!-- <view
         class="cu-item padding"
         style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
       >
@@ -104,9 +104,9 @@
             style="max-width: 60vw"
           >
             一个小小的能力测验~快看看你能拿多少分数吧！
-          </text>
-          <!--开始答题按钮-->
-          <view class="quiz-btn">
+          </text> -->
+      <!--开始答题按钮-->
+      <!-- <view class="quiz-btn">
             <button
               style="height: 80upx;width: 160upx"
               class="cu-btn bg-blue shadow"
@@ -114,6 +114,39 @@
             >
               <text class="text-sm">
                 开始测验
+              </text>
+            </button>
+          </view>
+        </view>
+      </view> -->
+      <view
+        class="cu-item padding"
+        style="background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)"
+      >
+        <view class="cu-bar">
+          <view class="action">
+            <text class="text-xl text-bold text-blue">
+              方言能力小测验！
+            </text>
+          </view>
+        </view>
+        <!--组卷测试，3.0增加-->
+        <view class="flex">
+          <text
+            class="text-content padding-left"
+            style="max-width: 60vw"
+          >
+            组卷答题测试~快来看看你能答对多少题吧！
+          </text>
+          <!--开始答题按钮-->
+          <view class="quiz-btn">
+            <button
+              style="height: 80upx;width: 160upx"
+              class="cu-btn bg-blue shadow"
+              @tap="toPaperPage(id)"
+            >
+              <text class="text-sm">
+                组卷答题
               </text>
             </button>
           </view>
@@ -143,15 +176,20 @@
 </template>
 
 <script>
-import { toRandomQuizPage, toSearchQuizPage, toTestPage } from '@/routers/quiz';
+import {
+  toRandomQuizPage, toSearchQuizPage, toTestPage, toPaperPage,
+} from '@/routers/quiz';
 import { defaultMessage } from '@/services/shareMessages';
 
+const app = getApp();
 export default {
   data() {
     return {
+      id: app.globalData.id,
       toRandomQuizPage,
       toTestPage,
       toSearchQuizPage,
+      toPaperPage,
     };
   },
 
@@ -169,10 +207,11 @@ export default {
 </script>
 
 <style>
-.indent{
+.indent {
   text-indent: 2em;
   display: block;
 }
+
 .quiz-btn {
   margin: 30rpx 0;
   display: flex;
