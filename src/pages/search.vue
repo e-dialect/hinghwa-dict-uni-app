@@ -88,6 +88,30 @@
         </view>
       </view>
 
+      <view
+        v-show="!isShow"
+        class="align-center flex flex-direction cu-bar foot"
+      >
+        <button
+          class="cu-btn icons bg-blue shadow margin-top"
+          @longpress="startRecord"
+          @touchend="stopRecord"
+        >
+          <text
+            class="cuIcon-voice"
+            style="font-size: 50upx;"
+          />
+        </button>
+        <view class="text-bold margin-bottom">
+          <text v-if="status === 0">
+            长按开始语音搜索
+          </text>
+          <text v-else>
+            松开结束搜索
+          </text>
+        </view>
+      </view>
+
       <!--搜索结果-->
       <view
         v-show="isShow"
@@ -118,6 +142,7 @@ import { defaultMessage } from '@/services/shareMessages';
 import ArticleList from '@/components/ArticleList.vue';
 import WordFullList from '@/components/WordFullList.vue';
 import CharacterPinyinList from '@/components/CharacterPinyinList.vue';
+import { pronunciationTranslation } from '../services/pronunciation';
 
 export default {
   components: {
@@ -136,9 +161,14 @@ export default {
       articles: null, // 搜索结果：文章
       historyList: [], // 历史记录列表
       isShow: false, // 历史记录展示
+      status: -1,
+      source: '',
     };
   },
-  onLoad(option) {
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  async onLoad(option) {
     if (option.index) {
       this.searchScopeIndex = Number(option.index);
     }
@@ -151,6 +181,65 @@ export default {
     } catch (error) {
       this.historyList = [];
     }
+
+    // 准备录音器
+    const that = this;
+    // #ifdef H5
+    // 查看是否支持本浏览器
+    if (navigator.mediaDevices.getUserMedia) {
+      // 尝试获取麦克风权限
+      const constraints = { audio: true };
+      navigator.mediaDevices.getUserMedia(constraints).then(
+        // 成功回调
+        (stream) => {
+          this.recorderManager = new MediaRecorder(stream);
+          let chunks = [];
+
+          // 录音开始
+          this.recorderManager.onstart = () => {
+            chunks = [];
+          };
+          // 录音过程中
+          this.recorderManager.ondataavailable = (e) => {
+            chunks.push(e.data);
+          };
+          // 录音停止
+          this.recorderManager.onstop = () => {
+            const blob = new Blob(chunks, { type: that.recorderManager.mimeType });
+            that.setSource(window.URL.createObjectURL(blob));
+          };
+
+          this.status = 0;
+        },
+        // 失败回调
+        () => {
+          uni.showToast({
+            title: '授权录音失败',
+            icon: 'error',
+          });
+        },
+      );
+    } else {
+      uni.showToast({
+        title: '不支持本浏览器',
+        icon: 'error',
+      });
+    }
+    // #endif
+
+    // #ifndef H5
+    this.recorderManager = uni.getRecorderManager();
+    /* this.recorderManager.onError(() => {
+      uni.showToast({
+        title: '录音失败',
+        icon: 'none',
+      });
+    }); */
+    this.recorderManager.onStop((res) => {
+      that.setSource(res.tempFilePath);
+    });
+    this.status = 0;
+    // #endif
   },
   /**
    * 右上角分享事件
@@ -274,6 +363,61 @@ export default {
           },
         });
       }
+    },
+
+    /**
+     * 开始录音
+     */
+    startRecord() {
+      if (this.status === -1) {
+        uni.showToast({
+          title: '请先授权录音',
+          icon: 'error',
+        });
+        return;
+      }
+      this.status = 1;
+      uni.showToast({
+        title: '正在识别...',
+        icon: 'none',
+      });
+      this.recorderManager.start();
+    },
+
+    /**
+     * 停止录音
+     */
+    async stopRecord() {
+      this.status = 0;
+      this.recorderManager.stop();
+      await this.translateRecord();
+    },
+
+    /**
+     * 设置录音文件
+     * @param source {string} 录音文件路径
+     */
+    setSource(source) {
+      this.source = source;
+      uni.showToast({
+        title: '识别成功',
+      });
+    },
+
+    /**
+     * 重新录音
+     */
+    reRecord() {
+      this.source = '';
+    },
+
+    /**
+     * 翻译
+     */
+    async translateRecord() {
+      await pronunciationTranslation(this.source).then((res) => {
+        this.keywords = res;
+      });
     },
   },
 };
