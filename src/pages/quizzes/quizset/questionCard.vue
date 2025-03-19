@@ -181,7 +181,7 @@ export default {
 }
 
 .fixbutton {
-  postion: fixed;
+  position: fixed;
   width: 40%;
   margin-top: 100%;
 
