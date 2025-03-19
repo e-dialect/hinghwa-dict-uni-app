@@ -17,8 +17,7 @@ jobs:
       - name: "Download artifact"
         uses: actions/download-artifact@v4
         with:
-          name: pr.zip
-      - run: unzip pr.zip
+          run-id: ${{github.event.workflow_run.id }}
 
       - name: "Save PR number to env.number"
         run: echo "number=$(cat ./pr/NR)" >> $GITHUB_ENV
