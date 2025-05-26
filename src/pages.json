@@ -245,12 +245,6 @@
       "path": "pages/articles/edit",
       "style": {}
     }
-    // {
-    //   "path": "*",
-    //   "usingComponents": {
-		// 		"custom": "pages/error/not-found"
-		// 	}
-    // }
   ],
   "sitemapLocation": "sitemap.json",
   "style": "v2",
