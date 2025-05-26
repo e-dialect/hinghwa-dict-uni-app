@@ -10,10 +10,10 @@ export default {
   },
   async onLaunch() {
     if (uni.getSystemInfoSync().uniPlatform === 'web') {
-      const pages = pagesJson.pages.map(page => page.path);
-      var currentPath = window.location.pathname;
+      const pages = pagesJson.pages.map((page) => page.path);
+      const currentPath = window.location.pathname;
       if (!pages.includes(currentPath)) {
-        uni.navigateTo({ url: '/pages/error/not-found' })
+        uni.navigateTo({ url: '/pages/error/not-found' });
       }
     }
 
