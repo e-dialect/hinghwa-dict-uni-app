@@ -14,6 +14,10 @@
       "path": "pages/search",
       "style": {}
     },
+    {
+      "path": "pages/error/not-found",
+      "style": {}
+    },
     // words 区域
     {
       "path": "pages/words/details",

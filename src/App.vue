@@ -2,12 +2,21 @@
 // app.js
 import { getLoginStatus } from '@/services/login';
 import mob2pc from '@/routers/mob2pc';
+import pagesJson from '@/pages.json';
 
 export default {
   data() {
     return {};
   },
   async onLaunch() {
+    if (uni.getSystemInfoSync().uniPlatform === 'web') {
+      const pages = pagesJson.pages.map((page) => page.path);
+      const currentPath = window.location.pathname;
+      if (!pages.includes(currentPath)) {
+        uni.navigateTo({ url: '/pages/error/not-found' });
+      }
+    }
+
     uni.getSystemInfo({
       success: async (e) => {
         // if widescreen device redirect to widescreen page
