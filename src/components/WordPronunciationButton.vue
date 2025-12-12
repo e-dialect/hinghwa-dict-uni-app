@@ -8,7 +8,7 @@
 
 <script>
 import { playAudio } from '@/utils/audio';
-import { combinePronunciationByIpa, combinePronunciationByPinyin } from '@/services/pronunciation';
+import { combinePronunciationByIpa, combinePronunciationByPinyin, getPronunciations } from '@/services/pronunciation';
 
 export default {
   name: 'WordPronunciationButton',
@@ -25,9 +25,9 @@ export default {
       type: String,
       default: '',
     },
-    pronunciations: {
-      type: Array,
-      default: () => [],
+    wordId: {
+      type: [Number, String],
+      default: null,
     },
   },
   data() {
@@ -35,37 +35,52 @@ export default {
       url: '', // 音频地址
       attempt: false, // 是否进行过尝试
       accept: false, // 是否愿意语音合成
+      firstPronunciation: null, // 词条的第一条语音
+      loading: false, // 是否正在加载
     };
   },
   computed: {
     isValid() {
       if (this.source && this.source !== 'null') return true;
-      if (this.hasRelatedPronunciation()) return true;
+      if (this.firstPronunciation?.pronunciation?.source) return true;
       if (!this.attempt) return true;
       return !!this.url;
     },
   },
+  async mounted() {
+    if (this.wordId) {
+      await this.loadFirstPronunciation();
+    }
+  },
   methods: {
-    hasRelatedPronunciation() {
-      return this.pronunciations && this.pronunciations.length > 0;
+    async loadFirstPronunciation() {
+      if (this.loading) return;
+      this.loading = true;
+      try {
+        const pronunciations = await getPronunciations({ word: this.wordId, pageSize: 1 });
+        if (pronunciations && pronunciations.length > 0) {
+          this.firstPronunciation = pronunciations[0];
+        }
+      } catch (e) {
+        // Silently fail
+      } finally {
+        this.loading = false;
+      }
     },
-    getFirstRelatedPronunciation() {
-      if (!this.hasRelatedPronunciation()) return null;
-      return this.pronunciations[0];
-    },
-    play() {
+    async play() {
+      // Priority 1: Complete match (exact IPA source)
       if (this.source && this.source !== 'null') {
         playAudio(this.source);
         return;
       }
 
-      // Try to play related pronunciation first
-      const relatedPronunciation = this.getFirstRelatedPronunciation();
-      if (relatedPronunciation?.pronunciation?.source) {
-        playAudio(relatedPronunciation.pronunciation.source);
+      // Priority 2: First pronunciation of this word
+      if (this.firstPronunciation?.pronunciation?.source) {
+        playAudio(this.firstPronunciation.pronunciation.source);
         return;
       }
 
+      // Priority 3: AI synthesis
       if (this.accept) this.playUrl();
       else {
         uni.showModal({
