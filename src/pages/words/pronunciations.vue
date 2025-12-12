@@ -25,6 +25,7 @@
           <WordPronunciationButton
             v-if="!word.source"
             :pinyin="word.standard_pinyin"
+            :word-id="id"
           />
         </view>
         <view>
@@ -38,6 +39,7 @@
           <WordPronunciationButton
             :ipa="word.standard_ipa"
             :source="word.source"
+            :word-id="id"
           />
         </view>
       </uni-card>

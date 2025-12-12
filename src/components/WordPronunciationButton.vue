@@ -8,7 +8,7 @@
 
 <script>
 import { playAudio } from '@/utils/audio';
-import { combinePronunciationByIpa, combinePronunciationByPinyin } from '@/services/pronunciation';
+import { combinePronunciationByIpa, combinePronunciationByPinyin, getPronunciations } from '@/services/pronunciation';
 
 export default {
   name: 'WordPronunciationButton',
@@ -25,27 +25,63 @@ export default {
       type: String,
       default: '',
     },
+    wordId: {
+      type: [Number, String],
+      default: null,
+    },
   },
   data() {
     return {
       url: '', // 音频地址
       attempt: false, // 是否进行过尝试
       accept: false, // 是否愿意语音合成
+      firstPronunciation: null, // 词条的第一条语音
+      loading: false, // 是否正在加载
     };
   },
   computed: {
     isValid() {
       if (this.source && this.source !== 'null') return true;
+      if (this.firstPronunciation?.pronunciation?.source) return true;
       if (!this.attempt) return true;
       return !!this.url;
     },
   },
+  async mounted() {
+    if (this.wordId) {
+      await this.loadFirstPronunciation();
+    }
+  },
   methods: {
-    play() {
+    async loadFirstPronunciation() {
+      if (this.loading) return;
+      this.loading = true;
+      try {
+        const pronunciations = await getPronunciations({ word: this.wordId, pageSize: 1, page: 1 });
+        if (pronunciations && pronunciations.length > 0) {
+          const [firstPronunciation] = pronunciations;
+          this.firstPronunciation = firstPronunciation;
+        }
+      } catch (e) {
+        // Silently fail
+      } finally {
+        this.loading = false;
+      }
+    },
+    async play() {
+      // Priority 1: Complete match (exact IPA source)
       if (this.source && this.source !== 'null') {
         playAudio(this.source);
         return;
       }
+
+      // Priority 2: First pronunciation of this word
+      if (this.firstPronunciation?.pronunciation?.source) {
+        playAudio(this.firstPronunciation.pronunciation.source);
+        return;
+      }
+
+      // Priority 3: AI synthesis
       if (this.accept) this.playUrl();
       else {
         uni.showModal({
