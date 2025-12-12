@@ -25,6 +25,10 @@ export default {
       type: String,
       default: '',
     },
+    pronunciations: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -36,16 +40,33 @@ export default {
   computed: {
     isValid() {
       if (this.source && this.source !== 'null') return true;
+      if (this.hasRelatedPronunciation()) return true;
       if (!this.attempt) return true;
       return !!this.url;
     },
   },
   methods: {
+    hasRelatedPronunciation() {
+      return this.pronunciations && this.pronunciations.length > 0;
+    },
+    getFirstRelatedPronunciation() {
+      if (!this.hasRelatedPronunciation()) return null;
+      return this.pronunciations[0];
+    },
     play() {
       if (this.source && this.source !== 'null') {
         playAudio(this.source);
         return;
       }
+      
+      // Try to play related pronunciation first
+      const relatedPronunciation = this.getFirstRelatedPronunciation();
+      if (relatedPronunciation && relatedPronunciation.pronunciation
+          && relatedPronunciation.pronunciation.source) {
+        playAudio(relatedPronunciation.pronunciation.source);
+        return;
+      }
+
       if (this.accept) this.playUrl();
       else {
         uni.showModal({
