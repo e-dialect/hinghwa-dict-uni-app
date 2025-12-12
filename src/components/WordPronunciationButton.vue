@@ -59,7 +59,8 @@ export default {
       try {
         const pronunciations = await getPronunciations({ word: this.wordId, pageSize: 1, page: 1 });
         if (pronunciations && pronunciations.length > 0) {
-          this.firstPronunciation = pronunciations[0];
+          const [firstPronunciation] = pronunciations;
+          this.firstPronunciation = firstPronunciation;
         }
       } catch (e) {
         // Silently fail
