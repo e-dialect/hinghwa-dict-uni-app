@@ -58,11 +58,10 @@ export default {
         playAudio(this.source);
         return;
       }
-      
+
       // Try to play related pronunciation first
       const relatedPronunciation = this.getFirstRelatedPronunciation();
-      if (relatedPronunciation && relatedPronunciation.pronunciation
-          && relatedPronunciation.pronunciation.source) {
+      if (relatedPronunciation?.pronunciation?.source) {
         playAudio(relatedPronunciation.pronunciation.source);
         return;
       }
