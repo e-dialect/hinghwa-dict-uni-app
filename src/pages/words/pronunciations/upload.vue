@@ -75,8 +75,8 @@
           <!-- 没有有效的录音文件-->
           <view v-if="!source">
             <button
-              class="cu-btn icons bg-blue shadow"
-              style="height: 150upx;width: 150upx;border-radius: 500upx;margin: 20upx 15upx;"
+              class="cu-btn icons bg-blue shadow margin-left-xl"
+              style="margin-left: 50upx;"
               @longpress="startRecord"
               @touchend="stopRecord"
             >
@@ -243,12 +243,12 @@ export default {
 
     // #ifndef H5
     this.recorderManager = uni.getRecorderManager();
-    this.recorderManager.onError(() => {
+    /* this.recorderManager.onError(() => {
       uni.showToast({
         title: '录音失败',
         icon: 'none',
       });
-    });
+    }); */
     this.recorderManager.onStop((res) => {
       that.setSource(res.tempFilePath);
     });
