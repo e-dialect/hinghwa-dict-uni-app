@@ -70,8 +70,7 @@
               style="height: 55upx;line-height: 55upx"
             >
               <text
-                @tap="keywords = item"
-                @click="search"
+                @click="searchHistory(item)"
               >
                 {{ item }}
               </text>
@@ -171,6 +170,15 @@ export default {
       if (this.keywords === '') {
         this.isShow = false;
       }
+    },
+
+    /**
+     * 从历史记录中搜索
+     * @param item 历史记录项
+     */
+    searchHistory(item) {
+      this.keywords = item;
+      this.search();
     },
 
     /**
