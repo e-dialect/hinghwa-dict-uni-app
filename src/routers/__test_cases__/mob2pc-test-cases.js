@@ -177,7 +177,8 @@ const testCases = [
  * );
  */
 
-console.log('Test cases defined. Total:', testCases.length);
-console.log('See comments in file for how to run tests.');
+// Uncomment the lines below to log test case information:
+// console.log('Test cases defined. Total:', testCases.length);
+// console.log('See comments in file for how to run tests.');
 
 export default testCases;

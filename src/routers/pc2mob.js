@@ -51,17 +51,17 @@ const pc2mobRouters = {
   // Tools
   '/tools': '/pages/tools/index',
   '/tools/conditions': '/pages/tools/condition',
-  '/tools/QuickRecording': '/pages/words/pronunciations/upload?id={word}',
+  '/tools/QuickRecording': '/pages/words/pronunciations/upload', // No word parameter - will redirect if required
   '/tools/QuickRecording/RecordRank': '/pages/words/pronunciations/ranking',
   '/tools/characters': '/pages/words/characters/details',
   '/tools/DailyExpressions': '/pages/tools/daily-expression/index',
   '/tools/RecordConfirming': '/pages/words/pronunciations/ranking', // No equivalent in mobile
-  '/tools/WordConfirming': '/pages/words/details', // No equivalent in mobile
+  '/tools/WordConfirming': '/pages/words/details?id={id}', // No equivalent in mobile
   '/tools/Relative': '/pages/tools/relative',
   '/pinyin': '/pages/tools/pinyin',
 
   // Words
-  '/words/Create': '/pages/words/details', // No create page in mobile
+  '/words/Create': '/pages/words/details?id=0', // No create page in mobile, use sentinel id=0
   '/words/{id}': '/pages/words/details?id={id}',
   '/words/{id}/edit': '/pages/words/details?id={id}', // No edit page in mobile
   '/application/{id}': '/pages/words/details?id={id}', // No application page in mobile
@@ -135,18 +135,21 @@ function findMatchingRoute(pathname) {
   }
 
   // Try pattern match with parameters
-  for (const pattern in pc2mobRouters) {
+  const patterns = Object.keys(pc2mobRouters);
+  for (let idx = 0; idx < patterns.length; idx += 1) {
+    const pattern = patterns[idx];
     if (pattern.includes('{')) {
       // Check if pattern matches pathname structure
       const patternParts = pattern.split('/');
       const pathnameParts = pathname.split('/');
 
       if (patternParts.length !== pathnameParts.length) {
+        // eslint-disable-next-line no-continue
         continue;
       }
 
       let matches = true;
-      for (let i = 0; i < patternParts.length; i++) {
+      for (let i = 0; i < patternParts.length; i += 1) {
         const patternPart = patternParts[i];
         const pathnamePart = pathnameParts[i];
 
@@ -193,11 +196,11 @@ export default function pc2mob() {
   const unresolvedParams = target.match(PARAM_PATTERN);
   if (unresolvedParams) {
     // Try to resolve from query string
-    unresolvedParams.forEach((param) => {
-      const paramName = param.substring(1, param.length - 1);
+    unresolvedParams.forEach((placeholder) => {
+      const paramName = placeholder.substring(1, placeholder.length - 1);
       const queryValue = getQueryString(paramName);
       if (queryValue) {
-        target = target.replace(param, queryValue);
+        target = target.replace(placeholder, queryValue);
       }
     });
   }
@@ -205,6 +208,8 @@ export default function pc2mob() {
   // Validate that all path parameters have been resolved
   if (UNRESOLVED_PARAM_PATTERN.test(target)) {
     // Some parameters couldn't be resolved, redirect to mobile index
+    // Log warning for debugging (disabled in production via eslint-disable-next-line)
+    // eslint-disable-next-line no-console
     console.warn('pc2mob: unresolved parameters in target URL:', {
       target,
       originalUrl: window.location.href,

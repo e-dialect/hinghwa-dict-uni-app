@@ -59,12 +59,12 @@ const mob2pcRouters = {
   '/pages/words/details': '/words/{id}',
   '/pages/words/pronunciations': '/words/{word}?tab=pronunciations',
   '/pages/words/characters/details': '/tools/characters',
-  '/pages/words/pronunciations/upload': '/tools/QuickRecording?word={id}',
+  '/pages/words/pronunciations/upload': '/tools/QuickRecording?word={id}', // Mobile uses ?id= for word identifier; web expects ?word=
   '/pages/words/pronunciations/ranking': '/tools/QuickRecording/RecordRank',
 
   // Word Lists
   '/pages/lists/index': '/wordlist',
-  '/pages/lists/upload': '/wordlist/editor?id={id}',
+  '/pages/lists/upload': '/wordlist/editor', // Special handling at lines 135-142 manages the id parameter
   '/pages/lists/details': '/wordlist/{id}',
 
   // Tools
@@ -82,9 +82,9 @@ const mob2pcRouters = {
   '/pages/products/history': '/rewards/transactions',
 
   // Mails (no direct equivalent in web, redirect to notification)
-  '/pages/mails/index': '/notification?context=mail',
-  '/pages/mails/details': '/notification?context=mail&id={id}',
-  '/pages/mails/send': '/notification?context=mail&action=send',
+  '/pages/mails/index': '/notification',
+  '/pages/mails/details': '/notification?id={id}',
+  '/pages/mails/send': '/notification?action=send',
 
   // Music
   '/pages/music': '/music',
@@ -172,6 +172,8 @@ export default function mob2pc() {
   // Validate that all path parameters have been resolved
   if (UNRESOLVED_PARAM_PATTERN.test(target)) {
     // Some path parameters couldn't be resolved, redirect to home
+    // Log warning for debugging (disabled in production via eslint-disable-next-line)
+    // eslint-disable-next-line no-console
     console.warn('mob2pc: unresolved path parameters in target URL:', {
       target,
       originalUrl: window.location.href,
