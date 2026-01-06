@@ -2,6 +2,7 @@
 // Mobile routes use uni-app pages structure, web routes use Vue Router paths
 const mob2pcRouters = {
   // Home and main pages
+  '/': '/Home', // Root path redirect
   '/pages/index': '/Home',
   '/pages/home': '/Home',
   '/pages/search': '/search?key={key}',
@@ -10,7 +11,7 @@ const mob2pcRouters = {
   '/pages/articles/index': '/articles',
   '/pages/articles/details': '/articles/{id}',
   '/pages/articles/edit': '/articles/edit/{id}',
-  '/pages/articles/comments/details': '/articles/{article}', // Web doesn't have separate comment details page
+  '/pages/articles/comments/details': '/articles/{article}', // Web shows comment context via the parent article details page; {article} is the parent article ID
   
   // Login
   '/pages/login/login': '/login',
@@ -22,32 +23,32 @@ const mob2pcRouters = {
   '/pages/quizzes/random': '/PuxianExam',
   '/pages/quizzes/search': '/PuxianExam/Research',
   '/pages/quizzes/details': '/PuxianExam/{id}',
-  '/pages/quizzes/tests/score': '/PuxianExam',
-  '/pages/quizzes/tests/answer': '/PuxianExam',
-  '/pages/quizzes/quizset/index': '/PuxianExam',
-  '/pages/quizzes/quizset/detail': '/PuxianExam/{id}',
-  '/pages/quizzes/quizset/records/index': '/PuxianExam',
-  '/pages/quizzes/quizset/records/detail': '/PuxianExam/{id}',
-  '/pages/quizzes/quizset/questionCard': '/PuxianExam/{id}',
+  '/pages/quizzes/tests/score': '/PuxianExam?view=score',
+  '/pages/quizzes/tests/answer': '/PuxianExam?view=answer',
+  '/pages/quizzes/quizset/index': '/PuxianExam?section=quizset',
+  '/pages/quizzes/quizset/detail': '/PuxianExam/{id}?section=quizset',
+  '/pages/quizzes/quizset/records/index': '/PuxianExam?section=records',
+  '/pages/quizzes/quizset/records/detail': '/PuxianExam/{id}?section=records',
+  '/pages/quizzes/quizset/questionCard': '/PuxianExam/{id}?view=questionCard',
   
   // Users
   '/pages/users/me': '/users/{id}',
   '/pages/users/details': '/users/{id}',
-  '/pages/users/settings/information': '/settings',
-  '/pages/users/settings/username': '/settings',
-  '/pages/users/settings/nickname': '/settings',
-  '/pages/users/settings/email': '/settings',
-  '/pages/users/settings/password': '/settings',
-  '/pages/users/settings/telephone': '/settings',
-  '/pages/users/pronunciations': '/users/{id}',
-  '/pages/users/words': '/users/{id}',
-  '/pages/users/me/likedarticles': '/users/{id}',
-  '/pages/users/me/articles': '/users/{id}',
-  '/pages/users/me/comments': '/users/{id}',
+  '/pages/users/settings/information': '/settings?section=information',
+  '/pages/users/settings/username': '/settings?section=username',
+  '/pages/users/settings/nickname': '/settings?section=nickname',
+  '/pages/users/settings/email': '/settings?section=email',
+  '/pages/users/settings/password': '/settings?section=password',
+  '/pages/users/settings/telephone': '/settings?section=telephone',
+  '/pages/users/pronunciations': '/users/{id}?tab=pronunciations',
+  '/pages/users/words': '/users/{id}?tab=words',
+  '/pages/users/me/likedarticles': '/users/{id}?tab=likedarticles',
+  '/pages/users/me/articles': '/users/{id}?tab=articles',
+  '/pages/users/me/comments': '/users/{id}?tab=comments',
   
   // Words
   '/pages/words/details': '/words/{id}',
-  '/pages/words/pronunciations': '/words/{id}',
+  '/pages/words/pronunciations': '/words/{id}?tab=pronunciations',
   '/pages/words/characters/details': '/tools/characters',
   '/pages/words/pronunciations/upload': '/tools/QuickRecording',
   '/pages/words/pronunciations/ranking': '/tools/QuickRecording/RecordRank',
@@ -71,10 +72,10 @@ const mob2pcRouters = {
   '/pages/products/details': '/rewards/detail/{id}',
   '/pages/products/history': '/rewards/transactions',
   
-  // Mails (no direct equivalent in web, redirect to notification)
-  '/pages/mails/index': '/notification',
-  '/pages/mails/details': '/notification',
-  '/pages/mails/send': '/notification',
+  // Mails (no direct equivalent in web, redirect to notification with context)
+  '/pages/mails/index': '/notification?feature=mail-index',
+  '/pages/mails/details': '/notification?feature=mail-details',
+  '/pages/mails/send': '/notification?feature=mail-send',
   
   // Music
   '/pages/music': '/music',
@@ -131,6 +132,17 @@ export default function mob2pc() {
         }
       }
     });
+  }
+  
+  // Validate that all path parameters have been resolved
+  if (/\{[A-Za-z0-9]+\}/.test(target)) {
+    // Log error for diagnostics and redirect to home page as fallback
+    console.error('mob2pc: unresolved path parameters in target URL:', {
+      target,
+      originalUrl: window.location.href,
+    });
+    window.location.href = 'https://hinghwa.cn/Home';
+    return;
   }
   
   // Handle query parameters that should be preserved
