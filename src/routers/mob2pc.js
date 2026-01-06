@@ -1,8 +1,16 @@
 // Mapping from mobile app routes (portrait) to web routes (landscape)
 // Mobile routes use uni-app pages structure, web routes use Vue Router paths
+
+// Base URL for the web application (landscape mode)
+const WEB_BASE_URL = 'https://hinghwa.cn';
+
+// Regex pattern for detecting parameters and unresolved parameters (compiled once for performance)
+const PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/g;
+const UNRESOLVED_PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/;
+
 const mob2pcRouters = {
   // Home and main pages
-  '/': '/Home', // Root path redirect
+  '/': '/Home',
   '/pages/index': '/Home',
   '/pages/home': '/Home',
   '/pages/search': '/search?key={key}',
@@ -10,12 +18,13 @@ const mob2pcRouters = {
   // Articles
   '/pages/articles/index': '/articles',
   '/pages/articles/details': '/articles/{id}',
-  '/pages/articles/edit': '/articles/edit/{id}',
-  '/pages/articles/comments/details': '/articles/{article}', // Web shows comment context via the parent article details page; {article} is the parent article ID
+  '/pages/articles/edit': '/articles/edit/{id}', // When id is present; for create (id=0), use /articles/create
+  '/pages/articles/comments/details': '/articles/{article}', // Web shows comment context via parent article; {article} is parent article ID
 
   // Login
   '/pages/login/login': '/login',
   '/pages/login/register': '/register',
+  '/pages/login/register/wechat': '/register?platform=wechat',
   '/pages/login/forget': '/forget',
 
   // Quizzes/Exam
@@ -48,14 +57,14 @@ const mob2pcRouters = {
 
   // Words
   '/pages/words/details': '/words/{id}',
-  '/pages/words/pronunciations': '/words/{id}?tab=pronunciations',
+  '/pages/words/pronunciations': '/words/{word}?tab=pronunciations',
   '/pages/words/characters/details': '/tools/characters',
-  '/pages/words/pronunciations/upload': '/tools/QuickRecording',
+  '/pages/words/pronunciations/upload': '/tools/QuickRecording?word={id}', // Maps mobile ?id= parameter to web ?word= parameter
   '/pages/words/pronunciations/ranking': '/tools/QuickRecording/RecordRank',
 
   // Word Lists
   '/pages/lists/index': '/wordlist',
-  '/pages/lists/upload': '/wordlist/editor',
+  '/pages/lists/upload': '/wordlist/editor', // Special handling at lines 135-142 manages the id parameter
   '/pages/lists/details': '/wordlist/{id}',
 
   // Tools
@@ -72,10 +81,10 @@ const mob2pcRouters = {
   '/pages/products/details': '/rewards/detail/{id}',
   '/pages/products/history': '/rewards/transactions',
 
-  // Mails (no direct equivalent in web, redirect to notification with context)
-  '/pages/mails/index': '/notification?feature=mail-index',
-  '/pages/mails/details': '/notification?feature=mail-details',
-  '/pages/mails/send': '/notification?feature=mail-send',
+  // Mails (no direct equivalent in web, redirect to notification)
+  '/pages/mails/index': '/notification',
+  '/pages/mails/details': '/notification?id={id}',
+  '/pages/mails/send': '/notification?action=send',
 
   // Music
   '/pages/music': '/music',
@@ -106,12 +115,34 @@ export default function mob2pc() {
 
   // If no mapping found, redirect to home page
   if (!target) {
-    window.location.href = 'https://hinghwa.cn/Home';
+    window.location.href = `${WEB_BASE_URL}/Home`;
     return;
   }
 
+  // Special handling for article edit/create
+  // When editing articles with id=0 or no id, it's a create operation
+  if (currentPath === '/pages/articles/edit') {
+    const articleId = getQueryString('id');
+    if (!articleId || articleId === '0') {
+      target = '/articles/create';
+    } else {
+      target = `/articles/edit/${articleId}`;
+    }
+  }
+
+  // Special handling for word list editor
+  // If id is present, pass it as a query parameter for editing
+  if (currentPath === '/pages/lists/upload') {
+    const listId = getQueryString('id');
+    if (listId && listId !== '0') {
+      target = `/wordlist/editor?id=${listId}`;
+    } else {
+      target = '/wordlist/editor';
+    }
+  }
+
   // Find all path parameters in the target route (e.g., {id}, {article})
-  const paramMatches = target.match(/\{[A-Za-z0-9]+\}/g);
+  const paramMatches = target.match(PARAM_PATTERN);
   const usedParams = new Set(); // Track which query params were used for path params
 
   if (paramMatches) {
@@ -123,8 +154,12 @@ export default function mob2pc() {
       if (queryValue) {
         target = target.replace(param, queryValue);
         usedParams.add(paramName);
-      } else {
-        // If required parameter is missing, try to get 'id' as fallback
+      } else if (paramName !== 'id') {
+        // Fallback: If a specific parameter is missing, try using 'id' as a last resort
+        // This handles cases where a route expects a specific param (e.g., {article})
+        // but the URL only has ?id=123. This is a reasonable fallback since most
+        // entity-detail pages use 'id' as the primary identifier.
+        // Note: Only applies when the parameter itself is not 'id' to avoid infinite loops
         const idValue = getQueryString('id');
         if (idValue) {
           target = target.replace(param, idValue);
@@ -135,13 +170,16 @@ export default function mob2pc() {
   }
 
   // Validate that all path parameters have been resolved
-  if (/\{[A-Za-z0-9]+\}/.test(target)) {
-    // Log error for diagnostics and redirect to home page as fallback
-    // console.error('mob2pc: unresolved path parameters in target URL:', {
-    //   target,
-    //   originalUrl: window.location.href,
-    // });
-    window.location.href = 'https://hinghwa.cn/Home';
+  if (UNRESOLVED_PARAM_PATTERN.test(target)) {
+    // Some path parameters couldn't be resolved, redirect to home
+    // Log warning for debugging (disabled in production via eslint-disable-next-line)
+    // eslint-disable-next-line no-console
+    console.warn('mob2pc: unresolved path parameters in target URL:', {
+      target,
+      originalUrl: window.location.href,
+      message: 'Redirecting to home page due to missing required parameters',
+    });
+    window.location.href = `${WEB_BASE_URL}/Home`;
     return;
   }
 
@@ -168,5 +206,5 @@ export default function mob2pc() {
   }
 
   // Redirect to the web version
-  window.location.href = `https://hinghwa.cn${target}`;
+  window.location.href = `${WEB_BASE_URL}${target}`;
 }
