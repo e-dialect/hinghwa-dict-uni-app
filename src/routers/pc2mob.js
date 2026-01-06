@@ -6,6 +6,7 @@ const MOBILE_BASE_URL = 'https://m.hinghwa.cn';
 
 // Regex pattern for detecting unresolved parameters (compiled once for performance)
 const UNRESOLVED_PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/;
+const PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/g;
 
 const pc2mobRouters = {
   // Home and main pages
@@ -189,7 +190,7 @@ export default function pc2mob() {
   });
 
   // Check if there are still unresolved parameters in target
-  const unresolvedParams = target.match(/\{[A-Za-z0-9_]+\}/g);
+  const unresolvedParams = target.match(PARAM_PATTERN);
   if (unresolvedParams) {
     // Try to resolve from query string
     unresolvedParams.forEach((param) => {

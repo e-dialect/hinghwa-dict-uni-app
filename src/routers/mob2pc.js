@@ -4,6 +4,10 @@
 // Base URL for the web application (landscape mode)
 const WEB_BASE_URL = 'https://hinghwa.cn';
 
+// Regex pattern for detecting parameters and unresolved parameters (compiled once for performance)
+const PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/g;
+const UNRESOLVED_PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/;
+
 const mob2pcRouters = {
   // Home and main pages
   '/': '/Home',
@@ -138,7 +142,7 @@ export default function mob2pc() {
   }
 
   // Find all path parameters in the target route (e.g., {id}, {article})
-  const paramMatches = target.match(/\{[A-Za-z0-9_]+\}/g);
+  const paramMatches = target.match(PARAM_PATTERN);
   const usedParams = new Set(); // Track which query params were used for path params
 
   if (paramMatches) {
@@ -166,7 +170,7 @@ export default function mob2pc() {
   }
 
   // Validate that all path parameters have been resolved
-  if (/\{[A-Za-z0-9_]+\}/.test(target)) {
+  if (UNRESOLVED_PARAM_PATTERN.test(target)) {
     // Some path parameters couldn't be resolved, redirect to home
     console.warn('mob2pc: unresolved path parameters in target URL:', {
       target,
