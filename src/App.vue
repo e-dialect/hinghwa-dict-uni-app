@@ -12,11 +12,9 @@ export default {
     if (uni.getSystemInfoSync().uniPlatform === 'web') {
       const pages = pagesJson.pages.map((page) => page.path);
       const currentPath = window.location.pathname;
-      // Handle root path '/' by redirecting to the first page (index page)
+      // Handle root path '/' by redirecting to the home page
       if (currentPath === '/' || currentPath === '') {
-        if (pages.length > 0) {
-          uni.reLaunch({ url: `/${pages[0]}` });
-        }
+        uni.reLaunch({ url: '/pages/home' });
       } else if (!pages.includes(currentPath)) {
         uni.navigateTo({ url: '/pages/error/not-found' });
       }
