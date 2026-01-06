@@ -11,7 +11,7 @@ export default {
   },
   async onLaunch() {
     if (uni.getSystemInfoSync().uniPlatform === 'web') {
-      const pages = pagesJson.pages.map((page) => page.path);
+      const pages = pagesJson.pages.map((page) => `/${page.path}`);
       const currentPath = window.location.pathname;
       // Handle root path '/' by redirecting to the index page (home page)
       if (currentPath === '/' || currentPath === '') {
