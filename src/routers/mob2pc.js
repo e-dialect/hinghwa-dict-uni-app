@@ -137,10 +137,10 @@ export default function mob2pc() {
   // Validate that all path parameters have been resolved
   if (/\{[A-Za-z0-9]+\}/.test(target)) {
     // Log error for diagnostics and redirect to home page as fallback
-    console.error('mob2pc: unresolved path parameters in target URL:', {
-      target,
-      originalUrl: window.location.href,
-    });
+    // console.error('mob2pc: unresolved path parameters in target URL:', {
+    //   target,
+    //   originalUrl: window.location.href,
+    // });
     window.location.href = 'https://hinghwa.cn/Home';
     return;
   }
