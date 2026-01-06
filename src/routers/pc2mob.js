@@ -88,15 +88,13 @@ const pc2mobRouters = {
 };
 
 /**
- * Get query parameter value from URL
+ * Get query parameter value from URL using URLSearchParams
  * @param {string} name - Parameter name
  * @returns {string|null} - Parameter value or null if not found
  */
 function getQueryString(name) {
-  const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`, 'i');
-  const r = window.location.search.substring(1).match(reg);
-  if (r != null) return decodeURI(r[2]);
-  return null;
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
 }
 
 /**
@@ -217,18 +215,23 @@ export default function pc2mob() {
 
   // Handle additional query parameters from current URL
   const searchParams = new URLSearchParams(window.location.search);
-  const targetUrl = new URL(target, MOBILE_BASE_URL);
   
-  // Add query parameters that aren't already in target
-  searchParams.forEach((value, key) => {
-    if (!targetUrl.searchParams.has(key)) {
-      targetUrl.searchParams.append(key, value);
-    }
-  });
+  // Only process if there are query parameters to add
+  if (searchParams.toString()) {
+    const targetUrl = new URL(target, MOBILE_BASE_URL);
+    
+    // Add query parameters that aren't already in target
+    searchParams.forEach((value, key) => {
+      if (!targetUrl.searchParams.has(key)) {
+        targetUrl.searchParams.append(key, value);
+      }
+    });
 
-  // Build final URL
-  const finalPath = targetUrl.pathname + (targetUrl.search || '');
-
-  // Redirect to the mobile version
-  window.location.href = `${MOBILE_BASE_URL}${finalPath}`;
+    // Build final URL
+    const finalPath = targetUrl.pathname + (targetUrl.search || '');
+    window.location.href = `${MOBILE_BASE_URL}${finalPath}`;
+  } else {
+    // No additional query parameters, use target as-is
+    window.location.href = `${MOBILE_BASE_URL}${target}`;
+  }
 }

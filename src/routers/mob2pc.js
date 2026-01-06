@@ -151,8 +151,11 @@ export default function mob2pc() {
         target = target.replace(param, queryValue);
         usedParams.add(paramName);
       } else if (paramName !== 'id') {
-        // If required parameter is missing, try to get 'id' as fallback
-        // Only use this fallback if the parameter isn't 'id' itself
+        // Fallback: If a specific parameter is missing, try using 'id' as a last resort
+        // This handles cases where a route expects a specific param (e.g., {article})
+        // but the URL only has ?id=123. This is a reasonable fallback since most
+        // entity-detail pages use 'id' as the primary identifier.
+        // Note: Only applies when the parameter itself is not 'id' to avoid infinite loops
         const idValue = getQueryString('id');
         if (idValue) {
           target = target.replace(param, idValue);
