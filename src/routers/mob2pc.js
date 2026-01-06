@@ -2,7 +2,7 @@
 // Mobile routes use uni-app pages structure, web routes use Vue Router paths
 const mob2pcRouters = {
   // Home and main pages
-  '/': '/Home', // Root path redirect
+  '/': '/Home',
   '/pages/index': '/Home',
   '/pages/home': '/Home',
   '/pages/search': '/search?key={key}',
@@ -10,12 +10,13 @@ const mob2pcRouters = {
   // Articles
   '/pages/articles/index': '/articles',
   '/pages/articles/details': '/articles/{id}',
-  '/pages/articles/edit': '/articles/edit/{id}',
-  '/pages/articles/comments/details': '/articles/{article}', // Web shows comment context via the parent article details page; {article} is the parent article ID
+  '/pages/articles/edit': '/articles/edit/{id}', // When id is present; for create (id=0), use /articles/create
+  '/pages/articles/comments/details': '/articles/{article}', // Web shows comment context via parent article; {article} is parent article ID
 
   // Login
   '/pages/login/login': '/login',
   '/pages/login/register': '/register',
+  '/pages/login/register/wechat': '/register?platform=wechat',
   '/pages/login/forget': '/forget',
 
   // Quizzes/Exam
@@ -48,14 +49,14 @@ const mob2pcRouters = {
 
   // Words
   '/pages/words/details': '/words/{id}',
-  '/pages/words/pronunciations': '/words/{id}?tab=pronunciations',
+  '/pages/words/pronunciations': '/words/{word}?tab=pronunciations',
   '/pages/words/characters/details': '/tools/characters',
-  '/pages/words/pronunciations/upload': '/tools/QuickRecording',
+  '/pages/words/pronunciations/upload': '/tools/QuickRecording?word={id}',
   '/pages/words/pronunciations/ranking': '/tools/QuickRecording/RecordRank',
 
   // Word Lists
   '/pages/lists/index': '/wordlist',
-  '/pages/lists/upload': '/wordlist/editor',
+  '/pages/lists/upload': '/wordlist/editor?id={id}',
   '/pages/lists/details': '/wordlist/{id}',
 
   // Tools
@@ -72,10 +73,10 @@ const mob2pcRouters = {
   '/pages/products/details': '/rewards/detail/{id}',
   '/pages/products/history': '/rewards/transactions',
 
-  // Mails (no direct equivalent in web, redirect to notification with context)
-  '/pages/mails/index': '/notification?feature=mail-index',
-  '/pages/mails/details': '/notification?feature=mail-details',
-  '/pages/mails/send': '/notification?feature=mail-send',
+  // Mails (no direct equivalent in web, redirect to notification)
+  '/pages/mails/index': '/notification?context=mail',
+  '/pages/mails/details': '/notification?context=mail&id={id}',
+  '/pages/mails/send': '/notification?context=mail&action=send',
 
   // Music
   '/pages/music': '/music',
@@ -110,8 +111,30 @@ export default function mob2pc() {
     return;
   }
 
+  // Special handling for article edit/create
+  // When editing articles with id=0 or no id, it's a create operation
+  if (currentPath === '/pages/articles/edit') {
+    const articleId = getQueryString('id');
+    if (!articleId || articleId === '0') {
+      target = '/articles/create';
+    } else {
+      target = `/articles/edit/${articleId}`;
+    }
+  }
+
+  // Special handling for word list editor
+  // If id is present, pass it as a query parameter for editing
+  if (currentPath === '/pages/lists/upload') {
+    const listId = getQueryString('id');
+    if (listId && listId !== '0') {
+      target = `/wordlist/editor?id=${listId}`;
+    } else {
+      target = '/wordlist/editor';
+    }
+  }
+
   // Find all path parameters in the target route (e.g., {id}, {article})
-  const paramMatches = target.match(/\{[A-Za-z0-9]+\}/g);
+  const paramMatches = target.match(/\{[A-Za-z0-9_]+\}/g);
   const usedParams = new Set(); // Track which query params were used for path params
 
   if (paramMatches) {
@@ -126,7 +149,7 @@ export default function mob2pc() {
       } else {
         // If required parameter is missing, try to get 'id' as fallback
         const idValue = getQueryString('id');
-        if (idValue) {
+        if (idValue && paramName !== 'id') {
           target = target.replace(param, idValue);
           usedParams.add('id');
         }
@@ -135,12 +158,13 @@ export default function mob2pc() {
   }
 
   // Validate that all path parameters have been resolved
-  if (/\{[A-Za-z0-9]+\}/.test(target)) {
-    // Log error for diagnostics and redirect to home page as fallback
-    // console.error('mob2pc: unresolved path parameters in target URL:', {
-    //   target,
-    //   originalUrl: window.location.href,
-    // });
+  if (/\{[A-Za-z0-9_]+\}/.test(target)) {
+    // Some path parameters couldn't be resolved, redirect to home
+    console.warn('mob2pc: unresolved path parameters in target URL:', {
+      target,
+      originalUrl: window.location.href,
+      message: 'Redirecting to home page due to missing required parameters',
+    });
     window.location.href = 'https://hinghwa.cn/Home';
     return;
   }
