@@ -1,5 +1,9 @@
 // Mapping from mobile app routes (portrait) to web routes (landscape)
 // Mobile routes use uni-app pages structure, web routes use Vue Router paths
+
+// Base URL for the web application (landscape mode)
+const WEB_BASE_URL = 'https://hinghwa.cn';
+
 const mob2pcRouters = {
   // Home and main pages
   '/': '/Home',
@@ -107,7 +111,7 @@ export default function mob2pc() {
 
   // If no mapping found, redirect to home page
   if (!target) {
-    window.location.href = 'https://hinghwa.cn/Home';
+    window.location.href = `${WEB_BASE_URL}/Home`;
     return;
   }
 
@@ -166,7 +170,7 @@ export default function mob2pc() {
       originalUrl: window.location.href,
       message: 'Redirecting to home page due to missing required parameters',
     });
-    window.location.href = 'https://hinghwa.cn/Home';
+    window.location.href = `${WEB_BASE_URL}/Home`;
     return;
   }
 
@@ -193,5 +197,5 @@ export default function mob2pc() {
   }
 
   // Redirect to the web version
-  window.location.href = `https://hinghwa.cn${target}`;
+  window.location.href = `${WEB_BASE_URL}${target}`;
 }

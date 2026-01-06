@@ -1,5 +1,12 @@
 // Mapping from web routes (landscape) to mobile app routes (portrait)
 // Web routes use Vue Router paths, mobile routes use uni-app pages structure
+
+// Base URL for the mobile application (portrait mode)
+const MOBILE_BASE_URL = 'https://m.hinghwa.cn';
+
+// Regex pattern for detecting unresolved parameters (compiled once for performance)
+const UNRESOLVED_PARAM_PATTERN = /\{[A-Za-z0-9_]+\}/;
+
 const pc2mobRouters = {
   // Home and main pages
   '/': '/pages/index',
@@ -170,7 +177,7 @@ export default function pc2mob() {
 
   // If no mapping found, redirect to mobile index page
   if (!matchResult) {
-    window.location.href = 'https://m.hinghwa.cn/pages/index';
+    window.location.href = `${MOBILE_BASE_URL}/pages/index`;
     return;
   }
 
@@ -197,20 +204,20 @@ export default function pc2mob() {
   }
 
   // Validate that all path parameters have been resolved
-  if (/\{[A-Za-z0-9_]+\}/.test(target)) {
+  if (UNRESOLVED_PARAM_PATTERN.test(target)) {
     // Some parameters couldn't be resolved, redirect to mobile index
     console.warn('pc2mob: unresolved parameters in target URL:', {
       target,
       originalUrl: window.location.href,
       message: 'Redirecting to mobile index due to missing required parameters',
     });
-    window.location.href = 'https://m.hinghwa.cn/pages/index';
+    window.location.href = `${MOBILE_BASE_URL}/pages/index`;
     return;
   }
 
   // Handle additional query parameters from current URL
   const searchParams = new URLSearchParams(window.location.search);
-  const targetUrl = new URL(target, 'https://m.hinghwa.cn');
+  const targetUrl = new URL(target, MOBILE_BASE_URL);
   
   // Add query parameters that aren't already in target
   searchParams.forEach((value, key) => {
@@ -223,5 +230,5 @@ export default function pc2mob() {
   const finalPath = targetUrl.pathname + (targetUrl.search || '');
 
   // Redirect to the mobile version
-  window.location.href = `https://m.hinghwa.cn${finalPath}`;
+  window.location.href = `${MOBILE_BASE_URL}${finalPath}`;
 }

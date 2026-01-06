@@ -133,11 +133,15 @@ If required path parameters are missing, the function redirects to a safe defaul
 
 ## Configuration
 
-Base URLs are currently hardcoded:
-- Web base URL: `https://hinghwa.cn`
-- Mobile base URL: `https://m.hinghwa.cn`
+Base URLs are defined as constants at the top of each file for easy configuration:
 
-To change these, modify the `window.location.href` assignments in mob2pc.js and pc2mob.js.
+**mob2pc.js:**
+- `WEB_BASE_URL`: `'https://hinghwa.cn'` (landscape/web version)
+
+**pc2mob.js:**
+- `MOBILE_BASE_URL`: `'https://m.hinghwa.cn'` (portrait/mobile version)
+
+To change these for different environments (e.g., development, staging), simply modify these constants.
 
 ## Maintenance
 
