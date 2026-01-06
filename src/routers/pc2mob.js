@@ -37,7 +37,7 @@ const pc2mobRouters = {
 
   // Word Lists
   '/wordlist': '/pages/lists/index',
-  '/wordlist/editor': '/pages/lists/upload?id={id}',
+  '/wordlist/editor': '/pages/lists/upload', // Query param 'id' will be preserved if present
   '/wordlist/{id}': '/pages/lists/details?id={id}',
 
   // Tools
@@ -198,13 +198,14 @@ export default function pc2mob() {
 
   // Validate that all path parameters have been resolved
   if (/\{[A-Za-z0-9_]+\}/.test(target)) {
-    // Some parameters couldn't be resolved, remove them
+    // Some parameters couldn't be resolved, redirect to mobile index
     console.warn('pc2mob: unresolved parameters in target URL:', {
       target,
       originalUrl: window.location.href,
-      message: 'Removing unresolved parameters',
+      message: 'Redirecting to mobile index due to missing required parameters',
     });
-    target = target.replace(/[?&]?[^=&?]+={[^}]+}/g, '');
+    window.location.href = 'https://m.hinghwa.cn/pages/index';
+    return;
   }
 
   // Handle additional query parameters from current URL

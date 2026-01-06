@@ -146,10 +146,11 @@ export default function mob2pc() {
       if (queryValue) {
         target = target.replace(param, queryValue);
         usedParams.add(paramName);
-      } else {
+      } else if (paramName !== 'id') {
         // If required parameter is missing, try to get 'id' as fallback
+        // Only use this fallback if the parameter isn't 'id' itself
         const idValue = getQueryString('id');
-        if (idValue && paramName !== 'id') {
+        if (idValue) {
           target = target.replace(param, idValue);
           usedParams.add('id');
         }
