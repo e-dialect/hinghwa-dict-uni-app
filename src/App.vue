@@ -14,7 +14,9 @@ export default {
       const currentPath = window.location.pathname;
       // Handle root path '/' by redirecting to the first page (index page)
       if (currentPath === '/' || currentPath === '') {
-        uni.reLaunch({ url: `/${pages[0]}` });
+        if (pages.length > 0) {
+          uni.reLaunch({ url: `/${pages[0]}` });
+        }
       } else if (!pages.includes(currentPath)) {
         uni.navigateTo({ url: '/pages/error/not-found' });
       }
