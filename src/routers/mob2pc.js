@@ -59,7 +59,7 @@ const mob2pcRouters = {
   '/pages/words/details': '/words/{id}',
   '/pages/words/pronunciations': '/words/{word}?tab=pronunciations',
   '/pages/words/characters/details': '/tools/characters',
-  '/pages/words/pronunciations/upload': '/tools/QuickRecording?word={id}', // Mobile uses ?id= for word identifier; web expects ?word=
+  '/pages/words/pronunciations/upload': '/tools/QuickRecording?word={id}', // Maps mobile ?id= parameter to web ?word= parameter
   '/pages/words/pronunciations/ranking': '/tools/QuickRecording/RecordRank',
 
   // Word Lists

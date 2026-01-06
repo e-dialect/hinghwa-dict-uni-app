@@ -55,8 +55,8 @@ const pc2mobRouters = {
   '/tools/QuickRecording/RecordRank': '/pages/words/pronunciations/ranking',
   '/tools/characters': '/pages/words/characters/details',
   '/tools/DailyExpressions': '/pages/tools/daily-expression/index',
-  '/tools/RecordConfirming': '/pages/words/pronunciations/ranking', // No equivalent in mobile
-  '/tools/WordConfirming': '/pages/words/details?id={id}', // No equivalent in mobile
+  '/tools/RecordConfirming': '/pages/words/pronunciations/ranking', // Maps to mobile ranking page (no exact equivalent)
+  '/tools/WordConfirming': '/pages/words/details?id={id}', // Maps to mobile word details page
   '/tools/Relative': '/pages/tools/relative',
   '/pinyin': '/pages/tools/pinyin',
 
