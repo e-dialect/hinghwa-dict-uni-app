@@ -2,6 +2,7 @@
 // app.js
 import { getLoginStatus } from '@/services/login';
 import mob2pc from '@/routers/mob2pc';
+import { toIndexPage } from '@/routers/index';
 import pagesJson from '@/pages.json';
 
 export default {
@@ -10,9 +11,12 @@ export default {
   },
   async onLaunch() {
     if (uni.getSystemInfoSync().uniPlatform === 'web') {
-      const pages = pagesJson.pages.map((page) => page.path);
+      const pages = pagesJson.pages.map((page) => `/${page.path}`);
       const currentPath = window.location.pathname;
-      if (!pages.includes(currentPath)) {
+      // Handle root path '/' by redirecting to the index page (home page)
+      if (currentPath === '/' || currentPath === '') {
+        toIndexPage(true);
+      } else if (!pages.includes(currentPath)) {
         uni.navigateTo({ url: '/pages/error/not-found' });
       }
     }
