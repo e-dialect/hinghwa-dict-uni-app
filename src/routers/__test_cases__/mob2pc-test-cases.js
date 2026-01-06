@@ -16,7 +16,7 @@ const testCases = [
     expected: '/search?key=test',
     description: 'Search with key parameter',
   },
-  
+
   // Articles
   {
     input: '/pages/articles/details?id=123',
@@ -43,7 +43,7 @@ const testCases = [
     expected: '/articles/789?comment=12',
     description: 'Article comment details',
   },
-  
+
   // Users
   {
     input: '/pages/users/details?id=100',
@@ -60,7 +60,7 @@ const testCases = [
     expected: '/settings?section=information',
     description: 'User settings - information section',
   },
-  
+
   // Words
   {
     input: '/pages/words/details?id=555',
@@ -77,7 +77,7 @@ const testCases = [
     expected: '/tools/QuickRecording?word=777',
     description: 'Upload pronunciation with word id',
   },
-  
+
   // Quizzes
   {
     input: '/pages/quizzes/details?id=888',
@@ -89,7 +89,7 @@ const testCases = [
     expected: '/PuxianExam/999?section=quizset',
     description: 'Quiz set detail',
   },
-  
+
   // Word Lists
   {
     input: '/pages/lists/details?id=111',
@@ -106,42 +106,42 @@ const testCases = [
     expected: '/wordlist/editor',
     description: 'Create new word list',
   },
-  
+
   // Products/Rewards
   {
     input: '/pages/products/details?id=333',
     expected: '/rewards/detail/333',
     description: 'Product/reward details',
   },
-  
+
   // Mails
   {
     input: '/pages/mails/details?id=444',
     expected: '/notification?context=mail&id=444',
     description: 'Mail details',
   },
-  
+
   // Tools
   {
     input: '/pages/tools/dictionary',
     expected: '/Dictionary',
     description: 'Dictionary tool',
   },
-  
+
   // Multiple query parameters
   {
     input: '/pages/users/details?id=100&tab=articles&page=2',
     expected: '/users/100?tab=articles&page=2',
     description: 'User with multiple query params',
   },
-  
+
   // Missing required parameter (should redirect to home)
   {
     input: '/pages/words/details',
     expected: '/Home',
     description: 'Word details without id (should redirect to home)',
   },
-  
+
   // Unknown route (should redirect to home)
   {
     input: '/pages/unknown/route',
@@ -156,20 +156,20 @@ const testCases = [
  * 1. Mock window.location.pathname and window.location.search
  * 2. Mock window.location.href setter to capture redirects
  * 3. Call mob2pc() and verify the redirect URL
- * 
+ *
  * Example test setup:
- * 
+ *
  * // Mock window.location
  * delete window.location;
- * window.location = { 
- *   pathname: '/pages/articles/details', 
+ * window.location = {
+ *   pathname: '/pages/articles/details',
  *   search: '?id=123',
  *   href: ''
  * };
- * 
+ *
  * // Call function
  * mob2pc();
- * 
+ *
  * // Verify
  * console.assert(
  *   window.location.href === 'https://hinghwa.cn/articles/123',

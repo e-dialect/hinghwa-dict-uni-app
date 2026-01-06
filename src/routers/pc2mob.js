@@ -221,11 +221,11 @@ export default function pc2mob() {
 
   // Handle additional query parameters from current URL
   const searchParams = new URLSearchParams(window.location.search);
-  
+
   // Only process if there are query parameters to add
   if (searchParams.toString()) {
     const targetUrl = new URL(target, MOBILE_BASE_URL);
-    
+
     // Add query parameters that aren't already in target
     searchParams.forEach((value, key) => {
       if (!targetUrl.searchParams.has(key)) {
