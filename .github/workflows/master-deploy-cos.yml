@@ -1,0 +1,55 @@
+name: Master Deploy to Tencent COS
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-upload-master:
+    runs-on: ubuntu-latest
+    env:
+      REPO_NAME: ${{ github.event.repository.name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --production=false
+
+      - name: Lint
+        run: |
+          yarn run lint
+
+      - name: Build project
+        env:
+          PREVIEW_BASE: "/${{ env.REPO_NAME }}-pr-${{ github.event.number }}/"
+        run: |
+          yarn run build-dev:h5
+
+      - name: Generate SHA256 for dist
+        run: |
+          find dist/build/h5 -type f -exec sha256sum {} \; > dist/build/h5/sha256sum.txt
+
+      - name: Install coscmd and configure
+        run: |
+          pip install coscmd
+          coscmd config -a ${{ secrets.TENCENT_CLOUD_SECRET_ID }} -s ${{ secrets.TENCENT_CLOUD_SECRET_KEY }} -b ${{ secrets.TENCENT_CLOUD_BUCKET }} -r ${{ secrets.TENCENT_CLOUD_REGION }} || true
+
+      - name: Download previous master sha (if exists)
+        run: |
+          set -e
+          coscmd download /${REPO_NAME}-master/sha256sum.txt ./previous_master_sha.txt || true
+
+      - name: Run incremental diff vs previous master
+        run: |
+          ./scripts/incremental-diff.sh ./previous_master_sha.txt
+
+      - name: Upload changed files to COS via coscmd
+        run: |
+          echo "Uploading changed files -> /${REPO_NAME}-master/"
+          cd dist/build/h5 && coscmd upload -r . /${REPO_NAME}-master/

@@ -103,15 +103,17 @@
     "vueVersion" : "3",
     "h5" : {
         "devServer" : {
-            "port" : 80
+            "port" : 8011
         },
         "sdkConfigs" : {
             "maps" : {}
         },
         "title" : "兴化语记移动端（测试版）",
         "router" : {
-            "mode" : "history"
+            "mode" : "history",
+            "base" : "/__REPLACE_PREVIEW_BASE__/"
         },
+        "publicPath" : "/__REPLACE_PREVIEW_BASE__/",
         "optimization" : {
             "treeShaking" : {
                 "enable" : false
