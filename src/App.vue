@@ -22,7 +22,7 @@ export default {
     }
 
     uni.getSystemInfo({
-      success: async (e) => {
+      success: (e) => {
         // if widescreen device redirect to widescreen page
         if (uni.getSystemInfoSync().uniPlatform === 'web') {
           // UA check
@@ -52,11 +52,26 @@ export default {
         } else {
           this.globalData.CustomBar = e.statusBarHeight + 50;
         }
-        await getLoginStatus();
       },
     });
+    await getLoginStatus();
   },
   globalData: {
+    userInfo: {
+      avatar: '',
+      nickname: '',
+    },
+    platform: '',
+    StatusBar: 0,
+    Custom: null,
+    CustomBar: 0,
+    publish_articles: [],
+    publish_comments: [],
+    like_articles: [],
+    contribution: 0,
+    id: null,
+    showRedirectTips: false,
+    comment: null,
     watch(method) {
       const obj = this;
       Object.defineProperty(obj, 'data', {
