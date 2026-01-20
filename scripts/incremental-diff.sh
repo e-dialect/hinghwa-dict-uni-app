@@ -26,7 +26,7 @@ if [ ! -f "${PREVIOUS_SHA_FILE}" ]; then
 fi
 
 # Generate SHA256 by:
-# find dist -type f -exec sha256sum {} \; > dist/sha256sum.txt
+# find dist/build/h5 -type f -exec sha256sum {} \; > dist/build/h5/sha256sum.txt
 
 IFS=$'\n'
 FILE_LIST=($(cat "${PREVIOUS_SHA_FILE}" | awk -F '  ' '{ print $2 }'))
@@ -45,6 +45,6 @@ for ((i = 0; i < ${#FILE_LIST[@]}; i++)); do
 done
 
 echo "These files will be uploaded after diff:"
-find dist -type f -exec echo "    {}" \;
+find dist/build/h5 -type f -exec echo "    {}" \;
 echo -n "Total size: "
-du -sh dist | awk '{ print $1 }'
+du -sh dist/build/h5 | awk '{ print $1 }'
