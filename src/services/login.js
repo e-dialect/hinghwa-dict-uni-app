@@ -41,6 +41,58 @@ export async function afterLogin(res) {
 /**
  * 小程序一键登录
  */
+/**
+ * 生成安全的随机密码
+ */
+function generateSecurePassword(length = 16) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+  let password = '';
+  for (let i = 0; i < length; i += 1) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+}
+
+/**
+ * 简单加密密码（实际应用中应使用更安全的加密）
+ */
+function encryptPassword(password) {
+  // 这里使用简单的base64编码，实际应使用更安全的加密
+  return btoa(password);
+}
+
+/**
+ * 使用微信 code 进行一键注册
+ */
+async function registerWithWechatCode(code) {
+  // 自动生成用户名和密码
+  const username = `wx_${generateSecurePassword(8)}`;
+  const password = generateSecurePassword(16);
+
+  // 不再调用 uni.getUserProfile（小程序基础库限制），只提交必需字段
+  // 发送注册请求（仅必填项）
+  return rawRequest.post('/users/wechat/register', {
+    jscode: code,
+    username,
+    password,
+  })
+    .then(async (res) => {
+      // 保存凭证（加密存储）
+      uni.setStorageSync('username', username);
+      uni.setStorageSync('password', encryptPassword(password));
+      await afterLogin(res);
+      return res;
+    })
+    .catch((err) => {
+      // 不在此处直接弹窗，保留原行为：提示给用户
+      uni.showToast({
+        title: err.data && err.data.msg ? err.data.msg : (err.msg || '注册失败'),
+        icon: 'none',
+      });
+      throw err;
+    });
+}
+
 export async function mpLogin() {
   // #ifdef H5
   toLoginPage();
@@ -70,11 +122,28 @@ export async function mpLogin() {
           switch (err.statusCode) {
             case 404:
               uni.showModal({
-                content: err.data.msg || '当前用户未注册或未绑定微信',
-                showCancel: false,
-                success() {
-                  // 跳转到普通登录页面
-                  toLoginPage();
+                content: '当前微信未绑定账号，是否一键注册？',
+                success(modalRes) {
+                  if (modalRes.confirm) {
+                    // jscode 是一次性凭证，之前用于登录尝试已可能被后端消费，
+                    // 因此再次调用 uni.login() 获取新的 code 用于注册。
+                    uni.login({
+                      success: (res2) => {
+                        if (!res2.code) {
+                          uni.showToast({ title: '获取微信授权失败', icon: 'none' });
+                          return;
+                        }
+                        // 使用新的 code 进行注册
+                        registerWithWechatCode(res2.code);
+                      },
+                      fail() {
+                        uni.showToast({ title: '获取微信授权失败', icon: 'none' });
+                      },
+                    });
+                  } else {
+                    // 跳转到普通登录页面
+                    toLoginPage();
+                  }
                 },
               });
               break;
@@ -91,7 +160,7 @@ export async function mpLogin() {
       toLoginPage();
     },
   });
-// #endif
+  // #endif
 }
 
 /**
