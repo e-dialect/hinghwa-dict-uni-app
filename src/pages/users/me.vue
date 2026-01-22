@@ -163,7 +163,7 @@
           <view class="content">
             <text class="cuIcon-group text-grey" />
             <text class="text-grey">
-              绑定微信
+              {{ wechatBindText }}
             </text>
           </view>
         </view>
@@ -198,8 +198,8 @@
 <script>
 import { toIndexPage, toTuxiaochaoPage } from '@/routers';
 import {
-  bindingWechat,
-  cancelBindingWechat,
+  bindingWechat as bindingWechatService,
+  cancelBindingWechat as cancelBindingWechatService,
   clearUserInfo,
   getUserInfo,
 } from '@/services/user';
@@ -221,6 +221,8 @@ export default {
       recordsCount: 0,
       wordsCount: 0,
       visitTotal: 0,
+      wechatBindText: '绑定微信',
+      isBinding: false,
     };
   },
 
@@ -247,6 +249,7 @@ export default {
       this.wordsCount = userInfo.contribution.word;
       this.visitTotal = userInfo.contribution.article_views || 0;
       this.unreadMailsCount = userInfo.notification.statistics.unread;
+      this.wechatBindText = userInfo.user.wechat ? '解绑微信' : '绑定微信';
     },
 
     /**
@@ -269,54 +272,52 @@ export default {
     },
 
     /**
-     * 绑定微信
+     * 绑定/解绑微信
      */
     async bindingWechat() {
-      const userInfo = await getUserInfo(app.globalData.id);
-      // 尚未绑定微信
-      if (!userInfo.user.wechat) {
-        // #ifndef MP-WEIXIN
-        uni.showToast({
-          title: '请在微信小程序中绑定微信',
-        });
-        // #endif
-        // #ifdef MP-WEIXIN
-        await bindingWechat(app.globalData.id, false);
-        // #endif
-        return;
-      }
-      // 已经绑定微信
-      uni.showModal({
-        content: '当前用户已经绑定微信！',
-        cancelText: '返回',
-        confirmText: '继续操作',
-
-        success(continueOperating) {
-          // 继续操作
-          if (continueOperating.confirm) {
-            // 取消绑定
-            uni.showModal({
-              content: '是否解除绑定？',
-              success: async (cancelBinding) => {
-                if (cancelBinding.confirm) {
-                  await cancelBindingWechat(app.globalData.id);
-                  // 绑定到此微信
-                  if (uni.getSystemInfoSync().uniPlatform === 'mp-weixin') {
-                    uni.showModal({
-                      content: '是否绑定至此微信？',
-                      success: async (binding) => {
-                        if (binding.confirm) {
-                          await bindingWechat(app.globalData.id);
-                        }
-                      },
-                    });
-                  }
-                }
-              },
-            });
+      if (this.isBinding) return;
+      this.isBinding = true;
+      try {
+        const userInfo = await getUserInfo(app.globalData.id);
+        // 尚未绑定微信
+        if (!userInfo.user.wechat) {
+          // #ifndef MP-WEIXIN
+          uni.showToast({ title: '请在微信小程序中绑定微信' });
+          // #endif
+          // #ifdef MP-WEIXIN
+          try {
+            const res = await bindingWechatService(app.globalData.id, false);
+            uni.showToast({ title: res && res.msg ? res.msg : '绑定成功' });
+            this.wechatBindText = '解绑微信';
+            await this.getInfo();
+          } catch (err) {
+            const msg = (err && (err.msg || (err.data && err.data.msg))) || '绑定失败';
+            uni.showToast({ title: msg, icon: 'none' });
           }
-        },
-      });
+          // #endif
+          return;
+        }
+
+        // 已经绑定微信，确认解绑
+        uni.showModal({
+          content: '是否解除微信绑定？',
+          success: async (res) => {
+            if (res.confirm) {
+              try {
+                await cancelBindingWechatService(app.globalData.id);
+                uni.showToast({ title: '解绑成功' });
+                this.wechatBindText = '绑定微信';
+                await this.getInfo();
+              } catch (err) {
+                const msg = (err && (err.msg || (err.data && err.data.msg))) || '解绑失败';
+                uni.showToast({ title: msg, icon: 'none' });
+              }
+            }
+          },
+        });
+      } finally {
+        this.isBinding = false;
+      }
     },
   },
 };
