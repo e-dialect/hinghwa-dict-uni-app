@@ -2,35 +2,7 @@ import { toIndexPage } from '@/routers';
 import { toMePage } from '@/routers/user';
 import { toLoginPage } from '@/routers/login';
 import rawRequest from '../utils/rawRequest';
-
-// 导入base64 polyfill用于WeChat miniprogram环境
-const b64ch = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-const b64chs = [...b64ch];
-
-/**
- * polyfill version of `btoa` for WeChat miniprogram
- * eslint规则在此处禁用因为base64编码需要位运算
- */
-/* eslint-disable no-plusplus, no-bitwise, no-mixed-operators */
-function btoaPolyfill(bin) {
-  let u32; let c0; let c1; let c2; let asc = '';
-  const pad = bin.length % 3;
-  for (let i = 0; i < bin.length;) {
-    c0 = bin.charCodeAt(i++);
-    c1 = bin.charCodeAt(i++);
-    c2 = bin.charCodeAt(i++);
-    if (c0 > 255 || c1 > 255 || c2 > 255) {
-      throw new TypeError('invalid character found');
-    }
-    u32 = (c0 << 16) | (c1 << 8) | c2;
-    asc += b64chs[(u32 >> 18) & 63]
-      + b64chs[(u32 >> 12) & 63]
-      + b64chs[(u32 >> 6) & 63]
-      + b64chs[u32 & 63];
-  }
-  return pad ? asc.slice(0, pad - 3) + '==='.substring(pad) : asc;
-}
-/* eslint-enable no-plusplus, no-bitwise, no-mixed-operators */
+import base64Utils from '../polyfill/base64Binary';
 
 /**
  * 加载用户信息到 app.globalData
@@ -88,7 +60,7 @@ function generateSecurePassword(length = 16) {
 function encryptPassword(password) {
   // 这里使用简单的base64编码，实际应使用更安全的加密
   // 使用polyfill以支持WeChat miniprogram环境
-  return btoaPolyfill(password);
+  return base64Utils.btoaPolyfill(password);
 }
 
 /**

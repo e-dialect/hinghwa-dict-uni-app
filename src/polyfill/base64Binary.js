@@ -92,4 +92,6 @@ function arrayBufferToBase64 (buffer) {
 export default {
     base64ToArrayBuffer,
     arrayBufferToBase64,
+    btoaPolyfill,
+    atobPolyfill,
 }
