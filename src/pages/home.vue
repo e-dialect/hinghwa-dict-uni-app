@@ -56,7 +56,6 @@
                 type="text"
                 placeholder="搜索词语、单字、拼音和文章"
                 confirm-type="search"
-                @tap="search"
               >
             </view>
           </view>
