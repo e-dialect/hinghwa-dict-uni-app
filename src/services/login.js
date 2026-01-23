@@ -54,14 +54,6 @@ function generateSecurePassword(length = 16) {
 }
 
 /**
- * 简单加密密码（实际应用中应使用更安全的加密）
- */
-function encryptPassword(password) {
-  // 这里使用简单的base64编码，实际应使用更安全的加密
-  return btoa(password);
-}
-
-/**
  * 使用微信 code 进行一键注册
  */
 async function registerWithWechatCode(code) {
@@ -77,9 +69,6 @@ async function registerWithWechatCode(code) {
     password,
   })
     .then(async (res) => {
-      // 保存凭证（加密存储）
-      uni.setStorageSync('username', username);
-      uni.setStorageSync('password', encryptPassword(password));
       await afterLogin(res);
       return res;
     })
