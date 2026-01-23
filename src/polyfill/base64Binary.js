@@ -71,7 +71,7 @@ function base64ToArrayBuffer (base64) {
     const byteLength = binaryStr.length
     const bytes = new Uint8Array(byteLength)
     for (let i = 0;i < byteLength;i++) {
-        bytes[i] = binary.charCodeAt(i)
+        bytes[i] = binaryStr.charCodeAt(i)
     }
     return bytes.buffer
 }
