@@ -22,3 +22,13 @@
 项目主体采用 `Vue2` + `webpack`，之所以不采用 `Vue3` + `Vite` 的原因在于，这个仓库源自于[原先的微信小程序代码](https://github.com/e-dialect/hinghwa-dict-mp-weixin)，通过 `uni-app` 提供的插件一键转化为 `uni-app` 应用。（因此代码前期会充满着 `refactor` 和 `fix`，彻底完成转化之后才适时添加新功能）
 
 UI 组件使用  [`ColorUI`](https://github.com/weilanwl/ColorUI/) ，这是一款适应于H5、微信小程序、安卓、iOS、支付宝的高颜值，高度自定义的 CSS 组件库。
+
+## 许可证
+
+本仓库中由 e-dialect 有权授权的原创软件代码，除另有说明外采用
+**GNU Affero General Public License v3.0 only（`AGPL-3.0-only`）**。
+AGPL 允许商业使用，但使用者须遵守其全部条款；无法或不希望遵守这些条款的组织，
+可以联系维护者了解替代商业许可。第三方组件以及词典、语料、录音、用户内容、数据、
+图片、商标和 Logo 不自动适用该许可证。详见 [`LICENSING.md`](LICENSING.md)、
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) 和
+[`ASSET_BOUNDARIES.md`](ASSET_BOUNDARIES.md)。
