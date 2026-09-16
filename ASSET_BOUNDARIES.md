@@ -5,7 +5,7 @@ media item used by the application.
 
 | Path or material | Boundary |
 | --- | --- |
-| `src/services/relative.js`, `src/const/pinyin.js`, `src/const/sheng-yun-diao.js`, and `src/const/location.js` | Embedded Puxian vocabulary, phonology examples, relationship data, and geographic lists. Their inclusion is not a representation that all underlying factual or expressive content is AGPL-licensed; retain provenance and content permissions separately. |
+| `src/services/relative.js`, `src/const/pinyin.js`, `src/const/sheng-yun-diao.js`, and `src/const/location.js` | Embedded Puxian vocabulary, phonology examples, relationship data, and geographic lists. Their inclusion is not a representation that all underlying factual or expressive content is AGPL-licensed; the audited repository lineage and status are recorded in [`DATA_PROVENANCE.md`](./DATA_PROVENANCE.md). |
 | `favicon.png` | Project/product identity artwork. No trademark right or endorsement is granted by the code license. |
 | `images/branches.webp`, `images/image-20220701012922288.png` | Documentation screenshots. Their inclusion does not create a general media reuse or trademark grant. |
 | Runtime dictionary, article, quiz, product, account, and recording content | Content returned by the backend or supplied by users requires its own provenance, consent, privacy basis, and license/permission. |

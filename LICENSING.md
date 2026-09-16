@@ -27,6 +27,8 @@ The software license does not automatically cover dictionary or corpus content,
 recordings, user content, datasets, images, trademarks, logos, or other
 separately identified assets. See
 [`ASSET_BOUNDARIES.md`](./ASSET_BOUNDARIES.md) for the repository-specific map.
+The repository lineage of its embedded linguistic and geographic constants is
+recorded in [`DATA_PROVENANCE.md`](./DATA_PROVENANCE.md).
 
 Historical releases and file-level grants remain governed by their published
 terms. In particular, the root license was GPL version 3 from 13 July 2022
@@ -48,7 +50,8 @@ ColorUI、uParse/wxParse、转换 polyfill、js-base64 派生代码、`luch-audi
 继续适用路径内的 MIT、BSD-3-Clause 或 Apache-2.0 条款，详见
 [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md)。代码许可证不自动授权词典、
 语料、录音、用户内容、数据集、图片、商标或 Logo；路径边界见
-[`ASSET_BOUNDARIES.md`](./ASSET_BOUNDARIES.md)。
+[`ASSET_BOUNDARIES.md`](./ASSET_BOUNDARIES.md)，内嵌语言与行政区资料的仓库来源链见
+[`DATA_PROVENANCE.md`](./DATA_PROVENANCE.md)。
 
 根许可证在 2022 年 7 月 13 日至 2026 年 3 月 19 日期间为 GPL 第 3 版，`v2.0.0`
 至 `v2.1.3` 均发布于该期间；这些版本已授予的 GPL 权利继续有效。当前声明不撤销
