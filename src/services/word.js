@@ -41,9 +41,9 @@ import request from '../utils/request';
  * WD0101 获取某个词语的详细信息
  * @param id 词语id
  */
-export async function getWordDetails(id) {
+export async function getWordDetails(id, options = {}) {
   let word;
-  await request.get(`/words/${id}`).then((res) => {
+  await request.get(`/words/${id}`, null, false, options).then((res) => {
     word = res.word;
   });
   word.definitions = splitDefinition(word.definition);

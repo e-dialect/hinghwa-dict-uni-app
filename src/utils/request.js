@@ -2,11 +2,14 @@ import { BASE_URL } from '@/const/urls';
 import { toLoginPage } from '@/routers/login';
 
 // TODO remove noPrompt
-const request = (method = 'GET', url = '', data = {}, noPrompt = false) => {
-  uni.showLoading({
-    title: '加载中',
-    mask: true,
-  });
+const request = (method = 'GET', url = '', data = {}, noPrompt = false, options = {}) => {
+  const background = Boolean(options && options.background);
+  if (!background) {
+    uni.showLoading({
+      title: '加载中',
+      mask: true,
+    });
+  }
   return new Promise(
     (resolve, reject) => {
       uni.request({
@@ -19,12 +22,12 @@ const request = (method = 'GET', url = '', data = {}, noPrompt = false) => {
         },
         dataType: 'json',
       }).then((res) => {
-        uni.hideLoading();
+        if (!background) uni.hideLoading();
         // 如果正常返回，则根据状态码进行处理
         if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data);
         else {
           // 如果 noPrompt 为 true，则不弹出错误提示
-          if (noPrompt) {
+          if (noPrompt || background) {
             reject(res);
             return;
           }
@@ -66,19 +69,21 @@ const request = (method = 'GET', url = '', data = {}, noPrompt = false) => {
           reject(res);
         }
       }).catch((error) => {
-        uni.hideLoading();
-        uni.showToast({
-          title: '网络错误',
-          icon: 'error',
-        });
+        if (!background) {
+          uni.hideLoading();
+          uni.showToast({
+            title: '网络错误',
+            icon: 'error',
+          });
+        }
         reject(error);
       });
     },
   );
 };
 
-function get(url, data = null, noPrompt = false) {
-  return request('get', url, data, noPrompt);
+function get(url, data = null, noPrompt = false, options = {}) {
+  return request('get', url, data, noPrompt, options);
 }
 
 function post(url, data = {}, noPrompt = false) {
