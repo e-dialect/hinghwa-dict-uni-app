@@ -77,7 +77,9 @@
           <WordListShowing
             v-if="words.length"
             :word-list="words"
+            :show-contribution-invitation="true"
             class="cu-item"
+            @retry="retryWords"
           />
         </view>
       </view>
@@ -154,6 +156,9 @@ export default {
     this.wordRequest += 1;
   },
   methods: {
+    retryWords() {
+      return this.$options.watch.top.handler.call(this, this.top);
+    },
     pushRelative(field) {
       if (this.stack.length > 15) {
         uni.showModal({
