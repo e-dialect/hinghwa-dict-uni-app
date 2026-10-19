@@ -55,7 +55,7 @@ class RuntimeContractTests(unittest.TestCase):
             'NetworkSettings': {'Ports': {'8080/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '49152'}]}}}
         return sha, image, container
 
-    def run_smoke(self, image, container, javascript=b'const api="https://api.pxm.edialect.top";', html=None):
+    def run_smoke(self, image, container, javascript=b'const api="https://api.pxm.edialect.top";', html=None, css=b'body{}'):
         import email.message
         import json
         import urllib.error
@@ -86,7 +86,7 @@ class RuntimeContractTests(unittest.TestCase):
             def __exit__(self, *args): return False
             def read(self, limit):
                 if self.url.endswith('/app.js'): return javascript
-                if self.url.endswith('/app.css'): return b'body{}'
+                if self.url.endswith('/app.css'): return css
                 return html
         class Opener:
             def open(self, url, timeout):
@@ -116,6 +116,19 @@ class RuntimeContractTests(unittest.TestCase):
         self.assertEqual(run[-1], image['Id'])
         self.assertIn('127.0.0.1::8080', run)
         self.assertNotIn('--privileged', run)
+
+    def test_empty_generated_css_is_valid_but_empty_javascript_is_rejected(self):
+        _, image, container = self.fixture()
+        receipt, _ = self.run_smoke(image, container, css=b'')
+        self.assertEqual(receipt['result'], 'PASS')
+        self.assertGreater(receipt['cssAssets'], 0)
+        with self.assertRaisesRegex(AssertionError, 'Empty document or JavaScript: /app.js'):
+            self.run_smoke(image, container, javascript=b'')
+
+    def test_css_limit_stays_bounded_and_reports_only_asset_path_and_size(self):
+        _, image, container = self.fixture()
+        with self.assertRaisesRegex(AssertionError, r'Response exceeds limit: /app.css \(8388609 bytes\)'):
+            self.run_smoke(image, container, css=b'x' * (8 * 1024 * 1024 + 1))
 
     def test_reject_bad_runtime_limits_and_still_remove_only_test_container(self):
         for field, value in [('ReadonlyRootfs', False), ('CapDrop', []), ('Memory', 0), ('PidsLimit', 0), ('Binds', ['/host:/data'])]:

@@ -76,11 +76,12 @@ def check(image, source_sha):
         origin = 'http://127.0.0.1:' + bound[0]['HostPort']
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
-        def get(path):
+        def get(path, allow_empty=False):
             with opener.open(origin + path, timeout=5) as response:
                 assert response.status == 200 and response.url == origin + path
                 body = response.read(8 * 1024 * 1024 + 1)
-                assert 0 < len(body) <= 8 * 1024 * 1024
+                assert len(body) <= 8 * 1024 * 1024, f'Response exceeds limit: {path} ({len(body)} bytes)'
+                assert body or allow_empty, f'Empty document or JavaScript: {path}'
                 return body, response.headers.get_content_type()
 
         for attempt in range(30):
@@ -97,7 +98,7 @@ def check(image, source_sha):
             assert mime == 'text/html' and b'id="app"' in body
         entries = entry_assets(get('/')[0])
         for path in entries:
-            get(path)
+            get(path, allow_empty=path.endswith('.css'))
         for path in ['/.env', '/.git/config', '/assets/missing-ci.js', '/missing-ci.css']:
             try:
                 get(path)
@@ -117,7 +118,7 @@ def check(image, source_sha):
                 continue
             suffix = filename.rsplit('.', 1)[1]
             path = '/' + urllib.parse.quote(filename.removeprefix('/usr/share/nginx/html/'), safe='/')
-            body, mime = get(path)
+            body, mime = get(path, allow_empty=suffix == 'css')
             assert mime in ({'application/javascript', 'text/javascript'} if suffix == 'js' else {'text/css'})
             assert not body.lstrip().lower().startswith((b'<!doctype html', b'<html'))
             if suffix == 'js':
