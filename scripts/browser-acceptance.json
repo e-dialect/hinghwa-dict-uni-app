@@ -1,0 +1,10 @@
+{
+  "verified": false,
+  "dependencyInventoryComplete": false,
+  "knownExternalDependencies": [],
+  "pendingPaths": [
+    "/pages/index",
+    "/pages/tools/relative",
+    "/pages/login/login"
+  ]
+}

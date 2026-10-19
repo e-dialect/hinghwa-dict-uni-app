@@ -21,6 +21,13 @@ only its own loopback-published disposable container: it fetches every emitted J
 checks production API selection, rejects external entry JS/CSS and missing assets, and checks
 sensitive paths are unavailable. It does not call a backend or establish browser/user acceptance.
 
+The receipt claims only `sameOriginEntryAssets`: the HTML entry scripts and stylesheets
+are local, and emitted JS/CSS files are fetched and scanned. It does not execute browser
+JavaScript or prove that dynamic loaders, content, images, fonts, or API calls are same-origin.
+`browserAcceptance` is explicitly unverified; `scripts/browser-acceptance.json` records a
+non-exhaustive dependency inventory and pending browser paths. Empty known dependencies
+mean none were recorded, not that external runtime dependencies are absent.
+
 The old Dockerfile, Compose, API rewrite script and COS workflows remain legacy paths.
 **A push to master still triggers `master-deploy-cos.yml`, which builds in development mode
 and writes the public `/hinghwa-dict-uni-app-master/` COS prefix.** That deployment side effect is not a CI gate;
