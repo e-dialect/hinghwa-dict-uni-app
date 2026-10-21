@@ -23,6 +23,12 @@
             {{ item }}
           </text>
         </view>
+        <view
+          v-if="top.note"
+          class="text-gray padding-sm"
+        >
+          {{ top.note }}
+        </view>
       </view>
       <!--选择亲戚按钮-->
       <view class="cu-item padding-left-xs">
@@ -71,7 +77,9 @@
           <WordListShowing
             v-if="words.length"
             :word-list="words"
+            :show-contribution-invitation="true"
             class="cu-item"
+            @retry="retryWords"
           />
         </view>
       </view>
@@ -86,6 +94,7 @@ import {
 import WordListShowing from '@/components/WordListShowing.vue';
 import { defaultMessage } from '@/services/shareMessages';
 import { getWordDetails } from '../../services/word';
+import loadRelativeWords from '../../services/relativeWords';
 
 export default {
   components: {
@@ -96,6 +105,7 @@ export default {
       stack: [[relative[0]]],
       select: [],
       words: [],
+      wordRequest: 0,
     };
   },
   onShareAppMessage() {
@@ -127,43 +137,38 @@ export default {
     },
   },
   watch: {
-    async top(value) {
-      const ans = [];
-      await Promise.all(value.words.map(async (item) => {
-        let tmp = {
-          word: item.word,
-          id: null,
-        };
-        if (item.id) {
-          await getWordDetails(item.id).then((res) => {
-            tmp = res;
-            tmp.url = res.word.source;
-            tmp.id = item.id;
-          });
-        } else {
-          tmp = { ...item };
-        }
-        ans.push(tmp);
-      }));
-      this.words = ans;
+    top: {
+      immediate: true,
+      async handler(value) {
+        const request = this.wordRequest + 1;
+        this.wordRequest = request;
+        this.words = [];
+        const ans = await loadRelativeWords(value.words, async (id) => {
+          const word = await getWordDetails(id);
+          return { ...word, id, url: word.source };
+        });
+        if (request === this.wordRequest) this.words = ans;
+      },
     },
 
   },
-  async onLoad() {
-    await getWordDetails(1966).then((res) => {
-      this.words[0] = res;
-    });
+  onUnload() {
+    this.wordRequest += 1;
   },
   methods: {
+    retryWords() {
+      return this.$options.watch.top.handler.call(this, this.top);
+    },
     pushRelative(field) {
       if (this.stack.length > 15) {
         uni.showModal({
           content: '关系层数太多了，可以考虑简化一下无效信息？',
           showCancel: false,
         });
+        return false;
       }
 
-      if (!this.top.relations[field]) { return false; }
+      if (this.topLength !== 1 || !this.top.relations[field]) { return false; }
       const ans = [];
       if (typeof this.top.relations[field] !== 'string') {
         Object.keys(this.top.relations[field]).forEach((i) => {
@@ -183,6 +188,7 @@ export default {
     },
 
     popRelative() {
+      if (this.stack.length === 1) return;
       this.select.pop();
       this.stack.pop();
     },

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "check:relative": "node scripts/check-relative.mjs",
     "serve": "npm run dev:h5",
     "build": "npm run build:h5",
     "dev:app": "uni -p app",
